@@ -302,7 +302,7 @@ a { text-decoration: none; }
 ══════════════════════ */
 .hero {
   min-height: 100vh;
-  background: url('../assets/img/hero-v2.png') left center / auto 100% no-repeat, #fff;
+  background: url('../assets/img/hero-v2.png') center center / auto 100% no-repeat, #fff;
   display: flex;
   align-items: center;
   overflow: hidden;

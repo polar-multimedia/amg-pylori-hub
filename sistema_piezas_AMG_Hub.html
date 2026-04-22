@@ -1199,7 +1199,7 @@ body.edit-mode .sello:hover { outline: 2px solid rgba(136,112,40,0.9); }
 
 /* ════════════════════════════════════
    VARIANT B — TIKTOK / CAROUSEL
-   Clean white background, bold hook text, bullet points
+   Tamaños fijos calibrados para tarjetas 246×307px / 173×307px / 380×214px
 ════════════════════════════════════ */
 .var-b-tk {
   background: #fff;
@@ -1207,59 +1207,108 @@ body.edit-mode .sello:hover { outline: 2px solid rgba(136,112,40,0.9); }
   display: flex; flex-direction: column;
   position: relative; overflow: hidden;
 }
-/* accent stripe left */
+
+/* accent stripe izquierda */
 .var-b-tk .tk-stripe {
   position: absolute; left: 0; top: 0; bottom: 0;
-  width: 6px; background: var(--teal);
-}
-/* top bar with logo */
-.var-b-tk .tk-topbar {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 14px 20px 10px 22px;
-  border-bottom: 1px solid rgba(24,56,136,0.08);
-}
-.var-b-tk .tk-brand { font-size: 9px; font-weight: 700; color: var(--navy); letter-spacing: 0.06em; text-transform: uppercase; }
-.var-b-tk .tk-logo { height: 22px; object-fit: contain; }
-/* hook — the big opening line */
-.var-b-tk .tk-hook {
-  font-size: clamp(18px, 5.5cqi, 34px); font-weight: 900;
-  color: var(--navy); line-height: 1.15; padding: 16px 20px 10px 22px;
-}
-.var-b-tk .tk-hook em { color: var(--teal); font-style: normal; }
-/* body bullets */
-.var-b-tk .tk-body {
-  flex: 1; padding: 6px 20px 6px 22px; display: flex; flex-direction: column; gap: 6px;
-}
-.var-b-tk .tk-point {
-  font-size: clamp(11px, 3cqi, 16px); color: #1a1a2e; line-height: 1.35; font-weight: 600;
-  display: flex; gap: 8px; align-items: flex-start;
-}
-.var-b-tk .tk-point .tk-emoji { flex-shrink: 0; font-size: 1em; }
-/* divider */
-.var-b-tk .tk-divider { height: 1px; background: rgba(24,56,136,0.10); margin: 6px 20px; }
-/* CTA */
-.var-b-tk .tk-cta {
-  font-size: clamp(10px, 2.8cqi, 14px); font-weight: 700;
-  color: var(--teal); padding: 6px 20px 8px 22px; line-height: 1.3;
-}
-/* bottom bar: hashtags + slide indicator */
-.var-b-tk .tk-bottom {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 8px 14px 10px 22px;
-  background: var(--navy); color: rgba(255,255,255,0.55);
-  font-size: clamp(7px, 2cqi, 10px); font-weight: 600; letter-spacing: 0.03em;
-}
-.var-b-tk .tk-slide-hint {
-  color: var(--teal); font-weight: 800; font-size: clamp(8px, 2.2cqi, 11px); white-space: nowrap;
+  width: 5px; background: var(--teal);
 }
 
-/* Ki-CAB version of B: stripe is cobalt */
+/* topbar: logo + campaña */
+.var-b-tk .tk-topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 7px 10px 6px 14px;
+  border-bottom: 1.5px solid rgba(24,56,136,0.10);
+  flex-shrink: 0; background: rgba(24,56,136,0.04);
+}
+.var-b-tk .tk-brand {
+  font-size: 7px; font-weight: 800; color: var(--navy);
+  letter-spacing: 0.07em; text-transform: uppercase; line-height: 1.3;
+}
+.var-b-tk .tk-logo { height: 16px; object-fit: contain; flex-shrink: 0; }
+
+/* hook — titular de impacto */
+.var-b-tk .tk-hook {
+  font-size: 13px; font-weight: 900;
+  color: var(--navy); line-height: 1.2;
+  padding: 9px 12px 7px 14px;
+  flex-shrink: 0;
+  border-left: 3px solid var(--teal);
+  margin: 8px 10px 2px 0;
+}
+.var-b-tk .tk-hook em { color: var(--teal); font-style: normal; }
+
+/* cuerpo: bullets */
+.var-b-tk .tk-body {
+  flex: 1; overflow: hidden;
+  padding: 4px 10px 2px 14px;
+  display: flex; flex-direction: column; gap: 5px;
+}
+.var-b-tk .tk-point {
+  font-size: 9px; font-weight: 700;
+  color: #1a2a4a; line-height: 1.5;
+  padding-left: 8px;
+  border-left: 2px solid rgba(48,184,176,0.35);
+}
+
+/* separador */
+.var-b-tk .tk-divider { height: 1px; background: rgba(24,56,136,0.10); margin: 4px 10px; flex-shrink: 0; }
+
+/* CTA line */
+.var-b-tk .tk-cta {
+  font-size: 8px; font-weight: 800;
+  color: var(--teal); line-height: 1.4;
+  padding: 4px 10px 4px 14px;
+  flex-shrink: 0;
+}
+
+/* barra inferior: hashtags + indicador */
+.var-b-tk .tk-bottom {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 5px 10px 6px 14px;
+  background: var(--navy); color: rgba(255,255,255,0.50);
+  font-size: 6px; font-weight: 600; letter-spacing: 0.04em;
+  flex-shrink: 0;
+}
+.var-b-tk .tk-slide-hint {
+  color: var(--teal); font-weight: 900; font-size: 7px; white-space: nowrap; flex-shrink: 0;
+}
+
+/* LinkedIn 16:9 — más espacio, tipografía más grande */
+.fmt-169 .var-b-tk .tk-topbar,
+.var-b-tk.fmt-169 .tk-topbar { padding: 10px 16px 8px 20px; }
+.fmt-169 .var-b-tk .tk-brand,
+.var-b-tk.fmt-169 .tk-brand { font-size: 9px; }
+.fmt-169 .var-b-tk .tk-logo,
+.var-b-tk.fmt-169 .tk-logo { height: 22px; }
+.fmt-169 .var-b-tk .tk-hook,
+.var-b-tk.fmt-169 .tk-hook { font-size: 22px; padding: 14px 18px 10px 20px; margin: 10px 14px 4px 0; }
+.fmt-169 .var-b-tk .tk-body,
+.var-b-tk.fmt-169 .tk-body { padding: 6px 16px 4px 20px; gap: 8px; }
+.fmt-169 .var-b-tk .tk-point,
+.var-b-tk.fmt-169 .tk-point { font-size: 14px; }
+.fmt-169 .var-b-tk .tk-cta,
+.var-b-tk.fmt-169 .tk-cta { font-size: 11px; padding: 6px 16px 6px 20px; }
+.fmt-169 .var-b-tk .tk-bottom,
+.var-b-tk.fmt-169 .tk-bottom { padding: 7px 14px 8px 20px; font-size: 9px; }
+.fmt-169 .var-b-tk .tk-slide-hint,
+.var-b-tk.fmt-169 .tk-slide-hint { font-size: 10px; }
+
+/* Stories 9:16 — columna alta, tipografía media */
+.fmt-916 .var-b-tk .tk-hook,
+.var-b-tk.fmt-916 .tk-hook { font-size: 12px; }
+.fmt-916 .var-b-tk .tk-point,
+.var-b-tk.fmt-916 .tk-point { font-size: 9px; }
+
+/* Ki-CAB versión B: cobalt */
 .var-b-tk.kc .tk-stripe { background: #4A5EE8; }
-.var-b-tk.kc .tk-hook { color: #1E2EA8; }
+.var-b-tk.kc .tk-hook { color: #0d1640; border-left-color: #4A5EE8; }
 .var-b-tk.kc .tk-hook em { color: #4A5EE8; }
+.var-b-tk.kc .tk-point { border-left-color: rgba(74,94,232,0.35); }
 .var-b-tk.kc .tk-cta { color: #4A5EE8; }
 .var-b-tk.kc .tk-bottom { background: #1E2EA8; }
 .var-b-tk.kc .tk-slide-hint { color: #3DC0B4; }
+.var-b-tk.kc .tk-topbar { background: rgba(30,46,168,0.04); border-bottom-color: rgba(74,94,232,0.12); }
 
 /* ════════════════════════════════════
    KI-CAB VARIANT A — Split layout: foto arriba / texto abajo
@@ -2088,13 +2137,18 @@ const claims2 = [
 /* ══════════════════════════════════
    KC BUILD FUNCTIONS (variantes Ki-CAB)
 ══════════════════════════════════ */
-/* ── Fotos KC: alternan mujer/hombre con caja Ki-CAB ── */
-const FK2_MUJER  = 'HUB_AMG_PYLORI/brand_kicab/kicab_mujer_caja.png';
-const FK2_HOMBRE = 'HUB_AMG_PYLORI/brand_kicab/kicab_hombre_caja.png';
-/* Producto alterna 10mg / 30mg por claim */
-const PROD_KC10 = 'HUB_AMG_PYLORI/brand_kicab/KICAB 10.jpg';
-const PROD_KC30 = 'HUB_AMG_PYLORI/brand_kicab/KICAB 30a.jpg';
-function fotoKC(claim) { return claim.id % 2 === 0 ? FK2_MUJER : FK2_HOMBRE; }
+/* ── Fotos KC: mismas fotos de pacientes que Brazo 1 — sin caja genérica de AI ── */
+function fotoKC(claim) {
+  const map = {
+    1: F.mujer1,    2: F.hombre2,    3: F.mujer3,    4: F.hombre4,
+    5: F.mujer5,    6: F.bacteria6,  7: F.bacteria7, 8: F.hombre8,
+    9: F.hombre9,   10: F.bacteria10,11: F.mujer11,  12: F.hombre12
+  };
+  return map[claim.id] || F.mujer1;
+}
+/* Cajas reales Ki-CAB® sin fondo — alternando 10 comp / 30 comp por claim */
+const PROD_KC10 = 'HUB_AMG_PYLORI/brand_amg/caja-con10.png';
+const PROD_KC30 = 'HUB_AMG_PYLORI/brand_amg/caja-con-30.png';
 function prodKC(claim)  { return claim.id % 2 === 0 ? PROD_KC10 : PROD_KC30; }
 
 function buildVarA_KC(claim, fmt) {
