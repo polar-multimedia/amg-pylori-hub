@@ -1198,6 +1198,123 @@ body.edit-mode .sello:hover { outline: 2px solid rgba(136,112,40,0.9); }
 .brazo-sep { width: 1px; height: 32px; background: rgba(255,255,255,0.08); margin: 0 4px; }
 
 /* ════════════════════════════════════
+   VARIANT B — TIKTOK / CAROUSEL
+   Clean white background, bold hook text, bullet points
+════════════════════════════════════ */
+.var-b-tk {
+  background: #fff;
+  font-family: 'Montserrat', sans-serif;
+  display: flex; flex-direction: column;
+  position: relative; overflow: hidden;
+}
+/* accent stripe left */
+.var-b-tk .tk-stripe {
+  position: absolute; left: 0; top: 0; bottom: 0;
+  width: 6px; background: var(--teal);
+}
+/* top bar with logo */
+.var-b-tk .tk-topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 20px 10px 22px;
+  border-bottom: 1px solid rgba(24,56,136,0.08);
+}
+.var-b-tk .tk-brand { font-size: 9px; font-weight: 700; color: var(--navy); letter-spacing: 0.06em; text-transform: uppercase; }
+.var-b-tk .tk-logo { height: 22px; object-fit: contain; }
+/* hook — the big opening line */
+.var-b-tk .tk-hook {
+  font-size: clamp(18px, 5.5cqi, 34px); font-weight: 900;
+  color: var(--navy); line-height: 1.15; padding: 16px 20px 10px 22px;
+}
+.var-b-tk .tk-hook em { color: var(--teal); font-style: normal; }
+/* body bullets */
+.var-b-tk .tk-body {
+  flex: 1; padding: 6px 20px 6px 22px; display: flex; flex-direction: column; gap: 6px;
+}
+.var-b-tk .tk-point {
+  font-size: clamp(11px, 3cqi, 16px); color: #1a1a2e; line-height: 1.35; font-weight: 600;
+  display: flex; gap: 8px; align-items: flex-start;
+}
+.var-b-tk .tk-point .tk-emoji { flex-shrink: 0; font-size: 1em; }
+/* divider */
+.var-b-tk .tk-divider { height: 1px; background: rgba(24,56,136,0.10); margin: 6px 20px; }
+/* CTA */
+.var-b-tk .tk-cta {
+  font-size: clamp(10px, 2.8cqi, 14px); font-weight: 700;
+  color: var(--teal); padding: 6px 20px 8px 22px; line-height: 1.3;
+}
+/* bottom bar: hashtags + slide indicator */
+.var-b-tk .tk-bottom {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 8px 14px 10px 22px;
+  background: var(--navy); color: rgba(255,255,255,0.55);
+  font-size: clamp(7px, 2cqi, 10px); font-weight: 600; letter-spacing: 0.03em;
+}
+.var-b-tk .tk-slide-hint {
+  color: var(--teal); font-weight: 800; font-size: clamp(8px, 2.2cqi, 11px); white-space: nowrap;
+}
+
+/* Ki-CAB version of B: stripe is cobalt */
+.var-b-tk.kc .tk-stripe { background: #4A5EE8; }
+.var-b-tk.kc .tk-hook { color: #1E2EA8; }
+.var-b-tk.kc .tk-hook em { color: #4A5EE8; }
+.var-b-tk.kc .tk-cta { color: #4A5EE8; }
+.var-b-tk.kc .tk-bottom { background: #1E2EA8; }
+.var-b-tk.kc .tk-slide-hint { color: #3DC0B4; }
+
+/* ════════════════════════════════════
+   KI-CAB VARIANT A — Clean photo (no overlays)
+════════════════════════════════════ */
+.var-a-kc {
+  position: relative; overflow: hidden; display: flex; flex-direction: column;
+}
+.var-a-kc .foto-bg { position: absolute; inset: 0; background-size: cover; background-position: center top; }
+/* Very subtle bottom gradient only for text legibility */
+.var-a-kc .foto-veil {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(14,18,60,0.82) 0%, rgba(14,18,60,0.20) 40%, transparent 65%);
+}
+/* product shot pip */
+.var-a-kc .prod-pip {
+  position: absolute; right: 10px; top: 10px;
+  width: clamp(48px, 14cqi, 90px); height: auto;
+  object-fit: contain; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.30));
+}
+.var-a-kc .copy-block {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  padding: clamp(8px,3cqi,20px) clamp(10px,3.5cqi,22px);
+}
+.var-a-kc .copy-block .cifra {
+  display: block; font-family: 'Montserrat',sans-serif; font-weight: 900;
+  font-size: clamp(26px,8cqi,64px); color: #3DC0B4; line-height: 1;
+}
+.var-a-kc .copy-block .cifra-label {
+  font-size: clamp(9px,2.5cqi,14px); color: rgba(255,255,255,0.75);
+  font-weight: 600; display: block; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.06em;
+}
+.var-a-kc .copy-block .headline {
+  font-family: 'Montserrat',sans-serif; font-weight: 800;
+  font-size: clamp(13px,3.8cqi,24px); color: #fff; line-height: 1.2; margin-bottom: 4px;
+}
+.var-a-kc .copy-block .headline em { color: #3DC0B4; font-style: normal; }
+.var-a-kc .copy-block .subcopy { font-size: clamp(10px,2.8cqi,15px); color: rgba(255,255,255,0.75); font-weight: 600; }
+.var-a-kc .sello {
+  position: absolute; top: 10px; left: 10px;
+  height: clamp(32px,9cqi,60px); width: auto; object-fit: contain;
+}
+.var-a-kc .franja-bar {
+  position: absolute; bottom: 62px; left: 0; width: 100%; height: auto;
+  pointer-events: none;
+}
+.var-a-kc .cta-bar {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  background: linear-gradient(90deg,#1E2EA8,#2D3ECC);
+  padding: clamp(5px,1.5cqi,10px) clamp(10px,3cqi,18px);
+  display: flex; flex-direction: column; gap: 2px;
+}
+.var-a-kc .cta-bar .cta-text { font-size: clamp(7px,2cqi,11px); color: #fff; font-weight: 700; line-height: 1.3; }
+.var-a-kc .cta-bar .disclaimer { font-size: clamp(5px,1.3cqi,8px); color: rgba(255,255,255,0.55); }
+
+/* ════════════════════════════════════
    KI-CAB VARIANT OVERRIDES
    Cobalt blue palette: #1E2EA8 / #4A5EE8 / #3DC0B4
 ════════════════════════════════════ */
@@ -1318,21 +1435,13 @@ body.edit-mode .sello:hover { outline: 2px solid rgba(136,112,40,0.9); }
 
 <!-- ══ TABS ══ -->
 <div class="tabs-bar">
-  <button class="tab-btn active" onclick="switchTab('varA', this)">
+  <button class="tab-btn active" data-var="A" onclick="switchTab('varA', this)">
     <span class="tab-icon">📷</span>A — Con Foto
-    <span class="tab-desc">Editorial fotográfico + copy</span>
+    <span class="tab-desc">Editorial fotográfico · Feed</span>
   </button>
-  <button class="tab-btn" onclick="switchTab('varB', this)">
-    <span class="tab-icon">◼</span>B — Tipografía
-    <span class="tab-desc">Navy + bloques + Montserrat</span>
-  </button>
-  <button class="tab-btn" onclick="switchTab('varC', this)">
-    <span class="tab-icon">🔍</span>C — Detección
-    <span class="tab-desc">Con QR + campaña detección</span>
-  </button>
-  <button class="tab-btn" onclick="switchTab('varD', this)">
-    <span class="tab-icon">◆</span>D — Editorial
-    <span class="tab-desc">Tipografía + formas geométricas</span>
+  <button class="tab-btn" data-var="B" onclick="switchTab('varB', this)">
+    <span class="tab-icon">📱</span>B — TikTok / Carrusel
+    <span class="tab-desc">Caption hook · texto · CTA</span>
   </button>
 </div>
 
@@ -1345,27 +1454,15 @@ body.edit-mode .sello:hover { outline: 2px solid rgba(136,112,40,0.9); }
 <div id="tab-varA" class="tab-panel active"></div>
 
 <!-- ═══════════════════════════════
-     TAB B — TIPOGRAFÍA
+     TAB B — TIKTOK / CARRUSEL
 ═══════════════════════════════ -->
 <div id="tab-varB" class="tab-panel"></div>
-
-<!-- ═══════════════════════════════
-     TAB C — DETECCIÓN
-═══════════════════════════════ -->
-<div id="tab-varC" class="tab-panel"></div>
-
-<!-- ═══════════════════════════════
-     TAB D — EDITORIAL
-═══════════════════════════════ -->
-<div id="tab-varD" class="tab-panel"></div>
 
 <!-- ══════════════════════════════════════════
      KI-CAB BRAZO 2 TABS (hidden until B2 active)
 ═══════════════════════════════════════════ -->
 <div id="tab-kc-varA" class="tab-panel kc-active"></div>
 <div id="tab-kc-varB" class="tab-panel kc-active"></div>
-<div id="tab-kc-varC" class="tab-panel kc-active"></div>
-<div id="tab-kc-varD" class="tab-panel kc-active"></div>
 
 </div>
 
@@ -1627,72 +1724,34 @@ function buildVarA(claim, fmt) {
   </div>`;
 }
 
-function buildVarB(claim, fmt) {
-  const is169 = fmt === '169';
-  if (is169) {
-    return `
-  <div class="pieza fmt-${fmt} var-b" id="pieza-b-${claim.id}-${fmt}">
-    <div class="geo-accent"></div>
-    <div class="dots"></div>
-    <div class="circle-accent"></div>
-    <div class="content">
-      <div class="left-col">
-        <div class="cifra">${claim.cifra}</div>
-        ${claim.cifraLabel ? `<span class="cifra-label">${claim.cifraLabel}</span>` : ''}
-        <div class="headline" style="margin-top:8px">${claim.headline}</div>
-        <div class="subcopy" style="margin-top:6px">${claim.subcopy}</div>
-      </div>
-      <div class="right-col">
-        <img class="sello" src="${SELLO}" alt="AMG">
-        <div class="cta-inline bottom-area">${CTA}<div class="url-text">mexicosincancergastrico.com.mx</div></div>
-      </div>
-    </div>
-  </div>`;
-  }
-  return `
-  <div class="pieza fmt-${fmt} var-b" id="pieza-b-${claim.id}-${fmt}">
-    <div class="geo-accent"></div>
-    <div class="dots"></div>
-    <div class="circle-accent"></div>
-    <div class="content">
-      <div class="top-area">
-        <div>
-          <span class="cifra">${claim.cifra}</span>
-          ${claim.cifraLabel ? `<span class="cifra-label">${claim.cifraLabel}</span>` : ''}
-        </div>
-        <img class="sello" src="${SELLO}" alt="AMG">
-      </div>
-      <div class="middle-area">
-        <div class="headline">${claim.headline}</div>
-        <div class="subcopy" style="margin-top:8px">${claim.subcopy}</div>
-      </div>
-      <div class="bottom-area">
-        <div class="cta-inline">${CTA}</div>
-        <div class="url-text">mexicosincancergastrico.com.mx</div>
-      </div>
-    </div>
-  </div>`;
+/* ── Helper: break copyIG into hook + bullet array ── */
+function parseTKCopy(copyIG) {
+  const clean = txt => txt.replace(/<[^>]*>/g,'').trim();
+  const parts  = copyIG.split('\n\n').map(p => clean(p)).filter(Boolean);
+  const hook   = parts[0] || '';
+  const bullets = parts.slice(1);
+  return { hook, bullets };
 }
 
-function buildVarC(claim, fmt) {
+function buildVarB(claim, fmt) {
+  const { hook, bullets } = parseTKCopy(claim.copyIG);
+  const bulletHtml = bullets.slice(0,3).map(b => `<div class="tk-point"><span>${b}</span></div>`).join('');
+  const isSlide = fmt === '11' || fmt === '45';
+  const slideHint = isSlide ? '◀ Desliza ▶' : (fmt === '916' ? '▶ TikTok' : '▶');
   return `
-  <div class="pieza fmt-${fmt} var-c" id="pieza-c-${claim.id}-${fmt}">
-    <div class="foto-bg" style="background-image:url('${claim.foto}')"></div>
-    <div class="foto-overlay"></div>
-    <div class="banda-top">
-      <span class="campana-label">Campaña de detección 2026</span>
-      <img class="sello" src="${SELLO}" alt="AMG">
+  <div class="pieza fmt-${fmt} var-b-tk" id="pieza-b-${claim.id}-${fmt}">
+    <div class="tk-stripe"></div>
+    <div class="tk-topbar">
+      <span class="tk-brand">México Sin Cáncer Gástrico · AMG 2026</span>
+      <img class="tk-logo" src="${SELLO}" alt="AMG">
     </div>
-    <div class="main-area">
-      <span class="hp-giant">${claim.hpTitle}</span>
-      <div class="hp-claim">${claim.claimC}</div>
-      <div class="hp-sub">${claim.subC}</div>
-      <div class="cta-detect">Pregunta a tu médico por los requisitos<br>para participar sin costo en las sedes participantes.</div>
-    </div>
-    <div class="url-bottom">mexicosincancergastrico.com.mx</div>
-    <div class="barra-bottom">
-      <div class="bottom-claim-text"><strong>90%</strong> del cáncer gástrico inicia con la infección de esta bacteria.</div>
-      <div class="qr-box"><img src="${QR_URL}" alt="QR"></div>
+    <div class="tk-hook">${hook}</div>
+    <div class="tk-body">${bulletHtml}</div>
+    <div class="tk-divider"></div>
+    <div class="tk-cta">${stripHtml(CTA)}</div>
+    <div class="tk-bottom">
+      <span>#HelicobacterPylori #SaludDigestiva #MéxicoSinCáncerGástrico</span>
+      <span class="tk-slide-hint">${slideHint}</span>
     </div>
   </div>`;
 }
@@ -1786,43 +1845,8 @@ function copiarTexto(key, withHashtags) {
   });
 }
 
-function buildVarD(claim, fmt) {
-  const is169 = fmt === '169';
-  const vdSep = is169 ? '<div class="vd-sep"></div>' : '';
-  const vdRight = is169 ? `
-    <div class="vd-right">
-      <div class="vd-headline">${claim.headline}</div>
-      <div class="vd-subcopy">${claim.subcopy}</div>
-    </div>` : '';
-
-  return `
-  <div class="pieza fmt-${fmt} var-d" id="pieza-d-${claim.id}-${fmt}">
-    <div class="vd-shape"></div>
-    <div class="vd-stripe"></div>
-    <div class="vd-tracks"></div>
-    ${vdSep}
-    <img class="sello" src="${SELLO}" alt="AMG">
-    <div class="vd-body">
-      <div class="vd-eyebrow">Campaña de detección 2026</div>
-      <div class="vd-stat">${claim.cifra}</div>
-      <div class="vd-stat-label">${claim.cifraLabel}</div>
-      <div class="vd-divider"></div>
-      ${!is169 ? `<div class="vd-headline">${claim.headline}</div>
-      <div class="vd-subcopy">${claim.subcopy}</div>` : ''}
-    </div>
-    ${vdRight}
-    <img class="franja-bar" src="HUB_AMG_PYLORI/brand_amg/franja.png" alt="">
-    <div class="cta-bar">
-      <div class="cta-text">${CTA}</div>
-      <div class="disclaimer">${DISCLAIMER}</div>
-    </div>
-  </div>`;
-}
-
 renderTab('A', buildVarA);
 renderTab('B', buildVarB);
-renderTab('C', buildVarC);
-renderTab('D', buildVarD);
 
 /* ══════════════════════════════════════════════════════
    BRAZO 2 — KI-CAB® DATA
@@ -1836,20 +1860,21 @@ const SELLO_KC = 'HUB_AMG_PYLORI/brand_kicab/Sello azul@2x.png';
 const LOGO_KC  = 'HUB_AMG_PYLORI/brand_kicab/logo_kicab_transparent.png';
 const FRANJA_KC= 'HUB_AMG_PYLORI/brand_kicab/franja.png';
 
-/* ── Reutilizamos las mismas fotos del Brazo 1 ── */
+/* ── Fotos Brazo 2: nuevas imágenes con caja Ki-CAB en mano ── */
+/* La selección mujer/hombre se hace dinámicamente por fotoKC(claim) */
 const FK = {
-  mujer1:    'HUB_AMG_PYLORI/brand_amg/hispanica_mujer_c1_gastritis.png',
-  hombre2:   'HUB_AMG_PYLORI/brand_amg/hispanico_hombre_c2_transmisio.png',
-  mujer3:    'HUB_AMG_PYLORI/brand_amg/hispanica_mujer_c3_auto.png',
-  hombre4:   'HUB_AMG_PYLORI/brand_amg/hispanico_hombre_c4_consulta.png',
-  mujer5:    'HUB_AMG_PYLORI/brand_amg/hispanica_mujer_c5_dispepsia.png',
+  mujer1:    'HUB_AMG_PYLORI/brand_kicab/kicab_mujer_caja.png',
+  hombre2:   'HUB_AMG_PYLORI/brand_kicab/kicab_hombre_caja.png',
+  mujer3:    'HUB_AMG_PYLORI/brand_kicab/kicab_mujer_caja.png',
+  hombre4:   'HUB_AMG_PYLORI/brand_kicab/kicab_hombre_caja.png',
+  mujer5:    'HUB_AMG_PYLORI/brand_kicab/kicab_mujer_caja.png',
   bacteria6: 'HUB_AMG_PYLORI/brand_amg/imagen_bacteria.png',
   bacteria7: 'HUB_AMG_PYLORI/brand_amg/bacteria_c7_tratamiento.png',
-  hombre8:   'HUB_AMG_PYLORI/brand_amg/hispanico_hombre_c8_preguntas.png',
-  hombre9:   'HUB_AMG_PYLORI/brand_amg/hispanico_hombre_c9_reflujo.png',
+  hombre8:   'HUB_AMG_PYLORI/brand_kicab/kicab_hombre_caja.png',
+  hombre9:   'HUB_AMG_PYLORI/brand_kicab/kicab_hombre_caja.png',
   bacteria10:'HUB_AMG_PYLORI/brand_amg/bacteria_c10_ulceras.png',
-  mujer11:   'HUB_AMG_PYLORI/brand_amg/hispanica_mujer_c11_protocolo.png',
-  hombre12:  'HUB_AMG_PYLORI/brand_amg/hispanico_hombre_c12_segundaopinio.png',
+  mujer11:   'HUB_AMG_PYLORI/brand_kicab/kicab_mujer_caja.png',
+  hombre12:  'HUB_AMG_PYLORI/brand_kicab/kicab_hombre_caja.png',
 };
 
 const HT_KC = '#KiCAB #Tegoprazan #PCAB #CierraLaPinza #HelicobacterPylori #ErradicaciónHP #SaludDigestiva';
@@ -2047,22 +2072,28 @@ const claims2 = [
 /* ══════════════════════════════════
    KC BUILD FUNCTIONS (variantes Ki-CAB)
 ══════════════════════════════════ */
+/* ── Fotos KC: alternan mujer/hombre con caja Ki-CAB ── */
+const FK2_MUJER  = 'HUB_AMG_PYLORI/brand_kicab/kicab_mujer_caja.png';
+const FK2_HOMBRE = 'HUB_AMG_PYLORI/brand_kicab/kicab_hombre_caja.png';
+const PROD_KC    = 'HUB_AMG_PYLORI/brand_kicab/KICAB 30a.jpg';
+function fotoKC(claim) { return claim.id % 2 === 0 ? FK2_MUJER : FK2_HOMBRE; }
+
 function buildVarA_KC(claim, fmt) {
-  const fotos = `url('${claim.foto}')`;
+  const foto = fotoKC(claim);
   return `
-  <div class="pieza fmt-${fmt} var-a" id="pieza-kca-${claim.id}-${fmt}">
-    <div class="foto-bg" style="background-image:${fotos}"></div>
-    <div class="foto-halo"></div>
-    <div class="foto-overlay" style="background:linear-gradient(to top, rgba(14,18,60,0.95) 0%, rgba(14,18,60,0.55) 55%, rgba(14,18,60,0.15) 100%)"></div>
+  <div class="pieza fmt-${fmt} var-a-kc" id="pieza-kca-${claim.id}-${fmt}">
+    <div class="foto-bg" style="background-image:url('${foto}'); background-position:center top;"></div>
+    <div class="foto-veil"></div>
     <img class="sello" src="${SELLO_KC}" alt="Ki-CAB">
+    <img class="prod-pip" src="${PROD_KC}" alt="Ki-CAB® producto">
     <div class="copy-block">
-      <span class="cifra" style="color:#3DC0B4">${claim.cifra}</span>
+      <span class="cifra">${claim.cifra}</span>
       ${claim.cifraLabel ? `<span class="cifra-label">${claim.cifraLabel}</span>` : ''}
       <div class="headline">${claim.headline}</div>
       <div class="subcopy">${claim.subcopy}</div>
     </div>
     <img class="franja-bar" src="${FRANJA_KC}" alt="" onerror="this.src='HUB_AMG_PYLORI/brand_amg/franja.png'">
-    <div class="cta-bar" style="background:linear-gradient(90deg,#1E2EA8,#2D3ECC)">
+    <div class="cta-bar">
       <div class="cta-text">${CTA_KC}</div>
       <div class="disclaimer">${DISCLAIMER_KC}</div>
     </div>
@@ -2070,112 +2101,32 @@ function buildVarA_KC(claim, fmt) {
 }
 
 function buildVarB_KC(claim, fmt) {
-  const is169 = fmt === '169';
-  const style = 'background:linear-gradient(150deg,#1E2EA8 0%,#0d1640 60%,#0d1733 100%)';
-  if (is169) {
-    return `
-  <div class="pieza fmt-${fmt} var-b" style="${style}" id="pieza-kcb-${claim.id}-${fmt}">
-    <div class="geo-accent" style="background:#4A5EE8;opacity:.25"></div>
-    <div class="dots" style="background-image:radial-gradient(rgba(74,94,232,.4) 1px,transparent 1px)"></div>
-    <div class="circle-accent" style="border-color:rgba(74,94,232,.4)"></div>
-    <div class="content">
-      <div class="left-col">
-        <div class="cifra" style="color:#3DC0B4">${claim.cifra}</div>
-        ${claim.cifraLabel ? `<span class="cifra-label">${claim.cifraLabel}</span>` : ''}
-        <div class="headline" style="margin-top:8px">${claim.headline}</div>
-        <div class="subcopy" style="margin-top:6px">${claim.subcopy}</div>
-      </div>
-      <div class="right-col">
-        <img class="sello" src="${SELLO_KC}" alt="Ki-CAB">
-        <div class="cta-inline bottom-area" style="color:#3DC0B4">${CTA_KC}<div class="url-text" style="color:rgba(74,94,232,.7)">mexicosincancergastrico.com.mx</div></div>
-      </div>
-    </div>
-  </div>`;
-  }
+  const { hook, bullets } = parseTKCopy(claim.copyIG);
+  const bulletHtml = bullets.slice(0,3).map(b => `<div class="tk-point"><span>${b}</span></div>`).join('');
+  const isSlide = fmt === '11' || fmt === '45';
+  const slideHint = isSlide ? '◀ Desliza ▶' : (fmt === '916' ? '▶ TikTok' : '▶');
   return `
-  <div class="pieza fmt-${fmt} var-b" style="${style}" id="pieza-kcb-${claim.id}-${fmt}">
-    <div class="geo-accent" style="background:#4A5EE8;opacity:.25"></div>
-    <div class="dots" style="background-image:radial-gradient(rgba(74,94,232,.4) 1px,transparent 1px)"></div>
-    <div class="circle-accent" style="border-color:rgba(74,94,232,.4)"></div>
-    <div class="content">
-      <div class="top-area">
-        <div>
-          <span class="cifra" style="color:#3DC0B4">${claim.cifra}</span>
-          ${claim.cifraLabel ? `<span class="cifra-label">${claim.cifraLabel}</span>` : ''}
-        </div>
-        <img class="sello" src="${SELLO_KC}" alt="Ki-CAB">
-      </div>
-      <div class="middle-area">
-        <div class="headline">${claim.headline}</div>
-        <div class="subcopy" style="margin-top:8px">${claim.subcopy}</div>
-      </div>
-      <div class="bottom-area">
-        <div class="cta-inline" style="color:#3DC0B4">${CTA_KC}</div>
-        <div class="url-text" style="color:rgba(74,94,232,.7)">mexicosincancergastrico.com.mx</div>
-      </div>
+  <div class="pieza fmt-${fmt} var-b-tk kc" id="pieza-kcb-${claim.id}-${fmt}">
+    <div class="tk-stripe"></div>
+    <div class="tk-topbar">
+      <span class="tk-brand">Ki-CAB® · Cerrar la Pinza · 2026</span>
+      <img class="tk-logo" src="${SELLO_KC}" alt="Ki-CAB">
+    </div>
+    <div class="tk-hook">${hook}</div>
+    <div class="tk-body">${bulletHtml}</div>
+    <div class="tk-divider"></div>
+    <div class="tk-cta">${stripHtml(CTA_KC)}</div>
+    <div class="tk-bottom">
+      <span>#KiCAB #Tegoprazan #CierraLaPinza #HelicobacterPylori</span>
+      <span class="tk-slide-hint">${slideHint}</span>
     </div>
   </div>`;
 }
 
-function buildVarC_KC(claim, fmt) {
-  return `
-  <div class="pieza fmt-${fmt} var-c" id="pieza-kcc-${claim.id}-${fmt}">
-    <div class="foto-bg" style="background-image:url('${claim.foto}')"></div>
-    <div class="foto-overlay"></div>
-    <div class="banda-top" style="background:rgba(30,46,168,.92)">
-      <span class="campana-label">Brazo 2 · Tratamiento Ki-CAB® 2026</span>
-      <img class="sello" src="${SELLO_KC}" alt="Ki-CAB">
-    </div>
-    <div class="main-area">
-      <span class="hp-giant" style="color:rgba(74,94,232,.22)">${claim.hpTitle}</span>
-      <div class="hp-claim">${claim.claimC}</div>
-      <div class="hp-sub">${claim.subC}</div>
-      <div class="cta-detect" style="color:#3DC0B4">Pregunta a tu médico por Ki-CAB® — el 1er P-CAB<br>con evidencia en México.</div>
-    </div>
-    <div class="url-bottom">mexicosincancergastrico.com.mx</div>
-    <div class="barra-bottom" style="background:rgba(30,46,168,.95)">
-      <div class="bottom-claim-text"><strong>Ki-CAB® tegoprazan</strong> · 1er P-CAB con evidencia en México · Carnot Laboratorios</div>
-      <div class="qr-box"><img src="${QR_URL}" alt="QR"></div>
-    </div>
-  </div>`;
-}
-
-function buildVarD_KC(claim, fmt) {
-  const is169 = fmt === '169';
-  const vdSep = is169 ? '<div class="vd-sep"></div>' : '';
-  const vdRight = is169 ? `
-    <div class="vd-right">
-      <div class="vd-headline">${claim.headline}</div>
-      <div class="vd-subcopy">${claim.subcopy}</div>
-    </div>` : '';
-
-  return `
-  <div class="pieza fmt-${fmt} var-d" id="pieza-kcd-${claim.id}-${fmt}">
-    <div class="vd-shape" style="background:#1E2EA8"></div>
-    <div class="vd-stripe" style="background:#3DC0B4"></div>
-    <div class="vd-tracks" style="background-image:repeating-linear-gradient(90deg,rgba(74,94,232,.12) 0 1px,transparent 1px 16px)"></div>
-    ${vdSep}
-    <img class="sello" src="${SELLO_KC}" alt="Ki-CAB">
-    <div class="vd-body">
-      <div class="vd-eyebrow" style="color:#3DC0B4">Ki-CAB® — Tratamiento 2026</div>
-      <div class="vd-stat" style="color:#4A5EE8">${claim.cifra}</div>
-      <div class="vd-stat-label">${claim.cifraLabel}</div>
-      <div class="vd-divider" style="background:rgba(74,94,232,.4)"></div>
-      ${!is169 ? `<div class="vd-headline">${claim.headline}</div>
-      <div class="vd-subcopy">${claim.subcopy}</div>` : ''}
-    </div>
-    ${vdRight}
-    <img class="franja-bar" src="${FRANJA_KC}" alt="" onerror="this.src='HUB_AMG_PYLORI/brand_amg/franja.png'">
-    <div class="cta-bar" style="background:linear-gradient(90deg,#1E2EA8,#2D3ECC)">
-      <div class="cta-text">${CTA_KC}</div>
-      <div class="disclaimer">${DISCLAIMER_KC}</div>
-    </div>
-  </div>`;
-}
-
-/* ── Render Ki-CAB tabs (misma lógica pero con claims2 y ids KC) ── */
+/* ── Render Ki-CAB tabs ── */
 function renderTabKC(varKey, buildFn) {
   const container = document.getElementById(`tab-kc-var${varKey}`);
+  if (!container) return;
   let html = '';
   let currentMes = null;
 
@@ -2184,7 +2135,7 @@ function renderTabKC(varKey, buildFn) {
       currentMes = claim.mes;
       html += `<div class="mes-header" style="border-left-color:${claim.mesColor}">
         <span class="mes-label" style="background:${claim.mesColor}">${claim.mes} 2026</span>
-        <span class="mes-total">4 posts · 4 variantes · 4 formatos · <strong>48 piezas Ki-CAB®</strong></span>
+        <span class="mes-total">4 posts · 2 variantes · 4 formatos · <strong>32 piezas Ki-CAB®</strong></span>
         <button class="btn-mes-dl" onclick="downloadMesKC('${varKey}', '${claim.mes}')">
           ↓ Descargar ${claim.mes} KC-Var${varKey} (PNG)
         </button>
@@ -2204,14 +2155,13 @@ function renderTabKC(varKey, buildFn) {
 
     formats.forEach(fmt => {
       const pieceId = `pieza-kc${varKey.toLowerCase()}-${claim.id}-${fmt.key}`;
-      const hasPhoto = ['A','C'].includes(varKey);
       html += `
         <div class="format-card">
           <div class="format-label">${fmt.label}</div>
           <div class="format-info">${fmt.info}</div>
           ${buildFn(claim, fmt.key)}
           <div class="pieza-edit-bar">
-            ${hasPhoto ? `<button class="btn-peb" onclick="openImgForPieza('${pieceId}')">🖼 Ajustar imagen</button>` : ''}
+            ${varKey === 'A' ? `<button class="btn-peb" onclick="openImgForPieza('${pieceId}')">🖼 Ajustar imagen</button>` : ''}
             <button class="btn-peb" style="border-color:rgba(74,94,232,0.45);color:#7A8AFF;" onclick="openSelloForPieza('${pieceId}')">🔰 Ajustar sello</button>
             <button class="btn-peb btn-peb-reset" onclick="resetPiezaAll('${pieceId}')">↺ Reset pieza</button>
           </div>
@@ -2226,8 +2176,8 @@ function renderTabKC(varKey, buildFn) {
         <div class="copy-always-text">${claim.copyIG.replace(/\n/g,'<br>')}</div>
         <div class="copy-always-ht">${claim.hashtags}</div>
         <div class="copy-always-actions">
-          <button class="btn-copiar" onclick="copiarTextoKC('${varKey}-${claim.id}', false)">Copiar texto</button>
-          <button class="btn-copiar btn-copiar-ht" onclick="copiarTextoKC('${varKey}-${claim.id}', true)">Copiar + hashtags</button>
+          <button class="btn-copiar" onclick="copiarTextoKC('${claim.id}', false)">Copiar texto</button>
+          <button class="btn-copiar btn-copiar-ht" onclick="copiarTextoKC('${claim.id}', true)">Copiar + hashtags</button>
         </div>
       </div>
     </div>`;
@@ -2236,16 +2186,11 @@ function renderTabKC(varKey, buildFn) {
 }
 
 /* ── copiar KC ── */
-function copiarTextoKC(key, withHashtags) {
-  const [varKey, id] = key.split('-');
+function copiarTextoKC(id, withHashtags) {
   const claim = claims2.find(c => c.id === parseInt(id));
   if (!claim) return;
   const raw = withHashtags ? claim.copyIG + '\n\n' + claim.hashtags : claim.copyIG;
-  const text = stripHtml(raw);
-  navigator.clipboard.writeText(text).then(() => {
-    const btns = document.querySelectorAll(`.copy-always .btn-copiar`);
-    // find the right claim section
-  });
+  navigator.clipboard.writeText(stripHtml(raw));
 }
 
 /* ── descarga por mes KC ── */
@@ -2266,8 +2211,6 @@ async function downloadMesKC(varKey, mes) {
 
 renderTabKC('A', buildVarA_KC);
 renderTabKC('B', buildVarB_KC);
-renderTabKC('C', buildVarC_KC);
-renderTabKC('D', buildVarD_KC);
 
 /* ══════════════════════════════════
    TAB SWITCHING
@@ -2288,15 +2231,16 @@ function switchBrazo(brazo, btn) {
   currentBrazo = brazo;
   document.querySelectorAll('.brazo-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
-  // Update header badge text
   const badge = document.querySelector('.site-header .badge');
   if (badge) badge.textContent = brazo === 'B1'
-    ? 'Brazo 1 · Sin Marca · Mayo–Julio 2026 · 144 piezas'
-    : 'Brazo 2 · Ki-CAB® · Ago–Oct 2026 · 144 piezas';
-  // Activate current variant tab in new brazo
+    ? 'Brazo 1 · Sin Marca · Mayo–Julio 2026 · 96 piezas'
+    : 'Brazo 2 · Ki-CAB® · Ago–Oct 2026 · 96 piezas';
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
   const prefix = brazo === 'B2' ? 'tab-kc-var' : 'tab-var';
-  document.getElementById(`${prefix}${currentVarKey}`).classList.add('active');
+  // currentVarKey may be C or D from old session — clamp to A or B
+  if (!['A','B'].includes(currentVarKey)) currentVarKey = 'A';
+  const panel = document.getElementById(`${prefix}${currentVarKey}`);
+  if (panel) panel.classList.add('active');
 }
 
 /* ══════════════════════════════════
