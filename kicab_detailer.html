@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ki-CAB® Visual Aid · Detailer · 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,600;0,700;0,800;0,900;1,700&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════
+   RESET & BASE
+═══════════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --navy:    #0d1640;
+  --cobalt:  #1E2EA8;
+  --cobalt2: #2D3ECC;
+  --cobalt3: #4A5EE8;
+  --teal:    #3DC0B4;
+  --teal-d:  #2AA89D;
+  --white:   #ffffff;
+  --muted:   rgba(255,255,255,0.55);
+  --muted2:  rgba(255,255,255,0.30);
+  --gold:    #887028;
+  --font:    'Montserrat', sans-serif;
+}
+html, body {
+  width: 100%; height: 100%; overflow: hidden;
+  background: var(--navy); font-family: var(--font);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ═══════════════════════════════════════════════
+   DECK — horizontal slide engine
+═══════════════════════════════════════════════ */
+#deck {
+  position: fixed; inset: 0;
+  display: flex; transition: transform 0.45s cubic-bezier(0.4,0,0.2,1);
+}
+
+/* Each slide = 100vw × 100vh */
+.slide {
+  min-width: 100vw; height: 100vh;
+  position: relative; overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* ── slide backgrounds ── */
+.slide-portada  { background: linear-gradient(135deg, #0a0f2e 0%, var(--cobalt) 60%, #0d3050 100%); }
+.slide-ciclo    { background: var(--navy); }
+.slide-problema { background: linear-gradient(160deg, #0d1640 0%, #0a1a35 100%); }
+.slide-brecha   { background: linear-gradient(160deg, #0d1640 0%, #12184a 100%); }
+.slide-mecanismo{ background: linear-gradient(140deg, var(--cobalt) 0%, #0d1640 70%); }
+.slide-posologia{ background: linear-gradient(150deg, #0a0f2e 0%, var(--cobalt) 55%, var(--teal-d) 100%); }
+.slide-evidencia{ background: linear-gradient(160deg, #0d1640 0%, #0a2a40 100%); }
+.slide-rescate  { background: linear-gradient(155deg, #1a0a3a 0%, #0d1640 100%); }
+.slide-cofepris { background: linear-gradient(150deg, #0d1640 0%, #0d2a10 100%); }
+.slide-cierre   { background: linear-gradient(135deg, #0a0f2e 0%, var(--cobalt) 50%, var(--teal-d) 100%); }
+
+/* ── decorative grid overlay ── */
+.slide::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none; z-index: 0;
+}
+.slide-content { position: relative; z-index: 1; width: 100%; height: 100%; }
+
+/* ═══════════════════════════════════════════════
+   CHROME: progress bar + nav + counter
+═══════════════════════════════════════════════ */
+#progress-bar {
+  position: fixed; top: 0; left: 0; height: 3px;
+  background: linear-gradient(90deg, var(--teal), var(--cobalt3));
+  transition: width 0.4s ease; z-index: 100;
+}
+#nav-prev, #nav-next {
+  position: fixed; top: 50%; transform: translateY(-50%);
+  width: 52px; height: 52px; border-radius: 50%;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: #fff; font-size: 20px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s, opacity 0.2s; z-index: 100;
+  backdrop-filter: blur(8px);
+}
+#nav-prev { left: 16px; }
+#nav-next { right: 16px; }
+#nav-prev:hover, #nav-next:hover { background: rgba(61,192,180,0.25); border-color: var(--teal); }
+#nav-prev.hidden, #nav-next.hidden { opacity: 0; pointer-events: none; }
+
+#slide-counter {
+  position: fixed; bottom: 22px; left: 50%; transform: translateX(-50%);
+  display: flex; gap: 8px; z-index: 100;
+}
+.dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: rgba(255,255,255,0.25);
+  cursor: pointer; transition: background 0.25s, transform 0.25s;
+}
+.dot.active { background: var(--teal); transform: scale(1.3); }
+
+#btn-fullscreen {
+  position: fixed; top: 14px; right: 16px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: #fff; font-family: var(--font); font-size: 11px; font-weight: 700;
+  padding: 6px 12px; border-radius: 20px; cursor: pointer; z-index: 100;
+  letter-spacing: 0.05em; backdrop-filter: blur(8px); transition: background 0.2s;
+}
+#btn-fullscreen:hover { background: rgba(61,192,180,0.2); }
+
+#slide-num-label {
+  position: fixed; top: 14px; left: 50%; transform: translateX(-50%);
+  color: var(--muted); font-size: 10px; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase; z-index: 100;
+}
+
+/* ═══════════════════════════════════════════════
+   REUSABLE COMPONENTS
+═══════════════════════════════════════════════ */
+.badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(61,192,180,0.15);
+  border: 1px solid rgba(61,192,180,0.4);
+  color: var(--teal); font-size: .7rem; font-weight: 800;
+  letter-spacing: .08em; text-transform: uppercase;
+  padding: 5px 12px; border-radius: 100px;
+}
+.badge::before { content: ''; width: 6px; height: 6px; background: var(--teal); border-radius: 50%; flex-shrink: 0; }
+
+.badge-cobalt {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(74,94,232,0.2);
+  border: 1px solid rgba(74,94,232,0.5);
+  color: #a0b0ff; font-size: .7rem; font-weight: 800;
+  letter-spacing: .08em; text-transform: uppercase;
+  padding: 5px 12px; border-radius: 100px;
+}
+
+.stat-box {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 16px;
+  padding: 20px 24px;
+  backdrop-filter: blur(6px);
+}
+.stat-n {
+  font-size: clamp(2.2rem, 4.5vw, 4rem);
+  font-weight: 900; color: var(--teal); line-height: 1;
+}
+.stat-l { font-size: .8rem; color: var(--muted); margin-top: 6px; line-height: 1.5; font-weight: 600; }
+
+.pill-divider {
+  height: 1px; background: rgba(255,255,255,0.1); margin: 0 auto;
+}
+
+.logo-kc { height: clamp(28px, 4vw, 42px); object-fit: contain; }
+.sello-kc { height: clamp(48px, 7vw, 80px); object-fit: contain; }
+.caja-img { height: clamp(120px, 20vw, 220px); object-fit: contain; filter: drop-shadow(0 8px 24px rgba(0,0,0,0.5)); }
+
+em { color: var(--teal); font-style: italic; }
+strong { color: #fff; }
+
+/* ═══════════════════════════════════════════════
+   SLIDE 0 — PORTADA
+═══════════════════════════════════════════════ */
+.s0-inner {
+  height: 100%; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; text-align: center;
+  padding: 40px;
+}
+.s0-glow {
+  position: absolute; width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(61,192,180,0.12) 0%, transparent 65%);
+  top: 50%; left: 50%; transform: translate(-50%,-50%);
+  pointer-events: none;
+}
+.s0-logo-wrap { margin-bottom: 32px; }
+.s0-title {
+  font-size: clamp(1.6rem, 3.8vw, 3.2rem);
+  font-weight: 900; color: #fff; line-height: 1.15;
+  margin-bottom: 16px; letter-spacing: -.02em;
+}
+.s0-title span { color: var(--teal); }
+.s0-sub {
+  font-size: clamp(.9rem, 1.5vw, 1.1rem);
+  color: var(--muted); max-width: 520px; line-height: 1.7;
+  margin-bottom: 32px;
+}
+.s0-badges { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 40px; }
+.s0-cycle-badge {
+  background: linear-gradient(90deg, var(--cobalt), var(--cobalt2));
+  border: 1px solid rgba(74,94,232,0.6);
+  color: #fff; font-size: .8rem; font-weight: 800;
+  padding: 8px 18px; border-radius: 100px;
+  letter-spacing: .05em; text-transform: uppercase;
+}
+.s0-disclaimer { font-size: .65rem; color: var(--muted2); line-height: 1.6; max-width: 480px; }
+
+/* ═══════════════════════════════════════════════
+   SLIDE 1 — CICLO DEL MES (dinámico)
+═══════════════════════════════════════════════ */
+.s1-layout {
+  height: 100%; display: grid;
+  grid-template-columns: 42% 58%;
+}
+.s1-photo {
+  background-size: cover; background-position: center top;
+  position: relative;
+}
+.s1-photo-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to right, transparent 60%, var(--navy) 100%),
+              linear-gradient(to bottom, rgba(13,22,64,0.3) 0%, transparent 40%);
+}
+.s1-badge-over {
+  position: absolute; top: 24px; left: 24px;
+}
+.s1-right {
+  padding: clamp(32px, 5vw, 64px) clamp(32px, 5vw, 72px) 32px clamp(16px, 2.5vw, 32px);
+  display: flex; flex-direction: column; justify-content: center; gap: 20px;
+}
+.s1-mes-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: .7rem; font-weight: 800; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--teal); margin-bottom: 4px;
+}
+.s1-cifra {
+  font-size: clamp(3rem, 7vw, 7rem);
+  font-weight: 900; color: var(--teal);
+  line-height: 1; letter-spacing: -.03em;
+}
+.s1-cifra-label { font-size: clamp(.75rem, 1.4vw, .95rem); color: var(--muted); font-weight: 700; letter-spacing: .05em; text-transform: uppercase; }
+.s1-headline {
+  font-size: clamp(1.1rem, 2.2vw, 1.8rem);
+  font-weight: 800; color: #fff; line-height: 1.3;
+}
+.s1-subcopy { font-size: clamp(.8rem, 1.3vw, 1rem); color: var(--muted); line-height: 1.6; font-weight: 600; }
+.s1-week-nav {
+  display: flex; gap: 8px; align-items: center; margin-top: 8px;
+}
+.s1-week-btn {
+  width: 32px; height: 32px; border-radius: 50%;
+  border: 1.5px solid rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.06); color: var(--muted);
+  font-size: 11px; font-weight: 800; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s; font-family: var(--font);
+}
+.s1-week-btn.active {
+  background: var(--teal); border-color: var(--teal); color: var(--navy);
+}
+.s1-week-btn:hover:not(.active) { border-color: var(--teal); color: var(--teal); }
+.s1-week-label { font-size: .68rem; color: var(--muted2); font-weight: 700; margin-left: 4px; }
+
+/* ═══════════════════════════════════════════════
+   SLIDE 2 — EL PROBLEMA
+═══════════════════════════════════════════════ */
+.s2-inner {
+  height: 100%; display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: clamp(32px,5vw,80px) clamp(40px,8vw,120px);
+  text-align: center;
+}
+.s2-title {
+  font-size: clamp(1.4rem, 3.2vw, 2.8rem);
+  font-weight: 900; color: #fff; line-height: 1.2;
+  margin-bottom: 12px; letter-spacing: -.02em;
+}
+.s2-lead { font-size: clamp(.85rem, 1.4vw, 1.05rem); color: var(--muted); margin-bottom: 40px; max-width: 640px; line-height: 1.7; }
+.s2-stats {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 20px; width: 100%; max-width: 900px;
+}
+.s2-stat-box {
+  background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 20px; padding: clamp(18px,3vw,32px) clamp(16px,2vw,24px);
+  position: relative; overflow: hidden;
+}
+.s2-stat-box::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0;
+  height: 3px; background: var(--teal);
+}
+.s2-stat-n { font-size: clamp(2.2rem, 5vw, 4.4rem); font-weight: 900; color: var(--teal); line-height: 1; }
+.s2-stat-l { font-size: clamp(.72rem, 1.2vw, .9rem); color: var(--muted); margin-top: 8px; font-weight: 600; line-height: 1.5; }
+.s2-source { font-size: .65rem; color: var(--muted2); margin-top: 32px; }
+
+/* ═══════════════════════════════════════════════
+   SLIDE 3 — IBP vs P-CAB
+═══════════════════════════════════════════════ */
+.s3-inner {
+  height: 100%; display: grid;
+  grid-template-rows: auto 1fr auto;
+  padding: clamp(28px,4vw,60px) clamp(40px,8vw,120px);
+  gap: 24px;
+}
+.s3-header { text-align: center; }
+.s3-title {
+  font-size: clamp(1.4rem, 3vw, 2.4rem);
+  font-weight: 900; color: #fff; line-height: 1.2; letter-spacing: -.02em;
+}
+.s3-subtitle { font-size: clamp(.8rem, 1.3vw, 1rem); color: var(--muted); margin-top: 8px; }
+.s3-table {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 20px; align-items: start;
+}
+.s3-col {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 20px; padding: 24px 28px; height: 100%;
+}
+.s3-col.highlighted {
+  background: rgba(30,46,168,0.4);
+  border-color: var(--cobalt3);
+  box-shadow: 0 0 40px rgba(74,94,232,0.2);
+}
+.s3-col-header {
+  display: flex; align-items: center; gap: 12px; margin-bottom: 20px;
+  padding-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.s3-col-icon { font-size: 1.6rem; }
+.s3-col-name { font-size: 1.1rem; font-weight: 900; color: #fff; }
+.s3-col-sub { font-size: .72rem; color: var(--muted); margin-top: 2px; }
+.s3-col.highlighted .s3-col-name { color: var(--teal); }
+.s3-row { display: flex; gap: 10px; margin-bottom: 14px; align-items: flex-start; }
+.s3-icon { flex-shrink: 0; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; margin-top: 2px; }
+.s3-icon.neg { background: rgba(255,80,80,0.15); color: #ff6b6b; }
+.s3-icon.pos { background: rgba(61,192,180,0.15); color: var(--teal); }
+.s3-text { font-size: clamp(.75rem, 1.2vw, .9rem); color: rgba(255,255,255,.8); line-height: 1.5; font-weight: 600; }
+.s3-footer { text-align: center; font-size: .68rem; color: var(--muted2); }
+
+/* ═══════════════════════════════════════════════
+   SLIDE 4 — MECANISMO P-CAB
+═══════════════════════════════════════════════ */
+.s4-inner {
+  height: 100%; display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: clamp(40px,6vw,80px) clamp(40px,8vw,100px);
+  gap: 48px; align-items: center;
+}
+.s4-left { }
+.s4-tag { margin-bottom: 16px; }
+.s4-title { font-size: clamp(1.4rem, 3vw, 2.4rem); font-weight: 900; color: #fff; line-height: 1.25; letter-spacing: -.02em; margin-bottom: 16px; }
+.s4-desc { font-size: clamp(.82rem, 1.3vw, 1rem); color: var(--muted); line-height: 1.75; margin-bottom: 24px; }
+.s4-points { display: flex; flex-direction: column; gap: 12px; }
+.s4-point {
+  display: flex; gap: 12px; align-items: flex-start;
+  background: rgba(61,192,180,0.06); border: 1px solid rgba(61,192,180,0.2);
+  border-radius: 12px; padding: 12px 16px;
+}
+.s4-point-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 2px; }
+.s4-point-text { font-size: clamp(.78rem, 1.2vw, .92rem); color: rgba(255,255,255,.85); font-weight: 600; line-height: 1.5; }
+.s4-point-text b { color: var(--teal); }
+.s4-right { display: flex; flex-direction: column; gap: 16px; align-items: center; }
+.s4-diagram {
+  width: 100%; max-width: 400px;
+  background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 24px; padding: 28px 20px; text-align: center;
+  display: flex; flex-direction: column; gap: 0;
+}
+.s4-pump {
+  background: linear-gradient(135deg, rgba(30,46,168,0.6), rgba(74,94,232,0.4));
+  border: 2px solid var(--cobalt3); border-radius: 16px;
+  padding: 20px; margin-bottom: 12px;
+}
+.s4-pump-title { font-size: .75rem; font-weight: 800; color: #a0b0ff; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 8px; }
+.s4-pump-h { font-size: 1.4rem; font-weight: 900; color: #fff; }
+.s4-pump-sub { font-size: .72rem; color: var(--muted); margin-top: 4px; }
+.s4-vs { font-size: .72rem; font-weight: 800; color: var(--muted2); text-transform: uppercase; letter-spacing: .1em; margin: 4px 0; }
+.s4-block {
+  background: linear-gradient(135deg, rgba(61,192,180,0.2), rgba(42,168,157,0.1));
+  border: 2px solid var(--teal); border-radius: 16px;
+  padding: 20px;
+}
+.s4-block-title { font-size: .75rem; font-weight: 800; color: var(--teal); letter-spacing: .08em; text-transform: uppercase; margin-bottom: 8px; }
+.s4-block-h { font-size: 1.4rem; font-weight: 900; color: #fff; }
+.s4-block-sub { font-size: .72rem; color: var(--muted); margin-top: 4px; }
+
+/* ═══════════════════════════════════════════════
+   SLIDE 5 — POSOLOGÍA
+═══════════════════════════════════════════════ */
+.s5-inner {
+  height: 100%; display: grid;
+  grid-template-columns: 52% 48%;
+  align-items: center;
+}
+.s5-left {
+  padding: clamp(40px,6vw,80px) 0 clamp(40px,6vw,80px) clamp(40px,8vw,100px);
+}
+.s5-tag { margin-bottom: 20px; }
+.s5-title { font-size: clamp(1.5rem, 3.2vw, 2.8rem); font-weight: 900; color: #fff; letter-spacing: -.02em; line-height: 1.2; margin-bottom: 12px; }
+.s5-sub { font-size: clamp(.82rem, 1.3vw, 1rem); color: var(--muted); line-height: 1.7; margin-bottom: 32px; }
+.s5-regimen {
+  display: flex; flex-direction: column; gap: 14px; margin-bottom: 32px;
+}
+.s5-reg-row {
+  display: flex; align-items: center; gap: 16px;
+  background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 14px; padding: 14px 20px;
+}
+.s5-reg-icon { font-size: 1.5rem; flex-shrink: 0; }
+.s5-reg-text { }
+.s5-reg-val { font-size: 1rem; font-weight: 900; color: var(--teal); }
+.s5-reg-desc { font-size: .75rem; color: var(--muted); font-weight: 600; margin-top: 2px; }
+.s5-presentaciones { }
+.s5-pres-label { font-size: .7rem; font-weight: 800; color: var(--muted); letter-spacing: .08em; text-transform: uppercase; margin-bottom: 10px; }
+.s5-pres-row { display: flex; gap: 10px; }
+.s5-pres {
+  background: rgba(74,94,232,0.15); border: 1.5px solid var(--cobalt3);
+  border-radius: 12px; padding: 10px 18px;
+  font-size: .85rem; font-weight: 800; color: #a0b0ff;
+}
+.s5-right {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 40px 32px;
+  background: linear-gradient(to left, rgba(0,0,0,0.3), transparent);
+  height: 100%; gap: 16px;
+}
+.s5-caja-label { font-size: .7rem; font-weight: 800; color: var(--muted); letter-spacing: .08em; text-transform: uppercase; }
+.s5-disclaimer { font-size: .62rem; color: var(--muted2); line-height: 1.6; text-align: center; max-width: 280px; }
+
+/* ═══════════════════════════════════════════════
+   SLIDE 6 — EVIDENCIA CLÍNICA
+═══════════════════════════════════════════════ */
+.s6-inner {
+  height: 100%; display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: clamp(32px,5vw,64px) clamp(40px,8vw,100px);
+  text-align: center;
+}
+.s6-title { font-size: clamp(1.4rem, 3vw, 2.4rem); font-weight: 900; color: #fff; line-height: 1.2; margin-bottom: 8px; letter-spacing: -.02em; }
+.s6-sub { font-size: clamp(.8rem, 1.3vw, 1rem); color: var(--muted); margin-bottom: 40px; max-width: 580px; }
+.s6-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; width: 100%; max-width: 960px; margin-bottom: 24px; }
+.s6-card {
+  background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 20px; padding: 28px 20px;
+  position: relative; overflow: hidden;
+  transition: transform 0.2s, border-color 0.2s;
+}
+.s6-card:hover { transform: translateY(-4px); border-color: var(--teal); }
+.s6-card::after {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+  height: 3px; background: linear-gradient(90deg, var(--teal), var(--cobalt3));
+}
+.s6-card-n { font-size: clamp(2rem, 4.5vw, 3.6rem); font-weight: 900; color: var(--teal); line-height: 1; }
+.s6-card-l { font-size: clamp(.72rem, 1.1vw, .88rem); color: var(--muted); margin-top: 8px; line-height: 1.5; font-weight: 600; }
+.s6-source { font-size: .65rem; color: var(--muted2); }
+.s6-maastricht {
+  background: rgba(74,94,232,0.12); border: 1px solid rgba(74,94,232,0.3);
+  border-radius: 14px; padding: 14px 24px; margin-bottom: 20px;
+  font-size: clamp(.78rem, 1.2vw, .92rem); color: rgba(255,255,255,.8); font-weight: 600;
+  max-width: 700px;
+}
+
+/* ═══════════════════════════════════════════════
+   SLIDE 7 — RESCATE / SEGUNDA LÍNEA
+═══════════════════════════════════════════════ */
+.s7-inner {
+  height: 100%; display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: clamp(40px,6vw,80px) clamp(40px,8vw,100px);
+  gap: 48px; align-items: center;
+}
+.s7-title { font-size: clamp(1.4rem, 3vw, 2.4rem); font-weight: 900; color: #fff; line-height: 1.25; letter-spacing: -.02em; margin-bottom: 12px; }
+.s7-sub { font-size: clamp(.82rem, 1.3vw, 1rem); color: var(--muted); line-height: 1.7; margin-bottom: 28px; }
+.s7-stats { display: flex; flex-direction: column; gap: 14px; }
+.s7-stat {
+  display: flex; align-items: center; gap: 16px;
+  background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 14px; padding: 16px 20px;
+}
+.s7-stat-n { font-size: 1.8rem; font-weight: 900; color: var(--teal); min-width: 80px; }
+.s7-stat-l { font-size: .82rem; color: rgba(255,255,255,.8); font-weight: 600; line-height: 1.4; }
+.s7-right { display: flex; flex-direction: column; gap: 16px; }
+.s7-card {
+  background: rgba(74,94,232,0.15); border: 1px solid rgba(74,94,232,0.35);
+  border-radius: 16px; padding: 20px 24px;
+}
+.s7-card-title { font-size: .8rem; font-weight: 800; color: #a0b0ff; letter-spacing: .06em; text-transform: uppercase; margin-bottom: 8px; }
+.s7-card-text { font-size: clamp(.78rem, 1.2vw, .92rem); color: rgba(255,255,255,.85); line-height: 1.6; font-weight: 600; }
+.s7-card-text em { color: var(--teal); font-style: normal; }
+
+/* ═══════════════════════════════════════════════
+   SLIDE 8 — DISPONIBILIDAD MX
+═══════════════════════════════════════════════ */
+.s8-inner {
+  height: 100%; display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: clamp(40px,6vw,80px) clamp(40px,8vw,100px);
+  gap: 48px; align-items: center;
+}
+.s8-title { font-size: clamp(1.4rem, 3vw, 2.4rem); font-weight: 900; color: #fff; line-height: 1.25; margin-bottom: 12px; letter-spacing: -.02em; }
+.s8-sub { font-size: clamp(.82rem, 1.3vw, 1rem); color: var(--muted); line-height: 1.7; margin-bottom: 28px; }
+.s8-features { display: flex; flex-direction: column; gap: 12px; }
+.s8-feat {
+  display: flex; gap: 12px; align-items: flex-start;
+  padding: 14px 16px;
+  background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+}
+.s8-feat-icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 2px; }
+.s8-feat-text { font-size: clamp(.76rem, 1.2vw, .9rem); color: rgba(255,255,255,.85); font-weight: 600; line-height: 1.5; }
+.s8-feat-text b { color: var(--teal); }
+.s8-right {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 24px;
+}
+.s8-cofepris {
+  background: rgba(0,160,50,0.1); border: 2px solid rgba(0,200,70,0.35);
+  border-radius: 20px; padding: 24px 32px; text-align: center; width: 100%;
+}
+.s8-cofepris-label { font-size: .7rem; font-weight: 800; color: rgba(100,255,130,.8); letter-spacing: .1em; text-transform: uppercase; margin-bottom: 8px; }
+.s8-cofepris-h { font-size: 1.1rem; font-weight: 900; color: #fff; }
+.s8-cofepris-sub { font-size: .75rem; color: var(--muted); margin-top: 4px; }
+.s8-mx {
+  font-size: 4rem; line-height: 1;
+}
+.s8-availability {
+  background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 14px; padding: 16px 24px; text-align: center; width: 100%;
+}
+.s8-avail-h { font-size: 1rem; font-weight: 900; color: var(--teal); margin-bottom: 4px; }
+.s8-avail-l { font-size: .75rem; color: var(--muted); line-height: 1.5; font-weight: 600; }
+
+/* ═══════════════════════════════════════════════
+   SLIDE 9 — CIERRE
+═══════════════════════════════════════════════ */
+.s9-inner {
+  height: 100%; display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 40px 60px; text-align: center;
+  gap: 24px;
+}
+.s9-glow {
+  position: absolute; width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(61,192,180,0.15) 0%, transparent 65%);
+  top: 50%; left: 50%; transform: translate(-50%,-50%);
+  pointer-events: none;
+}
+.s9-logo { margin-bottom: 8px; }
+.s9-title { font-size: clamp(1.4rem, 3.2vw, 2.8rem); font-weight: 900; color: #fff; letter-spacing: -.02em; line-height: 1.2; }
+.s9-title span { color: var(--teal); }
+.s9-sub { font-size: clamp(.85rem, 1.4vw, 1.05rem); color: var(--muted); max-width: 560px; line-height: 1.7; }
+.s9-cta-block {
+  background: linear-gradient(135deg, var(--cobalt), var(--cobalt2));
+  border: 1px solid var(--cobalt3);
+  border-radius: 20px; padding: 28px 40px; max-width: 560px; width: 100%;
+}
+.s9-cta-label { font-size: .7rem; font-weight: 800; color: #a0b0ff; letter-spacing: .1em; text-transform: uppercase; margin-bottom: 10px; }
+.s9-cta-text { font-size: clamp(.9rem, 1.6vw, 1.15rem); font-weight: 800; color: #fff; line-height: 1.5; }
+.s9-cta-text em { color: var(--teal); font-style: normal; }
+.s9-url {
+  font-size: clamp(.8rem, 1.4vw, 1rem); font-weight: 800;
+  color: var(--teal); letter-spacing: .02em;
+}
+.s9-disclaimer { font-size: .62rem; color: var(--muted2); line-height: 1.7; max-width: 520px; }
+
+/* ═══════════════════════════════════════════════
+   ANIMATIONS
+═══════════════════════════════════════════════ */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.slide.active .s0-inner > *,
+.slide.active .s2-inner > *,
+.slide.active .s9-inner > * { animation: fadeUp 0.5s ease both; }
+.slide.active .s0-inner > *:nth-child(1) { animation-delay: .05s; }
+.slide.active .s0-inner > *:nth-child(2) { animation-delay: .15s; }
+.slide.active .s0-inner > *:nth-child(3) { animation-delay: .25s; }
+.slide.active .s0-inner > *:nth-child(4) { animation-delay: .35s; }
+.slide.active .s2-inner > *:nth-child(1) { animation-delay: .05s; }
+.slide.active .s2-inner > *:nth-child(2) { animation-delay: .15s; }
+.slide.active .s2-inner > *:nth-child(3) { animation-delay: .25s; }
+</style>
+</head>
+<body>
+
+<!-- ══ CHROME ══ -->
+<div id="progress-bar"></div>
+<button id="nav-prev" onclick="go(-1)">‹</button>
+<button id="nav-next" onclick="go(1)">›</button>
+<div id="slide-num-label"></div>
+<div id="slide-counter"></div>
+<button id="btn-fullscreen" onclick="toggleFS()">⛶ Pantalla completa</button>
+
+<!-- ══ DECK ══ -->
+<div id="deck">
+
+  <!-- ════ SLIDE 0: PORTADA ════ -->
+  <div class="slide slide-portada" data-idx="0">
+    <div class="slide-content">
+      <div class="s0-inner">
+        <div class="s0-glow"></div>
+        <div class="s0-logo-wrap">
+          <img src="HUB_AMG_PYLORI/brand_kicab/logo_kicab_transparent.png" class="logo-kc" alt="Ki-CAB®" style="height:56px">
+        </div>
+        <div class="s0-title">El primer <span>P-CAB</span><br>con evidencia en México</div>
+        <div class="s0-sub">tegoprazan · erradicación de <em>Helicobacter pylori</em> · nueva generación</div>
+        <div class="s0-badges">
+          <div class="badge">Campaña 2026</div>
+          <div id="s0-cycle-badge" class="s0-cycle-badge">Cargando ciclo…</div>
+          <div class="badge-cobalt">Carnot Laboratorios</div>
+        </div>
+        <img src="HUB_AMG_PYLORI/brand_kicab/Sello azul@2x.png" style="height:64px; object-fit:contain; margin-bottom:16px;" alt="">
+        <div class="s0-disclaimer">
+          Medicamento de prescripción. Esta presentación es para profesionales de la salud.<br>
+          Avalada por la Asociación Mexicana de Gastroenterología A.C. · 2026
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════ SLIDE 1: CICLO DEL MES ════ -->
+  <div class="slide slide-ciclo" data-idx="1">
+    <div class="slide-content">
+      <div class="s1-layout">
+        <div class="s1-photo" id="s1-photo">
+          <div class="s1-photo-overlay"></div>
+          <div class="s1-badge-over">
+            <img src="HUB_AMG_PYLORI/brand_kicab/Sello azul@2x.png" style="height:48px; object-fit:contain;" alt="Ki-CAB">
+          </div>
+        </div>
+        <div class="s1-right">
+          <div>
+            <div class="s1-mes-badge" id="s1-mes-badge">⬤ &nbsp;Ciclo activo</div>
+          </div>
+          <div>
+            <div class="s1-cifra" id="s1-cifra">—</div>
+            <div class="s1-cifra-label" id="s1-cifra-label"></div>
+          </div>
+          <div class="s1-headline" id="s1-headline">Cargando mensaje del ciclo…</div>
+          <div class="s1-subcopy" id="s1-subcopy"></div>
+          <div class="s1-week-nav" id="s1-week-nav">
+            <!-- Botones de semana se inyectan por JS -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════ SLIDE 2: EL PROBLEMA ════ -->
+  <div class="slide slide-problema" data-idx="2">
+    <div class="slide-content">
+      <div class="s2-inner">
+        <div class="badge" style="margin-bottom:16px">El problema que no da síntomas</div>
+        <div class="s2-title"><em>Helicobacter pylori</em>:<br>silenciosa, prevalente, prevenible.</div>
+        <div class="s2-lead">7 de cada 10 adultos mexicanos portan esta bacteria sin saberlo. La conexión con el cáncer gástrico es directa — y la erradicación puede cambiar el desenlace.</div>
+        <div class="s2-stats">
+          <div class="s2-stat-box">
+            <div class="s2-stat-n">70<span style="font-size:.5em; color:var(--teal)">%</span></div>
+            <div class="s2-stat-l">de adultos mexicanos<br>con infección activa</div>
+          </div>
+          <div class="s2-stat-box">
+            <div class="s2-stat-n">90<span style="font-size:.5em; color:var(--teal)">%</span></div>
+            <div class="s2-stat-l">del cáncer gástrico<br>inicia como H. pylori</div>
+          </div>
+          <div class="s2-stat-box">
+            <div class="s2-stat-n">>90<span style="font-size:.5em; color:var(--teal)">%</span></div>
+            <div class="s2-stat-l">de erradicación<br>con esquema P-CAB</div>
+          </div>
+        </div>
+        <div class="s2-source">Fuente: AMG · Maastricht VI · estudios poblacionales nacionales</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════ SLIDE 3: IBP VS P-CAB ════ -->
+  <div class="slide slide-brecha" data-idx="3">
+    <div class="slide-content">
+      <div class="s3-inner">
+        <div class="s3-header">
+          <div class="badge" style="margin-bottom:12px;">¿Por qué cambiar?</div>
+          <div class="s3-title">IBP vs P-CAB:<br>la diferencia que importa</div>
+          <div class="s3-subtitle">No todos los supresores ácidos son iguales en la erradicación de <em>H. pylori</em></div>
+        </div>
+        <div class="s3-table">
+          <div class="s3-col">
+            <div class="s3-col-header">
+              <div class="s3-col-icon">⚙️</div>
+              <div>
+                <div class="s3-col-name">IBP</div>
+                <div class="s3-col-sub">omeprazol · lansoprazol</div>
+              </div>
+            </div>
+            <div class="s3-row"><div class="s3-icon neg">✗</div><div class="s3-text">Bloqueo indirecto, dependiente de CYP2C19 — variabilidad metabólica significativa</div></div>
+            <div class="s3-row"><div class="s3-icon neg">✗</div><div class="s3-text">Requieren activación en medio ácido — efecto variable en las primeras dosis</div></div>
+            <div class="s3-row"><div class="s3-icon neg">✗</div><div class="s3-text">Tasas de falla en primera línea de hasta 20% en algunos estudios</div></div>
+            <div class="s3-row"><div class="s3-icon neg">✗</div><div class="s3-text">No hay opción directa de rescate dentro de la misma clase</div></div>
+          </div>
+          <div class="s3-col highlighted">
+            <div class="s3-col-header">
+              <div class="s3-col-icon">⚡</div>
+              <div>
+                <div class="s3-col-name">Ki-CAB® P-CAB</div>
+                <div class="s3-col-sub">tegoprazan · nueva generación</div>
+              </div>
+            </div>
+            <div class="s3-row"><div class="s3-icon pos">✓</div><div class="s3-text"><b>Bloqueo competitivo directo</b> — sin dependencia de polimorfismos CYP2C19</div></div>
+            <div class="s3-row"><div class="s3-icon pos">✓</div><div class="s3-text"><b>Acción más rápida</b> y supresión ácida potente desde la primera dosis</div></div>
+            <div class="s3-row"><div class="s3-icon pos">✓</div><div class="s3-text"><b>>90% erradicación</b> en esquemas de primera línea con evidence local</div></div>
+            <div class="s3-row"><div class="s3-icon pos">✓</div><div class="s3-text"><b>Sin resistencia cruzada</b> con IBP — opción válida para rescate</div></div>
+          </div>
+        </div>
+        <div class="s3-footer">Información basada en datos publicados. Medicamento de prescripción. Consulte la información completa del producto.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════ SLIDE 4: MECANISMO ════ -->
+  <div class="slide slide-mecanismo" data-idx="4">
+    <div class="slide-content">
+      <div class="s4-inner">
+        <div class="s4-left">
+          <div class="s4-tag"><div class="badge">Mecanismo de acción</div></div>
+          <div class="s4-title">P-CAB: bloqueo<br><em>competitivo directo</em></div>
+          <div class="s4-desc">A diferencia de los IBP que requieren activación ácida, Ki-CAB® (tegoprazan) actúa directamente sobre la bomba de protones H⁺/K⁺-ATPasa de forma competitiva, con mayor potencia y predecibilidad.</div>
+          <div class="s4-points">
+            <div class="s4-point">
+              <div class="s4-point-icon">⚡</div>
+              <div class="s4-point-text"><b>Inicio de acción más rápido</b> — supresión ácida efectiva desde la primera dosis</div>
+            </div>
+            <div class="s4-point">
+              <div class="s4-point-icon">🎯</div>
+              <div class="s4-point-text"><b>Independiente de CYP2C19</b> — sin variabilidad genética metabólica</div>
+            </div>
+            <div class="s4-point">
+              <div class="s4-point-icon">📈</div>
+              <div class="s4-point-text"><b>Mayor supresión ácida sostenida</b> — entorno óptimo para que los antibióticos actúen</div>
+            </div>
+          </div>
+        </div>
+        <div class="s4-right">
+          <div class="s4-diagram">
+            <div class="s4-pump">
+              <div class="s4-pump-title">Bomba H⁺/K⁺-ATPasa</div>
+              <div class="s4-pump-h">Secreción ácida</div>
+              <div class="s4-pump-sub">objetivo terapéutico clave</div>
+            </div>
+            <div class="s4-vs">↕ acción directa</div>
+            <div class="s4-block">
+              <div class="s4-block-title">Ki-CAB® tegoprazan</div>
+              <div class="s4-block-h">Bloqueo competitivo</div>
+              <div class="s4-block-sub">sin activación ácida previa</div>
+            </div>
+          </div>
+          <div class="badge-cobalt" style="font-size:.7rem; padding:8px 16px;">tegoprazan · P-CAB de nueva generación</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════ SLIDE 5: POSOLOGÍA ════ -->
+  <div class="slide slide-posologia" data-idx="5">
+    <div class="slide-content">
+      <div class="s5-inner">
+        <div class="s5-left">
+          <div class="s5-tag"><div class="badge">Posología</div></div>
+          <div class="s5-title">Simple.<br>Una vez al día.<br>14 días.</div>
+          <div class="s5-sub">Un esquema sencillo mejora el apego al tratamiento y maximiza la probabilidad de erradicación exitosa.</div>
+          <div class="s5-regimen">
+            <div class="s5-reg-row">
+              <div class="s5-reg-icon">💊</div>
+              <div class="s5-reg-text">
+                <div class="s5-reg-val">1 comprimido</div>
+                <div class="s5-reg-desc">Ki-CAB® (tegoprazan) · como base del esquema</div>
+              </div>
+            </div>
+            <div class="s5-reg-row">
+              <div class="s5-reg-icon">🕐</div>
+              <div class="s5-reg-text">
+                <div class="s5-reg-val">1 vez al día</div>
+                <div class="s5-reg-desc">administración oral · con o sin alimentos</div>
+              </div>
+            </div>
+            <div class="s5-reg-row">
+              <div class="s5-reg-icon">📅</div>
+              <div class="s5-reg-text">
+                <div class="s5-reg-val">14 días</div>
+                <div class="s5-reg-desc">duración estándar del ciclo de erradicación</div>
+              </div>
+            </div>
+            <div class="s5-reg-row" style="border-color:rgba(61,192,180,0.3); background:rgba(61,192,180,0.06);">
+              <div class="s5-reg-icon">✅</div>
+              <div class="s5-reg-text">
+                <div class="s5-reg-val" style="color:#fff">Confirmar erradicación</div>
+                <div class="s5-reg-desc">test de aliento UBT · mín. 4 semanas después</div>
+              </div>
+            </div>
+          </div>
+          <div class="s5-presentaciones">
+            <div class="s5-pres-label">Presentaciones disponibles</div>
+            <div class="s5-pres-row">
+              <div class="s5-pres">10 mg · 14 comp</div>
+              <div class="s5-pres">30 mg · 14 comp</div>
+            </div>
+          </div>
+        </div>
+        <div class="s5-right">
+          <div class="s5-caja-label">Ki-CAB® tegoprazan</div>
+          <img src="HUB_AMG_PYLORI/brand_amg/caja-con10.png" class="caja-img" alt="Ki-CAB® 10 mg"
+               onerror="this.src='HUB_AMG_PYLORI/brand_kicab/KICAB 10.jpg'">
+          <div class="s5-disclaimer">
+            Medicamento de prescripción.<br>
+            Consulte siempre la información completa del producto antes de prescribir.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════ SLIDE 6: EVIDENCIA ════ -->
+  <div class="slide slide-evidencia" data-idx="6">
+    <div class="slide-content">
+      <div class="s6-inner">
+        <div class="badge" style="margin-bottom:12px">Evidencia clínica</div>
+        <div class="s6-title">Los números que respaldan<br>la elección</div>
+        <div class="s6-sub">Esquemas basados en tegoprazan muestran resultados superiores en estudios controlados</div>
+        <div class="s6-maastricht">
+          📚 Las <strong>guías Maastricht VI</strong> (consenso europeo más reciente) respaldan el uso de <em>P-CAB como base</em> de los esquemas de erradicación de primera y segunda línea de <em>Helicobacter pylori</em>.
+        </div>
+        <div class="s6-grid">
+          <div class="s6-card">
+            <div class="s6-card-n">&gt;90%</div>
+            <div class="s6-card-l">tasa de erradicación con tegoprazan en primera línea (estudios fase III)</div>
+          </div>
+          <div class="s6-card">
+            <div class="s6-card-n">~20%</div>
+            <div class="s6-card-l">tasa de falla reportada con IBP en algunos esquemas estándar de primera línea</div>
+          </div>
+          <div class="s6-card">
+            <div class="s6-card-n">↓35%</div>
+            <div class="s6-card-l">reducción en riesgo de cáncer gástrico tras erradicación exitosa de H. pylori</div>
+          </div>
+        </div>
+        <div class="s6-source">Datos de estudios publicados. Esta información es para profesionales de la salud. Consulte bibliografía completa.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════ SLIDE 7: RESCATE ════ -->
+  <div class="slide slide-rescate" data-idx="7">
+    <div class="slide-content">
+      <div class="s7-inner">
+        <div>
+          <div class="badge" style="margin-bottom:16px; border-color:rgba(160,100,255,0.4); color:#c090ff; background:rgba(160,100,255,0.1);">Segunda línea · Rescate</div>
+          <div class="s7-title">Cuando el primer<br>esquema no funcionó</div>
+          <div class="s7-sub">Hasta el 20% de los esquemas con IBP fallan en primera línea. Ki-CAB® no comparte mecanismo de resistencia con los IBP — lo que lo convierte en una opción válida de rescate.</div>
+          <div class="s7-stats">
+            <div class="s7-stat">
+              <div class="s7-stat-n">20%</div>
+              <div class="s7-stat-l">tasa de falla estimada con IBP en primera línea en algunos contextos clínicos</div>
+            </div>
+            <div class="s7-stat">
+              <div class="s7-stat-n">0</div>
+              <div class="s7-stat-l">resistencia cruzada entre P-CAB e IBP — mecanismos de acción distintos</div>
+            </div>
+          </div>
+        </div>
+        <div class="s7-right">
+          <div class="s7-card">
+            <div class="s7-card-title">Primera línea fallida</div>
+            <div class="s7-card-text">Si el paciente ya fue tratado con un esquema con IBP sin éxito, Ki-CAB® <em>(tegoprazan)</em> ofrece una alternativa con distinto mecanismo de acción y sin resistencia cruzada.</div>
+          </div>
+          <div class="s7-card">
+            <div class="s7-card-title">Esquema de rescate</div>
+            <div class="s7-card-text">Los P-CAB están contemplados en guías internacionales como base de los esquemas de segunda línea. Consultar sensibilidad local a antibióticos para complementar el régimen.</div>
+          </div>
+          <div class="s7-card" style="border-color:rgba(61,192,180,0.35); background:rgba(61,192,180,0.08);">
+            <div class="s7-card-title" style="color:var(--teal)">Confirmar siempre</div>
+            <div class="s7-card-text">Test de aliento UBT mín. 4 semanas después del último comprimido, sin IBP/P-CAB en los 15 días previos.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════ SLIDE 8: DISPONIBILIDAD MX ════ -->
+  <div class="slide slide-cofepris" data-idx="8">
+    <div class="slide-content">
+      <div class="s8-inner">
+        <div>
+          <div class="badge" style="margin-bottom:16px; border-color:rgba(0,200,70,0.35); color:rgba(100,255,130,.8); background:rgba(0,160,50,0.1);">Disponibilidad · México</div>
+          <div class="s8-title">El primer P-CAB<br>disponible en México</div>
+          <div class="s8-sub">Ki-CAB® (tegoprazan) cuenta con registro COFEPRIS y evidencia clínica en población mexicana — disponible para su paciente hoy.</div>
+          <div class="s8-features">
+            <div class="s8-feat">
+              <div class="s8-feat-icon">🏛️</div>
+              <div class="s8-feat-text"><b>Registro COFEPRIS</b> — autorizado para uso en México con indicación en H. pylori</div>
+            </div>
+            <div class="s8-feat">
+              <div class="s8-feat-icon">🔬</div>
+              <div class="s8-feat-text"><b>Evidencia local</b> — datos en población mexicana disponibles</div>
+            </div>
+            <div class="s8-feat">
+              <div class="s8-feat-icon">🏥</div>
+              <div class="s8-feat-text"><b>Avalado por la AMG</b> — Asociación Mexicana de Gastroenterología A.C.</div>
+            </div>
+            <div class="s8-feat">
+              <div class="s8-feat-icon">💊</div>
+              <div class="s8-feat-text"><b>2 presentaciones</b> — 10 mg y 30 mg · disponibles en farmacia especializada</div>
+            </div>
+          </div>
+        </div>
+        <div class="s8-right">
+          <div class="s8-mx">🇲🇽</div>
+          <div class="s8-cofepris">
+            <div class="s8-cofepris-label">✓ Registro COFEPRIS</div>
+            <div class="s8-cofepris-h">Ki-CAB® (tegoprazan)</div>
+            <div class="s8-cofepris-sub">Medicamento de prescripción · 2026</div>
+          </div>
+          <div class="s8-availability">
+            <div class="s8-avail-h">Disponible ahora</div>
+            <div class="s8-avail-l">Farmacia especializada · consulta médica · hospitales de referencia<br>Carnot Laboratorios · México</div>
+          </div>
+          <img src="HUB_AMG_PYLORI/brand_kicab/Sello azul@2x.png" style="height:52px; object-fit:contain; opacity:.7;" alt="">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════ SLIDE 9: CIERRE ════ -->
+  <div class="slide slide-cierre" data-idx="9">
+    <div class="slide-content">
+      <div class="s9-inner">
+        <div class="s9-glow"></div>
+        <div class="s9-logo">
+          <img src="HUB_AMG_PYLORI/brand_kicab/logo_kicab_transparent.png" style="height:48px; object-fit:contain;" alt="Ki-CAB®">
+        </div>
+        <div class="s9-title">Cierra la pinza.<br><span>Prescribe Ki-CAB®.</span></div>
+        <div class="s9-sub">El ciclo completo: detectar → tratar con Ki-CAB® → confirmar erradicación.<br>La solución existe. Y está disponible en México.</div>
+        <div class="s9-cta-block">
+          <div class="s9-cta-label">Acción para el médico</div>
+          <div class="s9-cta-text">Prescribe <em>Ki-CAB® (tegoprazan)</em> como base del esquema de erradicación de <em>Helicobacter pylori</em> para tus pacientes candidatos.</div>
+        </div>
+        <div class="s9-url">mexicosincancergastrico.com.mx</div>
+        <div class="s9-disclaimer">
+          Medicamento de prescripción. Esta presentación es para uso exclusivo de profesionales de la salud.<br>
+          La información aquí contenida no sustituye el juicio clínico del médico tratante.<br>
+          Carnot Laboratorios · Campaña México Sin Cáncer Gástrico 2026 · AMG A.C.
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /deck -->
+
+<script>
+/* ══════════════════════════════════════════════
+   DATA — claims2 del ciclo Ki-CAB (Ago–Oct 2026)
+══════════════════════════════════════════════ */
+const claims2 = [
+  { id:1,  mes:'Agosto',    semana:1, fecha:'2026-08-06',
+    cifra:'Cierra', cifraLabel:'la pinza',
+    titulo:'Ya la identificaste. Ahora ciérrala.',
+    headline:'Ya identificaste <em>Helicobacter pylori</em>. Ahora es momento de erradicarla.',
+    subcopy:'Ki-CAB® — el primer paso hacia la curación.',
+    foto:'HUB_AMG_PYLORI/brand_kicab/kc_mujer_a1.png' },
+  { id:2,  mes:'Agosto',    semana:2, fecha:'2026-08-13',
+    cifra:'P-CAB', cifraLabel:'nueva generación',
+    titulo:'P-CAB vs IBP: la diferencia importa',
+    headline:'No todos los supresores de ácido son iguales.',
+    subcopy:'Los P-CAB actúan más rápido y con mayor potencia sostenida.',
+    foto:'HUB_AMG_PYLORI/brand_kicab/kc_hombre_a1.png' },
+  { id:3,  mes:'Agosto',    semana:3, fecha:'2026-08-20',
+    cifra:'1×', cifraLabel:'al día',
+    titulo:'1 comprimido, 1 vez al día',
+    headline:'Simplicidad que mejora el apego al tratamiento.',
+    subcopy:'Ki-CAB® — 1 comprimido, 1 vez al día.',
+    foto:'HUB_AMG_PYLORI/brand_kicab/kc_mujer_a2.png' },
+  { id:4,  mes:'Agosto',    semana:4, fecha:'2026-08-27',
+    cifra:'1er', cifraLabel:'P-CAB en México',
+    titulo:'El 1er P-CAB con evidencia en México',
+    headline:'Ki-CAB® — respaldado por evidencia clínica en población mexicana.',
+    subcopy:'La diferencia que importa a tus pacientes.',
+    foto:'HUB_AMG_PYLORI/brand_kicab/kc_hombre_a2.png' },
+  { id:5,  mes:'Septiembre', semana:1, fecha:'2026-09-03',
+    cifra:'>90%', cifraLabel:'erradicación',
+    titulo:'Erradicación >90%',
+    headline:'Tasas de curación que superan los esquemas anteriores.',
+    subcopy:'Con tegoprazan como base del esquema.',
+    foto:'HUB_AMG_PYLORI/brand_kicab/kc_mujer_a1.png' },
+  { id:6,  mes:'Septiembre', semana:2, fecha:'2026-09-10',
+    cifra:'Triple', cifraLabel:'terapia moderna',
+    titulo:'Triple terapia con Ki-CAB®',
+    headline:'Ki-CAB® como base del esquema de erradicación 2026.',
+    subcopy:'Según guías internacionales Maastricht VI.',
+    foto:'HUB_AMG_PYLORI/brand_kicab/kc_hombre_a1.png' },
+  { id:7,  mes:'Septiembre', semana:3, fecha:'2026-09-17',
+    cifra:'Plan B', cifraLabel:'sin resistencia cruzada',
+    titulo:'Cuando el IBP ya no es suficiente',
+    headline:'Un primer intento fallido no significa el fin.',
+    subcopy:'Los P-CAB ofrecen una vía alternativa sin resistencia cruzada.',
+    foto:'HUB_AMG_PYLORI/brand_kicab/kc_mujer_a2.png' },
+  { id:8,  mes:'Septiembre', semana:4, fecha:'2026-09-24',
+    cifra:'↓', cifraLabel:'riesgo de cáncer',
+    titulo:'Después de erradicar: el tejido sana',
+    headline:'Erradicar <em>Helicobacter pylori</em> reduce el riesgo de cáncer gástrico.',
+    subcopy:'La gastritis puede revertirse. La úlcera puede sanar.',
+    foto:'HUB_AMG_PYLORI/brand_kicab/kc_hombre_a2.png' },
+  { id:9,  mes:'Octubre',    semana:1, fecha:'2026-10-01',
+    cifra:'4 sem', cifraLabel:'test de confirmación',
+    titulo:'Confirma la erradicación',
+    headline:'La prueba de aliento confirma si la erradicación fue exitosa.',
+    subcopy:'No asumas — verifica. 4 semanas después del tratamiento.',
+    foto:'HUB_AMG_PYLORI/brand_kicab/kc_mujer_a1.png' },
+  { id:10, mes:'Octubre',    semana:2, fecha:'2026-10-08',
+    cifra:'Familia', cifraLabel:'protegida',
+    titulo:'Protege a tu familia',
+    headline:'<em>Helicobacter pylori</em> se transmite entre convivientes.',
+    subcopy:'Si tú la tuviste, tus familiares merecen saber.',
+    foto:'HUB_AMG_PYLORI/brand_kicab/kc_hombre_a1.png' },
+  { id:11, mes:'Octubre',    semana:3, fecha:'2026-10-15',
+    cifra:'✓ MX', cifraLabel:'registro COFEPRIS',
+    titulo:'Ki-CAB® disponible en México',
+    headline:'Ki-CAB® (tegoprazan) ya está disponible en México.',
+    subcopy:'Con registro COFEPRIS y evidencia local.',
+    foto:'HUB_AMG_PYLORI/brand_kicab/kc_mujer_a2.png' },
+  { id:12, mes:'Octubre',    semana:4, fecha:'2026-10-22',
+    cifra:'360°', cifraLabel:'detección · tratamiento · confirmación',
+    titulo:'La pinza cerrada. El ciclo completo.',
+    headline:'Del diagnóstico a la erradicación confirmada.',
+    subcopy:'Detección → Ki-CAB® → confirmación. Ciclo completo.',
+    foto:'HUB_AMG_PYLORI/brand_kicab/kc_hombre_a2.png' },
+];
+
+/* ══════════════════════════════════════════════
+   CICLO DINÁMICO — detectar mes/semana actual
+══════════════════════════════════════════════ */
+function getCycleInfo() {
+  const now  = new Date();
+  const m    = now.getMonth() + 1; // 1-12
+  const day  = now.getDate();
+  const week = Math.min(Math.ceil(day / 7), 4); // semana 1-4 dentro del mes
+
+  let cycleMonth;
+  if      (m === 8)  cycleMonth = 'Agosto';
+  else if (m === 9)  cycleMonth = 'Septiembre';
+  else if (m === 10) cycleMonth = 'Octubre';
+  else if (m < 8)    cycleMonth = 'Agosto';     // preview pre-campaña
+  else               cycleMonth = 'Octubre';    // post-campaña
+
+  const isActive = m >= 8 && m <= 10;
+  return { cycleMonth, week, isActive };
+}
+
+function getClaimsForMonth(month) {
+  return claims2.filter(c => c.mes === month);
+}
+
+/* ══════════════════════════════════════════════
+   RENDER CICLO SLIDE (slide 1)
+══════════════════════════════════════════════ */
+let activeClaim = null;
+let cycleMonthClaims = [];
+
+function renderCycleSlide(claim) {
+  activeClaim = claim;
+
+  // Photo
+  const photo = document.getElementById('s1-photo');
+  photo.style.backgroundImage = `url('${claim.foto}')`;
+
+  // Content
+  document.getElementById('s1-cifra').innerHTML      = claim.cifra;
+  document.getElementById('s1-cifra-label').textContent = claim.cifraLabel || '';
+  document.getElementById('s1-headline').innerHTML   = claim.headline;
+  document.getElementById('s1-subcopy').textContent  = claim.subcopy;
+
+  // Mes badge
+  const mesColors = { Agosto:'#1E2EA8', Septiembre:'#0A5E7A', Octubre:'#5B1A8F' };
+  const mesColor  = mesColors[claim.mes] || '#1E2EA8';
+  const mesBadge  = document.getElementById('s1-mes-badge');
+  mesBadge.innerHTML = `⬤ &nbsp;${claim.mes} · Semana ${claim.semana} · ${claim.fecha}`;
+  mesBadge.style.color = '#a0d0ff';
+
+  // Week buttons
+  const nav = document.getElementById('s1-week-nav');
+  nav.innerHTML = '<span class="s1-week-label">Semana:</span>';
+  cycleMonthClaims.forEach(c => {
+    const btn = document.createElement('button');
+    btn.className = 's1-week-btn' + (c.id === claim.id ? ' active' : '');
+    btn.textContent = c.semana;
+    btn.title = c.titulo;
+    btn.onclick = () => renderCycleSlide(c);
+    nav.appendChild(btn);
+  });
+}
+
+function initCycle() {
+  const { cycleMonth, week, isActive } = getCycleInfo();
+  cycleMonthClaims = getClaimsForMonth(cycleMonth);
+
+  // Portada badge
+  document.getElementById('s0-cycle-badge').textContent =
+    `Ciclo ${cycleMonth} 2026${isActive ? '' : ' · Preview'}`;
+
+  // Find current week's claim (or first of month)
+  const claim = cycleMonthClaims.find(c => c.semana === week) || cycleMonthClaims[0];
+  renderCycleSlide(claim);
+}
+
+/* ══════════════════════════════════════════════
+   SLIDE NAVIGATION
+══════════════════════════════════════════════ */
+const totalSlides = document.querySelectorAll('.slide').length;
+let current = 0;
+
+function buildChrome() {
+  const counter = document.getElementById('slide-counter');
+  counter.innerHTML = '';
+  for (let i = 0; i < totalSlides; i++) {
+    const dot = document.createElement('div');
+    dot.className = 'dot' + (i === 0 ? ' active' : '');
+    dot.onclick = () => goTo(i);
+    counter.appendChild(dot);
+  }
+}
+
+function goTo(idx) {
+  if (idx < 0 || idx >= totalSlides) return;
+
+  // Remove active
+  document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+
+  current = idx;
+  document.getElementById('deck').style.transform = `translateX(${-current * 100}vw)`;
+
+  // Active class for animations
+  const slides = document.querySelectorAll('.slide');
+  slides[current].classList.add('active');
+
+  // Progress bar
+  document.getElementById('progress-bar').style.width =
+    ((current + 1) / totalSlides * 100) + '%';
+
+  // Dots
+  document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === current));
+
+  // Nav arrows
+  document.getElementById('nav-prev').classList.toggle('hidden', current === 0);
+  document.getElementById('nav-next').classList.toggle('hidden', current === totalSlides - 1);
+
+  // Counter label
+  document.getElementById('slide-num-label').textContent = `${current + 1} / ${totalSlides}`;
+}
+
+function go(dir) { goTo(current + dir); }
+
+/* ══════════════════════════════════════════════
+   KEYBOARD + TOUCH
+══════════════════════════════════════════════ */
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === ' ')  { e.preventDefault(); go(1); }
+  if (e.key === 'ArrowLeft')                    { e.preventDefault(); go(-1); }
+  if (e.key === 'ArrowUp' || e.key === 'Home')  { e.preventDefault(); goTo(0); }
+  if (e.key === 'ArrowDown' || e.key === 'End') { e.preventDefault(); goTo(totalSlides - 1); }
+  if (e.key === 'f' || e.key === 'F')           toggleFS();
+});
+
+let touchStart = null;
+document.addEventListener('touchstart', e => { touchStart = e.touches[0].clientX; }, { passive: true });
+document.addEventListener('touchend', e => {
+  if (!touchStart) return;
+  const dx = e.changedTouches[0].clientX - touchStart;
+  if (Math.abs(dx) > 60) go(dx < 0 ? 1 : -1);
+  touchStart = null;
+});
+
+/* ══════════════════════════════════════════════
+   FULLSCREEN
+══════════════════════════════════════════════ */
+function toggleFS() {
+  if (!document.fullscreenElement) {
+    document.documentElement.requestFullscreen().catch(() => {});
+    document.getElementById('btn-fullscreen').textContent = '⊠ Salir pantalla completa';
+  } else {
+    document.exitFullscreen();
+    document.getElementById('btn-fullscreen').textContent = '⛶ Pantalla completa';
+  }
+}
+
+/* ══════════════════════════════════════════════
+   INIT
+══════════════════════════════════════════════ */
+buildChrome();
+initCycle();
+goTo(0);
+</script>
+</body>
+</html>

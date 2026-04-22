@@ -1417,6 +1417,153 @@ body.edit-mode .sello:hover { outline: 2px solid rgba(136,112,40,0.9); }
   background: linear-gradient(90deg, #1E2EA8 0%, #2D3ECC 100%);
 }
 .kc-active .franja-bar { filter: hue-rotate(180deg) saturate(1.3); }
+
+/* ══════════════════════════════════════════════════════
+   CALENDARIO EDITORIAL — Brazo 1
+══════════════════════════════════════════════════════ */
+.cal-wrap { padding: 0; }
+
+/* Month accordion */
+.cal-month {
+  margin-bottom: 24px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.07);
+}
+.cal-month-hdr {
+  display: flex; align-items: center; gap: 14px;
+  padding: 16px 24px;
+  background: rgba(24,56,136,0.45);
+  border-left: 5px solid var(--teal);
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.2s;
+}
+.cal-month-hdr:hover { background: rgba(24,56,136,0.6); }
+.cal-mes-pill {
+  font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 14px;
+  color: #fff; padding: 5px 18px; border-radius: 20px;
+  white-space: nowrap; letter-spacing: 0.02em;
+}
+.cal-mes-info {
+  font-size: 11px; color: rgba(255,255,255,0.45);
+  font-family: 'Open Sans', sans-serif;
+}
+.cal-toggle-chevron {
+  margin-left: auto; font-size: 18px; color: var(--teal);
+  transition: transform 0.25s; line-height: 1;
+}
+.cal-month.collapsed .cal-toggle-chevron { transform: rotate(-90deg); }
+.cal-month-body {
+  padding: 0 20px 16px;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+}
+.cal-month.collapsed .cal-month-body { display: none; }
+
+/* Week section */
+.cal-week {
+  margin: 16px 0;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.025);
+  border: 1px solid rgba(255,255,255,0.07);
+  overflow: hidden;
+}
+.cal-week-hdr {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 18px;
+  background: rgba(0,0,0,0.25);
+  cursor: pointer; user-select: none;
+  transition: background 0.2s;
+}
+.cal-week-hdr:hover { background: rgba(0,0,0,0.38); }
+.cal-sem-pill {
+  background: var(--teal); color: #fff;
+  font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 10px;
+  padding: 3px 10px; border-radius: 12px; white-space: nowrap;
+}
+.cal-sem-range {
+  font-size: 11px; color: rgba(255,255,255,0.5);
+  font-family: 'Open Sans', sans-serif; white-space: nowrap;
+}
+.cal-sem-topic {
+  font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 12px;
+  color: #fff;
+}
+.cal-week-toggle {
+  margin-left: auto; font-size: 14px; color: rgba(255,255,255,0.4);
+  transition: transform 0.25s;
+}
+.cal-week.collapsed .cal-week-toggle { transform: rotate(-90deg); }
+.cal-week-body { padding: 12px 18px 18px; }
+.cal-week.collapsed .cal-week-body { display: none; }
+
+/* Publication rows */
+.cal-pub-row {
+  display: flex; align-items: flex-start; gap: 16px;
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.cal-pub-row:last-of-type { border-bottom: none; }
+
+.cal-pub-meta {
+  display: flex; flex-direction: column; gap: 4px;
+  min-width: 130px; padding-top: 6px;
+}
+.cal-pub-icon { font-size: 20px; line-height: 1; margin-bottom: 4px; }
+.cal-pub-platform {
+  font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 11px;
+  letter-spacing: 0.02em;
+}
+.cal-pub-tipo {
+  font-size: 10px; color: rgba(255,255,255,0.45);
+  font-family: 'Open Sans', sans-serif;
+}
+.cal-pub-fecha {
+  font-size: 10px; color: rgba(255,255,255,0.35);
+  font-family: 'Open Sans', sans-serif;
+  margin-top: 2px;
+}
+
+/* Piece wrapper inside calendar */
+.cal-pub-piece {
+  display: flex; flex-direction: column; gap: 8px; align-items: center;
+}
+.cal-pub-piece .format-card {
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+}
+.cal-pub-piece .format-label { display: none; } /* hidden in calendar context */
+.cal-pub-piece .pieza-edit-bar { display: none; } /* suppress edit bar */
+
+/* Download button small variant for calendar */
+.cal-pub-piece .btn-download {
+  font-size: 9px; padding: 4px 10px;
+}
+
+/* Copy block per week */
+.cal-copy-block {
+  margin-top: 16px;
+  background: rgba(13,27,110,0.35);
+  border-left: 3px solid rgba(48,184,176,0.4);
+  border-radius: 0 8px 8px 0;
+  padding: 14px 18px;
+}
+.cal-copy-text {
+  font-size: 12px; line-height: 1.7; color: rgba(255,255,255,0.82);
+  white-space: pre-wrap; margin-bottom: 8px;
+}
+.cal-copy-ht {
+  font-size: 11px; color: var(--teal); opacity: 0.8;
+  margin-bottom: 10px; word-spacing: 4px;
+}
+.cal-copy-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+/* Scrollable pieces row on narrow screens */
+@media (max-width: 900px) {
+  .cal-pub-row { flex-wrap: wrap; }
+  .cal-week-body { overflow-x: auto; }
+}
 </style>
 </head>
 <body>
@@ -1445,6 +1592,13 @@ body.edit-mode .sello:hover { outline: 2px solid rgba(136,112,40,0.9); }
     <span class="b-pill">KI-CAB</span>
     <small style="color:rgba(255,255,255,0.35); font-weight:400; font-size:10px;">Ago–Oct 2026</small>
   </button>
+  <div class="brazo-sep"></div>
+  <a href="kicab_detailer.html" target="_blank" class="brazo-btn b2"
+     style="text-decoration:none; background:rgba(30,46,168,0.25); border-color:rgba(74,94,232,0.5)">
+    <span>🎯 Detailer Rep</span>
+    <span class="b-pill" style="background:#4A5EE8">DEMO</span>
+    <small style="color:rgba(255,255,255,0.35); font-weight:400; font-size:10px;">Presentación Ki-CAB®</small>
+  </a>
 </div>
 
 <!-- ══ TOOLBAR EDICIÓN ══ -->
@@ -1498,8 +1652,16 @@ body.edit-mode .sello:hover { outline: 2px solid rgba(136,112,40,0.9); }
   </div>
 </div>
 
-<!-- ══ TABS ══ -->
-<div class="tabs-bar">
+<!-- ══ TABS B1 — Calendario editorial ══ -->
+<div class="tabs-bar tabs-bar-b1">
+  <button class="tab-btn active" data-var="CAL" onclick="switchTab('CAL', this)">
+    <span class="tab-icon">📅</span>Calendario de Contenido
+    <span class="tab-desc">Mayo · Junio · Julio 2026 · IG · TikTok · LinkedIn</span>
+  </button>
+</div>
+
+<!-- ══ TABS B2 — Ki-CAB variantes ══ -->
+<div class="tabs-bar tabs-bar-b2" style="display:none">
   <button class="tab-btn active" data-var="A" onclick="switchTab('A', this)">
     <span class="tab-icon">📷</span>A — Con Foto
     <span class="tab-desc">Editorial fotográfico · Feed</span>
@@ -1514,14 +1676,13 @@ body.edit-mode .sello:hover { outline: 2px solid rgba(136,112,40,0.9); }
 <div class="content">
 
 <!-- ═══════════════════════════════
-     TAB A — CON FOTO
+     BRAZO 1 — CALENDARIO EDITORIAL
 ═══════════════════════════════ -->
-<div id="tab-varA" class="tab-panel active"></div>
+<div id="tab-calendario" class="tab-panel active"></div>
 
-<!-- ═══════════════════════════════
-     TAB B — TIKTOK / CARRUSEL
-═══════════════════════════════ -->
-<div id="tab-varB" class="tab-panel"></div>
+<!-- Legacy B1 panels (not displayed — kept as empty placeholders) -->
+<div id="tab-varA" class="tab-panel" style="display:none!important"></div>
+<div id="tab-varB" class="tab-panel" style="display:none!important"></div>
 
 <!-- ══════════════════════════════════════════
      KI-CAB BRAZO 2 TABS (hidden until B2 active)
@@ -1910,8 +2071,9 @@ function copiarTexto(key, withHashtags) {
   });
 }
 
-renderTab('A', buildVarA);
-renderTab('B', buildVarB);
+// Brazo 1 now uses the calendar view — see renderCalendario() below
+// renderTab('A', buildVarA);  ← replaced by calendar
+// renderTab('B', buildVarB);  ← replaced by calendar
 
 /* ══════════════════════════════════════════════════════
    BRAZO 2 — KI-CAB® DATA
@@ -2294,6 +2456,163 @@ async function downloadMesKC(varKey, mes) {
 renderTabKC('A', buildVarA_KC);
 renderTabKC('B', buildVarB_KC);
 
+/* ══════════════════════════════════════════════════════
+   BRAZO 1 — CALENDARIO EDITORIAL
+   Organiza los 12 claims de Mayo/Junio/Julio por semana
+   con sus publicaciones por plataforma y día asignado.
+══════════════════════════════════════════════════════ */
+
+/* Plataformas por semana — día relativo al jueves de cada claim */
+const CAL_SCHEDULE = [
+  { fmtKey: '45',  varKey: 'A', platform: 'Instagram',  tipo: 'Post 4:5',      diaOffset: -3, icon: '📸', pColor: '#C13584' },
+  { fmtKey: '169', varKey: 'A', platform: 'LinkedIn',   tipo: 'Post 16:9',     diaOffset: -1, icon: '💼', pColor: '#0A66C2' },
+  { fmtKey: '916', varKey: 'B', platform: 'TikTok',     tipo: 'Video / Reel',  diaOffset:  0, icon: '🎬', pColor: '#ffffff' },
+  { fmtKey: '11',  varKey: 'A', platform: 'Instagram',  tipo: 'Carrusel 1:1',  diaOffset: +3, icon: '🖼', pColor: '#C13584' },
+];
+
+/* Helpers de fecha */
+function parseFechaDate(fechaStr) {
+  const parts = fechaStr.split('·');
+  const iso = parts[2] ? parts[2].trim() : null;
+  if (!iso) return new Date();
+  return new Date(iso + 'T12:00:00');
+}
+
+function offsetDate(base, n) {
+  const d = new Date(base);
+  d.setDate(d.getDate() + n);
+  return d;
+}
+
+function fmtDia(d) {
+  const days = ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
+  const months = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+  return `${days[d.getDay()]} ${d.getDate()} ${months[d.getMonth()]}`;
+}
+
+function getWeekRangeStr(base) {
+  const dow = base.getDay();
+  const diffMon = dow === 0 ? -6 : 1 - dow;
+  const mon = offsetDate(base, diffMon);
+  const sun = offsetDate(mon, 6);
+  const months = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+  return `${mon.getDate()} – ${sun.getDate()} ${months[sun.getMonth()]}`;
+}
+
+/* Toggle accordion month */
+function toggleMes(hdr) {
+  hdr.closest('.cal-month').classList.toggle('collapsed');
+}
+
+/* Toggle week section */
+function toggleSem(hdr) {
+  hdr.closest('.cal-week').classList.toggle('collapsed');
+}
+
+/* Copy helper for calendar pieces */
+function copiarTextoCAL(id, withHT) {
+  const claim = claims.find(c => c.id === id);
+  if (!claim) return;
+  const raw = withHT ? claim.copyIG + '\n\n' + claim.hashtags : claim.copyIG;
+  navigator.clipboard.writeText(stripHtml(raw)).then(() => {
+    // Brief visual feedback on buttons
+    document.querySelectorAll(`[data-cal-copy="${id}"]`).forEach(b => {
+      const orig = b.textContent;
+      b.textContent = '✓ Copiado';
+      setTimeout(() => { b.textContent = orig; }, 1500);
+    });
+  });
+}
+
+function renderCalendario() {
+  const container = document.getElementById('tab-calendario');
+
+  /* Group claims by month maintaining order */
+  const monthOrder = [];
+  const monthMap = {};
+  claims.forEach(c => {
+    if (!monthMap[c.mes]) { monthMap[c.mes] = []; monthOrder.push(c.mes); }
+    monthMap[c.mes].push(c);
+  });
+
+  let html = '<div class="cal-wrap">';
+
+  monthOrder.forEach(mes => {
+    const claimsDelMes = monthMap[mes];
+    const mesColor = claimsDelMes[0].mesColor;
+    const totalPubs = claimsDelMes.length * CAL_SCHEDULE.length;
+
+    html += `
+    <div class="cal-month">
+      <div class="cal-month-hdr" onclick="toggleMes(this)" style="border-left-color:${mesColor}">
+        <span class="cal-mes-pill" style="background:${mesColor}">${mes} 2026</span>
+        <span class="cal-mes-info">${claimsDelMes.length} semanas · ${totalPubs} publicaciones · 3 plataformas</span>
+        <span class="cal-toggle-chevron">▾</span>
+      </div>
+      <div class="cal-month-body">`;
+
+    claimsDelMes.forEach((claim, wi) => {
+      const baseDate = parseFechaDate(claim.fecha);
+      const weekRange = getWeekRangeStr(baseDate);
+      const semNum = wi + 1;
+
+      html += `
+        <div class="cal-week" id="calweek-${claim.id}">
+          <div class="cal-week-hdr" onclick="toggleSem(this)">
+            <span class="cal-sem-pill">S${semNum}</span>
+            <span class="cal-sem-range">${weekRange}</span>
+            <span class="cal-sem-topic">${claim.titulo}</span>
+            <span class="cal-week-toggle">▾</span>
+          </div>
+          <div class="cal-week-body">`;
+
+      CAL_SCHEDULE.forEach(sched => {
+        const pubDate = offsetDate(baseDate, sched.diaOffset);
+        const buildFn = sched.varKey === 'A' ? buildVarA : buildVarB;
+        const pieceId = `pieza-${sched.varKey.toLowerCase()}-${claim.id}-${sched.fmtKey}`;
+        const dlName  = `AMG_C${claim.id}_${sched.platform.replace(/\s+/g,'')}_${sched.fmtKey}`;
+
+        html += `
+            <div class="cal-pub-row">
+              <div class="cal-pub-meta">
+                <span class="cal-pub-icon">${sched.icon}</span>
+                <span class="cal-pub-platform" style="color:${sched.pColor}">${sched.platform}</span>
+                <span class="cal-pub-tipo">${sched.tipo}</span>
+                <span class="cal-pub-fecha">${fmtDia(pubDate)}</span>
+              </div>
+              <div class="cal-pub-piece">
+                <div class="format-card">
+                  ${buildFn(claim, sched.fmtKey)}
+                  <button class="btn-download" onclick="downloadPieza('${pieceId}','${dlName}')">↓ PNG</button>
+                </div>
+              </div>
+            </div>`;
+      });
+
+      html += `
+            <div class="cal-copy-block">
+              <div class="cal-copy-text">${claim.copyIG.replace(/\n/g,'<br>')}</div>
+              <div class="cal-copy-ht">${claim.hashtags}</div>
+              <div class="cal-copy-actions">
+                <button class="btn-copiar" data-cal-copy="${claim.id}" onclick="copiarTextoCAL(${claim.id},false)">Copiar texto</button>
+                <button class="btn-copiar btn-copiar-ht" data-cal-copy="${claim.id}" onclick="copiarTextoCAL(${claim.id},true)">+ hashtags</button>
+              </div>
+            </div>
+          </div><!-- /cal-week-body -->
+        </div><!-- /cal-week -->`;
+    });
+
+    html += `
+      </div><!-- /cal-month-body -->
+    </div><!-- /cal-month -->`;
+  });
+
+  html += '</div><!-- /cal-wrap -->';
+  container.innerHTML = html;
+}
+
+renderCalendario();
+
 /* ══════════════════════════════════
    TAB SWITCHING
 ══════════════════════════════════ */
@@ -2301,12 +2620,21 @@ let currentBrazo = 'B1';
 let currentVarKey = 'A';
 
 function switchTab(varKey, btn) {
+  if (varKey === 'CAL') {
+    // B1 calendar — single tab, no variant selection
+    document.querySelectorAll('.tabs-bar-b1 .tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.getElementById('tab-calendario').classList.add('active');
+    return;
+  }
+  // B2 variant tabs
   currentVarKey = varKey;
-  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  const prefix = currentBrazo === 'B2' ? 'tab-kc-var' : 'tab-var';
-  document.getElementById(`${prefix}${varKey}`).classList.add('active');
+  document.querySelectorAll('.tabs-bar-b2 .tab-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  const panel = document.getElementById(`tab-kc-var${varKey}`);
+  if (panel) panel.classList.add('active');
 }
 
 function switchBrazo(brazo, btn) {
@@ -2318,11 +2646,18 @@ function switchBrazo(brazo, btn) {
     ? 'Brazo 1 · Sin Marca · Mayo–Julio 2026 · 96 piezas'
     : 'Brazo 2 · Ki-CAB® · Ago–Oct 2026 · 96 piezas';
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-  const prefix = brazo === 'B2' ? 'tab-kc-var' : 'tab-var';
-  // currentVarKey may be C or D from old session — clamp to A or B
-  if (!['A','B'].includes(currentVarKey)) currentVarKey = 'A';
-  const panel = document.getElementById(`${prefix}${currentVarKey}`);
-  if (panel) panel.classList.add('active');
+
+  if (brazo === 'B1') {
+    document.querySelector('.tabs-bar-b1').style.display = 'flex';
+    document.querySelector('.tabs-bar-b2').style.display = 'none';
+    document.getElementById('tab-calendario').classList.add('active');
+  } else {
+    document.querySelector('.tabs-bar-b1').style.display = 'none';
+    document.querySelector('.tabs-bar-b2').style.display = 'flex';
+    if (!['A','B'].includes(currentVarKey)) currentVarKey = 'A';
+    const panel = document.getElementById(`tab-kc-var${currentVarKey}`);
+    if (panel) panel.classList.add('active');
+  }
 }
 
 /* ══════════════════════════════════
