@@ -1347,11 +1347,11 @@ body.edit-mode .sello:hover { outline: 2px solid rgba(136,112,40,0.9); }
 .var-a-kc .kc-subcopy {
   font-size: clamp(8px,2.2cqi,12px); color: rgba(255,255,255,0.65); font-weight: 600;
 }
-/* Producto: esquina inferior derecha dentro del texto */
+/* Producto: esquina inferior derecha — caja Ki-CAB® prominente */
 .var-a-kc .kc-prod {
-  position: absolute; right: clamp(6px,1.8cqi,14px); bottom: clamp(20px,6cqi,44px);
-  height: clamp(38px,11cqi,72px); width: auto; object-fit: contain;
-  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.45));
+  position: absolute; right: clamp(4px,1.5cqi,12px); bottom: clamp(18px,5cqi,38px);
+  height: clamp(52px,17cqi,110px); width: auto; object-fit: contain;
+  filter: drop-shadow(0 3px 12px rgba(0,0,0,0.55));
 }
 /* Sello: sobre la foto, esquina superior izquierda */
 .var-a-kc .sello {
@@ -2137,14 +2137,23 @@ const claims2 = [
 /* ══════════════════════════════════
    KC BUILD FUNCTIONS (variantes Ki-CAB)
 ══════════════════════════════════ */
-/* ── Fotos KC: mismas fotos de pacientes que Brazo 1 — sin caja genérica de AI ── */
+/* ── Fotos KC: nuevas imágenes de pacientes optimizadas para layout split KC ── */
+const FK_KC = {
+  mujer:  ['HUB_AMG_PYLORI/brand_kicab/kc_mujer_a1.png',
+           'HUB_AMG_PYLORI/brand_kicab/kc_mujer_a2.png'],
+  hombre: ['HUB_AMG_PYLORI/brand_kicab/kc_hombre_a1.png',
+           'HUB_AMG_PYLORI/brand_kicab/kc_hombre_a2.png'],
+};
 function fotoKC(claim) {
-  const map = {
-    1: F.mujer1,    2: F.hombre2,    3: F.mujer3,    4: F.hombre4,
-    5: F.mujer5,    6: F.bacteria6,  7: F.bacteria7, 8: F.hombre8,
-    9: F.hombre9,   10: F.bacteria10,11: F.mujer11,  12: F.hombre12
-  };
-  return map[claim.id] || F.mujer1;
+  /* Bacterias usan sus fotos originales de brazo 1 */
+  if ([6,7,10].includes(claim.id)) {
+    const bMap = { 6: F.bacteria6, 7: F.bacteria7, 10: F.bacteria10 };
+    return bMap[claim.id];
+  }
+  /* Par = mujer, impar = hombre; alterna entre las 2 fotos disponibles */
+  const isMujer = claim.id % 2 === 0;
+  const arr = isMujer ? FK_KC.mujer : FK_KC.hombre;
+  return arr[Math.floor((claim.id - 1) / 2) % arr.length];
 }
 /* Cajas reales Ki-CAB® sin fondo — alternando 10 comp / 30 comp por claim */
 const PROD_KC10 = 'HUB_AMG_PYLORI/brand_amg/caja-con10.png';
@@ -2642,7 +2651,8 @@ let _imgEl = null;
 /* Wrapper: el click viene del foto-overlay → buscamos el foto-bg hermano */
 function openImgPanelFromOverlay(e) {
   e.stopPropagation();
-  const fotoBg = e.currentTarget.closest('.pieza')?.querySelector('.foto-bg');
+  const pieza = e.currentTarget.closest('.pieza');
+  const fotoBg = pieza?.querySelector('.foto-bg') || pieza?.querySelector('.kc-photo');
   if (fotoBg) openImgPanel({ currentTarget: fotoBg, stopPropagation: () => {} });
 }
 
@@ -2651,7 +2661,8 @@ function openImgForPieza(pieceId) {
   if (!editMode) toggleEditMode();
   const pieza = document.getElementById(pieceId);
   if (!pieza) return;
-  const fotoBg = pieza.querySelector('.foto-bg');
+  /* Soporta .foto-bg (Brazo 1 Var A) y .kc-photo (Brazo 2 Var A KC) */
+  const fotoBg = pieza.querySelector('.foto-bg') || pieza.querySelector('.kc-photo');
   if (!fotoBg) return;
   openImgPanel({ currentTarget: fotoBg, stopPropagation: () => {} });
   setTimeout(() => pieza.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 50);
