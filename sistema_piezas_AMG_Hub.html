@@ -1159,6 +1159,82 @@ body.edit-mode .sello:hover { outline: 2px solid rgba(136,112,40,0.9); }
   color: rgba(255,255,255,0.2); font-size: 10px;
   border-top: 1px solid rgba(255,255,255,0.05); margin-top: 24px;
 }
+
+/* ════════════════════════════════════
+   BRAZO SELECTOR
+════════════════════════════════════ */
+.brazo-bar {
+  background: #0b1228;
+  padding: 0 40px;
+  display: flex; align-items: center; gap: 8px;
+  border-bottom: 2px solid rgba(255,255,255,0.05);
+}
+.brazo-label {
+  color: rgba(255,255,255,0.35); font-size: 11px; font-weight: 600;
+  letter-spacing: 0.06em; text-transform: uppercase; margin-right: 8px;
+}
+.brazo-btn {
+  background: none; border: 1.5px solid rgba(255,255,255,0.12);
+  border-radius: 8px; padding: 8px 20px; cursor: pointer;
+  color: rgba(255,255,255,0.45); font-family: 'Montserrat', sans-serif;
+  font-weight: 700; font-size: 12px; letter-spacing: 0.04em;
+  transition: all 0.2s; display: flex; align-items: center; gap: 8px;
+}
+.brazo-btn:hover { color: #fff; border-color: rgba(255,255,255,0.35); }
+.brazo-btn.active.b1 {
+  background: rgba(24,56,136,0.5); border-color: var(--navy);
+  color: #fff;
+}
+.brazo-btn.active.b2 {
+  background: rgba(30,46,168,0.5); border-color: #4A5EE8;
+  color: #fff;
+}
+.brazo-btn .b-pill {
+  font-size: 9px; font-weight: 700; padding: 2px 6px;
+  border-radius: 4px; letter-spacing: 0.04em;
+}
+.brazo-btn.b1 .b-pill { background: var(--teal); color: #fff; }
+.brazo-btn.b2 .b-pill { background: #4A5EE8; color: #fff; }
+.brazo-sep { width: 1px; height: 32px; background: rgba(255,255,255,0.08); margin: 0 4px; }
+
+/* ════════════════════════════════════
+   KI-CAB VARIANT OVERRIDES
+   Cobalt blue palette: #1E2EA8 / #4A5EE8 / #3DC0B4
+════════════════════════════════════ */
+.kc-active .var-a .copy-block .headline,
+.kc-active .var-a .copy-block .cifra { color: #fff; }
+.kc-active .var-a { background: #0d1733; }
+
+/* KC Variant B — cobalt background */
+.kc-active .var-b {
+  background: linear-gradient(150deg, #1E2EA8 0%, #0d1640 60%, #0d1733 100%);
+}
+.kc-active .var-b .geo-accent { background: #4A5EE8; opacity: 0.25; }
+.kc-active .var-b .circle-accent { border-color: rgba(74,94,232,0.4); }
+.kc-active .var-b .dots {
+  background-image: radial-gradient(rgba(74,94,232,0.4) 1px, transparent 1px);
+}
+.kc-active .var-b .cta-inline { color: #3DC0B4; }
+.kc-active .var-b .url-text { color: rgba(74,94,232,0.7); }
+
+/* KC Variant C — cobalt accent */
+.kc-active .var-c .banda-top { background: rgba(30,46,168,0.92); }
+.kc-active .var-c .barra-bottom { background: rgba(30,46,168,0.95); }
+.kc-active .var-c .cta-detect { color: #3DC0B4; }
+.kc-active .var-c .hp-giant { color: rgba(74,94,232,0.25); }
+
+/* KC Variant D */
+.kc-active .var-d .vd-shape { background: #1E2EA8; }
+.kc-active .var-d .vd-stripe { background: #3DC0B4; }
+.kc-active .var-d .vd-tracks { background-image: repeating-linear-gradient(90deg, rgba(74,94,232,0.12) 0 1px, transparent 1px 16px); }
+.kc-active .var-d .vd-eyebrow { color: #3DC0B4; }
+.kc-active .var-d .vd-divider { background: rgba(74,94,232,0.4); }
+
+/* KC CTA bar — cobalt gradient */
+.kc-active .cta-bar {
+  background: linear-gradient(90deg, #1E2EA8 0%, #2D3ECC 100%);
+}
+.kc-active .franja-bar { filter: hue-rotate(180deg) saturate(1.3); }
 </style>
 </head>
 <body>
@@ -1170,6 +1246,22 @@ body.edit-mode .sello:hover { outline: 2px solid rgba(136,112,40,0.9); }
   <div class="badge">Brazo 1 · Sin Marca · Mayo–Julio 2026 · 144 piezas</div>
   <button id="btn-edit-mode" onclick="toggleEditMode()" title="Activar modo edición: haz clic en cualquier texto de las piezas para editarlo">
     ✏️ Modo Edición
+  </button>
+</div>
+
+<!-- ══ BRAZO SELECTOR ══ -->
+<div class="brazo-bar">
+  <span class="brazo-label">Campaña:</span>
+  <button class="brazo-btn b1 active" onclick="switchBrazo('B1',this)">
+    <span>🦠 Brazo 1 — Sin Marca</span>
+    <span class="b-pill">AMG</span>
+    <small style="color:rgba(255,255,255,0.35); font-weight:400; font-size:10px;">Mayo–Julio 2026</small>
+  </button>
+  <div class="brazo-sep"></div>
+  <button class="brazo-btn b2" onclick="switchBrazo('B2',this)">
+    <span>💊 Brazo 2 — Ki-CAB®</span>
+    <span class="b-pill">KI-CAB</span>
+    <small style="color:rgba(255,255,255,0.35); font-weight:400; font-size:10px;">Ago–Oct 2026</small>
   </button>
 </div>
 
@@ -1267,10 +1359,18 @@ body.edit-mode .sello:hover { outline: 2px solid rgba(136,112,40,0.9); }
 ═══════════════════════════════ -->
 <div id="tab-varD" class="tab-panel"></div>
 
+<!-- ══════════════════════════════════════════
+     KI-CAB BRAZO 2 TABS (hidden until B2 active)
+═══════════════════════════════════════════ -->
+<div id="tab-kc-varA" class="tab-panel kc-active"></div>
+<div id="tab-kc-varB" class="tab-panel kc-active"></div>
+<div id="tab-kc-varC" class="tab-panel kc-active"></div>
+<div id="tab-kc-varD" class="tab-panel kc-active"></div>
+
 </div>
 
 <div class="site-footer">
-  Hub AMG · México Sin Cáncer Gástrico · Brazo 1 Sin Marca · Polar Multimedia para Carnot Laboratorios · 2026
+  Hub AMG · México Sin Cáncer Gástrico · Brazo 1 Sin Marca + Brazo 2 Ki-CAB® · Polar Multimedia para Carnot Laboratorios · 2026
 </div>
 
 <script>
@@ -1724,14 +1824,479 @@ renderTab('B', buildVarB);
 renderTab('C', buildVarC);
 renderTab('D', buildVarD);
 
+/* ══════════════════════════════════════════════════════
+   BRAZO 2 — KI-CAB® DATA
+   Concepto: "Cerrar la pinza"
+   Brazo 1 abrió la conciencia del problema.
+   Brazo 2 presenta Ki-CAB como la solución.
+══════════════════════════════════════════════════════ */
+
+/* ── Ki-CAB brand assets ── */
+const SELLO_KC = 'HUB_AMG_PYLORI/brand_kicab/Sello azul@2x.png';
+const LOGO_KC  = 'HUB_AMG_PYLORI/brand_kicab/logo_kicab_transparent.png';
+const FRANJA_KC= 'HUB_AMG_PYLORI/brand_kicab/franja.png';
+
+/* ── Reutilizamos las mismas fotos del Brazo 1 ── */
+const FK = {
+  mujer1:    'HUB_AMG_PYLORI/brand_amg/hispanica_mujer_c1_gastritis.png',
+  hombre2:   'HUB_AMG_PYLORI/brand_amg/hispanico_hombre_c2_transmisio.png',
+  mujer3:    'HUB_AMG_PYLORI/brand_amg/hispanica_mujer_c3_auto.png',
+  hombre4:   'HUB_AMG_PYLORI/brand_amg/hispanico_hombre_c4_consulta.png',
+  mujer5:    'HUB_AMG_PYLORI/brand_amg/hispanica_mujer_c5_dispepsia.png',
+  bacteria6: 'HUB_AMG_PYLORI/brand_amg/imagen_bacteria.png',
+  bacteria7: 'HUB_AMG_PYLORI/brand_amg/bacteria_c7_tratamiento.png',
+  hombre8:   'HUB_AMG_PYLORI/brand_amg/hispanico_hombre_c8_preguntas.png',
+  hombre9:   'HUB_AMG_PYLORI/brand_amg/hispanico_hombre_c9_reflujo.png',
+  bacteria10:'HUB_AMG_PYLORI/brand_amg/bacteria_c10_ulceras.png',
+  mujer11:   'HUB_AMG_PYLORI/brand_amg/hispanica_mujer_c11_protocolo.png',
+  hombre12:  'HUB_AMG_PYLORI/brand_amg/hispanico_hombre_c12_segundaopinio.png',
+};
+
+const HT_KC = '#KiCAB #Tegoprazan #PCAB #CierraLaPinza #HelicobacterPylori #ErradicaciónHP #SaludDigestiva';
+const CTA_KC = 'Pregunta a tu médico por <strong>Ki-CAB®</strong> — el 1er P-CAB con evidencia en México.';
+const DISCLAIMER_KC = 'Medicamento de prescripción. Esta información es para fines educativos y no sustituye la consulta médica.';
+
+const claims2 = [
+  /* ─────────────── AGOSTO ─────────────── */
+  {
+    id: 1, mes: 'Agosto', mesColor: '#1E2EA8',
+    titulo: 'Ya la identificaste. Ahora ciérrala.',
+    fecha: 'Agosto · S1 · 2026-08-06',
+    foto: FK.mujer1,
+    cifra: 'Cierra',
+    cifraLabel: 'la pinza',
+    headline: 'Ya identificaste <em>Helicobacter pylori</em>. Ahora es momento de erradicarla.',
+    subcopy: 'Ki-CAB® — el primer paso hacia la curación.',
+    hpTitle: '<em>Helicobacter pylori</em>.',
+    claimC: 'Identificada la bacteria, <span class="hp-highlight">cierra la pinza</span> con el tratamiento adecuado.',
+    subC: 'Pregunta a tu médico por Ki-CAB®.',
+    hashtags: HT_KC,
+    copyIG: '🔒 Ya sabes que tienes <em>Helicobacter pylori</em>. Ahora es momento de cerrar la pinza.\n\nIdentificar la bacteria fue el primer paso. El segundo es erradicarla con el tratamiento correcto.\n\nKi-CAB® (tegoprazan) es el 1er P-CAB con evidencia en México. Pregunta a tu médico si eres candidato.',
+  },
+  {
+    id: 2, mes: 'Agosto', mesColor: '#1E2EA8',
+    titulo: 'P-CAB vs IBP: la diferencia importa',
+    fecha: 'Agosto · S2 · 2026-08-13',
+    foto: FK.hombre2,
+    cifra: 'P-CAB',
+    cifraLabel: 'nueva generación',
+    headline: 'No todos los supresores de ácido son iguales.',
+    subcopy: 'Los P-CAB actúan más rápido y con mayor potencia sostenida.',
+    hpTitle: 'Ki-CAB® tegoprazan.',
+    claimC: 'Los <span class="hp-highlight">P-CAB actúan</span> más rápido y de forma más predecible que los IBP.',
+    subC: 'Mayor supresión ácida = mayor eficacia de erradicación.',
+    hashtags: HT_KC,
+    copyIG: '💡 ¿Todos los «pastillas para el ácido» son iguales?\n\nNo. Existe una diferencia importante:\n\n• IBP (omeprazol, lansoprazol): inhiben la bomba de protones de forma indirecta, con variabilidad metabólica.\n• P-CAB (tegoprazan / Ki-CAB®): bloqueo competitivo directo, acción más rápida y supresión ácida más potente y predecible.\n\nMayor supresión ácida = mayor eficacia de erradicación de <em>Helicobacter pylori</em>.',
+  },
+  {
+    id: 3, mes: 'Agosto', mesColor: '#1E2EA8',
+    titulo: '1 comprimido, 1 vez al día',
+    fecha: 'Agosto · S3 · 2026-08-20',
+    foto: FK.mujer3,
+    cifra: '1×',
+    cifraLabel: 'al día',
+    headline: 'Simplicidad que mejora el apego al tratamiento.',
+    subcopy: 'Ki-CAB® — 1 comprimido, 1 vez al día.',
+    hpTitle: 'Ki-CAB® tegoprazan.',
+    claimC: '1 comprimido, 1 vez al día. <span class="hp-highlight">Apego al tratamiento</span> que marca la diferencia.',
+    subC: 'El apego completo es clave para la erradicación exitosa.',
+    hashtags: HT_KC,
+    copyIG: '📋 El tratamiento funciona cuando se toma completo.\n\nKi-CAB® (tegoprazan) se administra 1 vez al día, simplificando el esquema de erradicación de <em>Helicobacter pylori</em>.\n\nUn esquema simple = mejor apego = mayor tasa de curación.\n\nHabla con tu médico sobre el esquema más adecuado para ti.',
+  },
+  {
+    id: 4, mes: 'Agosto', mesColor: '#1E2EA8',
+    titulo: 'El 1er P-CAB con evidencia en México',
+    fecha: 'Agosto · S4 · 2026-08-27',
+    foto: FK.hombre4,
+    cifra: '1er',
+    cifraLabel: 'P-CAB en México',
+    headline: 'Ki-CAB® — respaldado por evidencia clínica en población mexicana.',
+    subcopy: 'La diferencia que importa a tus pacientes.',
+    hpTitle: 'Ki-CAB® tegoprazan.',
+    claimC: 'El <span class="hp-highlight">1er P-CAB</span> con registro y evidencia clínica en México.',
+    subC: 'Respaldado por la Asociación Mexicana de Gastroenterología.',
+    hashtags: HT_KC,
+    copyIG: '🇲🇽 No todos los tratamientos tienen evidencia en nuestra población.\n\nKi-CAB® (tegoprazan) es el 1er P-CAB con registro y evidencia clínica disponible en México.\n\nUna diferencia que importa cuando hablamos de erradicar <em>Helicobacter pylori</em> en nuestra población.',
+  },
+
+  /* ─────────────── SEPTIEMBRE ─────────────── */
+  {
+    id: 5, mes: 'Septiembre', mesColor: '#0A5E7A',
+    titulo: 'Erradicación >90%',
+    fecha: 'Sep · S1 · 2026-09-03',
+    foto: FK.mujer5,
+    cifra: '>90%',
+    cifraLabel: 'erradicación en estudios',
+    headline: 'Tasas de curación que superan los esquemas anteriores.',
+    subcopy: 'Con tegoprazan como base del esquema.',
+    hpTitle: 'Ki-CAB® tegoprazan.',
+    claimC: 'Tasas de erradicación <span class="hp-highlight">>90%</span> con tegoprazan en esquemas de primera línea.',
+    subC: 'La evidencia respalda la elección.',
+    hashtags: HT_KC,
+    copyIG: '📊 Números que cuentan.\n\nLos esquemas de erradicación basados en tegoprazan (Ki-CAB®) han demostrado tasas de erradicación de <em>Helicobacter pylori</em> superiores al 90% en estudios clínicos controlados.\n\nUn resultado que mejora sustancialmente lo que ofrecían los esquemas con IBP en primera línea.',
+  },
+  {
+    id: 6, mes: 'Septiembre', mesColor: '#0A5E7A',
+    titulo: 'Triple terapia moderna',
+    fecha: 'Sep · S2 · 2026-09-10',
+    foto: FK.bacteria6,
+    cifra: 'Triple',
+    cifraLabel: 'terapia con Ki-CAB®',
+    headline: 'Ki-CAB® como base del esquema de erradicación 2026.',
+    subcopy: 'Según guías internacionales Maastricht VI.',
+    hpTitle: 'Ki-CAB® tegoprazan.',
+    claimC: 'Guías Maastricht VI respaldan el uso de <span class="hp-highlight">P-CAB como base</span> de erradicación.',
+    subC: 'Ki-CAB® — la elección con respaldo científico internacional.',
+    hashtags: HT_KC,
+    copyIG: '📚 Las guías Maastricht VI — el consenso internacional más actualizado sobre <em>Helicobacter pylori</em> — respaldan el uso de P-CAB como base de los esquemas de erradicación de primera y segunda línea.\n\nKi-CAB® (tegoprazan) es la opción P-CAB disponible en México.\n\nEl conocimiento global, con disponibilidad local.',
+  },
+  {
+    id: 7, mes: 'Septiembre', mesColor: '#0A5E7A',
+    titulo: 'Cuando el IBP ya no es suficiente',
+    fecha: 'Sep · S3 · 2026-09-17',
+    foto: FK.bacteria7,
+    cifra: 'Plan B',
+    cifraLabel: 'cuando el IBP falló',
+    headline: 'Un primer intento fallido no significa el fin.',
+    subcopy: 'Los P-CAB ofrecen una vía alternativa sin resistencia cruzada.',
+    hpTitle: 'Ki-CAB® tegoprazan.',
+    claimC: 'Los P-CAB no tienen <span class="hp-highlight">resistencia cruzada</span> con los IBP.',
+    subC: 'Una opción válida cuando el primer esquema falló.',
+    hashtags: HT_KC,
+    copyIG: '🔄 ¿El tratamiento anterior para <em>Helicobacter pylori</em> no funcionó?\n\nNo estás solo — hasta el 20% de los esquemas de primera línea con IBP fallan en alcanzar la erradicación.\n\nLa buena noticia: los P-CAB como Ki-CAB® (tegoprazan) no comparten mecanismo de resistencia con los IBP, lo que los convierte en una opción válida para esquemas de rescate.\n\nHabla con tu gastroenterólogo.',
+  },
+  {
+    id: 8, mes: 'Septiembre', mesColor: '#0A5E7A',
+    titulo: 'Después de erradicar: el tejido sana',
+    fecha: 'Sep · S4 · 2026-09-24',
+    foto: FK.hombre8,
+    cifra: '↓',
+    cifraLabel: 'riesgo de cáncer gástrico',
+    headline: 'Erradicar <em>Helicobacter pylori</em> reduce el riesgo de cáncer gástrico.',
+    subcopy: 'La gastritis puede revertirse. La úlcera puede sanar.',
+    hpTitle: 'Ki-CAB® tegoprazan.',
+    claimC: 'Erradicar <em>Helicobacter pylori</em> puede <span class="hp-highlight">reducir el riesgo</span> de cáncer gástrico hasta en un 35%.',
+    subC: 'El tejido gástrico tiene la capacidad de recuperarse.',
+    hashtags: HT_KC,
+    copyIG: '🌱 Erradicar <em>Helicobacter pylori</em> no solo alivia los síntomas — transforma el riesgo.\n\nEstudios muestran que la erradicación exitosa puede reducir el riesgo de desarrollar cáncer gástrico hasta en un 35%.\n\nEl tejido gástrico puede recuperarse, la gastritis puede mejorar, las úlceras pueden sanar.\n\nCerrar la pinza hoy es protegerte mañana.',
+  },
+
+  /* ─────────────── OCTUBRE ─────────────── */
+  {
+    id: 9, mes: 'Octubre', mesColor: '#5B1A8F',
+    titulo: 'Confirma la erradicación',
+    fecha: 'Oct · S1 · 2026-10-01',
+    foto: FK.hombre9,
+    cifra: '4 sem',
+    cifraLabel: 'después del tratamiento',
+    headline: 'La prueba de aliento confirma si la erradicación fue exitosa.',
+    subcopy: 'No asumas — verifica. 4 semanas después del tratamiento.',
+    hpTitle: 'Ki-CAB® tegoprazan.',
+    claimC: 'Confirma la erradicación con test de aliento <span class="hp-highlight">4 semanas</span> después del último comprimido.',
+    subC: 'Sin IBP ni P-CAB al momento del test de confirmación.',
+    hashtags: HT_KC,
+    copyIG: '✅ El tratamiento terminó. ¿Ahora qué?\n\nNo des por hecho la erradicación — confírmala.\n\nEl test de aliento de confirmación debe realizarse:\n• Mínimo 4 semanas después del último comprimido\n• Sin tomar IBP, P-CAB ni antibióticos en los 15 días previos\n\nSolo así tienes certeza real de que <em>Helicobacter pylori</em> fue erradicada.',
+  },
+  {
+    id: 10, mes: 'Octubre', mesColor: '#5B1A8F',
+    titulo: 'Protege a tu familia',
+    fecha: 'Oct · S2 · 2026-10-08',
+    foto: FK.bacteria10,
+    cifra: 'Familia',
+    cifraLabel: 'protegida',
+    headline: '<em>Helicobacter pylori</em> se transmite entre convivientes.',
+    subcopy: 'Si tú la tuviste, tus familiares merecen saber.',
+    hpTitle: '<em>Helicobacter pylori</em>.',
+    claimC: 'Si tú fuiste tratado, <span class="hp-highlight">tus familiares</span> también merecen evaluarse.',
+    subC: 'Proteger a la familia es parte del tratamiento.',
+    hashtags: HT_KC,
+    copyIG: '👨‍👩‍👧 Si tú la tuviste, tus familiares pueden tenerla.\n\n<em>Helicobacter pylori</em> se transmite por contacto cercano, agua y alimentos. Los convivientes — especialmente niños y pareja — tienen mayor riesgo de portar la bacteria.\n\nSi fuiste tratado con Ki-CAB® o cualquier esquema de erradicación, recomienda a tu médico que evalúe a tu familia.',
+  },
+  {
+    id: 11, mes: 'Octubre', mesColor: '#5B1A8F',
+    titulo: 'Ki-CAB® disponible en México',
+    fecha: 'Oct · S3 · 2026-10-15',
+    foto: FK.mujer11,
+    cifra: '✓ MX',
+    cifraLabel: 'registro COFEPRIS',
+    headline: 'Ki-CAB® (tegoprazan) ya está disponible en México.',
+    subcopy: 'Con registro COFEPRIS y evidencia local.',
+    hpTitle: 'Ki-CAB® tegoprazan.',
+    claimC: 'Ki-CAB® tiene <span class="hp-highlight">registro COFEPRIS</span> y evidencia clínica en población mexicana.',
+    subC: 'Pregunta a tu médico o especialista gastroenterólogo.',
+    hashtags: HT_KC,
+    copyIG: '🏥 La mejor opción debe ser accesible donde la necesitas.\n\nKi-CAB® (tegoprazan) cuenta con registro COFEPRIS y evidencia clínica en población mexicana — el primer P-CAB disponible en nuestro país para el tratamiento de <em>Helicobacter pylori</em>.\n\nPregunta en tu consulta o farmacia especializada.',
+  },
+  {
+    id: 12, mes: 'Octubre', mesColor: '#5B1A8F',
+    titulo: 'La pinza cerrada. El ciclo completo.',
+    fecha: 'Oct · S4 · 2026-10-22',
+    foto: FK.hombre12,
+    cifra: '360°',
+    cifraLabel: 'detección · tratamiento · confirmación',
+    headline: 'Del diagnóstico a la erradicación confirmada.',
+    subcopy: 'Detección → Ki-CAB® → confirmación. Ciclo completo.',
+    hpTitle: 'Ki-CAB® tegoprazan.',
+    claimC: '<span class="hp-highlight">Ciclo completo:</span> detectar, tratar con Ki-CAB® y confirmar la erradicación.',
+    subC: 'La solución existe. El ciclo puede cerrarse.',
+    hashtags: HT_KC,
+    copyIG: '🔒 La pinza está cerrada.\n\n3 pasos para resolver <em>Helicobacter pylori</em>:\n\n1️⃣ DETECTAR — Test de aliento o biopsia\n2️⃣ TRATAR — Ki-CAB® (tegoprazan) + antibióticos según esquema médico\n3️⃣ CONFIRMAR — Test de aliento 4 semanas después\n\nCuando el ciclo se cierra, el riesgo de cáncer gástrico se reduce. El diagnóstico fue el inicio. Ki-CAB® fue la solución.',
+  },
+];
+
+/* ══════════════════════════════════
+   KC BUILD FUNCTIONS (variantes Ki-CAB)
+══════════════════════════════════ */
+function buildVarA_KC(claim, fmt) {
+  const fotos = `url('${claim.foto}')`;
+  return `
+  <div class="pieza fmt-${fmt} var-a" id="pieza-kca-${claim.id}-${fmt}">
+    <div class="foto-bg" style="background-image:${fotos}"></div>
+    <div class="foto-halo"></div>
+    <div class="foto-overlay" style="background:linear-gradient(to top, rgba(14,18,60,0.95) 0%, rgba(14,18,60,0.55) 55%, rgba(14,18,60,0.15) 100%)"></div>
+    <img class="sello" src="${SELLO_KC}" alt="Ki-CAB">
+    <div class="copy-block">
+      <span class="cifra" style="color:#3DC0B4">${claim.cifra}</span>
+      ${claim.cifraLabel ? `<span class="cifra-label">${claim.cifraLabel}</span>` : ''}
+      <div class="headline">${claim.headline}</div>
+      <div class="subcopy">${claim.subcopy}</div>
+    </div>
+    <img class="franja-bar" src="${FRANJA_KC}" alt="" onerror="this.src='HUB_AMG_PYLORI/brand_amg/franja.png'">
+    <div class="cta-bar" style="background:linear-gradient(90deg,#1E2EA8,#2D3ECC)">
+      <div class="cta-text">${CTA_KC}</div>
+      <div class="disclaimer">${DISCLAIMER_KC}</div>
+    </div>
+  </div>`;
+}
+
+function buildVarB_KC(claim, fmt) {
+  const is169 = fmt === '169';
+  const style = 'background:linear-gradient(150deg,#1E2EA8 0%,#0d1640 60%,#0d1733 100%)';
+  if (is169) {
+    return `
+  <div class="pieza fmt-${fmt} var-b" style="${style}" id="pieza-kcb-${claim.id}-${fmt}">
+    <div class="geo-accent" style="background:#4A5EE8;opacity:.25"></div>
+    <div class="dots" style="background-image:radial-gradient(rgba(74,94,232,.4) 1px,transparent 1px)"></div>
+    <div class="circle-accent" style="border-color:rgba(74,94,232,.4)"></div>
+    <div class="content">
+      <div class="left-col">
+        <div class="cifra" style="color:#3DC0B4">${claim.cifra}</div>
+        ${claim.cifraLabel ? `<span class="cifra-label">${claim.cifraLabel}</span>` : ''}
+        <div class="headline" style="margin-top:8px">${claim.headline}</div>
+        <div class="subcopy" style="margin-top:6px">${claim.subcopy}</div>
+      </div>
+      <div class="right-col">
+        <img class="sello" src="${SELLO_KC}" alt="Ki-CAB">
+        <div class="cta-inline bottom-area" style="color:#3DC0B4">${CTA_KC}<div class="url-text" style="color:rgba(74,94,232,.7)">mexicosincancergastrico.com.mx</div></div>
+      </div>
+    </div>
+  </div>`;
+  }
+  return `
+  <div class="pieza fmt-${fmt} var-b" style="${style}" id="pieza-kcb-${claim.id}-${fmt}">
+    <div class="geo-accent" style="background:#4A5EE8;opacity:.25"></div>
+    <div class="dots" style="background-image:radial-gradient(rgba(74,94,232,.4) 1px,transparent 1px)"></div>
+    <div class="circle-accent" style="border-color:rgba(74,94,232,.4)"></div>
+    <div class="content">
+      <div class="top-area">
+        <div>
+          <span class="cifra" style="color:#3DC0B4">${claim.cifra}</span>
+          ${claim.cifraLabel ? `<span class="cifra-label">${claim.cifraLabel}</span>` : ''}
+        </div>
+        <img class="sello" src="${SELLO_KC}" alt="Ki-CAB">
+      </div>
+      <div class="middle-area">
+        <div class="headline">${claim.headline}</div>
+        <div class="subcopy" style="margin-top:8px">${claim.subcopy}</div>
+      </div>
+      <div class="bottom-area">
+        <div class="cta-inline" style="color:#3DC0B4">${CTA_KC}</div>
+        <div class="url-text" style="color:rgba(74,94,232,.7)">mexicosincancergastrico.com.mx</div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function buildVarC_KC(claim, fmt) {
+  return `
+  <div class="pieza fmt-${fmt} var-c" id="pieza-kcc-${claim.id}-${fmt}">
+    <div class="foto-bg" style="background-image:url('${claim.foto}')"></div>
+    <div class="foto-overlay"></div>
+    <div class="banda-top" style="background:rgba(30,46,168,.92)">
+      <span class="campana-label">Brazo 2 · Tratamiento Ki-CAB® 2026</span>
+      <img class="sello" src="${SELLO_KC}" alt="Ki-CAB">
+    </div>
+    <div class="main-area">
+      <span class="hp-giant" style="color:rgba(74,94,232,.22)">${claim.hpTitle}</span>
+      <div class="hp-claim">${claim.claimC}</div>
+      <div class="hp-sub">${claim.subC}</div>
+      <div class="cta-detect" style="color:#3DC0B4">Pregunta a tu médico por Ki-CAB® — el 1er P-CAB<br>con evidencia en México.</div>
+    </div>
+    <div class="url-bottom">mexicosincancergastrico.com.mx</div>
+    <div class="barra-bottom" style="background:rgba(30,46,168,.95)">
+      <div class="bottom-claim-text"><strong>Ki-CAB® tegoprazan</strong> · 1er P-CAB con evidencia en México · Carnot Laboratorios</div>
+      <div class="qr-box"><img src="${QR_URL}" alt="QR"></div>
+    </div>
+  </div>`;
+}
+
+function buildVarD_KC(claim, fmt) {
+  const is169 = fmt === '169';
+  const vdSep = is169 ? '<div class="vd-sep"></div>' : '';
+  const vdRight = is169 ? `
+    <div class="vd-right">
+      <div class="vd-headline">${claim.headline}</div>
+      <div class="vd-subcopy">${claim.subcopy}</div>
+    </div>` : '';
+
+  return `
+  <div class="pieza fmt-${fmt} var-d" id="pieza-kcd-${claim.id}-${fmt}">
+    <div class="vd-shape" style="background:#1E2EA8"></div>
+    <div class="vd-stripe" style="background:#3DC0B4"></div>
+    <div class="vd-tracks" style="background-image:repeating-linear-gradient(90deg,rgba(74,94,232,.12) 0 1px,transparent 1px 16px)"></div>
+    ${vdSep}
+    <img class="sello" src="${SELLO_KC}" alt="Ki-CAB">
+    <div class="vd-body">
+      <div class="vd-eyebrow" style="color:#3DC0B4">Ki-CAB® — Tratamiento 2026</div>
+      <div class="vd-stat" style="color:#4A5EE8">${claim.cifra}</div>
+      <div class="vd-stat-label">${claim.cifraLabel}</div>
+      <div class="vd-divider" style="background:rgba(74,94,232,.4)"></div>
+      ${!is169 ? `<div class="vd-headline">${claim.headline}</div>
+      <div class="vd-subcopy">${claim.subcopy}</div>` : ''}
+    </div>
+    ${vdRight}
+    <img class="franja-bar" src="${FRANJA_KC}" alt="" onerror="this.src='HUB_AMG_PYLORI/brand_amg/franja.png'">
+    <div class="cta-bar" style="background:linear-gradient(90deg,#1E2EA8,#2D3ECC)">
+      <div class="cta-text">${CTA_KC}</div>
+      <div class="disclaimer">${DISCLAIMER_KC}</div>
+    </div>
+  </div>`;
+}
+
+/* ── Render Ki-CAB tabs (misma lógica pero con claims2 y ids KC) ── */
+function renderTabKC(varKey, buildFn) {
+  const container = document.getElementById(`tab-kc-var${varKey}`);
+  let html = '';
+  let currentMes = null;
+
+  claims2.forEach(claim => {
+    if (claim.mes !== currentMes) {
+      currentMes = claim.mes;
+      html += `<div class="mes-header" style="border-left-color:${claim.mesColor}">
+        <span class="mes-label" style="background:${claim.mesColor}">${claim.mes} 2026</span>
+        <span class="mes-total">4 posts · 4 variantes · 4 formatos · <strong>48 piezas Ki-CAB®</strong></span>
+        <button class="btn-mes-dl" onclick="downloadMesKC('${varKey}', '${claim.mes}')">
+          ↓ Descargar ${claim.mes} KC-Var${varKey} (PNG)
+        </button>
+      </div>`;
+    }
+
+    html += `<div class="claim-section">
+      <div class="claim-header" style="background:rgba(30,46,168,0.35)">
+        <div class="claim-num" style="background:#4A5EE8">${claim.id}</div>
+        <div>
+          <div class="claim-title">${claim.titulo}</div>
+          <div class="claim-fecha">${claim.fecha}</div>
+        </div>
+        <button class="btn-edit-claim" onclick="if(!editMode)toggleEditMode()">✏️ Editar piezas</button>
+      </div>
+      <div class="formats-row">`;
+
+    formats.forEach(fmt => {
+      const pieceId = `pieza-kc${varKey.toLowerCase()}-${claim.id}-${fmt.key}`;
+      const hasPhoto = ['A','C'].includes(varKey);
+      html += `
+        <div class="format-card">
+          <div class="format-label">${fmt.label}</div>
+          <div class="format-info">${fmt.info}</div>
+          ${buildFn(claim, fmt.key)}
+          <div class="pieza-edit-bar">
+            ${hasPhoto ? `<button class="btn-peb" onclick="openImgForPieza('${pieceId}')">🖼 Ajustar imagen</button>` : ''}
+            <button class="btn-peb" style="border-color:rgba(74,94,232,0.45);color:#7A8AFF;" onclick="openSelloForPieza('${pieceId}')">🔰 Ajustar sello</button>
+            <button class="btn-peb btn-peb-reset" onclick="resetPiezaAll('${pieceId}')">↺ Reset pieza</button>
+          </div>
+          <button class="btn-download" onclick="downloadPieza('${pieceId}', 'KC_C${claim.id}_Var${varKey}_${fmt.key}')">
+            ↓ Descargar PNG
+          </button>
+        </div>`;
+    });
+
+    html += `</div>
+      <div class="copy-always">
+        <div class="copy-always-text">${claim.copyIG.replace(/\n/g,'<br>')}</div>
+        <div class="copy-always-ht">${claim.hashtags}</div>
+        <div class="copy-always-actions">
+          <button class="btn-copiar" onclick="copiarTextoKC('${varKey}-${claim.id}', false)">Copiar texto</button>
+          <button class="btn-copiar btn-copiar-ht" onclick="copiarTextoKC('${varKey}-${claim.id}', true)">Copiar + hashtags</button>
+        </div>
+      </div>
+    </div>`;
+  });
+  container.innerHTML = html;
+}
+
+/* ── copiar KC ── */
+function copiarTextoKC(key, withHashtags) {
+  const [varKey, id] = key.split('-');
+  const claim = claims2.find(c => c.id === parseInt(id));
+  if (!claim) return;
+  const raw = withHashtags ? claim.copyIG + '\n\n' + claim.hashtags : claim.copyIG;
+  const text = stripHtml(raw);
+  navigator.clipboard.writeText(text).then(() => {
+    const btns = document.querySelectorAll(`.copy-always .btn-copiar`);
+    // find the right claim section
+  });
+}
+
+/* ── descarga por mes KC ── */
+async function downloadMesKC(varKey, mes) {
+  const claimsDelMes = claims2.filter(c => c.mes === mes);
+  let total = claimsDelMes.length * formats.length;
+  let done = 0;
+  for (const claim of claimsDelMes) {
+    for (const fmt of formats) {
+      const pieceId = `pieza-kc${varKey.toLowerCase()}-${claim.id}-${fmt.key}`;
+      await downloadPieza(pieceId, `KC_${mes}_Var${varKey}_${fmt.key}_C${claim.id}`);
+      done++;
+      console.log(`KC descargando: ${done}/${total}`);
+      await new Promise(r => setTimeout(r, 350));
+    }
+  }
+}
+
+renderTabKC('A', buildVarA_KC);
+renderTabKC('B', buildVarB_KC);
+renderTabKC('C', buildVarC_KC);
+renderTabKC('D', buildVarD_KC);
+
 /* ══════════════════════════════════
    TAB SWITCHING
 ══════════════════════════════════ */
+let currentBrazo = 'B1';
+let currentVarKey = 'A';
+
 function switchTab(varKey, btn) {
+  currentVarKey = varKey;
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById(`tab-var${varKey}`).classList.add('active');
+  const prefix = currentBrazo === 'B2' ? 'tab-kc-var' : 'tab-var';
+  document.getElementById(`${prefix}${varKey}`).classList.add('active');
   btn.classList.add('active');
+}
+
+function switchBrazo(brazo, btn) {
+  currentBrazo = brazo;
+  document.querySelectorAll('.brazo-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  // Update header badge text
+  const badge = document.querySelector('.site-header .badge');
+  if (badge) badge.textContent = brazo === 'B1'
+    ? 'Brazo 1 · Sin Marca · Mayo–Julio 2026 · 144 piezas'
+    : 'Brazo 2 · Ki-CAB® · Ago–Oct 2026 · 144 piezas';
+  // Activate current variant tab in new brazo
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  const prefix = brazo === 'B2' ? 'tab-kc-var' : 'tab-var';
+  document.getElementById(`${prefix}${currentVarKey}`).classList.add('active');
 }
 
 /* ══════════════════════════════════

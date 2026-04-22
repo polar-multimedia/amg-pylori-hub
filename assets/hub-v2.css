@@ -913,3 +913,209 @@ a { text-decoration: none; }
    SCROLL REVEAL INIT
 ══════════════════════ */
 /* Applied via JS observer — elements start hidden, .in added on enter */
+
+/* ══════════════════════════════════════
+   SOCIAL BAR — share + like + login
+══════════════════════════════════════ */
+.social-bar {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  flex-wrap: wrap;
+  padding: 1.5rem 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  margin: 2.5rem 0;
+}
+.social-bar-label {
+  font-family: var(--font-head);
+  font-size: .72rem;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-right: .25rem;
+}
+.btn-social {
+  display: inline-flex;
+  align-items: center;
+  gap: .45rem;
+  padding: .55rem 1.1rem;
+  border-radius: 50px;
+  border: 1.5px solid var(--border);
+  background: var(--white);
+  font-family: var(--font-head);
+  font-size: .78rem;
+  font-weight: 700;
+  color: var(--navy);
+  cursor: pointer;
+  transition: all .2s;
+  user-select: none;
+}
+.btn-social:hover { background: var(--bg); border-color: var(--navy3); }
+.btn-social svg { width: 15px; height: 15px; flex-shrink: 0; }
+.btn-like.liked {
+  background: rgba(48,184,176,.08);
+  border-color: var(--teal);
+  color: var(--teal-d);
+}
+.btn-like .like-count {
+  font-size: .7rem;
+  font-weight: 700;
+  background: var(--bg2);
+  color: var(--navy);
+  padding: 1px 6px;
+  border-radius: 10px;
+  margin-left: 2px;
+}
+.btn-like.liked .like-count { background: rgba(48,184,176,.15); color: var(--teal-d); }
+.btn-share { background: var(--navy); border-color: var(--navy); color: #fff; }
+.btn-share:hover { background: var(--navy2); border-color: var(--navy2); color: #fff; }
+.social-login-link {
+  margin-left: auto;
+  font-size: .75rem;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+  cursor: pointer;
+}
+.social-login-link img { width: 18px; height: 18px; border-radius: 50%; }
+.social-login-link:hover { color: var(--navy); }
+
+/* ── Login modal ── */
+.login-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(16,40,80,.62);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+}
+.login-overlay.open { display: flex; }
+.login-modal {
+  background: #fff;
+  border-radius: 20px;
+  padding: 2.5rem 2rem;
+  max-width: 380px;
+  width: 90%;
+  box-shadow: var(--shadow-lg);
+  text-align: center;
+}
+.login-modal img.login-logo { height: 48px; margin: 0 auto 1.25rem; }
+.login-modal h3 { font-size: 1.15rem; margin-bottom: .5rem; }
+.login-modal p { font-size: .85rem; color: var(--muted); line-height: 1.6; margin-bottom: 1.75rem; }
+.btn-google-login {
+  display: inline-flex;
+  align-items: center;
+  gap: .75rem;
+  background: #fff;
+  border: 1.5px solid var(--border);
+  border-radius: 50px;
+  padding: .75rem 1.5rem;
+  font-family: var(--font-head);
+  font-size: .88rem;
+  font-weight: 700;
+  color: var(--navy);
+  cursor: pointer;
+  transition: box-shadow .2s, border-color .2s;
+  width: 100%;
+  justify-content: center;
+}
+.btn-google-login:hover { border-color: var(--navy3); box-shadow: var(--shadow-sm); }
+.btn-google-login svg { width: 20px; height: 20px; flex-shrink: 0; }
+.login-skip {
+  display: block;
+  margin-top: 1rem;
+  font-size: .78rem;
+  color: var(--muted);
+  cursor: pointer;
+}
+.login-skip:hover { color: var(--navy); }
+
+/* ══════════════════════════════════════
+   ARTICLE SOURCES / REFERENCIAS
+══════════════════════════════════════ */
+.article-sources {
+  margin-top: 2.5rem;
+  padding: 2rem;
+  background: var(--bg);
+  border-radius: var(--radius-sm);
+  border-left: 4px solid var(--teal);
+}
+.article-sources h4 {
+  font-family: var(--font-head);
+  font-size: .82rem;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--teal-d);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+.article-sources ol {
+  padding-left: 1.25rem;
+  margin: 0;
+}
+.article-sources li {
+  font-size: .82rem;
+  line-height: 1.65;
+  color: var(--muted);
+  margin-bottom: .6rem;
+}
+.article-sources li a {
+  color: var(--teal-d);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  font-weight: 600;
+}
+.article-sources li a:hover { color: var(--navy); }
+.article-sources .src-note {
+  font-size: .75rem;
+  color: var(--muted);
+  margin-top: 1rem;
+  padding-top: .75rem;
+  border-top: 1px solid var(--border);
+  font-style: italic;
+}
+
+/* ══════════════════════════════════════
+   HERO AMG ENDORSEMENT BLOCK
+══════════════════════════════════════ */
+.hero-amg-endorse {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  padding: .875rem 1.25rem;
+  background: #fff;
+  border: 1.5px solid rgba(136,112,40,.22);
+  border-radius: 16px;
+  box-shadow: 0 2px 12px rgba(136,112,40,.08);
+  width: fit-content;
+}
+.hero-amg-endorse img {
+  height: 56px;
+  flex-shrink: 0;
+}
+.hero-amg-endorse-txt {
+  display: flex;
+  flex-direction: column;
+}
+.hero-amg-endorse-name {
+  font-family: var(--font-head);
+  font-size: .82rem;
+  font-weight: 900;
+  color: var(--navy);
+  letter-spacing: .01em;
+  line-height: 1.2;
+}
+.hero-amg-endorse-sub {
+  font-size: .7rem;
+  color: var(--muted);
+  margin-top: 2px;
+  line-height: 1.4;
+}
