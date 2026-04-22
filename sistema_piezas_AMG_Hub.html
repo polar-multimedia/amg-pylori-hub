@@ -1,0 +1,2573 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sistema Visual · Hub AMG · México Sin Cáncer Gástrico</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,600;0,700;0,800;0,900;1,400;1,700;1,800;1,900&family=Open+Sans:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<style>
+:root {
+  --navy: #183888;
+  --navy-deep: #102850;
+  --teal: #30B8B0;
+  --teal-light: #3DCEDD;
+  --gold: #887028;
+  --offwhite: #F5F7FA;
+  --gray: #2A2A2A;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Open Sans', sans-serif; background: #0f1629; color: #fff; min-height: 100vh; }
+
+/* ── HEADER ── */
+.site-header {
+  background: linear-gradient(135deg, var(--navy) 0%, #0d2a5c 100%);
+  padding: 20px 40px;
+  border-bottom: 3px solid var(--teal);
+  display: flex; align-items: center; gap: 20px;
+}
+.site-header img.logo-header { height: 48px; }
+.site-header h1 { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 18px; line-height: 1.2; }
+.site-header h1 span { color: var(--teal); }
+.site-header .badge {
+  margin-left: auto;
+  background: rgba(48,184,176,0.15); border: 1px solid var(--teal);
+  color: var(--teal); padding: 4px 12px; border-radius: 20px;
+  font-size: 11px; font-weight: 600; white-space: nowrap;
+}
+
+/* ── TABS ── */
+.tabs-bar {
+  background: #141e3a;
+  padding: 0 40px;
+  display: flex; gap: 4px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.tab-btn {
+  background: none; border: none; cursor: pointer;
+  padding: 14px 24px;
+  color: rgba(255,255,255,0.45);
+  font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 13px;
+  border-bottom: 3px solid transparent; transition: all 0.2s;
+  letter-spacing: 0.03em;
+}
+.tab-btn:hover { color: rgba(255,255,255,0.8); }
+.tab-btn.active { color: #fff; border-bottom-color: var(--teal); }
+.tab-btn .tab-icon { margin-right: 8px; font-size: 15px; }
+.tab-desc { font-size: 10px; font-weight: 400; display: block; margin-top: 2px; color: rgba(255,255,255,0.4); }
+
+/* ── CONTENT AREA ── */
+.content { padding: 32px 40px; }
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+/* ── CLAIM SECTION ── */
+.claim-section {
+  margin-bottom: 48px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.claim-header {
+  background: rgba(24,56,136,0.5);
+  padding: 14px 24px;
+  display: flex; align-items: center; gap: 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.claim-num {
+  background: var(--teal); color: #fff;
+  width: 24px; height: 24px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 11px;
+  flex-shrink: 0;
+}
+.claim-title { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 14px; }
+.claim-fecha { margin-left: auto; font-size: 11px; color: rgba(255,255,255,0.4); }
+
+/* ── FORMATS GRID ── */
+.formats-row {
+  padding: 24px;
+  display: flex; gap: 20px; align-items: flex-start; flex-wrap: wrap;
+}
+.format-card {
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+}
+.format-label {
+  font-family: 'Montserrat', sans-serif; font-weight: 700;
+  font-size: 10px; color: var(--teal); letter-spacing: 0.08em; text-transform: uppercase;
+}
+.format-info { font-size: 9px; color: rgba(255,255,255,0.35); }
+.btn-download {
+  background: var(--navy); border: 1px solid var(--teal);
+  color: var(--teal); padding: 6px 14px; border-radius: 6px;
+  font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 10px;
+  cursor: pointer; transition: all 0.2s; white-space: nowrap;
+}
+.btn-download:hover { background: var(--teal); color: #fff; }
+.btn-download:active { transform: scale(0.97); }
+.btn-download.loading { opacity: 0.6; cursor: wait; }
+
+/* ── MES HEADER ── */
+.mes-header {
+  display: flex; align-items: center; gap: 14px;
+  margin: 36px 0 12px;
+  padding: 14px 20px;
+  background: rgba(255,255,255,0.03);
+  border-left: 4px solid var(--teal);
+  border-radius: 0 8px 8px 0;
+}
+.mes-label {
+  font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 13px;
+  color: #fff; padding: 4px 14px; border-radius: 20px;
+  white-space: nowrap;
+}
+.mes-total {
+  font-size: 11px; color: rgba(255,255,255,0.45);
+}
+.btn-mes-dl {
+  margin-left: auto;
+  background: rgba(48,184,176,0.12); border: 1px solid var(--teal);
+  color: var(--teal); padding: 6px 16px; border-radius: 6px;
+  font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 10px;
+  cursor: pointer; transition: all 0.2s; white-space: nowrap;
+}
+.btn-mes-dl:hover { background: var(--teal); color: #fff; }
+
+/* ── CLAIM HEADER (update) ── */
+.claim-header { flex-wrap: wrap; }
+.btn-copy-toggle {
+  margin-left: auto;
+  background: rgba(48,184,176,0.08); border: 1px solid rgba(48,184,176,0.3);
+  color: rgba(255,255,255,0.65); padding: 5px 12px; border-radius: 6px;
+  font-size: 10px; font-family: 'Montserrat', sans-serif; font-weight: 600;
+  cursor: pointer; transition: all 0.2s;
+}
+.btn-copy-toggle:hover { background: rgba(48,184,176,0.2); color: #fff; }
+
+/* ── COPY PANEL ── */
+.copy-panel {
+  max-height: 0; overflow: hidden;
+  transition: max-height 0.35s ease, padding 0.2s;
+  background: rgba(13,27,110,0.4);
+  border-top: 1px solid rgba(48,184,176,0.15);
+}
+.copy-panel.open { max-height: 400px; }
+.copy-panel-inner { padding: 16px 24px; }
+.copy-text {
+  font-size: 12px; line-height: 1.7; color: rgba(255,255,255,0.82);
+  white-space: pre-wrap; margin-bottom: 10px;
+}
+.copy-hashtags {
+  font-size: 11px; color: var(--teal); opacity: 0.8;
+  margin-bottom: 12px; word-spacing: 4px;
+}
+.copy-actions { display: flex; gap: 8px; }
+.btn-copiar {
+  background: rgba(48,184,176,0.12); border: 1px solid rgba(48,184,176,0.4);
+  color: var(--teal); padding: 5px 14px; border-radius: 6px;
+  font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 10px;
+  cursor: pointer; transition: all 0.2s;
+}
+.btn-copiar:hover { background: rgba(48,184,176,0.25); }
+.btn-copiar-ht { color: rgba(255,255,255,0.7); border-color: rgba(255,255,255,0.2); }
+
+/* ══════════════════════════════════════
+   PIECE WRAPPERS — fixed display sizes
+══════════════════════════════════════ */
+.pieza { position: relative; overflow: hidden; flex-shrink: 0; }
+.pieza.fmt-45  { width: 246px; height: 307px; }
+.pieza.fmt-11  { width: 246px; height: 246px; }
+.pieza.fmt-916 { width: 173px; height: 307px; }
+.pieza.fmt-169 { width: 380px; height: 214px; }
+
+/* ══════════════════════════════════════
+   VARIANTE A — CON FOTO
+══════════════════════════════════════ */
+.var-a .foto-bg {
+  position: absolute; inset: 0;
+  background-size: cover; background-position: left center;
+}
+/* Halo teal en zona estomacal (izquierda) */
+.var-a .foto-halo {
+  position: absolute; inset: 0; z-index: 2;
+  background: radial-gradient(ellipse 38% 32% at 28% 58%,
+    rgba(48,184,176,0.28) 0%,
+    rgba(48,184,176,0.10) 50%,
+    transparent 100%);
+}
+/* Degradado hacia blanco en zona derecha — legibilidad de texto */
+.var-a .foto-overlay {
+  position: absolute; inset: 0; z-index: 3;
+  background: linear-gradient(to right,
+    rgba(255,255,255,0)    38%,
+    rgba(245,247,250,0.82) 54%,
+    rgba(245,247,250,0.97) 68%,
+    rgba(245,247,250,0.99) 100%);
+}
+/* Bacteria posts: fondo oscuro → overlay navy profundo en zona de texto */
+.var-a.is-bacteria .foto-bg { background-color: #0a1228; background-size: cover; background-position: center top; }
+.var-a.is-bacteria .foto-overlay {
+  background: linear-gradient(to right,
+    rgba(10,18,40,0)    30%,
+    rgba(10,18,40,0.75) 50%,
+    rgba(10,18,40,0.95) 66%,
+    rgba(10,18,40,0.99) 100%);
+}
+.var-a.is-bacteria .cifra       { color: var(--teal); text-shadow: 0 0 16px rgba(48,184,176,0.5); }
+.var-a.is-bacteria .cifra-label { color: #fff; text-shadow: 0 0 8px rgba(10,18,40,0.9); }
+.var-a.is-bacteria .headline    { color: #fff; text-shadow: 0 0 8px rgba(10,18,40,0.9); }
+.var-a.is-bacteria .subcopy     { color: rgba(255,255,255,0.75); text-shadow: 0 0 6px rgba(10,18,40,0.9); }
+.var-a.is-bacteria .cta-bar     { background: rgba(13,27,110,0.95); }
+.var-a.is-bacteria .cta-text    { color: rgba(255,255,255,0.85); }
+.var-a.is-bacteria .disclaimer  { color: rgba(255,255,255,0.45); }
+.var-a .sello {
+  position: absolute; z-index: 25;
+  top: 4%; right: 0; width: 22%;
+  filter: drop-shadow(0 1px 4px rgba(0,0,0,0.18));
+}
+.var-a .copy-block {
+  position: absolute; z-index: 25;
+  font-family: 'Montserrat', sans-serif;
+  text-align: right;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  overflow: hidden;
+  background: none;
+  /* Flex: empuja el contenido al baseline inferior del box */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 0 8px 5px 0;
+}
+.var-a .cifra {
+  font-weight: 900; font-style: italic;
+  color: var(--teal); line-height: 1;
+  display: block;
+  text-shadow: 0 0 12px rgba(255,255,255,0.95), 0 0 24px rgba(255,255,255,0.7);
+}
+.var-a .cifra-label {
+  display: block;
+  color: var(--navy); font-weight: 800;
+  line-height: 1.2;
+  text-shadow: 0 0 8px rgba(255,255,255,0.95), 0 1px 4px rgba(255,255,255,0.8);
+}
+.var-a .headline {
+  display: block;
+  color: var(--navy); font-weight: 800;
+  line-height: 1.2;
+  text-shadow: 0 0 8px rgba(255,255,255,0.95), 0 1px 4px rgba(255,255,255,0.8);
+}
+.var-a .headline em { font-style: italic; }
+.var-a .subcopy {
+  display: block;
+  color: var(--navy); font-weight: 600;
+  line-height: 1.3;
+  text-shadow: 0 0 6px rgba(255,255,255,0.95), 0 1px 3px rgba(255,255,255,0.8);
+}
+.var-a .cta-bar {
+  position: absolute; z-index: 30;  /* siempre encima de foto capas */
+  bottom: 0; left: 0; right: 0;
+  background: #fff;
+  border-top: 2px solid #e8edf8;
+}
+/* Clip foto-bg y overlay: no pasan del borde superior de la franja */
+.fmt-45.var-a  .foto-bg, .fmt-45.var-a  .foto-overlay, .fmt-45.var-a  .foto-halo { bottom: 59px; }
+.fmt-11.var-a  .foto-bg, .fmt-11.var-a  .foto-overlay, .fmt-11.var-a  .foto-halo { bottom: 53px; }
+.fmt-916.var-a .foto-bg, .fmt-916.var-a .foto-overlay, .fmt-916.var-a .foto-halo { bottom: 73px; }
+.fmt-169.var-a .foto-bg, .fmt-169.var-a .foto-halo                                { bottom: 47px; }
+.var-a .cta-text {
+  font-family: 'Montserrat', sans-serif; font-weight: 600;
+  color: var(--navy); line-height: 1.3;
+}
+.var-a .cta-text strong { font-weight: 900; font-style: italic; }
+.var-a .disclaimer {
+  font-family: 'Open Sans', sans-serif; color: #777;
+  line-height: 1.3; margin-top: 2px;
+}
+
+/* ── Franja de marca sobre CTA (todas las variantes A) ── */
+.var-a .franja-bar {
+  position: absolute; z-index: 24;
+  left: 0; right: 0; width: 100%;
+  display: block; object-fit: fill;
+}
+
+/* --- 4:5 (246×307 px) — CTA real ~50px, franja encima --- */
+.fmt-45.var-a .copy-block  {
+  top: 26%; bottom: 62px; right: 0; left: auto;
+  width: 52%; text-align: right; overflow: hidden;
+}
+.fmt-45.var-a .cifra       { font-size: 28px; }
+.fmt-45.var-a .cifra-label { font-size: 9px;   margin-top: 1px; }
+.fmt-45.var-a .headline    { font-size: 9.5px; margin-top: 5px; }
+.fmt-45.var-a .subcopy     { font-size: 8px;   margin-top: 4px; }
+.fmt-45.var-a .franja-bar  { bottom: 46px; height: 7px; }
+.fmt-45.var-a .cta-bar     { padding: 7px 8px 5px; }
+.fmt-45.var-a .cta-text    { font-size: 7.5px; }
+.fmt-45.var-a .disclaimer  { font-size: 5px; }
+
+/* --- 1:1 (246×246 px) --- CTA real ~45px --- */
+.fmt-11.var-a .copy-block  {
+  top: 28%; bottom: 57px; right: 0; left: auto;
+  width: 52%; text-align: right; overflow: hidden;
+}
+.fmt-11.var-a .cifra       { font-size: 24px; }
+.fmt-11.var-a .cifra-label { font-size: 8.5px; margin-top: 1px; }
+.fmt-11.var-a .headline    { font-size: 8.5px; margin-top: 4px; }
+.fmt-11.var-a .subcopy     { font-size: 7.5px; margin-top: 4px; }
+.fmt-11.var-a .franja-bar  { bottom: 41px; height: 6px; }
+.fmt-11.var-a .cta-bar     { padding: 6px 7px 4px; }
+.fmt-11.var-a .cta-text    { font-size: 7px; }
+.fmt-11.var-a .disclaimer  { font-size: 4.5px; }
+
+/* --- 9:16 Stories --- */
+/* Persona: izquierda del frame (igual que 4:5/1:1)                       */
+/* Degradado horizontal → zona blanca derecha para texto                  */
+/* Logo AMG grande; copy-block columna derecha desde arriba               */
+.fmt-916.var-a .foto-bg    { background-position: left top !important; }
+.fmt-916.var-a .foto-halo  {
+  /* halo activo: zona estomacal izq */
+  background: radial-gradient(ellipse 38% 22% at 26% 58%,
+    rgba(48,184,176,0.28) 0%, rgba(48,184,176,0.10) 55%, transparent 100%);
+}
+.fmt-916.var-a .foto-overlay {
+  /* degradado horizontal → blanco derecha, igual que otros formatos */
+  background: linear-gradient(to right,
+    rgba(255,255,255,0)    34%,
+    rgba(245,247,250,0.82) 50%,
+    rgba(245,247,250,0.97) 63%,
+    rgba(245,247,250,0.99) 100%);
+}
+/* Logo AMG más grande en stories */
+.fmt-916.var-a .sello      { top: 4%; right: 3%; width: 28%; }
+/* 9:16 (173×307 px): CTA bar ~65px alto (texto wrappea en 173px) */
+/* franja encima del CTA; copy-block termina encima de la franja    */
+.fmt-916.var-a .copy-block {
+  top: 16%; bottom: 78px; right: 0; left: auto;
+  width: 58%; text-align: right; overflow: hidden;
+}
+.fmt-916.var-a .cifra       { font-size: 26px; color: var(--teal); }
+.fmt-916.var-a .cifra-label { font-size: 8.5px; margin-top: 1px; color: var(--navy); }
+.fmt-916.var-a .headline    { font-size: 8.5px; margin-top: 5px; color: var(--navy); }
+.fmt-916.var-a .subcopy     { font-size: 7.5px; margin-top: 4px; color: var(--navy); }
+.fmt-916.var-a .franja-bar  { bottom: 59px; height: 8px; }
+.fmt-916.var-a .cta-bar     { padding: 6px 7px 4px; }
+.fmt-916.var-a .cta-text    { font-size: 7.5px; }
+.fmt-916.var-a .disclaimer  { font-size: 5px; }
+
+/* --- 16:9 LinkedIn — 35% foto izq | separador | 65% texto der --- */
+.fmt-169.var-a {
+  background: var(--offwhite);
+}
+/* Columna foto: 35% del ancho, top center para mostrar cabeza completa */
+.fmt-169.var-a .foto-bg {
+  left: 0; top: 0; bottom: 0; right: auto;
+  width: 35%;
+  background-position: top center !important;
+  background-size: cover;
+}
+/* Halo teal en columna foto */
+.fmt-169.var-a .foto-halo {
+  left: 0; top: 0; bottom: 0; right: auto;
+  width: 35%;
+  background: radial-gradient(ellipse 60% 28% at 50% 65%,
+    rgba(48,184,176,0.28) 0%, rgba(48,184,176,0.10) 55%, transparent 100%);
+}
+/* Separador vertical teal→navy */
+.fmt-169.var-a .foto-overlay {
+  left: 34.5%; right: auto; top: 0; bottom: 0; width: 5px;
+  background: linear-gradient(to bottom, var(--teal), var(--navy-deep));
+}
+.fmt-169.var-a .sello       { top: 5%; right: 3%; width: 18%; }
+/* LinkedIn 16:9: CTA bar ~42px alto en 380px de ancho              */
+/* franja encima del CTA; copy-block termina encima de la franja    */
+.fmt-169.var-a .copy-block  {
+  top: 14%; bottom: 52px; right: 0; left: auto;
+  width: 62%; text-align: right; overflow: hidden;
+}
+.fmt-169.var-a .cifra       { font-size: 32px; }
+.fmt-169.var-a .cifra-label { font-size: 9px;  margin-top: 1px; }
+.fmt-169.var-a .headline    { font-size: 9.5px; margin-top: 5px; }
+.fmt-169.var-a .subcopy     { font-size: 8px;  margin-top: 4px; }
+.fmt-169.var-a .franja-bar  { bottom: 36px; height: 5px; }
+.fmt-169.var-a .cta-bar     { padding: 5px 8px 4px; }
+.fmt-169.var-a .cta-text    { font-size: 7px; }
+.fmt-169.var-a .disclaimer  { font-size: 4.5px; }
+
+/* ══════════════════════════════════════
+   VARIANTE B — TIPOGRAFÍA + BLOQUES
+══════════════════════════════════════ */
+.var-b {
+  background: var(--navy);
+  font-family: 'Montserrat', sans-serif;
+}
+.var-b .geo-accent {
+  position: absolute; top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none; z-index: 1;
+}
+/* Vertical teal bar */
+.var-b .geo-accent::before {
+  content: ''; position: absolute;
+  left: 0; top: 0; width: 5px; height: 100%;
+  background: linear-gradient(to bottom, var(--teal), var(--teal-light));
+}
+/* Diagonal band */
+.var-b .geo-accent::after {
+  content: ''; position: absolute;
+  bottom: 22%; left: -30%; width: 160%; height: 3px;
+  background: rgba(48,184,176,0.2);
+  transform: rotate(-8deg);
+}
+/* Dot grid pattern */
+.var-b .dots {
+  position: absolute; inset: 0; z-index: 1;
+  background-image: radial-gradient(circle, rgba(48,184,176,0.12) 1px, transparent 1px);
+  background-size: 18px 18px;
+}
+/* Circle accent */
+.var-b .circle-accent {
+  position: absolute; z-index: 1;
+  border-radius: 50%;
+  border: 2px solid rgba(48,184,176,0.15);
+}
+.var-b .content {
+  position: relative; z-index: 10;
+  display: flex; flex-direction: column;
+  height: 100%; padding: 10% 8% 8% 10%;
+  justify-content: space-between;
+}
+.var-b .top-area {
+  display: flex; justify-content: space-between; align-items: flex-start;
+}
+.var-b .sello { width: 20%; flex-shrink: 0; }
+.var-b .middle-area { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+.var-b .cifra {
+  font-weight: 900; font-style: italic;
+  color: var(--teal); line-height: 1;
+  display: block;
+}
+.var-b .cifra-label { color: rgba(255,255,255,0.85); font-weight: 700; display: block; }
+.var-b .headline { color: #fff; font-weight: 800; line-height: 1.25; }
+.var-b .headline em { color: var(--teal); font-style: italic; }
+.var-b .subcopy { color: rgba(255,255,255,0.75); font-weight: 400; line-height: 1.35; }
+.var-b .bottom-area { }
+.var-b .cta-inline {
+  color: var(--teal); font-weight: 700; line-height: 1.3;
+  border-top: 1px solid rgba(48,184,176,0.3); padding-top: 8%;
+}
+.var-b .cta-inline strong { font-weight: 900; font-style: italic; }
+.var-b .url-text {
+  color: rgba(255,255,255,0.35); font-family: 'Open Sans', sans-serif; margin-top: 4px;
+}
+
+/* --- 4:5 --- */
+.fmt-45.var-b .cifra       { font-size: 56px; }
+.fmt-45.var-b .cifra-label { font-size: 11px; margin-top: -2px; margin-bottom: 6px; }
+.fmt-45.var-b .headline    { font-size: 14px; margin-bottom: 8px; }
+.fmt-45.var-b .subcopy     { font-size: 10px; }
+.fmt-45.var-b .cta-inline  { font-size: 9px; }
+.fmt-45.var-b .url-text    { font-size: 7px; }
+.fmt-45.var-b .circle-accent { width: 80px; height: 80px; bottom: 28%; right: -20px; }
+
+/* --- 1:1 --- */
+.fmt-11.var-b .cifra       { font-size: 48px; }
+.fmt-11.var-b .cifra-label { font-size: 10px; margin-top: -2px; margin-bottom: 5px; }
+.fmt-11.var-b .headline    { font-size: 12px; margin-bottom: 7px; }
+.fmt-11.var-b .subcopy     { font-size: 9px; }
+.fmt-11.var-b .cta-inline  { font-size: 8px; }
+.fmt-11.var-b .url-text    { font-size: 6.5px; }
+.fmt-11.var-b .circle-accent { width: 60px; height: 60px; bottom: 25%; right: -15px; }
+
+/* --- 9:16 --- */
+.fmt-916.var-b .cifra       { font-size: 50px; }
+.fmt-916.var-b .cifra-label { font-size: 10px; margin-top: -2px; margin-bottom: 6px; }
+.fmt-916.var-b .headline    { font-size: 13px; margin-bottom: 8px; }
+.fmt-916.var-b .subcopy     { font-size: 9.5px; }
+.fmt-916.var-b .cta-inline  { font-size: 8.5px; }
+.fmt-916.var-b .url-text    { font-size: 6.5px; }
+.fmt-916.var-b .circle-accent { width: 70px; height: 70px; bottom: 30%; right: -15px; }
+
+/* --- 16:9 --- */
+.fmt-169.var-b .content {
+  flex-direction: row; align-items: stretch;
+  padding: 6% 6% 6% 8%;
+  gap: 5%;
+}
+.fmt-169.var-b .left-col {
+  flex: 0 0 45%; display: flex; flex-direction: column; justify-content: center;
+}
+.fmt-169.var-b .right-col {
+  flex: 1; display: flex; flex-direction: column; justify-content: space-between;
+}
+.fmt-169.var-b .top-area { flex-direction: column; gap: 0; }
+.fmt-169.var-b .cifra       { font-size: 52px; }
+.fmt-169.var-b .cifra-label { font-size: 9px; margin-top: -1px; margin-bottom: 4px; }
+.fmt-169.var-b .headline    { font-size: 11px; margin-bottom: 6px; }
+.fmt-169.var-b .subcopy     { font-size: 8px; }
+.fmt-169.var-b .cta-inline  { font-size: 7.5px; }
+.fmt-169.var-b .url-text    { font-size: 6px; }
+.fmt-169.var-b .sello       { width: 22%; align-self: flex-end; margin-bottom: 8px; }
+.fmt-169.var-b .circle-accent { width: 55px; height: 55px; bottom: 20%; right: -10px; }
+
+/* ══════════════════════════════════════
+   VARIANTE C — DETECCIÓN 2026
+══════════════════════════════════════ */
+.var-c { font-family: 'Montserrat', sans-serif; }
+.var-c .foto-bg {
+  position: absolute; inset: 0;
+  background-size: cover; background-position: left center;
+}
+.var-c .foto-overlay {
+  position: absolute; inset: 0;
+  background: rgba(10, 25, 65, 0.60);
+}
+.var-c .banda-top {
+  position: absolute; top: 0; left: 0; right: 0; z-index: 20;
+  background: rgba(16, 40, 80, 0.92);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.var-c .campana-label {
+  color: var(--teal); font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;
+}
+.var-c .sello { flex-shrink: 0; }
+.var-c .main-area {
+  position: absolute; z-index: 20;
+  left: 5%; right: 5%;
+}
+.var-c .hp-giant {
+  font-weight: 900; font-style: italic;
+  color: #fff; line-height: 0.92;
+  display: block;
+}
+.var-c .hp-claim {
+  color: #fff; font-weight: 700; line-height: 1.35;
+}
+.var-c .hp-highlight { color: var(--teal); font-weight: 900; }
+.var-c .hp-sub {
+  color: rgba(255,255,255,0.9); font-weight: 800;
+  font-style: italic;
+}
+.var-c .cta-detect {
+  color: rgba(255,255,255,0.85); font-weight: 400; line-height: 1.35;
+}
+.var-c .barra-bottom {
+  position: absolute; bottom: 0; left: 0; right: 0; z-index: 20;
+  background: var(--navy-deep);
+  display: flex; align-items: center;
+}
+.var-c .bottom-claim-text {
+  flex: 1; color: rgba(255,255,255,0.9); font-weight: 400; line-height: 1.3;
+}
+.var-c .bottom-claim-text strong {
+  color: var(--teal); font-weight: 900; font-style: italic;
+}
+.var-c .qr-box { flex-shrink: 0; }
+.var-c .qr-box img { display: block; border-radius: 4px; background: #fff; }
+.var-c .url-bottom {
+  position: absolute; z-index: 20;
+  left: 0; right: 0; text-align: center;
+  font-family: 'Open Sans', sans-serif; color: rgba(255,255,255,0.5); font-weight: 400;
+}
+
+/* --- 4:5 --- */
+.fmt-45.var-c .banda-top    { padding: 7px 10px; }
+.fmt-45.var-c .campana-label{ font-size: 6.5px; }
+.fmt-45.var-c .sello        { width: 17%; }
+.fmt-45.var-c .main-area    { top: 16%; }
+.fmt-45.var-c .hp-giant     { font-size: 30px; }
+.fmt-45.var-c .hp-claim     { font-size: 10px; margin-top: 8px; }
+.fmt-45.var-c .hp-sub       { font-size: 10px; margin-top: 4px; }
+.fmt-45.var-c .cta-detect   { font-size: 9px; margin-top: 10px; }
+.fmt-45.var-c .barra-bottom { padding: 7px 10px; min-height: 18%; }
+.fmt-45.var-c .bottom-claim-text { font-size: 7px; }
+.fmt-45.var-c .qr-box img  { width: 40px; height: 40px; margin-left: 8px; }
+.fmt-45.var-c .url-bottom   { font-size: 6.5px; bottom: calc(18% + 2px); }
+
+/* --- 1:1 --- */
+.fmt-11.var-c .banda-top    { padding: 6px 9px; }
+.fmt-11.var-c .campana-label{ font-size: 6px; }
+.fmt-11.var-c .sello        { width: 17%; }
+.fmt-11.var-c .main-area    { top: 15%; }
+.fmt-11.var-c .hp-giant     { font-size: 26px; }
+.fmt-11.var-c .hp-claim     { font-size: 9px; margin-top: 7px; }
+.fmt-11.var-c .hp-sub       { font-size: 9px; margin-top: 3px; }
+.fmt-11.var-c .cta-detect   { font-size: 7.5px; margin-top: 8px; }
+.fmt-11.var-c .barra-bottom { padding: 6px 9px; min-height: 18%; }
+.fmt-11.var-c .bottom-claim-text { font-size: 6.5px; }
+.fmt-11.var-c .qr-box img  { width: 34px; height: 34px; margin-left: 7px; }
+.fmt-11.var-c .url-bottom   { font-size: 6px; bottom: calc(18% + 2px); }
+
+/* --- 9:16 --- */
+.fmt-916.var-c .banda-top    { padding: 7px 9px; }
+.fmt-916.var-c .campana-label{ font-size: 6.5px; }
+.fmt-916.var-c .sello        { width: 18%; }
+.fmt-916.var-c .main-area    { top: 16%; }
+.fmt-916.var-c .hp-giant     { font-size: 28px; }
+.fmt-916.var-c .hp-claim     { font-size: 9.5px; margin-top: 8px; }
+.fmt-916.var-c .hp-sub       { font-size: 9.5px; margin-top: 3px; }
+.fmt-916.var-c .cta-detect   { font-size: 8.5px; margin-top: 10px; }
+.fmt-916.var-c .barra-bottom { padding: 7px 9px; min-height: 17%; }
+.fmt-916.var-c .bottom-claim-text { font-size: 6.5px; }
+.fmt-916.var-c .qr-box img  { width: 36px; height: 36px; margin-left: 7px; }
+.fmt-916.var-c .url-bottom   { font-size: 6px; bottom: calc(17% + 2px); }
+
+/* --- 16:9 --- */
+.fmt-169.var-c .banda-top    { padding: 5px 9px; }
+.fmt-169.var-c .campana-label{ font-size: 6px; }
+.fmt-169.var-c .sello        { width: 12%; }
+.fmt-169.var-c .main-area    { top: 13%; }
+.fmt-169.var-c .hp-giant     { font-size: 26px; }
+.fmt-169.var-c .hp-claim     { font-size: 8.5px; margin-top: 7px; }
+.fmt-169.var-c .hp-sub       { font-size: 8.5px; margin-top: 3px; }
+.fmt-169.var-c .cta-detect   { font-size: 7.5px; margin-top: 7px; }
+.fmt-169.var-c .barra-bottom { padding: 5px 9px; min-height: 20%; }
+.fmt-169.var-c .bottom-claim-text { font-size: 6px; }
+.fmt-169.var-c .qr-box img  { width: 30px; height: 30px; margin-left: 6px; }
+.fmt-169.var-c .url-bottom   { font-size: 5.5px; bottom: calc(20% + 2px); }
+
+/* ── DOWNLOAD STATE ── */
+.btn-download.loading { opacity: 0.5; pointer-events: none; }
+.btn-download.loading::after { content: ' ⏳'; }
+
+/* ══════════════════════════════════════
+   VARIANTE D — EDITORIAL
+   Diseño tipográfico + formas geométricas
+   Sin foto de fondo. Stat como héroe visual.
+══════════════════════════════════════ */
+
+/* ── Base: fondo navy profundo con gradiente diagonal ── */
+.var-d {
+  font-family: 'Montserrat', sans-serif;
+  background: linear-gradient(148deg, #0D1B6E 0%, #102850 55%, #071830 100%);
+  position: relative; overflow: hidden;
+}
+
+/* ── Forma geométrica teal: triángulo diagonal superior derecho ── */
+.var-d .vd-shape {
+  position: absolute; z-index: 1;
+  top: 0; right: 0;
+  width: 45%; height: 45%;
+  background: linear-gradient(135deg, rgba(48,184,176,0.18) 0%, rgba(48,184,176,0.04) 70%, transparent 100%);
+  clip-path: polygon(100% 0, 0 0, 100% 100%);
+}
+
+/* ── Acento de línea vertical teal izquierda ── */
+.var-d .vd-stripe {
+  position: absolute; z-index: 2;
+  left: 0; top: 0; bottom: 0;
+  width: 4px;
+  background: linear-gradient(to bottom, var(--teal) 0%, var(--navy-deep) 100%);
+}
+
+/* ── Pistas / tracks horizontales de fondo (decorativas) ── */
+.var-d .vd-tracks {
+  position: absolute; z-index: 1;
+  bottom: 18%; left: 8px; right: 8px;
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(48,184,176,0.25) 20%, rgba(48,184,176,0.25) 80%, transparent);
+}
+.var-d .vd-tracks::before {
+  content: '';
+  position: absolute; top: -6px; left: 0; right: 0; height: 1px;
+  background: linear-gradient(to right, transparent, rgba(48,184,176,0.10) 30%, rgba(48,184,176,0.10) 70%, transparent);
+}
+.var-d .vd-tracks::after {
+  content: '';
+  position: absolute; top: 6px; left: 0; right: 0; height: 1px;
+  background: linear-gradient(to right, transparent, rgba(48,184,176,0.10) 30%, rgba(48,184,176,0.10) 70%, transparent);
+}
+
+/* ── Sello ── */
+.var-d .sello {
+  position: absolute; z-index: 10;
+  top: 5%; right: 3%; width: 20%;
+  filter: drop-shadow(0 1px 6px rgba(0,0,0,0.5));
+}
+
+/* ── Eyebrow: etiqueta campaña ── */
+.var-d .vd-eyebrow {
+  font-size: 6.5px; font-weight: 700; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--teal);
+  opacity: 0.85;
+  margin-bottom: 6px;
+}
+
+/* ── Stat grande: la cifra héroe ── */
+.var-d .vd-stat {
+  font-size: 52px; font-weight: 900; font-style: italic;
+  line-height: 0.9;
+  color: var(--teal);
+  letter-spacing: -0.02em;
+  text-shadow: 0 0 30px rgba(48,184,176,0.35);
+}
+
+/* ── Stat label ── */
+.var-d .vd-stat-label {
+  font-size: 8px; font-weight: 700; color: rgba(255,255,255,0.65);
+  letter-spacing: 0.04em; margin-top: 3px;
+  text-transform: uppercase;
+}
+
+/* ── Línea separadora después del stat ── */
+.var-d .vd-divider {
+  width: 32px; height: 2px;
+  background: linear-gradient(to right, var(--teal), transparent);
+  margin: 8px 0;
+}
+
+/* ── Headline principal ── */
+.var-d .vd-headline {
+  font-size: 10px; font-weight: 800; line-height: 1.3;
+  color: #ffffff;
+  margin-bottom: 4px;
+}
+
+/* ── Subcopy ── */
+.var-d .vd-subcopy {
+  font-size: 8px; font-weight: 600; line-height: 1.4;
+  color: rgba(255,255,255,0.65);
+}
+
+/* ── Bloque de contenido principal ── */
+.var-d .vd-body {
+  position: absolute; z-index: 5;
+  left: 12px; right: 26px;
+  top: 14%; bottom: 22%;
+  display: flex; flex-direction: column; justify-content: center;
+}
+
+/* ── CTA bar adaptada a dark ── */
+.var-d .cta-bar {
+  background: rgba(48,184,176,0.10);
+  border-top: 1px solid rgba(48,184,176,0.25);
+}
+.var-d .cta-text    { color: rgba(255,255,255,0.80); }
+.var-d .disclaimer  { color: rgba(255,255,255,0.35); }
+
+/* ── franja: usa la imagen de marca igual que Var A ── */
+.var-d .franja-bar {
+  position: absolute; z-index: 8;
+  left: 0; right: 0; width: 100%;
+  display: block; object-fit: fill;
+}
+
+/* Ajustes por formato */
+.fmt-45.var-d  .vd-stat { font-size: 48px; }
+.fmt-45.var-d  .vd-body { top: 12%; bottom: 20%; left: 10px; right: 22px; }
+.fmt-45.var-d  .vd-headline { font-size: 9.5px; }
+.fmt-45.var-d  .vd-subcopy  { font-size: 8px; }
+.fmt-45.var-d  .vd-eyebrow  { font-size: 6px; }
+.fmt-45.var-d  .franja-bar  { bottom: 46px; height: 7px; }
+.fmt-45.var-d  .cta-bar     { padding: 7px 8px 5px; }
+.fmt-45.var-d  .cta-text    { font-size: 7.5px; }
+.fmt-45.var-d  .disclaimer  { font-size: 5px; }
+
+.fmt-11.var-d  .vd-stat { font-size: 44px; }
+.fmt-11.var-d  .vd-body { top: 12%; bottom: 20%; left: 10px; right: 22px; }
+.fmt-11.var-d  .vd-headline { font-size: 9px; }
+.fmt-11.var-d  .vd-subcopy  { font-size: 7.5px; }
+.fmt-11.var-d  .vd-eyebrow  { font-size: 6px; }
+.fmt-11.var-d  .franja-bar  { bottom: 41px; height: 6px; }
+.fmt-11.var-d  .cta-bar     { padding: 6px 7px 4px; }
+.fmt-11.var-d  .cta-text    { font-size: 7px; }
+.fmt-11.var-d  .disclaimer  { font-size: 4.5px; }
+
+.fmt-916.var-d .vd-stat { font-size: 40px; }
+.fmt-916.var-d .vd-body { top: 12%; bottom: 22%; left: 8px; right: 8px; }
+.fmt-916.var-d .vd-headline { font-size: 8.5px; }
+.fmt-916.var-d .vd-subcopy  { font-size: 7.5px; }
+.fmt-916.var-d .vd-eyebrow  { font-size: 5.5px; }
+.fmt-916.var-d .sello       { width: 26%; top: 4%; }
+.fmt-916.var-d .franja-bar  { bottom: 59px; height: 8px; }
+.fmt-916.var-d .cta-bar     { padding: 6px 7px 4px; }
+.fmt-916.var-d .cta-text    { font-size: 7.5px; }
+.fmt-916.var-d .disclaimer  { font-size: 5px; }
+
+/* LinkedIn: layout 2 columnas → stat izq, texto der */
+.fmt-169.var-d { background: linear-gradient(148deg, #0D1B6E 0%, #071830 100%); }
+.fmt-169.var-d .vd-stripe  { display: none; }
+.fmt-169.var-d .vd-shape   { width: 60%; height: 100%; clip-path: polygon(0 0, 45% 0, 55% 100%, 0 100%); background: linear-gradient(90deg, rgba(48,184,176,0.08) 0%, transparent 100%); }
+.fmt-169.var-d .vd-sep     { position: absolute; z-index: 4; left: 42%; top: 0; bottom: 0; width: 3px; background: linear-gradient(to bottom, var(--teal), var(--navy-deep)); }
+.fmt-169.var-d .vd-body    { top: 8%; bottom: 24%; left: 4%; right: 56%; }
+.fmt-169.var-d .vd-stat    { font-size: 48px; }
+.fmt-169.var-d .vd-stat-label { font-size: 7.5px; }
+.fmt-169.var-d .vd-headline { font-size: 8px; }
+.fmt-169.var-d .vd-subcopy  { font-size: 7px; }
+.fmt-169.var-d .vd-eyebrow  { font-size: 6px; }
+.fmt-169.var-d .vd-right   { position: absolute; z-index: 5; left: 46%; right: 2%; top: 8%; bottom: 24%; display: flex; flex-direction: column; justify-content: center; gap: 4px; }
+.fmt-169.var-d .vd-right .vd-headline { font-size: 8.5px; font-weight: 800; color: #fff; }
+.fmt-169.var-d .vd-right .vd-subcopy  { font-size: 7px; color: rgba(255,255,255,0.6); }
+.fmt-169.var-d .sello      { top: 5%; right: 2%; width: 15%; }
+.fmt-169.var-d .franja-bar { bottom: 36px; height: 5px; }
+.fmt-169.var-d .cta-bar    { padding: 5px 8px 4px; background: rgba(48,184,176,0.08); }
+.fmt-169.var-d .cta-text   { font-size: 7px; color: rgba(255,255,255,0.8); }
+.fmt-169.var-d .disclaimer { font-size: 4.5px; color: rgba(255,255,255,0.35); }
+
+/* ══════════════════════════════════════
+   MODO EDICIÓN
+══════════════════════════════════════ */
+#btn-edit-mode {
+  margin-left: 16px;
+  background: rgba(48,184,176,0.12); border: 1px solid rgba(48,184,176,0.5);
+  color: var(--teal); padding: 7px 16px; border-radius: 8px;
+  font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 12px;
+  cursor: pointer; transition: all 0.2s; white-space: nowrap; flex-shrink: 0;
+}
+#btn-edit-mode:hover  { background: rgba(48,184,176,0.25); }
+#btn-edit-mode.active { background: var(--teal); color: #fff; border-color: var(--teal); }
+
+/* Toolbar flotante */
+#edit-toolbar {
+  position: sticky; top: 0; z-index: 999;
+  background: rgba(13,20,55,0.97);
+  border-bottom: 2px solid var(--teal);
+  padding: 8px 24px;
+  display: flex; align-items: center; gap: 6px;
+  flex-wrap: wrap;
+  backdrop-filter: blur(8px);
+}
+.et-label { font-size: 10px; color: rgba(255,255,255,0.45); margin-right: 6px; font-style: italic; }
+.et-hint  { font-size: 10px; color: rgba(255,255,255,0.3); margin-left: auto; font-style: italic; }
+.et-sep   { color: rgba(255,255,255,0.2); font-size: 12px; }
+#edit-toolbar button {
+  background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
+  color: rgba(255,255,255,0.8); padding: 4px 10px; border-radius: 5px;
+  font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 700;
+  cursor: pointer; transition: all 0.15s;
+}
+#edit-toolbar button:hover  { background: rgba(48,184,176,0.25); color: #fff; border-color: var(--teal); }
+#edit-toolbar button.active { background: var(--teal); color: #fff; }
+.et-reset { color: #ff9a9a !important; border-color: rgba(255,100,100,0.3) !important; }
+.et-reset:hover { background: rgba(255,100,100,0.2) !important; border-color: rgba(255,100,100,0.6) !important; }
+
+/* Panel de ajuste de imagen */
+#img-panel {
+  position: fixed; z-index: 9999;
+  top: 120px; right: 24px;
+  width: 210px;
+  background: rgba(13,20,55,0.97);
+  border: 1px solid var(--teal);
+  border-radius: 10px;
+  padding: 0;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+  font-family: 'Montserrat', sans-serif;
+  user-select: none;
+}
+.ip-header {
+  background: rgba(48,184,176,0.15);
+  padding: 9px 12px;
+  font-size: 11px; font-weight: 700; color: var(--teal);
+  border-radius: 10px 10px 0 0;
+  display: flex; justify-content: space-between; align-items: center;
+  cursor: move; /* draggable */
+}
+.ip-close {
+  background: none; border: none; color: rgba(255,255,255,0.5);
+  font-size: 13px; cursor: pointer; padding: 0 2px; line-height: 1;
+}
+.ip-close:hover { color: #fff; }
+.ip-row {
+  padding: 8px 12px 4px;
+  display: flex; align-items: center; gap: 8px;
+}
+.ip-row label {
+  font-size: 9px; color: rgba(255,255,255,0.5);
+  width: 80px; flex-shrink: 0; text-align: right;
+}
+.ip-row input[type=range] {
+  flex: 1; accent-color: var(--teal);
+  height: 3px; cursor: pointer;
+}
+.ip-row span {
+  font-size: 9px; color: rgba(255,255,255,0.6);
+  width: 32px; text-align: right; flex-shrink: 0;
+}
+.ip-nudge {
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  padding: 8px 12px;
+}
+.ip-nudge button {
+  background: rgba(48,184,176,0.12); border: 1px solid rgba(48,184,176,0.3);
+  color: var(--teal); width: 28px; height: 24px; border-radius: 4px;
+  font-size: 12px; cursor: pointer; transition: background 0.15s;
+}
+.ip-nudge button:hover { background: rgba(48,184,176,0.3); }
+.ip-actions { padding: 6px 12px 10px; }
+.ip-reset {
+  width: 100%; background: rgba(255,100,100,0.1); border: 1px solid rgba(255,100,100,0.3);
+  color: #ff9a9a; padding: 5px; border-radius: 5px;
+  font-size: 10px; font-weight: 700; cursor: pointer;
+  font-family: 'Montserrat', sans-serif;
+}
+.ip-reset:hover { background: rgba(255,100,100,0.2); }
+
+/* Cuadros de texto: movibles y redimensionables en edit mode */
+body.edit-mode .copy-block,
+body.edit-mode .vd-body,
+body.edit-mode .vd-right {
+  resize: both;
+  overflow: auto !important;
+  cursor: default;
+  box-shadow: 0 0 0 1px rgba(48,184,176,0.4);
+  border-radius: 3px;
+}
+body.edit-mode .copy-block:hover,
+body.edit-mode .vd-body:hover,
+body.edit-mode .vd-right:hover {
+  box-shadow: 0 0 0 2px var(--teal);
+}
+/* Handle de arrastre: esquina superior izquierda del cuadro */
+.ed-move-handle {
+  display: none;
+  position: absolute;
+  top: 0; left: 0;
+  width: 16px; height: 16px;
+  background: var(--teal);
+  border-radius: 0 0 4px 0;
+  cursor: grab;
+  z-index: 100;
+  font-size: 9px;
+  color: #fff;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  user-select: none;
+}
+.ed-move-handle:active { cursor: grabbing; }
+body.edit-mode .copy-block .ed-move-handle,
+body.edit-mode .vd-body .ed-move-handle,
+body.edit-mode .vd-right .ed-move-handle { display: flex; }
+
+/* Foto-overlay: recibe el click en edit mode (está sobre foto-bg) */
+body.edit-mode .foto-overlay {
+  cursor: crosshair;
+  outline: 1px dashed rgba(48,184,176,0.35);
+  pointer-events: all !important;
+}
+body.edit-mode .foto-overlay:hover { outline: 2px solid var(--teal); }
+/* Foto-bg: indicador visual */
+body.edit-mode .foto-bg {
+  outline: 1px dashed rgba(48,184,176,0.15);
+}
+
+/* Barra de acciones por pieza — solo visible en edit mode */
+.pieza-edit-bar {
+  display: none;
+  gap: 6px;
+  margin-top: 6px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+body.edit-mode .pieza-edit-bar { display: flex; }
+.btn-peb {
+  background: rgba(48,184,176,0.12);
+  border: 1px solid rgba(48,184,176,0.35);
+  color: var(--teal);
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 9px; font-weight: 700;
+  cursor: pointer; font-family: 'Montserrat', sans-serif;
+  transition: background 0.15s;
+}
+.btn-peb:hover { background: rgba(48,184,176,0.28); }
+.btn-peb-reset { color: #ff9a9a !important; border-color: rgba(255,100,100,0.3) !important; }
+.btn-peb-reset:hover { background: rgba(255,100,100,0.15) !important; }
+
+/* Botón editar por claim-header */
+.btn-edit-claim {
+  background: rgba(48,184,176,0.1);
+  border: 1px solid rgba(48,184,176,0.3);
+  color: var(--teal);
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 10px; font-weight: 700;
+  cursor: pointer; font-family: 'Montserrat', sans-serif;
+  margin-left: 8px;
+  transition: background 0.15s;
+}
+.btn-edit-claim:hover  { background: rgba(48,184,176,0.25); }
+.btn-edit-claim.active { background: var(--teal); color: #fff; }
+
+/* Cuando el modo edición está activo: highlight de los campos editables */
+body.edit-mode [contenteditable="true"] {
+  outline: 1px dashed rgba(48,184,176,0.6);
+  border-radius: 2px;
+  cursor: text;
+  min-width: 8px; min-height: 8px;
+  transition: outline 0.15s;
+}
+body.edit-mode [contenteditable="true"]:hover  { outline: 1px solid rgba(48,184,176,0.9); }
+body.edit-mode [contenteditable="true"]:focus  { outline: 2px solid var(--teal); background: rgba(48,184,176,0.06); }
+
+/* ── MÁSCARA DE IMAGEN: overlay + handles ── */
+.img-mask-overlay {
+  position: absolute;
+  border: 1.5px dashed rgba(48,184,176,0.9);
+  z-index: 55;
+  box-sizing: border-box;
+  pointer-events: none;
+}
+/* Handle base */
+.imh {
+  position: absolute;
+  width: 10px; height: 10px;
+  background: var(--teal);
+  border: 1.5px solid #fff;
+  border-radius: 2px;
+  pointer-events: all;
+  z-index: 57;
+}
+/* Esquinas y puntos medios — posicionados DENTRO del overlay (no sobresalen) */
+.imh-nw { top:2px;    left:2px;   cursor:nw-resize; }
+.imh-n  { top:2px;    left:50%;   cursor:n-resize;  transform:translateX(-50%); }
+.imh-ne { top:2px;    right:2px;  cursor:ne-resize; }
+.imh-e  { top:50%;    right:2px;  cursor:e-resize;  transform:translateY(-50%); }
+.imh-se { bottom:2px; right:2px;  cursor:se-resize; }
+.imh-s  { bottom:2px; left:50%;   cursor:s-resize;  transform:translateX(-50%); }
+.imh-sw { bottom:2px; left:2px;   cursor:sw-resize; }
+.imh-w  { top:50%;    left:2px;   cursor:w-resize;  transform:translateY(-50%); }
+/* Barra de arrastre (mover la máscara) — franja superior del overlay */
+.imh-move {
+  position: absolute;
+  top:0; left:0; right:0;
+  height:16px;
+  background: rgba(48,184,176,0.8);
+  cursor: grab;
+  pointer-events: all;
+  display:flex; align-items:center; justify-content:center;
+  font-size:8px; font-weight:700; color:#fff; letter-spacing:0.06em;
+  user-select:none; z-index:58;
+}
+.imh-move:active { cursor:grabbing; }
+/* Botón reset máscara — esquina inferior derecha */
+.imh-reset-mask {
+  position: absolute;
+  bottom:2px; right:2px;
+  height:14px; padding:0 6px;
+  background: rgba(13,20,55,0.9);
+  border:1px solid rgba(255,120,120,0.5);
+  border-radius:3px;
+  cursor:pointer;
+  pointer-events:all;
+  font-size:8px; font-weight:700; color:#ff9a9a;
+  display:flex; align-items:center;
+  user-select:none; z-index:58;
+}
+.imh-reset-mask:hover { background:rgba(180,40,40,0.4); }
+
+/* ── SELLO AMG editable en modo edición ── */
+body.edit-mode .sello {
+  cursor: pointer;
+  outline: 1.5px dashed rgba(136,112,40,0.55);
+  border-radius: 3px;
+}
+body.edit-mode .sello:hover { outline: 2px solid rgba(136,112,40,0.9); }
+
+/* Overlay dorado del sello */
+.sello-mask-overlay {
+  position: absolute;
+  border: 1.5px dashed rgba(136,112,40,0.9);
+  z-index: 56;
+  box-sizing: border-box;
+  pointer-events: none;
+}
+/* Handles del sello (reutiliza .imh base + variantes smh) */
+.smh {
+  position: absolute;
+  width: 10px; height: 10px;
+  background: #887028;
+  border: 1.5px solid #fff;
+  border-radius: 2px;
+  pointer-events: all;
+  z-index: 58;
+}
+.smh-nw { top:2px;    left:2px;   cursor:nw-resize; }
+.smh-n  { top:2px;    left:50%;   cursor:n-resize;  transform:translateX(-50%); }
+.smh-ne { top:2px;    right:2px;  cursor:ne-resize; }
+.smh-e  { top:50%;    right:2px;  cursor:e-resize;  transform:translateY(-50%); }
+.smh-se { bottom:2px; right:2px;  cursor:se-resize; }
+.smh-s  { bottom:2px; left:50%;   cursor:s-resize;  transform:translateX(-50%); }
+.smh-sw { bottom:2px; left:2px;   cursor:sw-resize; }
+.smh-w  { top:50%;    left:2px;   cursor:w-resize;  transform:translateY(-50%); }
+.smh-move {
+  position: absolute;
+  top:0; left:0; right:0;
+  height:16px;
+  background: rgba(136,112,40,0.85);
+  cursor: grab;
+  pointer-events: all;
+  display:flex; align-items:center; justify-content:center;
+  font-size:8px; font-weight:700; color:#fff; letter-spacing:0.06em;
+  user-select:none; z-index:59;
+}
+.smh-move:active { cursor:grabbing; }
+.smh-reset {
+  position: absolute;
+  bottom:2px; right:2px;
+  height:14px; padding:0 6px;
+  background: rgba(13,20,55,0.9);
+  border:1px solid rgba(255,120,120,0.5);
+  border-radius:3px; cursor:pointer;
+  pointer-events:all;
+  font-size:8px; font-weight:700; color:#ff9a9a;
+  display:flex; align-items:center;
+  user-select:none; z-index:59;
+}
+.smh-reset:hover { background:rgba(180,40,40,0.4); }
+
+/* ── Copy siempre visible debajo de cada claim ── */
+.copy-always {
+  padding: 16px 24px 20px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+.copy-always-text {
+  flex: 1;
+  min-width: 240px;
+  font-size: 12px;
+  line-height: 1.65;
+  color: rgba(255,255,255,0.75);
+  font-family: 'Open Sans', sans-serif;
+  white-space: pre-line;
+}
+.copy-always-ht {
+  font-size: 10px;
+  color: var(--teal);
+  opacity: 0.75;
+  line-height: 1.7;
+  max-width: 280px;
+  word-break: break-word;
+}
+.copy-always-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex-shrink: 0;
+}
+.copy-always-actions .btn-copiar {
+  white-space: nowrap;
+}
+
+/* ── FOOTER ── */
+.site-footer {
+  text-align: center; padding: 24px;
+  color: rgba(255,255,255,0.2); font-size: 10px;
+  border-top: 1px solid rgba(255,255,255,0.05); margin-top: 24px;
+}
+</style>
+</head>
+<body>
+
+<!-- ══ HEADER ══ -->
+<div class="site-header">
+  <img class="logo-header" src="HUB_AMG_PYLORI/brand_amg/logo_amg_transparent.png" alt="AMG">
+  <h1>Sistema Visual · Hub AMG<br><span>México Sin Cáncer Gástrico 2026</span></h1>
+  <div class="badge">Brazo 1 · Sin Marca · Mayo–Julio 2026 · 144 piezas</div>
+  <button id="btn-edit-mode" onclick="toggleEditMode()" title="Activar modo edición: haz clic en cualquier texto de las piezas para editarlo">
+    ✏️ Modo Edición
+  </button>
+</div>
+
+<!-- ══ TOOLBAR EDICIÓN ══ -->
+<div id="edit-toolbar" style="display:none">
+  <span class="et-label" id="et-label-text">Texto:</span>
+  <button onclick="changeFontSize(-1)" title="Reducir tamaño de letra">A−</button>
+  <button onclick="changeFontSize(+1)" title="Aumentar tamaño de letra">A+</button>
+  <button onclick="toggleBold()" title="Negrita">B</button>
+  <button onclick="toggleItalic()" title="Cursiva"><em>i</em></button>
+  <span class="et-sep">|</span>
+  <button onclick="alignText('left')"   title="Alinear izquierda">⬅</button>
+  <button onclick="alignText('center')" title="Centrar">⬛</button>
+  <button onclick="alignText('right')"  title="Alinear derecha">➡</button>
+  <span class="et-sep">|</span>
+  <button onclick="resetElement()" class="et-reset" title="Restablecer este campo">↺ Reset texto</button>
+  <span class="et-sep">|</span>
+  <span class="et-hint">Arrastra el borde del cuadro para moverlo · Esquina inferior-derecha para cambiar tamaño · Clic en la foto para ajustarla</span>
+</div>
+
+<!-- ══ PANEL AJUSTE DE IMAGEN ══ -->
+<div id="img-panel" style="display:none">
+  <div class="ip-header">
+    🖼 Ajustar imagen
+    <button class="ip-close" onclick="closeImgPanel()">✕</button>
+  </div>
+  <div class="ip-row">
+    <label>← Horizontal →</label>
+    <input type="range" id="img-pos-x" min="0" max="100" value="50" oninput="updateImgPos()">
+    <span id="ip-x-val">50%</span>
+  </div>
+  <div class="ip-row">
+    <label>↑ Vertical ↓</label>
+    <input type="range" id="img-pos-y" min="0" max="100" value="50" oninput="updateImgPos()">
+    <span id="ip-y-val">50%</span>
+  </div>
+  <div class="ip-row">
+    <label>🔍 Zoom</label>
+    <input type="range" id="img-zoom" min="80" max="220" value="100" oninput="updateImgZoom()">
+    <span id="ip-z-val">100%</span>
+  </div>
+  <div class="ip-nudge">
+    <button onclick="nudgeImg(0,-5)">↑</button>
+    <div style="display:flex;gap:4px">
+      <button onclick="nudgeImg(-5,0)">←</button>
+      <button onclick="nudgeImg(5,0)">→</button>
+    </div>
+    <button onclick="nudgeImg(0,5)">↓</button>
+  </div>
+  <div class="ip-actions">
+    <button onclick="resetImg()" class="ip-reset">↺ Reset imagen</button>
+  </div>
+</div>
+
+<!-- ══ TABS ══ -->
+<div class="tabs-bar">
+  <button class="tab-btn active" onclick="switchTab('varA', this)">
+    <span class="tab-icon">📷</span>A — Con Foto
+    <span class="tab-desc">Editorial fotográfico + copy</span>
+  </button>
+  <button class="tab-btn" onclick="switchTab('varB', this)">
+    <span class="tab-icon">◼</span>B — Tipografía
+    <span class="tab-desc">Navy + bloques + Montserrat</span>
+  </button>
+  <button class="tab-btn" onclick="switchTab('varC', this)">
+    <span class="tab-icon">🔍</span>C — Detección
+    <span class="tab-desc">Con QR + campaña detección</span>
+  </button>
+  <button class="tab-btn" onclick="switchTab('varD', this)">
+    <span class="tab-icon">◆</span>D — Editorial
+    <span class="tab-desc">Tipografía + formas geométricas</span>
+  </button>
+</div>
+
+<!-- ══ CONTENT ══ -->
+<div class="content">
+
+<!-- ═══════════════════════════════
+     TAB A — CON FOTO
+═══════════════════════════════ -->
+<div id="tab-varA" class="tab-panel active"></div>
+
+<!-- ═══════════════════════════════
+     TAB B — TIPOGRAFÍA
+═══════════════════════════════ -->
+<div id="tab-varB" class="tab-panel"></div>
+
+<!-- ═══════════════════════════════
+     TAB C — DETECCIÓN
+═══════════════════════════════ -->
+<div id="tab-varC" class="tab-panel"></div>
+
+<!-- ═══════════════════════════════
+     TAB D — EDITORIAL
+═══════════════════════════════ -->
+<div id="tab-varD" class="tab-panel"></div>
+
+</div>
+
+<div class="site-footer">
+  Hub AMG · México Sin Cáncer Gástrico · Brazo 1 Sin Marca · Polar Multimedia para Carnot Laboratorios · 2026
+</div>
+
+<script>
+/* ══════════════════════════════════
+   DATA
+══════════════════════════════════ */
+const SELLO = 'HUB_AMG_PYLORI/brand_amg/logo_amg_transparent.png';
+const QR_URL = 'https://chart.googleapis.com/chart?chs=120x120&cht=qr&chl=https://mexicosincancergastrico.com.mx&choe=UTF-8&chld=M|1';
+
+/* ── FOTOS — una imagen única por claim ── */
+const F = {
+  mujer1:    'HUB_AMG_PYLORI/brand_amg/hispanica_mujer_c1_gastritis.png',
+  hombre2:   'HUB_AMG_PYLORI/brand_amg/hispanico_hombre_c2_transmisio.png',
+  mujer3:    'HUB_AMG_PYLORI/brand_amg/hispanica_mujer_c3_auto.png',
+  hombre4:   'HUB_AMG_PYLORI/brand_amg/hispanico_hombre_c4_consulta.png',
+  mujer5:    'HUB_AMG_PYLORI/brand_amg/hispanica_mujer_c5_dispepsia.png',
+  bacteria6: 'HUB_AMG_PYLORI/brand_amg/imagen_bacteria.png',
+  bacteria7: 'HUB_AMG_PYLORI/brand_amg/bacteria_c7_tratamiento.png',
+  hombre8:   'HUB_AMG_PYLORI/brand_amg/hispanico_hombre_c8_preguntas.png',
+  hombre9:   'HUB_AMG_PYLORI/brand_amg/hispanico_hombre_c9_reflujo.png',
+  bacteria10:'HUB_AMG_PYLORI/brand_amg/bacteria_c10_ulceras.png',
+  mujer11:   'HUB_AMG_PYLORI/brand_amg/hispanica_mujer_c11_protocolo.png',
+  hombre12:  'HUB_AMG_PYLORI/brand_amg/hispanico_hombre_c12_segundaopinio.png',
+};
+
+/* ── HASHTAGS CANÓNICOS ── */
+const HT = '#HelicobacterPylori #CancerGastrico #SaludDigestiva #PrevenciónMX #MéxicoSinCáncerGástrico #GastritisNoEsNormal';
+
+const claims = [
+  /* ─────────────── MAYO ─────────────── */
+  {
+    id: 1, mes: 'Mayo', mesColor: '#0D1B6E',
+    titulo: 'Gastritis recurrente',
+    fecha: 'Mayo · S1 · 2026-05-07',
+    foto: F.mujer1,
+    cifra: '90%',
+    cifraLabel: 'del cáncer gástrico',
+    headline: 'inicia como infección por <em>Helicobacter pylori</em>',
+    subcopy: 'No es alarma. Es información.',
+    hpTitle: '<em>Helicobacter pylori</em>.',
+    claimC: '<span class="hp-highlight">7 de cada 10</span> estómagos mexicanos portan esta bacteria.',
+    subC: 'Y la mayoría no lo sabe.',
+    hashtags: HT,
+    copyIG: '🦠 No es solo «gastritis».\n\nSi has sido diagnosticado con gastritis más de una vez, podría haber una causa detrás: <em>Helicobacter pylori</em>.\n\nEsta bacteria es responsable de hasta el 80% de las úlceras gástricas y el 95% de las duodenales.\n\nEl 90% del cáncer gástrico inicia como infección por <em>Helicobacter pylori</em>.\n\nNo es alarma. Es información.',
+  },
+  {
+    id: 2, mes: 'Mayo', mesColor: '#0D1B6E',
+    titulo: 'Transmisión en la infancia',
+    fecha: 'Mayo · S2 · 2026-05-14',
+    foto: F.hombre2,
+    cifra: '7 de 10',
+    cifraLabel: 'mexicanos la portan',
+    headline: 'La mayoría la adquiere en la infancia.',
+    subcopy: 'Y puede pasar años sin dar síntomas.',
+    hpTitle: '<em>Helicobacter pylori</em>.',
+    claimC: 'La mayoría adquiere <span class="hp-highlight"><em>Helicobacter pylori</em></span> desde la infancia.',
+    subC: 'Y puede pasar años sin dar síntomas.',
+    hashtags: HT,
+    copyIG: '👶 La mayoría adquiere <em>Helicobacter pylori</em> en la infancia.\n\nPor agua contaminada, alimentos mal manipulados, o contacto cercano — compartir cubiertos, saliva, un beso.\n\nY puede pasar años sin dar síntomas. Pero el 90% del cáncer gástrico empieza con ella.\n\nNo es tu culpa haberla adquirido. Pero sí puedes erradicarla.',
+  },
+  {
+    id: 3, mes: 'Mayo', mesColor: '#0D1B6E',
+    titulo: 'Prueba de aliento',
+    fecha: 'Mayo · S3 · 2026-05-21',
+    foto: F.mujer3,
+    cifra: '1 hora',
+    cifraLabel: 'para detectar <em>Helicobacter pylori</em>',
+    headline: 'Sin piquetes. Sin endoscopia.',
+    subcopy: 'Solo soplas.',
+    hpTitle: '<em>Helicobacter pylori</em>.',
+    claimC: 'Detección sin piquetes, sin endoscopia. Solo una <span class="hp-highlight">prueba de aliento.</span>',
+    subC: 'En menos de una hora.',
+    hashtags: HT,
+    copyIG: '🌬️ Una prueba simple.\n\nSoplas. Tomas una bebida especial. Vuelves a soplar. Sin piquetes. Sin endoscopia.\n\nEl test de aliento con urea detecta <em>Helicobacter pylori</em> con alta precisión — en menos de una hora.\n\nHabla con tu médico: él decide si eres candidato.',
+  },
+  {
+    id: 4, mes: 'Mayo', mesColor: '#0D1B6E',
+    titulo: 'Agenda tu consulta',
+    fecha: 'Mayo · S4 · 2026-05-28',
+    foto: F.hombre4,
+    cifra: '¿Cuándo?',
+    cifraLabel: 'fue tu última consulta',
+    headline: 'Tu estómago merece atención.',
+    subcopy: 'Agenda con tu médico. Es el primer paso.',
+    hpTitle: '<em>Helicobacter pylori</em>.',
+    claimC: 'Pregunta a tu médico si eres candidato a la <span class="hp-highlight">prueba sin costo.</span>',
+    subC: 'Síntomas: gastritis, acidez, reflujo recurrente.',
+    hashtags: HT,
+    copyIG: '📞 ¿Cuándo fue tu última consulta gastroenterológica?\n\nSi tienes síntomas digestivos recurrentes — acidez, reflujo, gastritis, pesadez — agendar con tu médico es el primer paso.\n\nÉl puede evaluarte y decidir si eres candidato a la prueba de <em>Helicobacter pylori</em>.\n\nTu estómago merece atención.',
+  },
+
+  /* ─────────────── JUNIO ─────────────── */
+  {
+    id: 5, mes: 'Junio', mesColor: '#0A7D8C',
+    titulo: 'Dispepsia',
+    fecha: 'Junio · S1 · 2026-06-04',
+    foto: F.mujer5,
+    cifra: '7 de 10',
+    cifraLabel: 'mexicanos podrían portarla',
+    headline: 'La pesadez después de comer puede ser <em>Helicobacter pylori</em>.',
+    subcopy: 'Sin saberlo.',
+    hpTitle: '<em>Helicobacter pylori</em>.',
+    claimC: '<span class="hp-highlight">7 de cada 10</span> estómagos mexicanos portan esta bacteria.',
+    subC: 'La pesadez que sientes podría ser su única señal.',
+    hashtags: HT,
+    copyIG: '💭 ¿Siempre tienes pesadez después de comer?\n\nLa dispepsia — esa sensación de «comida atorada», acidez, náusea — puede ser el único síntoma visible de <em>Helicobacter pylori</em>.\n\n7 de cada 10 mexicanos podrían portar esta bacteria sin saberlo.\n\nPregúntale a tu médico si vale la pena hacerte la prueba.',
+  },
+  {
+    id: 6, mes: 'Junio', mesColor: '#0A7D8C',
+    titulo: 'Síntomas silenciosos',
+    fecha: 'Junio · S2 · 2026-06-11',
+    foto: F.bacteria6,
+    cifra: 'Silenciosa',
+    cifraLabel: 'hasta que deja de serlo',
+    headline: '<em>Helicobacter pylori</em> puede pasar años sin dar señales.',
+    subcopy: 'Cuando aparecen, se confunden con gastritis o estrés.',
+    hpTitle: '<em>Helicobacter pylori</em>.',
+    claimC: 'La mayoría infectada no tiene <span class="hp-highlight">síntomas evidentes.</span>',
+    subC: 'Antecedente familiar, tabaquismo y gastritis recurrente: factores de riesgo clave.',
+    hashtags: HT,
+    copyIG: '🤫 <em>Helicobacter pylori</em> es silenciosa hasta que deja de serlo.\n\nLa mayoría de personas infectadas no tiene síntomas evidentes. Cuando aparecen, pueden confundirse con gastritis, colitis o «estrés».\n\nFactores de riesgo claves: antecedente familiar de cáncer gástrico, tabaquismo, gastritis recurrente.\n\n¿Tienes alguno? Habla con tu médico.',
+  },
+  {
+    id: 7, mes: 'Junio', mesColor: '#0A7D8C',
+    titulo: 'Tratamiento evolución',
+    fecha: 'Junio · S3 · 2026-06-18',
+    foto: F.bacteria7,
+    cifra: 'P-CAB',
+    cifraLabel: 'nueva generación 2026',
+    headline: 'El tratamiento de <em>Helicobacter pylori</em> ha evolucionado.',
+    subcopy: 'Pregunta a tu médico qué opción es la mejor para ti.',
+    hpTitle: '<em>Helicobacter pylori</em>.',
+    claimC: 'Hoy existen <span class="hp-highlight">nuevas opciones</span> que mejoran significativamente la curación.',
+    subC: 'Los P-CAB son la nueva clase de primera línea.',
+    hashtags: HT,
+    copyIG: '💊 La ciencia ha avanzado.\n\nEl tratamiento de <em>Helicobacter pylori</em> no es el mismo que hace 10 años. Ahora existe una nueva clase de medicamentos — los P-CAB — que están mejorando significativamente las tasas de curación.\n\nPregunta a tu médico qué opción es la mejor para ti.',
+  },
+  {
+    id: 8, mes: 'Junio', mesColor: '#0A7D8C',
+    titulo: '3 Preguntas para tu médico',
+    fecha: 'Junio · S4 · 2026-06-25',
+    foto: F.hombre8,
+    cifra: '3',
+    cifraLabel: 'preguntas para tu médico',
+    headline: 'Lleva esto a tu próxima consulta.',
+    subcopy: '¿<em>Helicobacter pylori</em>? · ¿Test aliento? · ¿Tratamiento?',
+    hpTitle: '<em>Helicobacter pylori</em>.',
+    claimC: 'Pregunta a tu médico si eres candidato a la <span class="hp-highlight">prueba sin costo.</span>',
+    subC: 'Guarda este post. Llévalo a tu cita.',
+    hashtags: HT,
+    copyIG: '🗒️ 3 preguntas para tu próxima consulta gastro:\n\n1. ¿Podría tener <em>Helicobacter pylori</em>?\n2. ¿Soy candidato al test de aliento?\n3. Si sale positivo, ¿qué opciones de tratamiento tengo hoy?\n\nGuarda este post. Llévalo a tu cita.',
+  },
+
+  /* ─────────────── JULIO ─────────────── */
+  {
+    id: 9, mes: 'Julio', mesColor: '#6B2FA0',
+    titulo: 'Reflujo frecuente',
+    fecha: 'Julio · S1 · 2026-07-02',
+    foto: F.hombre9,
+    cifra: '¿Cuántos?',
+    cifraLabel: 'antiácidos llevas este mes',
+    headline: 'Puede haber algo más detrás.',
+    subcopy: '<em>Helicobacter pylori</em> suprime el diagnóstico y mantiene el síntoma.',
+    hpTitle: '<em>Helicobacter pylori</em>.',
+    claimC: 'Si tomas antiácidos seguido, puede haber <span class="hp-highlight">algo más detrás.</span>',
+    subC: '<em>Helicobacter pylori</em> suprime el diagnóstico y mantiene el síntoma.',
+    hashtags: HT,
+    copyIG: '🔥 Acidez, reflujo, ardor: ¿cuántos antiácidos llevas este mes?\n\nSi tomas IBP o antiácidos seguido, puede haber algo más: <em>Helicobacter pylori</em>. Esta bacteria suprime el diagnóstico y mantiene el síntoma.\n\nEl truco: solo una prueba puede saberlo — un examen de aliento sencillo, sin piquetes.',
+  },
+  {
+    id: 10, mes: 'Julio', mesColor: '#6B2FA0',
+    titulo: 'Úlceras: los datos',
+    fecha: 'Julio · S2 · 2026-07-09',
+    foto: F.bacteria10,
+    cifra: '95%',
+    cifraLabel: 'de las úlceras duodenales',
+    headline: 'son causadas por <em>Helicobacter pylori</em>.',
+    subcopy: 'Erradicarla reduce el riesgo de cáncer gástrico.',
+    hpTitle: '<em>Helicobacter pylori</em>.',
+    claimC: '<span class="hp-highlight">95%</span> de las úlceras duodenales y 80% de las gástricas.',
+    subC: 'Erradicarla a tiempo reduce el riesgo de cáncer gástrico.',
+    hashtags: HT,
+    copyIG: '📊 Hasta el 95% de las úlceras duodenales y el 80% de las gástricas están asociadas a infección por <em>Helicobacter pylori</em>.\n\nErradicarla a tiempo puede reducir sustancialmente el riesgo de desarrollar cáncer gástrico.\n\nY el diagnóstico es simple: un examen de aliento no invasivo.',
+  },
+  {
+    id: 11, mes: 'Julio', mesColor: '#6B2FA0',
+    titulo: 'Protocolo 15 días',
+    fecha: 'Julio · S3 · 2026-07-16',
+    foto: F.mujer11,
+    cifra: '15 días',
+    cifraLabel: 'sin IBP antes del test',
+    headline: 'El diagnóstico confiable requiere preparación.',
+    subcopy: 'Habla con tu médico antes de suspender cualquier medicamento.',
+    hpTitle: '<em>Helicobacter pylori</em>.',
+    claimC: 'El diagnóstico confiable requiere <span class="hp-highlight">15 días sin IBP</span> bajo supervisión médica.',
+    subC: 'Habla con tu médico antes de suspender cualquier medicamento.',
+    hashtags: HT,
+    copyIG: '⏱️ El estudio requiere preparación.\n\nPara un diagnóstico confiable: 1 hora de ayuno total, 15 días sin IBP ni P-CAB bajo supervisión médica, 1 día sin antiácidos OTC.\n\n¿Por qué tanto detalle? Porque los supresores de ácido pueden esconder la bacteria y dar falsos negativos.\n\nHabla con tu médico antes de suspender cualquier medicamento.',
+  },
+  {
+    id: 12, mes: 'Julio', mesColor: '#6B2FA0',
+    titulo: 'Segunda opinión',
+    fecha: 'Julio · S4 · 2026-07-23',
+    foto: F.hombre12,
+    cifra: '¿Años?',
+    cifraLabel: 'con gastritis sin resolverse',
+    headline: 'Podría ser tratable.',
+    subcopy: 'Pedir una segunda opinión es tomar control de tu salud.',
+    hpTitle: '<em>Helicobacter pylori</em>.',
+    claimC: '¿Llevas años con «gastritis» que no se va? <span class="hp-highlight">Podría ser tratable.</span>',
+    subC: 'Pedir una segunda opinión no es desconfianza — es salud.',
+    hashtags: HT,
+    copyIG: '🔄 ¿Llevas años con «gastritis» que no se va?\n\nEl diagnóstico de gastritis crónica recurrente puede estar escondiendo una causa tratable: <em>Helicobacter pylori</em>.\n\nPedir una segunda opinión o una prueba específica no es desconfianza — es tomar control de tu salud.',
+  },
+];
+
+const formats = [
+  { key: '45',  label: 'Instagram · 4:5', info: '1080 × 1350 px' },
+  { key: '11',  label: 'Feed · 1:1',      info: '1080 × 1080 px' },
+  { key: '916', label: 'Stories · 9:16',  info: '1080 × 1920 px' },
+  { key: '169', label: 'LinkedIn · 16:9', info: '1920 × 1080 px' },
+];
+
+const CTA = 'Pregunta a tu médico por el tratamiento que está mejorando <strong>significativamente</strong> su tasa de curación.';
+const DISCLAIMER = 'Campaña educativa avalada por la Asociación Mexicana de Gastroenterología. Esta información no sustituye la consulta médica.';
+
+/* ══════════════════════════════════
+   RENDER FUNCTIONS
+══════════════════════════════════ */
+
+function buildVarA(claim, fmt) {
+  // Todos los formatos usan la imagen retrato (portrait)
+  // LinkedIn 16:9 usa layout split con background-position:top center (ver CSS)
+  const fotos = `url('${claim.foto}')`;
+  const isBacteria = claim.foto === F.bacteria;
+  const bacteriaClass = isBacteria ? ' is-bacteria' : '';
+  return `
+  <div class="pieza fmt-${fmt} var-a${bacteriaClass}" id="pieza-a-${claim.id}-${fmt}">
+    <div class="foto-bg" style="background-image:${fotos}"></div>
+    <div class="foto-halo"></div>
+    <div class="foto-overlay"></div>
+    <img class="sello" src="${SELLO}" alt="AMG">
+    <div class="copy-block">
+      <span class="cifra">${claim.cifra}</span>
+      ${claim.cifraLabel ? `<span class="cifra-label">${claim.cifraLabel}</span>` : ''}
+      <div class="headline">${claim.headline}</div>
+      <div class="subcopy">${claim.subcopy}</div>
+    </div>
+    <img class="franja-bar" src="HUB_AMG_PYLORI/brand_amg/franja.png" alt="">
+    <div class="cta-bar">
+      <div class="cta-text">${CTA}</div>
+      <div class="disclaimer">${DISCLAIMER}</div>
+    </div>
+  </div>`;
+}
+
+function buildVarB(claim, fmt) {
+  const is169 = fmt === '169';
+  if (is169) {
+    return `
+  <div class="pieza fmt-${fmt} var-b" id="pieza-b-${claim.id}-${fmt}">
+    <div class="geo-accent"></div>
+    <div class="dots"></div>
+    <div class="circle-accent"></div>
+    <div class="content">
+      <div class="left-col">
+        <div class="cifra">${claim.cifra}</div>
+        ${claim.cifraLabel ? `<span class="cifra-label">${claim.cifraLabel}</span>` : ''}
+        <div class="headline" style="margin-top:8px">${claim.headline}</div>
+        <div class="subcopy" style="margin-top:6px">${claim.subcopy}</div>
+      </div>
+      <div class="right-col">
+        <img class="sello" src="${SELLO}" alt="AMG">
+        <div class="cta-inline bottom-area">${CTA}<div class="url-text">mexicosincancergastrico.com.mx</div></div>
+      </div>
+    </div>
+  </div>`;
+  }
+  return `
+  <div class="pieza fmt-${fmt} var-b" id="pieza-b-${claim.id}-${fmt}">
+    <div class="geo-accent"></div>
+    <div class="dots"></div>
+    <div class="circle-accent"></div>
+    <div class="content">
+      <div class="top-area">
+        <div>
+          <span class="cifra">${claim.cifra}</span>
+          ${claim.cifraLabel ? `<span class="cifra-label">${claim.cifraLabel}</span>` : ''}
+        </div>
+        <img class="sello" src="${SELLO}" alt="AMG">
+      </div>
+      <div class="middle-area">
+        <div class="headline">${claim.headline}</div>
+        <div class="subcopy" style="margin-top:8px">${claim.subcopy}</div>
+      </div>
+      <div class="bottom-area">
+        <div class="cta-inline">${CTA}</div>
+        <div class="url-text">mexicosincancergastrico.com.mx</div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function buildVarC(claim, fmt) {
+  return `
+  <div class="pieza fmt-${fmt} var-c" id="pieza-c-${claim.id}-${fmt}">
+    <div class="foto-bg" style="background-image:url('${claim.foto}')"></div>
+    <div class="foto-overlay"></div>
+    <div class="banda-top">
+      <span class="campana-label">Campaña de detección 2026</span>
+      <img class="sello" src="${SELLO}" alt="AMG">
+    </div>
+    <div class="main-area">
+      <span class="hp-giant">${claim.hpTitle}</span>
+      <div class="hp-claim">${claim.claimC}</div>
+      <div class="hp-sub">${claim.subC}</div>
+      <div class="cta-detect">Pregunta a tu médico por los requisitos<br>para participar sin costo en las sedes participantes.</div>
+    </div>
+    <div class="url-bottom">mexicosincancergastrico.com.mx</div>
+    <div class="barra-bottom">
+      <div class="bottom-claim-text"><strong>90%</strong> del cáncer gástrico inicia con la infección de esta bacteria.</div>
+      <div class="qr-box"><img src="${QR_URL}" alt="QR"></div>
+    </div>
+  </div>`;
+}
+
+/* ══════════════════════════════════
+   RENDER TABS
+══════════════════════════════════ */
+function renderTab(varKey, buildFn) {
+  const container = document.getElementById(`tab-var${varKey}`);
+  let html = '';
+  let currentMes = null;
+
+  claims.forEach(claim => {
+    /* ── Separador de mes ── */
+    if (claim.mes !== currentMes) {
+      currentMes = claim.mes;
+      html += `<div class="mes-header" style="border-left-color:${claim.mesColor}">
+        <span class="mes-label" style="background:${claim.mesColor}">${claim.mes} 2026</span>
+        <span class="mes-total">4 posts · 3 variantes · 4 formatos · <strong>48 piezas</strong></span>
+        <button class="btn-mes-dl" onclick="downloadMes('${varKey}', '${claim.mes}')">
+          ↓ Descargar ${claim.mes} Var${varKey} (PNG)
+        </button>
+      </div>`;
+    }
+
+    html += `<div class="claim-section">
+      <div class="claim-header">
+        <div class="claim-num">${claim.id}</div>
+        <div>
+          <div class="claim-title">${claim.titulo}</div>
+          <div class="claim-fecha">${claim.fecha}</div>
+        </div>
+        <button class="btn-edit-claim" onclick="if(!editMode)toggleEditMode()">✏️ Editar piezas</button>
+      </div>
+
+      <div class="formats-row">`;
+    formats.forEach(fmt => {
+      const pieceId = `pieza-${varKey.toLowerCase()}-${claim.id}-${fmt.key}`;
+      const hasPhoto = ['A','C'].includes(varKey);
+      html += `
+        <div class="format-card">
+          <div class="format-label">${fmt.label}</div>
+          <div class="format-info">${fmt.info}</div>
+          ${buildFn(claim, fmt.key)}
+          <div class="pieza-edit-bar">
+            ${hasPhoto ? `<button class="btn-peb" onclick="openImgForPieza('${pieceId}')">🖼 Ajustar imagen</button>` : ''}
+            <button class="btn-peb" style="border-color:rgba(136,112,40,0.45);color:#b09048;" onclick="openSelloForPieza('${pieceId}')">🔰 Ajustar sello</button>
+            <button class="btn-peb btn-peb-reset" onclick="resetPiezaAll('${pieceId}')">↺ Reset pieza</button>
+          </div>
+          <button class="btn-download" onclick="downloadPieza('${pieceId}', 'AMG_C${claim.id}_Var${varKey}_${fmt.key}')">
+            ↓ Descargar PNG
+          </button>
+        </div>`;
+    });
+    html += `</div>
+      <div class="copy-always">
+        <div class="copy-always-text">${claim.copyIG.replace(/\n/g,'<br>')}</div>
+        <div class="copy-always-ht">${claim.hashtags}</div>
+        <div class="copy-always-actions">
+          <button class="btn-copiar" onclick="copiarTexto('${varKey}-${claim.id}', false)">Copiar texto</button>
+          <button class="btn-copiar btn-copiar-ht" onclick="copiarTexto('${varKey}-${claim.id}', true)">Copiar + hashtags</button>
+        </div>
+      </div>
+    </div>`;
+  });
+  container.innerHTML = html;
+}
+
+/* ── toggle copy panel ── */
+function toggleCopy(id) {
+  const el = document.getElementById(id);
+  el.classList.toggle('open');
+}
+
+/* ── copiar texto al clipboard ── */
+function copiarTexto(key, withHashtags) {
+  const [varKey, id] = key.split('-');
+  const claim = claims.find(c => c.id === parseInt(id));
+  if (!claim) return;
+  const text = withHashtags ? claim.copyIG + '\n\n' + claim.hashtags : claim.copyIG;
+  navigator.clipboard.writeText(text).then(() => {
+    // Brief feedback
+    const btns = document.querySelectorAll(`#copy-${key} .btn-copiar`);
+    btns.forEach(b => { b.textContent = '✓ Copiado'; setTimeout(() => { b.textContent = b.classList.contains('btn-copiar-ht') ? 'Copiar + hashtags' : 'Copiar texto'; }, 1500); });
+  });
+}
+
+function buildVarD(claim, fmt) {
+  const is169 = fmt === '169';
+  const vdSep = is169 ? '<div class="vd-sep"></div>' : '';
+  const vdRight = is169 ? `
+    <div class="vd-right">
+      <div class="vd-headline">${claim.headline}</div>
+      <div class="vd-subcopy">${claim.subcopy}</div>
+    </div>` : '';
+
+  return `
+  <div class="pieza fmt-${fmt} var-d" id="pieza-d-${claim.id}-${fmt}">
+    <div class="vd-shape"></div>
+    <div class="vd-stripe"></div>
+    <div class="vd-tracks"></div>
+    ${vdSep}
+    <img class="sello" src="${SELLO}" alt="AMG">
+    <div class="vd-body">
+      <div class="vd-eyebrow">Campaña de detección 2026</div>
+      <div class="vd-stat">${claim.cifra}</div>
+      <div class="vd-stat-label">${claim.cifraLabel}</div>
+      <div class="vd-divider"></div>
+      ${!is169 ? `<div class="vd-headline">${claim.headline}</div>
+      <div class="vd-subcopy">${claim.subcopy}</div>` : ''}
+    </div>
+    ${vdRight}
+    <img class="franja-bar" src="HUB_AMG_PYLORI/brand_amg/franja.png" alt="">
+    <div class="cta-bar">
+      <div class="cta-text">${CTA}</div>
+      <div class="disclaimer">${DISCLAIMER}</div>
+    </div>
+  </div>`;
+}
+
+renderTab('A', buildVarA);
+renderTab('B', buildVarB);
+renderTab('C', buildVarC);
+renderTab('D', buildVarD);
+
+/* ══════════════════════════════════
+   TAB SWITCHING
+══════════════════════════════════ */
+function switchTab(varKey, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(`tab-var${varKey}`).classList.add('active');
+  btn.classList.add('active');
+}
+
+/* ══════════════════════════════════
+   IMAGE PRELOAD CACHE
+   Convierte todas las imágenes a dataURLs en memoria
+   para que html2canvas exporte sin errores CORS/taint
+══════════════════════════════════ */
+const IMG_CACHE = {};
+
+function toDataURL(src) {
+  return new Promise(resolve => {
+    if (IMG_CACHE[src]) { resolve(IMG_CACHE[src]); return; }
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.onload = () => {
+      try {
+        const c = document.createElement('canvas');
+        c.width = img.naturalWidth; c.height = img.naturalHeight;
+        c.getContext('2d').drawImage(img, 0, 0);
+        IMG_CACHE[src] = c.toDataURL('image/png');
+      } catch(e) { IMG_CACHE[src] = src; } // fallback: use original
+      resolve(IMG_CACHE[src]);
+    };
+    img.onerror = () => { IMG_CACHE[src] = src; resolve(src); };
+    img.src = src + (src.startsWith('http') ? '' : '?v=' + Date.now());
+  });
+}
+
+/* Preload all images on page load */
+window.addEventListener('load', () => {
+  const allSrcs = [
+    SELLO,
+    'HUB_AMG_PYLORI/brand_amg/franja.png',
+    ...Object.values(F)
+  ];
+  allSrcs.forEach(src => toDataURL(src)); // warm up cache silently
+});
+
+/* Swap bg-images to cached dataURLs before export, then restore */
+async function prepareForExport(el) {
+  const bgEls = el.querySelectorAll('[style*="background-image"]');
+  const origBgs = [];
+  for (const bEl of bgEls) {
+    const orig = bEl.style.backgroundImage;
+    const match = orig.match(/url\(['"]?([^'")\s]+)['"]?\)/);
+    if (match) {
+      const cached = await toDataURL(match[1]);
+      origBgs.push({ el: bEl, orig });
+      bEl.style.backgroundImage = `url('${cached}')`;
+    }
+  }
+  // Swap img src
+  const imgEls = el.querySelectorAll('img');
+  const origSrcs = [];
+  for (const iEl of imgEls) {
+    const orig = iEl.src;
+    const relSrc = iEl.getAttribute('src');
+    if (relSrc && !relSrc.startsWith('data:') && !relSrc.startsWith('http')) {
+      const cached = await toDataURL(relSrc);
+      origSrcs.push({ el: iEl, orig: iEl.src });
+      iEl.src = cached;
+    }
+  }
+  return () => {
+    origBgs.forEach(({ el, orig }) => { el.style.backgroundImage = orig; });
+    origSrcs.forEach(({ el, orig }) => { el.src = orig; });
+  };
+}
+
+/* ══════════════════════════════════
+   DOWNLOAD — single piece
+══════════════════════════════════ */
+const EXPORT_SCALES = { '45': 4.4, '11': 4.4, '916': 6.2, '169': 5.0 };
+
+async function downloadPieza(id, filename) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const btn = el.closest('.format-card').querySelector('.btn-download');
+  btn.classList.add('loading');
+  btn.textContent = 'Generando…';
+
+  const fmtMatch = id.match(/-(\d+)$/);
+  const fmtKey = fmtMatch ? fmtMatch[1] : '45';
+  const scale = EXPORT_SCALES[fmtKey] || 4;
+
+  const restore = await prepareForExport(el);
+
+  html2canvas(el, {
+    scale: scale,
+    useCORS: true,
+    allowTaint: true,
+    logging: false,
+    backgroundColor: null,
+  }).then(canvas => {
+    restore();
+    const link = document.createElement('a');
+    link.download = filename + '.png';
+    link.href = canvas.toDataURL('image/png', 1.0);
+    link.click();
+    btn.classList.remove('loading');
+    btn.textContent = '↓ Descargar PNG';
+  }).catch(err => {
+    restore();
+    console.error(err);
+    btn.classList.remove('loading');
+    btn.textContent = '↓ Descargar PNG';
+    alert('Error: ' + err.message + '\n\nAsegúrate de abrir el archivo desde un servidor local.');
+  });
+}
+
+/* ══════════════════════════════════
+   DOWNLOAD — mes completo
+   Descarga secuencialmente todas las piezas
+   de un mes y variante
+══════════════════════════════════ */
+async function downloadMes(varKey, mes) {
+  const claimsDelMes = claims.filter(c => c.mes === mes);
+  const btn = event.target;
+  btn.disabled = true;
+  btn.textContent = '⏳ Generando…';
+
+  let total = claimsDelMes.length * formats.length;
+  let done = 0;
+
+  for (const claim of claimsDelMes) {
+    for (const fmt of formats) {
+      const id = `pieza-${varKey.toLowerCase()}-${claim.id}-${fmt.key}`;
+      const filename = `AMG_${mes}_C${claim.id}_Var${varKey}_${fmt.key}`;
+      const el = document.getElementById(id);
+      if (!el) { done++; continue; }
+
+      const fmtKey = fmt.key;
+      const scale = EXPORT_SCALES[fmtKey] || 4;
+      const restore = await prepareForExport(el);
+
+      try {
+        const canvas = await html2canvas(el, {
+          scale: scale, useCORS: true, allowTaint: true, logging: false, backgroundColor: null,
+        });
+        restore();
+        const link = document.createElement('a');
+        link.download = filename + '.png';
+        link.href = canvas.toDataURL('image/png', 1.0);
+        link.click();
+        await new Promise(r => setTimeout(r, 400)); // pause entre descargas
+      } catch(e) {
+        restore();
+        console.warn('Error pieza', id, e);
+      }
+      done++;
+      btn.textContent = `⏳ ${done}/${total}…`;
+    }
+  }
+  btn.disabled = false;
+  btn.textContent = `✓ ${mes} Var${varKey} listo`;
+  setTimeout(() => { btn.textContent = `↓ Descargar ${mes} Var${varKey} (PNG)`; }, 3000);
+}
+
+/* ══════════════════════════════════════════════════════
+   MODO EDICIÓN — Texto · Mover cajas · Ajustar imagen
+══════════════════════════════════════════════════════ */
+
+const EDITABLE_SEL = [
+  '.cifra','.cifra-label','.headline','.subcopy',
+  '.cta-text','.disclaimer',
+  '.vd-stat','.vd-stat-label','.vd-headline','.vd-subcopy','.vd-eyebrow',
+  '.hp-giant','.hp-claim','.hp-sub','.cta-detect','.url-bottom',
+].join(', ');
+
+const BOX_SEL = '.copy-block, .vd-body, .vd-right';
+
+let editMode  = false;
+let activeEl  = null;
+const origMap = new WeakMap(); // texto original
+const origBox = new WeakMap(); // estilos originales de caja
+const origImg = new WeakMap(); // bgPosition/bgSize originales
+
+/* ── TOGGLE MODO ── */
+function toggleEditMode() {
+  editMode = !editMode;
+  const btn     = document.getElementById('btn-edit-mode');
+  const toolbar = document.getElementById('edit-toolbar');
+  document.body.classList.toggle('edit-mode', editMode);
+  btn.classList.toggle('active', editMode);
+  btn.textContent = editMode ? '✅ Editando — clic para salir' : '✏️ Modo Edición';
+  toolbar.style.display = editMode ? 'flex' : 'none';
+
+  /* ── Textos editables ── */
+  document.querySelectorAll(EDITABLE_SEL).forEach(el => {
+    if (editMode) {
+      if (!origMap.has(el)) origMap.set(el, el.innerHTML);
+      el.setAttribute('contenteditable','true');
+      el.addEventListener('focus', onTextFocus);
+    } else {
+      el.removeAttribute('contenteditable');
+      el.removeEventListener('focus', onTextFocus);
+    }
+  });
+
+  /* ── Cajas movibles + redimensionables ── */
+  document.querySelectorAll(BOX_SEL).forEach(box => {
+    if (editMode) {
+      if (!origBox.has(box)) {
+        origBox.set(box, {
+          top: box.style.top, right: box.style.right,
+          bottom: box.style.bottom, left: box.style.left,
+          width: box.style.width, height: box.style.height,
+        });
+      }
+      if (!box.querySelector('.ed-move-handle')) {
+        const h = document.createElement('div');
+        h.className = 'ed-move-handle';
+        h.innerHTML = '⠿';
+        h.addEventListener('mousedown', startBoxDrag);
+        box.prepend(h);
+      }
+    } else {
+      box.querySelector('.ed-move-handle')?.remove();
+    }
+  });
+
+  /* ── Foto-overlay: click para abrir panel imagen ──
+     (foto-overlay está en z-index:3, encima de foto-bg z:1 — el click
+      siempre cae en el overlay, nunca en el bg que está debajo) */
+  document.querySelectorAll('.foto-overlay').forEach(ov => {
+    if (editMode) {
+      ov.addEventListener('click', openImgPanelFromOverlay);
+    } else {
+      ov.removeEventListener('click', openImgPanelFromOverlay);
+    }
+  });
+
+  /* ── Sello AMG: click para abrir edición de posición/tamaño ── */
+  document.querySelectorAll('.sello').forEach(sel => {
+    if (editMode) {
+      sel.addEventListener('click', onSelloClick);
+    } else {
+      sel.removeEventListener('click', onSelloClick);
+    }
+  });
+
+  if (!editMode) { removeSelloOverlay(); }
+
+  /* Sincronizar estado de botones edit por claim */
+  document.querySelectorAll('.btn-edit-claim').forEach(btn => {
+    btn.classList.toggle('active', editMode);
+    btn.textContent = editMode ? '✅ Editando' : '✏️ Editar piezas';
+  });
+
+  if (!editMode) { closeImgPanel(); activeEl = null; }
+}
+
+/* ── TEXTO: focus handler ── */
+function onTextFocus(e) {
+  activeEl = e.target;
+  const cls = [...activeEl.classList]
+    .find(c => !['pieza','fmt-45','fmt-11','fmt-916','fmt-169',
+                  'var-a','var-b','var-c','var-d','is-bacteria'].includes(c)) || 'texto';
+  document.getElementById('et-label-text').textContent = `.${cls}:`;
+}
+
+/* ── TEXTO: controles ── */
+function changeFontSize(d) {
+  if (!activeEl) return;
+  activeEl.style.fontSize = (parseFloat(getComputedStyle(activeEl).fontSize) + d) + 'px';
+}
+function toggleBold() {
+  if (!activeEl) return;
+  activeEl.style.fontWeight = parseInt(getComputedStyle(activeEl).fontWeight) >= 700 ? '400' : '800';
+}
+function toggleItalic() {
+  if (!activeEl) return;
+  activeEl.style.fontStyle = getComputedStyle(activeEl).fontStyle === 'italic' ? 'normal' : 'italic';
+}
+function alignText(dir) {
+  if (!activeEl) return;
+  const block = activeEl.closest('.copy-block,.vd-body,.vd-right') || activeEl;
+  block.style.textAlign = dir;
+}
+function resetElement() {
+  if (!activeEl || !origMap.has(activeEl)) return;
+  activeEl.innerHTML = origMap.get(activeEl);
+  ['fontSize','fontWeight','fontStyle'].forEach(p => activeEl.style[p] = '');
+}
+
+/* ── CAJA: drag para mover ── */
+let _drag = null;
+function startBoxDrag(e) {
+  e.preventDefault();
+  const box   = e.target.closest(BOX_SEL);
+  const pieza = box.closest('.pieza');
+  const pr    = pieza.getBoundingClientRect();
+  const br    = box.getBoundingClientRect();
+
+  // Convierto a posición absoluta desde esquina superior-izquierda del pieza
+  const startX = e.clientX;
+  const startY = e.clientY;
+  const startL = br.left - pr.left;
+  const startT = br.top  - pr.top;
+
+  box.style.left   = startL + 'px';
+  box.style.top    = startT + 'px';
+  box.style.right  = 'auto';
+  box.style.bottom = 'auto';
+
+  _drag = { box, startX, startY, startL, startT };
+
+  document.addEventListener('mousemove', onBoxDrag);
+  document.addEventListener('mouseup',   stopBoxDrag);
+}
+function onBoxDrag(e) {
+  if (!_drag) return;
+  const { box, startX, startY, startL, startT } = _drag;
+  box.style.left = (startL + e.clientX - startX) + 'px';
+  box.style.top  = (startT + e.clientY - startY) + 'px';
+}
+function stopBoxDrag() {
+  _drag = null;
+  document.removeEventListener('mousemove', onBoxDrag);
+  document.removeEventListener('mouseup',   stopBoxDrag);
+}
+
+/* ── IMAGEN: abrir panel ── */
+let _imgEl = null;
+
+/* Wrapper: el click viene del foto-overlay → buscamos el foto-bg hermano */
+function openImgPanelFromOverlay(e) {
+  e.stopPropagation();
+  const fotoBg = e.currentTarget.closest('.pieza')?.querySelector('.foto-bg');
+  if (fotoBg) openImgPanel({ currentTarget: fotoBg, stopPropagation: () => {} });
+}
+
+/* Abrir panel para una pieza específica por ID (desde botón debajo de la pieza) */
+function openImgForPieza(pieceId) {
+  if (!editMode) toggleEditMode();
+  const pieza = document.getElementById(pieceId);
+  if (!pieza) return;
+  const fotoBg = pieza.querySelector('.foto-bg');
+  if (!fotoBg) return;
+  openImgPanel({ currentTarget: fotoBg, stopPropagation: () => {} });
+  setTimeout(() => pieza.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 50);
+}
+
+function openImgPanel(e) {
+  e.stopPropagation();
+  _imgEl = e.currentTarget;
+  createMaskOverlay(_imgEl);
+
+  // Guarda estado original (posición bg + geometría de la máscara)
+  if (!origImg.has(_imgEl)) {
+    origImg.set(_imgEl, {
+      pos:    _imgEl.style.backgroundPosition || 'center center',
+      size:   _imgEl.style.backgroundSize     || 'cover',
+      left:   _imgEl.style.left,
+      top:    _imgEl.style.top,
+      right:  _imgEl.style.right,
+      bottom: _imgEl.style.bottom,
+      width:  _imgEl.style.width,
+      height: _imgEl.style.height,
+    });
+  }
+
+  // Lee posición actual
+  const cs = getComputedStyle(_imgEl);
+  const posStr  = _imgEl.style.backgroundPosition || cs.backgroundPosition;
+  const sizeStr = _imgEl.style.backgroundSize     || cs.backgroundSize;
+
+  // Parsea %
+  const pm = posStr.match(/([\d.]+)%\s*([\d.]+)%/);
+  const px = pm ? parseFloat(pm[1]) : 50;
+  const py = pm ? parseFloat(pm[2]) : 50;
+
+  // Zoom: si es 'cover' = 100, si es % parsearlo
+  const zm = sizeStr.match(/([\d.]+)%/);
+  const pz = zm ? parseFloat(zm[1]) : 100;
+
+  document.getElementById('img-pos-x').value = px;
+  document.getElementById('img-pos-y').value = py;
+  document.getElementById('img-zoom').value  = pz;
+  document.getElementById('ip-x-val').textContent = Math.round(px) + '%';
+  document.getElementById('ip-y-val').textContent = Math.round(py) + '%';
+  document.getElementById('ip-z-val').textContent = Math.round(pz) + '%';
+
+  document.getElementById('img-panel').style.display = 'block';
+}
+
+function closeImgPanel() {
+  document.getElementById('img-panel').style.display = 'none';
+  removeMaskOverlay();
+  _imgEl = null;
+}
+
+function updateImgPos() {
+  if (!_imgEl) return;
+  const x = document.getElementById('img-pos-x').value;
+  const y = document.getElementById('img-pos-y').value;
+  _imgEl.style.backgroundPosition = x + '% ' + y + '%';
+  document.getElementById('ip-x-val').textContent = Math.round(x) + '%';
+  document.getElementById('ip-y-val').textContent = Math.round(y) + '%';
+}
+
+function updateImgZoom() {
+  if (!_imgEl) return;
+  const z = document.getElementById('img-zoom').value;
+  _imgEl.style.backgroundSize = z + '%';
+  document.getElementById('ip-z-val').textContent = Math.round(z) + '%';
+}
+
+function nudgeImg(dx, dy) {
+  if (!_imgEl) return;
+  const xEl = document.getElementById('img-pos-x');
+  const yEl = document.getElementById('img-pos-y');
+  xEl.value = Math.min(100, Math.max(0, parseFloat(xEl.value) + dx));
+  yEl.value = Math.min(100, Math.max(0, parseFloat(yEl.value) + dy));
+  updateImgPos();
+}
+
+function resetImg() {
+  if (!_imgEl || !origImg.has(_imgEl)) return;
+  const o = origImg.get(_imgEl);
+  _imgEl.style.backgroundPosition = o.pos;
+  _imgEl.style.backgroundSize     = o.size;
+  // Restaurar geometría de la máscara
+  _imgEl.style.left   = o.left   || '';
+  _imgEl.style.top    = o.top    || '';
+  _imgEl.style.right  = o.right  || '';
+  _imgEl.style.bottom = o.bottom || '';
+  _imgEl.style.width  = o.width  || '';
+  _imgEl.style.height = o.height || '';
+  syncMaskOverlay();
+  openImgPanel({ currentTarget: _imgEl, stopPropagation: () => {} });
+}
+
+/* ── Reset completo de una pieza (texto + imagen + máscara) ── */
+function resetPiezaAll(pieceId) {
+  const pieza = document.getElementById(pieceId);
+  if (!pieza) return;
+  // Reset textos editables
+  pieza.querySelectorAll('[contenteditable]').forEach(el => {
+    if (origMap.has(el)) {
+      el.innerHTML = origMap.get(el);
+      ['fontSize','fontWeight','fontStyle'].forEach(p => el.style[p] = '');
+    }
+  });
+  // Reset cajas
+  pieza.querySelectorAll(BOX_SEL).forEach(box => {
+    if (origBox.has(box)) {
+      const o = origBox.get(box);
+      Object.assign(box.style, o);
+    }
+  });
+  // Reset imagen de fondo
+  const fotoBg = pieza.querySelector('.foto-bg');
+  if (fotoBg && origImg.has(fotoBg)) {
+    const o = origImg.get(fotoBg);
+    fotoBg.style.backgroundPosition = o.pos;
+    fotoBg.style.backgroundSize     = o.size;
+    fotoBg.style.left   = o.left   || '';
+    fotoBg.style.top    = o.top    || '';
+    fotoBg.style.right  = o.right  || '';
+    fotoBg.style.bottom = o.bottom || '';
+    fotoBg.style.width  = o.width  || '';
+    fotoBg.style.height = o.height || '';
+  }
+  if (_maskFb === fotoBg) syncMaskOverlay();
+
+  // Reset sello AMG
+  const sello = pieza.querySelector('.sello');
+  if (sello && origSello.has(sello)) {
+    resetSelloMask(sello);
+  }
+  if (_selloEl === sello) syncSelloOverlay();
+}
+
+/* ── MÁSCARA: crear overlay con handles ── */
+let _maskOverlay = null;
+let _maskFb      = null;
+let _maskDrag    = null;
+
+function createMaskOverlay(fotoBg) {
+  removeMaskOverlay();
+  const pieza = fotoBg.closest('.pieza');
+  if (!pieza) return;
+  const pr = pieza.getBoundingClientRect();
+  const fr = fotoBg.getBoundingClientRect();
+
+  const ov = document.createElement('div');
+  ov.className = 'img-mask-overlay';
+  ov.style.left   = (fr.left - pr.left) + 'px';
+  ov.style.top    = (fr.top  - pr.top)  + 'px';
+  ov.style.width  = fr.width  + 'px';
+  ov.style.height = fr.height + 'px';
+
+  // 8 handles de resize
+  ['nw','n','ne','e','se','s','sw','w'].forEach(dir => {
+    const h = document.createElement('div');
+    h.className = 'imh imh-' + dir;
+    h.addEventListener('mousedown', e => startMaskResize(e, fotoBg, dir));
+    ov.appendChild(h);
+  });
+
+  // Barra de movimiento
+  const mv = document.createElement('div');
+  mv.className = 'imh-move';
+  mv.textContent = '⠿ MOVER MÁSCARA';
+  mv.addEventListener('mousedown', e => startMaskMove(e, fotoBg));
+  ov.appendChild(mv);
+
+  // Botón reset máscara
+  const rb = document.createElement('div');
+  rb.className = 'imh-reset-mask';
+  rb.textContent = '↺ reset';
+  rb.addEventListener('click', () => resetMask(fotoBg));
+  ov.appendChild(rb);
+
+  pieza.appendChild(ov);
+  _maskOverlay = ov;
+  _maskFb = fotoBg;
+}
+
+function removeMaskOverlay() {
+  _maskOverlay?.remove();
+  _maskOverlay = null;
+  _maskFb = null;
+}
+
+function syncMaskOverlay() {
+  if (!_maskOverlay || !_maskFb) return;
+  const pieza = _maskFb.closest('.pieza');
+  if (!pieza) return;
+  const pr = pieza.getBoundingClientRect();
+  const fr = _maskFb.getBoundingClientRect();
+  _maskOverlay.style.left   = (fr.left - pr.left) + 'px';
+  _maskOverlay.style.top    = (fr.top  - pr.top)  + 'px';
+  _maskOverlay.style.width  = fr.width  + 'px';
+  _maskOverlay.style.height = fr.height + 'px';
+}
+
+function startMaskResize(e, fotoBg, dir) {
+  e.preventDefault(); e.stopPropagation();
+  const pieza = fotoBg.closest('.pieza');
+  const pr = pieza.getBoundingClientRect();
+  const fr = fotoBg.getBoundingClientRect();
+  _maskDrag = {
+    type:'resize', dir, fotoBg,
+    startX: e.clientX, startY: e.clientY,
+    startL: fr.left - pr.left,
+    startT: fr.top  - pr.top,
+    startW: fr.width,
+    startH: fr.height,
+  };
+  document.addEventListener('mousemove', onMaskDrag);
+  document.addEventListener('mouseup',   stopMaskDrag);
+}
+
+function startMaskMove(e, fotoBg) {
+  e.preventDefault(); e.stopPropagation();
+  const pieza = fotoBg.closest('.pieza');
+  const pr = pieza.getBoundingClientRect();
+  const fr = fotoBg.getBoundingClientRect();
+  _maskDrag = {
+    type:'move', fotoBg,
+    startX: e.clientX, startY: e.clientY,
+    startL: fr.left - pr.left,
+    startT: fr.top  - pr.top,
+    startW: fr.width,
+    startH: fr.height,
+  };
+  document.addEventListener('mousemove', onMaskDrag);
+  document.addEventListener('mouseup',   stopMaskDrag);
+}
+
+function onMaskDrag(e) {
+  if (!_maskDrag) return;
+  const { type, dir, fotoBg, startX, startY, startL, startT, startW, startH } = _maskDrag;
+  const dx = e.clientX - startX;
+  const dy = e.clientY - startY;
+
+  if (type === 'move') {
+    fotoBg.style.left   = (startL + dx) + 'px';
+    fotoBg.style.top    = (startT + dy) + 'px';
+    fotoBg.style.right  = 'auto';
+    fotoBg.style.bottom = 'auto';
+    fotoBg.style.width  = startW + 'px';
+    fotoBg.style.height = startH + 'px';
+  } else {
+    let l = startL, t = startT, w = startW, h = startH;
+    if (dir.includes('e'))  { w = Math.max(40, startW + dx); }
+    if (dir.includes('w'))  { l = startL + dx; w = Math.max(40, startW - dx); }
+    if (dir.includes('s'))  { h = Math.max(40, startH + dy); }
+    if (dir.includes('n'))  { t = startT + dy; h = Math.max(40, startH - dy); }
+    fotoBg.style.left   = l + 'px';
+    fotoBg.style.top    = t + 'px';
+    fotoBg.style.right  = 'auto';
+    fotoBg.style.bottom = 'auto';
+    fotoBg.style.width  = w + 'px';
+    fotoBg.style.height = h + 'px';
+  }
+  syncMaskOverlay();
+}
+
+function stopMaskDrag() {
+  _maskDrag = null;
+  document.removeEventListener('mousemove', onMaskDrag);
+  document.removeEventListener('mouseup',   stopMaskDrag);
+}
+
+function resetMask(fotoBg) {
+  if (!origImg.has(fotoBg)) { return; }
+  const o = origImg.get(fotoBg);
+  fotoBg.style.left   = o.left   || '';
+  fotoBg.style.top    = o.top    || '';
+  fotoBg.style.right  = o.right  || '';
+  fotoBg.style.bottom = o.bottom || '';
+  fotoBg.style.width  = o.width  || '';
+  fotoBg.style.height = o.height || '';
+  syncMaskOverlay();
+}
+
+/* ══════════════════════════════════
+   SELLO AMG — Edición de posición y tamaño
+   Mismo patrón que el mask overlay de foto-bg
+   pero para <img class="sello">
+══════════════════════════════════ */
+
+const origSello = new WeakMap(); // estado original del sello
+let _selloOverlay = null;
+let _selloEl      = null;
+let _selloDrag    = null;
+
+/* Abrir edición del sello desde botón debajo de la pieza */
+function openSelloForPieza(pieceId) {
+  if (!editMode) toggleEditMode();
+  const pieza = document.getElementById(pieceId);
+  if (!pieza) return;
+  const sello = pieza.querySelector('.sello');
+  if (!sello) return;
+  openSelloEdit(sello);
+  setTimeout(() => pieza.scrollIntoView({ behavior:'smooth', block:'nearest' }), 50);
+}
+
+/* Click directo en el sello en edit mode */
+function onSelloClick(e) {
+  e.stopPropagation();
+  openSelloEdit(e.currentTarget);
+}
+
+function openSelloEdit(selImg) {
+  removeSelloOverlay();
+  _selloEl = selImg;
+
+  // Guarda estado original (solo la primera vez)
+  if (!origSello.has(selImg)) {
+    const cs = getComputedStyle(selImg);
+    const pieza = selImg.closest('.pieza');
+    const pr = pieza.getBoundingClientRect();
+    const sr = selImg.getBoundingClientRect();
+    origSello.set(selImg, {
+      left:   selImg.style.left,
+      top:    selImg.style.top,
+      right:  selImg.style.right,
+      bottom: selImg.style.bottom,
+      width:  selImg.style.width,
+      // snapshot de posición computada para restaurar
+      _snapLeft: sr.left - pr.left,
+      _snapTop:  sr.top  - pr.top,
+      _snapW:    sr.width,
+    });
+  }
+  createSelloOverlay(selImg);
+}
+
+function createSelloOverlay(selImg) {
+  removeSelloOverlay();
+  const pieza = selImg.closest('.pieza');
+  if (!pieza) return;
+  const pr = pieza.getBoundingClientRect();
+  const sr = selImg.getBoundingClientRect();
+
+  const ov = document.createElement('div');
+  ov.className = 'sello-mask-overlay';
+  ov.style.left   = (sr.left - pr.left) + 'px';
+  ov.style.top    = (sr.top  - pr.top)  + 'px';
+  ov.style.width  = sr.width  + 'px';
+  ov.style.height = sr.height + 'px';
+
+  // 8 handles de resize
+  ['nw','n','ne','e','se','s','sw','w'].forEach(dir => {
+    const h = document.createElement('div');
+    h.className = 'smh smh-' + dir;
+    h.addEventListener('mousedown', e => startSelloResize(e, selImg, dir));
+    ov.appendChild(h);
+  });
+
+  // Barra de movimiento
+  const mv = document.createElement('div');
+  mv.className = 'smh-move';
+  mv.textContent = '⠿ MOVER SELLO AMG';
+  mv.addEventListener('mousedown', e => startSelloMove(e, selImg));
+  ov.appendChild(mv);
+
+  // Botón reset
+  const rb = document.createElement('div');
+  rb.className = 'smh-reset';
+  rb.textContent = '↺ reset';
+  rb.addEventListener('click', () => resetSelloMask(selImg));
+  ov.appendChild(rb);
+
+  pieza.appendChild(ov);
+  _selloOverlay = ov;
+  _selloEl = selImg;
+}
+
+function removeSelloOverlay() {
+  _selloOverlay?.remove();
+  _selloOverlay = null;
+  _selloEl = null;
+}
+
+function syncSelloOverlay() {
+  if (!_selloOverlay || !_selloEl) return;
+  const pieza = _selloEl.closest('.pieza');
+  if (!pieza) return;
+  const pr = pieza.getBoundingClientRect();
+  const sr = _selloEl.getBoundingClientRect();
+  _selloOverlay.style.left   = (sr.left - pr.left) + 'px';
+  _selloOverlay.style.top    = (sr.top  - pr.top)  + 'px';
+  _selloOverlay.style.width  = sr.width  + 'px';
+  _selloOverlay.style.height = sr.height + 'px';
+}
+
+function startSelloResize(e, selImg, dir) {
+  e.preventDefault(); e.stopPropagation();
+  const pieza = selImg.closest('.pieza');
+  const pr = pieza.getBoundingClientRect();
+  const sr = selImg.getBoundingClientRect();
+  _selloDrag = {
+    type:'resize', dir, selImg,
+    startX: e.clientX, startY: e.clientY,
+    startL: sr.left - pr.left,
+    startT: sr.top  - pr.top,
+    startW: sr.width,
+    startH: sr.height,
+  };
+  document.addEventListener('mousemove', onSelloDrag);
+  document.addEventListener('mouseup',   stopSelloDrag);
+}
+
+function startSelloMove(e, selImg) {
+  e.preventDefault(); e.stopPropagation();
+  const pieza = selImg.closest('.pieza');
+  const pr = pieza.getBoundingClientRect();
+  const sr = selImg.getBoundingClientRect();
+  _selloDrag = {
+    type:'move', selImg,
+    startX: e.clientX, startY: e.clientY,
+    startL: sr.left - pr.left,
+    startT: sr.top  - pr.top,
+    startW: sr.width,
+    startH: sr.height,
+  };
+  document.addEventListener('mousemove', onSelloDrag);
+  document.addEventListener('mouseup',   stopSelloDrag);
+}
+
+function onSelloDrag(e) {
+  if (!_selloDrag) return;
+  const { type, dir, selImg, startX, startY, startL, startT, startW, startH } = _selloDrag;
+  const dx = e.clientX - startX;
+  const dy = e.clientY - startY;
+
+  if (type === 'move') {
+    selImg.style.left   = (startL + dx) + 'px';
+    selImg.style.top    = (startT + dy) + 'px';
+    selImg.style.right  = 'auto';
+    selImg.style.bottom = 'auto';
+    selImg.style.width  = startW + 'px';
+  } else {
+    let l = startL, t = startT, w = startW;
+    // El sello mantiene aspect ratio — solo resize por ancho
+    if (dir.includes('e'))       { w = Math.max(20, startW + dx); }
+    if (dir.includes('w'))       { l = startL + dx; w = Math.max(20, startW - dx); }
+    if (dir.includes('s') && !dir.includes('e') && !dir.includes('w')) {
+      // resize desde borde inferior: escala por alto → convierte a ancho
+      w = Math.max(20, startW + dy);
+    }
+    if (dir.includes('n') && !dir.includes('e') && !dir.includes('w')) {
+      t = startT + dy; w = Math.max(20, startW - dy);
+    }
+    // Esquinas: usa dx para las que tienen componente horizontal
+    selImg.style.left   = l + 'px';
+    selImg.style.top    = t + 'px';
+    selImg.style.right  = 'auto';
+    selImg.style.bottom = 'auto';
+    selImg.style.width  = w + 'px';
+    selImg.style.height = 'auto'; // mantiene aspecto del img
+  }
+  syncSelloOverlay();
+}
+
+function stopSelloDrag() {
+  _selloDrag = null;
+  document.removeEventListener('mousemove', onSelloDrag);
+  document.removeEventListener('mouseup',   stopSelloDrag);
+}
+
+function resetSelloMask(selImg) {
+  if (!origSello.has(selImg)) return;
+  const o = origSello.get(selImg);
+  selImg.style.left   = o.left   || '';
+  selImg.style.top    = o.top    || '';
+  selImg.style.right  = o.right  || '';
+  selImg.style.bottom = o.bottom || '';
+  selImg.style.width  = o.width  || '';
+  selImg.style.height = '';
+  // Re-sync overlay after reset
+  requestAnimationFrame(() => syncSelloOverlay());
+}
+
+/* ── Panel imagen: draggable ── */
+(function() {
+  let pd = null;
+  const panel = document.getElementById('img-panel');
+  const hdr   = panel?.querySelector('.ip-header');
+  if (!hdr) return;
+  hdr.addEventListener('mousedown', e => {
+    const r = panel.getBoundingClientRect();
+    pd = { ox: e.clientX - r.left, oy: e.clientY - r.top };
+  });
+  document.addEventListener('mousemove', e => {
+    if (!pd) return;
+    panel.style.left = (e.clientX - pd.ox) + 'px';
+    panel.style.top  = (e.clientY - pd.oy) + 'px';
+    panel.style.right = 'auto';
+  });
+  document.addEventListener('mouseup', () => { pd = null; });
+})();
+
+/* ── Escape: salir del campo activo ── */
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { activeEl?.blur(); closeImgPanel(); }
+});
+</script>
+</body>
+</html>
