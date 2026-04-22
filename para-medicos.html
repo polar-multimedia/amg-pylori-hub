@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Para Médicos | Campaña de Detección 2026 | México Sin Cáncer Gástrico</title>
+  <meta name="description" content="Regístrate como sede participante en la Campaña de Detección de H. pylori 2026, avalada por la AMG. Recursos clínicos, material de apoyo y acceso a pruebas sin costo para tus pacientes.">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,600;0,700;0,800;0,900;1,700;1,800;1,900&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/hub-v2.css">
+  <style>
+    .hcp-hero {
+      background: var(--navy-deep);
+      padding: 96px 0 72px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hcp-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 50% 70% at 90% 40%, rgba(48,184,176,.2) 0%, transparent 65%),
+        radial-gradient(ellipse 40% 50% at 5% 80%, rgba(136,112,40,.15) 0%, transparent 60%);
+    }
+    .hcp-hero .container { position: relative; z-index: 1; }
+    .hcp-hero-inner { display: grid; grid-template-columns: 1fr 420px; gap: 64px; align-items: center; }
+    @media (max-width: 860px) { .hcp-hero-inner { grid-template-columns: 1fr; } }
+    .hcp-hero h1 { color: white; font-size: clamp(1.7rem, 3.5vw, 2.5rem); line-height: 1.2; margin-bottom: 16px; }
+    .hcp-hero p { color: rgba(255,255,255,.75); font-size: 1rem; line-height: 1.65; }
+
+    /* Register box */
+    .register-box {
+      background: white;
+      border-radius: 18px;
+      padding: 36px 32px;
+      box-shadow: 0 24px 64px rgba(0,0,0,.25);
+    }
+    .register-box h3 {
+      font-family: var(--font-head);
+      font-size: 1.1rem;
+      color: var(--navy);
+      margin-bottom: 6px;
+    }
+    .register-box p.sub {
+      font-size: .85rem;
+      color: var(--muted);
+      margin-bottom: 22px;
+    }
+    .form-group { margin-bottom: 14px; }
+    .form-group label {
+      display: block;
+      font-size: .8rem;
+      font-weight: 600;
+      color: var(--navy);
+      margin-bottom: 5px;
+    }
+    .form-group input, .form-group select {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-family: var(--font-body);
+      font-size: .9rem;
+      color: var(--text);
+      background: white;
+      box-sizing: border-box;
+      transition: border-color .2s;
+    }
+    .form-group input:focus, .form-group select:focus {
+      outline: none;
+      border-color: var(--teal);
+    }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .form-disclaimer {
+      font-size: .75rem;
+      color: var(--muted);
+      line-height: 1.5;
+      margin-top: 14px;
+      text-align: center;
+    }
+    .btn-full { width: 100%; text-align: center; margin-top: 16px; }
+
+    /* Benefits grid */
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 40px;
+    }
+    @media (max-width: 760px) { .benefits-grid { grid-template-columns: 1fr; } }
+    .benefit-card {
+      background: white;
+      border-radius: 14px;
+      padding: 28px 24px;
+      box-shadow: var(--shadow-sm);
+      border-top: 4px solid var(--teal);
+    }
+    .benefit-icon { font-size: 2rem; margin-bottom: 14px; display: block; }
+    .benefit-card h4 { font-family: var(--font-head); font-size: .95rem; font-weight: 800; color: var(--navy); margin-bottom: 8px; }
+    .benefit-card p { font-size: .88rem; color: var(--muted); line-height: 1.55; }
+
+    /* Protocol section */
+    .protocol-steps {
+      counter-reset: pstep;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .protocol-step {
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      gap: 0 20px;
+      position: relative;
+    }
+    .protocol-step:not(:last-child) .pstep-line::after {
+      content: '';
+      position: absolute;
+      left: 35px;
+      top: 56px;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--teal), rgba(48,184,176,.1));
+    }
+    .pstep-line { position: relative; }
+    .pstep-num {
+      width: 48px;
+      height: 48px;
+      background: var(--teal);
+      color: white;
+      font-family: var(--font-head);
+      font-weight: 900;
+      font-size: 1.1rem;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin: 4px 0 0 11px;
+      position: relative;
+      z-index: 1;
+    }
+    .pstep-body { padding: 4px 0 36px; }
+    .pstep-body h4 { font-family: var(--font-head); font-size: 1rem; font-weight: 800; color: var(--navy); margin-bottom: 8px; }
+    .pstep-body p { font-size: .9rem; color: var(--text); line-height: 1.6; }
+    .pstep-body .pstep-note { font-size: .8rem; color: var(--muted); margin-top: 6px; }
+
+    /* Criteria table */
+    .criteria-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: .9rem;
+    }
+    .criteria-table th {
+      background: var(--navy);
+      color: white;
+      font-family: var(--font-head);
+      font-weight: 700;
+      padding: 12px 16px;
+      text-align: left;
+      font-size: .82rem;
+      letter-spacing: .03em;
+    }
+    .criteria-table td {
+      padding: 11px 16px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+    .criteria-table tr:last-child td { border-bottom: none; }
+    .criteria-table tr:nth-child(even) td { background: var(--bg); }
+    .criteria-table .check { color: var(--teal); font-weight: 700; }
+    .criteria-table .warn { color: #c0602a; font-weight: 600; }
+
+    /* KOL quote */
+    .kol-quote-bar {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-deep) 100%);
+      border-radius: 16px;
+      padding: 40px 44px;
+      display: flex;
+      align-items: flex-start;
+      gap: 32px;
+    }
+    .kol-quote-bar blockquote {
+      font-family: var(--font-head);
+      font-style: italic;
+      font-size: 1.15rem;
+      color: white;
+      line-height: 1.5;
+      margin: 0 0 12px;
+      border: none;
+      padding: 0;
+    }
+    .kol-meta { font-size: .82rem; color: rgba(255,255,255,.65); }
+    .kol-teal-bar { width: 4px; flex-shrink: 0; background: var(--teal); border-radius: 2px; align-self: stretch; min-height: 80px; }
+    @media (max-width: 700px) { .kol-quote-bar { flex-direction: column; gap: 16px; padding: 28px 24px; } }
+
+    /* Download resources */
+    .resources-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin-top: 32px;
+    }
+    @media (max-width: 600px) { .resources-grid { grid-template-columns: 1fr; } }
+    .resource-card {
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 18px 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      cursor: pointer;
+      transition: border-color .2s, box-shadow .2s;
+      text-decoration: none;
+      color: inherit;
+    }
+    .resource-card:hover { border-color: var(--teal); box-shadow: var(--shadow-sm); }
+    .resource-icon { font-size: 1.8rem; flex-shrink: 0; }
+    .resource-info h5 { font-family: var(--font-head); font-size: .9rem; font-weight: 700; color: var(--navy); margin-bottom: 2px; }
+    .resource-info span { font-size: .78rem; color: var(--muted); }
+  </style>
+</head>
+<body>
+
+<header id="hdr">
+  <div class="hdr-i">
+    <a href="index.html" class="logo">
+      <img src="HUB_AMG_PYLORI/brand_amg/logo_amg_transparent.png" alt="AMG">
+      <div class="logo-nm">México Sin Cáncer Gástrico<small>Asociación Mexicana de Gastroenterología</small></div>
+    </a>
+    <nav class="nav-links">
+      <a href="index.html">Inicio</a>
+      <a href="articulos/index.html">Artículos</a>
+      <a href="deteccion.html">Detección</a>
+      <a href="para-medicos.html" class="active">Para médicos</a>
+      <span class="amg-pill">AMG 2026</span>
+      <a href="#registro" class="nav-cta">Registrar sede</a>
+    </nav>
+    <div class="hbg" onclick="document.getElementById('mob-nav').classList.toggle('open')">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</header>
+<nav class="mob-nav" id="mob-nav">
+  <a href="index.html">Inicio</a>
+  <a href="articulos/index.html">Artículos</a>
+  <a href="deteccion.html">Detección</a>
+  <a href="para-medicos.html">Para médicos</a>
+  <a href="#registro" class="nav-cta" style="align-self:flex-start;">Registrar sede</a>
+</nav>
+
+<!-- HERO + FORM -->
+<section class="hcp-hero">
+  <div class="container">
+    <div class="hcp-hero-inner">
+      <div>
+        <span class="pill pill-teal" style="margin-bottom:16px; display:inline-block;">🩺 Campaña 2026 · Solo médicos</span>
+        <h1>Sé parte de la campaña que puede cambiar la historia del cáncer gástrico en México</h1>
+        <p style="margin-top:16px;">La Asociación Mexicana de Gastroenterología te invita a participar como médico referidor o sede de detección en la Campaña 2026. Tus pacientes con factores de riesgo pueden acceder al urea breath test sin costo.</p>
+        <div style="margin-top:28px; display:flex; flex-wrap:wrap; gap:20px;">
+          <div>
+            <div style="font-family:var(--font-head); font-weight:900; font-size:1.6rem; color:var(--teal);">70%</div>
+            <div style="font-size:.8rem; color:rgba(255,255,255,.6);">de adultos mexicanos<br>con infección activa</div>
+          </div>
+          <div>
+            <div style="font-family:var(--font-head); font-weight:900; font-size:1.6rem; color:var(--teal);">90%</div>
+            <div style="font-size:.8rem; color:rgba(255,255,255,.6);">del cáncer gástrico<br>inicia con H. pylori</div>
+          </div>
+          <div>
+            <div style="font-family:var(--font-head); font-weight:900; font-size:1.6rem; color:var(--teal);">>90%</div>
+            <div style="font-size:.8rem; color:rgba(255,255,255,.6);">tasa de erradicación<br>con esquemas actuales</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FORM -->
+      <div id="registro" class="register-box">
+        <h3>Regístrate como médico participante</h3>
+        <p class="sub">Sin costo. El equipo de campaña te contactará en menos de 48 horas.</p>
+        <form onsubmit="return false;">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Nombre</label>
+              <input type="text" placeholder="Dr./Dra.">
+            </div>
+            <div class="form-group">
+              <label>Apellidos</label>
+              <input type="text" placeholder="">
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Especialidad</label>
+            <select>
+              <option value="">Seleccionar…</option>
+              <option>Gastroenterología</option>
+              <option>Medicina Interna</option>
+              <option>Medicina General / Familiar</option>
+              <option>Oncología</option>
+              <option>Otra especialidad</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Institución / Clínica</label>
+            <input type="text" placeholder="Nombre del hospital o consultorio">
+          </div>
+          <div class="form-group">
+            <label>Estado</label>
+            <select>
+              <option value="">Seleccionar…</option>
+              <option>Ciudad de México</option><option>Jalisco</option><option>Nuevo León</option>
+              <option>Estado de México</option><option>Puebla</option><option>Guanajuato</option>
+              <option>Chihuahua</option><option>Veracruz</option><option>Otro</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Correo electrónico</label>
+              <input type="email" placeholder="doctor@correo.com">
+            </div>
+            <div class="form-group">
+              <label>Teléfono (WhatsApp)</label>
+              <input type="tel" placeholder="+52 55 …">
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary btn-full">Registrarme como médico participante →</button>
+          <p class="form-disclaimer">Tus datos son confidenciales y solo se usarán para los fines de esta campaña educativa. Campaña avalada por la AMG · 2026.</p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BENEFITS -->
+<section class="section bg-white">
+  <div class="container">
+    <div class="section-header">
+      <span class="eyebrow">¿Por qué participar?</span>
+      <h2>Beneficios para médicos participantes</h2>
+      <p>La campaña está diseñada para ser simple de implementar y de alto valor para tus pacientes.</p>
+    </div>
+    <div class="benefits-grid">
+      <div class="benefit-card">
+        <span class="benefit-icon">🔬</span>
+        <h4>Pruebas gratuitas para tus pacientes</h4>
+        <p>Tus pacientes elegibles acceden al urea breath test sin costo en sedes participantes. Tú decides quién aplica según los criterios clínicos de la campaña.</p>
+      </div>
+      <div class="benefit-card">
+        <span class="benefit-icon">📋</span>
+        <h4>Material de apoyo clínico</h4>
+        <p>Recibirás material educativo para sala de espera, fichas de criterios de elegibilidad y guías de referimiento adaptadas a tu práctica.</p>
+      </div>
+      <div class="benefit-card">
+        <span class="benefit-icon">🎓</span>
+        <h4>Actualización con evidencia AMG</h4>
+        <p>Acceso a las guías de práctica clínica más recientes sobre manejo de H. pylori, esquemas de erradicación y protocolos de seguimiento post-tratamiento.</p>
+      </div>
+      <div class="benefit-card">
+        <span class="benefit-icon">🤝</span>
+        <h4>Red de gastroenterólogos</h4>
+        <p>Integra a tu red de referimiento contacto con gastroenterólogos certificados AMG en tu área para casos que requieran evaluación especializada.</p>
+      </div>
+      <div class="benefit-card">
+        <span class="benefit-icon">📊</span>
+        <h4>Impacto documentado</h4>
+        <p>Recibe reporte trimestral de resultados de la campaña: número de pacientes detectados, tasas de erradicación y datos epidemiológicos regionales.</p>
+      </div>
+      <div class="benefit-card">
+        <span class="benefit-icon">🏥</span>
+        <h4>Sin costo ni burocracia</h4>
+        <p>El registro es gratuito. No se requiere infraestructura especial. El proceso de referimiento toma menos de 5 minutos por paciente.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROTOCOL -->
+<section class="section bg-teal-light">
+  <div class="container">
+    <div class="section-header">
+      <span class="eyebrow">Protocolo de referimiento</span>
+      <h2>¿Cómo funciona el proceso?</h2>
+      <p>El médico es la pieza central. Tú evalúas, refieres y confirmas la erradicación.</p>
+    </div>
+    <div style="max-width:640px; margin:0 auto;">
+      <div class="protocol-steps">
+        <div class="protocol-step">
+          <div class="pstep-line"><div class="pstep-num">1</div></div>
+          <div class="pstep-body">
+            <h4>Identifica al paciente candidato</h4>
+            <p>En consulta, evalúa si tu paciente cumple con uno o más de los criterios de elegibilidad: dolor gástrico frecuente, gastritis recurrente, tabaquismo o antecedente familiar de cáncer gástrico.</p>
+            <p class="pstep-note">⚠️ Considera la suspensión de IBP/P-CAB 15 días antes de la prueba bajo tu supervisión.</p>
+          </div>
+        </div>
+        <div class="protocol-step">
+          <div class="pstep-line"><div class="pstep-num">2</div></div>
+          <div class="pstep-body">
+            <h4>Emite la referencia</h4>
+            <p>Entrega al paciente el formato de referimiento de la campaña. Indica sede más cercana y las instrucciones de preparación para el urea breath test (ayuno, suspensión de medicamentos).</p>
+            <p class="pstep-note">Los formatos de referimiento los recibirás al completar tu registro.</p>
+          </div>
+        </div>
+        <div class="protocol-step">
+          <div class="pstep-line"><div class="pstep-num">3</div></div>
+          <div class="pstep-body">
+            <h4>Recibes el resultado</h4>
+            <p>El resultado del urea breath test llega al médico referidor. Si es positivo, inicia el esquema de erradicación según las guías AMG vigentes (primera línea: terapia cuádruple con bismuto o terapia concomitante, 14 días).</p>
+          </div>
+        </div>
+        <div class="protocol-step">
+          <div class="pstep-line"><div class="pstep-num">4</div></div>
+          <div class="pstep-body">
+            <h4>Confirma erradicación</h4>
+            <p>4 semanas después de completar el tratamiento, refiérete al paciente nuevamente para el urea breath test de seguimiento. Confirmar la erradicación es parte del estándar de cuidado.</p>
+            <p class="pstep-note">La prueba de confirmación también está incluida en la campaña para pacientes elegibles.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CRITERIA TABLE -->
+<section class="section bg-white">
+  <div class="container">
+    <div class="section-header">
+      <span class="eyebrow">Criterios clínicos</span>
+      <h2>Elegibilidad para la prueba gratuita</h2>
+      <p>Referencia rápida para identificar a tus pacientes candidatos en consulta.</p>
+    </div>
+    <div style="overflow-x:auto; border-radius:12px; box-shadow:var(--shadow-sm);">
+      <table class="criteria-table">
+        <thead>
+          <tr>
+            <th style="width:35%">Factor de riesgo</th>
+            <th style="width:30%">Elegible para prueba gratuita</th>
+            <th>Notas clínicas</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Dolor gástrico frecuente (dispepsia)</strong></td>
+            <td class="check">✅ Sí</td>
+            <td>Aplica estrategia "test &amp; treat" según guías AMG. Descarta alarma antes de UBT.</td>
+          </tr>
+          <tr>
+            <td><strong>Gastritis recurrente documentada</strong></td>
+            <td class="check">✅ Sí</td>
+            <td>Dos o más episodios diagnosticados, independientemente del tiempo transcurrido.</td>
+          </tr>
+          <tr>
+            <td><strong>Fumador activo o exfumador</strong></td>
+            <td class="check">✅ Sí</td>
+            <td>El tabaquismo es cofactor de daño mucoso y resistencia al tratamiento.</td>
+          </tr>
+          <tr>
+            <td><strong>Antecedente familiar de cáncer gástrico</strong></td>
+            <td class="check">✅ Sí</td>
+            <td>Primer o segundo grado. Riesgo hasta 3× mayor si familiar de primer grado.</td>
+          </tr>
+          <tr>
+            <td><strong>Toma IBP o P-CAB crónicamente</strong></td>
+            <td class="warn">⚠️ Sí, con condición</td>
+            <td>Requiere suspensión de 15 días bajo tu supervisión antes del UBT. No suspender sin indicación médica.</td>
+          </tr>
+          <tr>
+            <td><strong>Uso reciente de antibióticos (&lt; 4 semanas)</strong></td>
+            <td class="warn">⚠️ Diferir prueba</td>
+            <td>Esperar al menos 4 semanas post-antibiótico para evitar falsos negativos.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="font-size:.8rem; color:var(--muted); margin-top:12px;">Los criterios de elegibilidad pueden ajustarse por temporada y disponibilidad de pruebas en tu región. El médico siempre tiene la decisión final.</p>
+  </div>
+</section>
+
+<!-- KOL QUOTE -->
+<section class="section bg-white" style="padding-top:0;">
+  <div class="container">
+    <div class="kol-quote-bar">
+      <div class="kol-teal-bar"></div>
+      <div>
+        <blockquote>"La erradicación de H. pylori en pacientes de alto riesgo es la intervención preventiva con mayor impacto demostrado sobre el cáncer gástrico. Cada médico que identifica y trata a un paciente positivo está interrumpiendo una cadena que de otro modo llevaría años avanzando en silencio."</blockquote>
+        <p class="kol-meta">Dr. Óscar Noble Lugo · Gastroenterólogo · Miembro AMG · Campaña de Detección 2026</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RECURSOS -->
+<section class="section bg-teal-light">
+  <div class="container">
+    <div class="section-header">
+      <span class="eyebrow">Material de apoyo</span>
+      <h2>Recursos para tu práctica</h2>
+      <p>Disponibles para médicos registrados en la campaña.</p>
+    </div>
+    <div class="resources-grid">
+      <div class="resource-card">
+        <span class="resource-icon">📄</span>
+        <div class="resource-info">
+          <h5>Guía de Práctica Clínica AMG 2026</h5>
+          <span>Diagnóstico y tratamiento de H. pylori · PDF</span>
+        </div>
+      </div>
+      <div class="resource-card">
+        <span class="resource-icon">🗂️</span>
+        <div class="resource-info">
+          <h5>Algoritmo de referimiento</h5>
+          <span>Flujo rápido "test &amp; treat" · PDF imprimible</span>
+        </div>
+      </div>
+      <div class="resource-card">
+        <span class="resource-icon">🖼️</span>
+        <div class="resource-info">
+          <h5>Material de sala de espera</h5>
+          <span>Poster y tríptico paciente · Formatos impresos</span>
+        </div>
+      </div>
+      <div class="resource-card">
+        <span class="resource-icon">💊</span>
+        <div class="resource-info">
+          <h5>Esquemas de erradicación 2026</h5>
+          <span>Primera y segunda línea según perfil · PDF</span>
+        </div>
+      </div>
+    </div>
+    <p style="font-size:.84rem; color:var(--muted); text-align:center; margin-top:24px;">Los recursos se envían al correo registrado tras confirmar tu participación.</p>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="detect-band">
+  <div class="container">
+    <div class="detect-band-inner">
+      <div>
+        <h2>Regístrate hoy. Sin costo. Sin burocracia.</h2>
+        <p style="margin-top:10px;">En menos de 2 minutos eres parte de la campaña más grande de detección de H. pylori en México.</p>
+      </div>
+      <div>
+        <a href="#registro" class="btn btn-white btn-lg">Registrar mi consultorio →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-bottom" style="border-top:none; padding-top:0;">
+      <p class="footer-disclaimer">Campaña educativa avalada por la Asociación Mexicana de Gastroenterología. Esta información no sustituye la consulta médica. © 2026 México Sin Cáncer Gástrico · mexicosincancergastrico.com.mx</p>
+      <img src="HUB_AMG_PYLORI/brand_amg/logo_amg_transparent.png" alt="AMG" style="height:40px; filter:brightness(0) invert(1); opacity:.5;">
+    </div>
+  </div>
+</footer>
+</body>
+</html>

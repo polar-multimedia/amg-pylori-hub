@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>México Sin Cáncer Gástrico — ¿Tu estómago tiene H. pylori?</title>
+  <meta name="description" content="7 de cada 10 mexicanos portan Helicobacter pylori sin saberlo. Detectarla puede cambiar todo. Campaña de detección gratuita 2026, avalada por la AMG.">
+  <meta property="og:title" content="México Sin Cáncer Gástrico 2026">
+  <meta property="og:description" content="El 90% del cáncer gástrico inicia con H. pylori. Una prueba de aliento puede cambiarlo todo.">
+  <meta property="og:image" content="assets/img/hero-v2.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="assets/hub-v2.css">
+</head>
+<body>
+
+<!-- ══ AD SLOT — Leaderboard 970×90 (placeholder) ══ -->
+<div class="adslot" id="ad-top" style="display:none;">
+  <div class="adslot-lbl">Publicidad</div>
+  <div style="height:90px; background:#e8eaf0; display:flex; align-items:center; justify-content:center;">
+    <span style="font-family:var(--font-head); font-size:.75rem; color:#aab; letter-spacing:.1em;">970 × 90</span>
+  </div>
+</div>
+
+<!-- ══ NAVIGATION ══ -->
+<header id="hdr">
+  <div class="hdr-i">
+    <a href="index.html" class="logo">
+      <img src="HUB_AMG_PYLORI/brand_amg/logo_amg_transparent.png" alt="AMG México Sin Cáncer Gástrico">
+      <div class="logo-nm">México Sin Cáncer Gástrico<small>Asociación Mexicana de Gastroenterología</small></div>
+    </a>
+    <nav class="nav-links">
+      <a href="index.html" class="active">Inicio</a>
+      <a href="articulos/index.html">Artículos</a>
+      <a href="deteccion.html">Detección</a>
+      <a href="para-medicos.html">Para médicos</a>
+      <span class="amg-pill">AMG 2026</span>
+      <a href="deteccion.html#registro" class="nav-cta">Participa gratis</a>
+    </nav>
+    <div class="hbg" onclick="toggleMob()" aria-label="Menú">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</header>
+<nav class="mob-nav" id="mob-nav">
+  <a href="index.html">Inicio</a>
+  <a href="articulos/index.html">Artículos</a>
+  <a href="deteccion.html">Detección</a>
+  <a href="para-medicos.html">Para médicos</a>
+  <a href="deteccion.html#registro" class="nav-cta" style="align-self:flex-start;">Participa gratis</a>
+</nav>
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <div class="hero-i">
+    <div id="hero-r">
+      <div class="amg-badge s-fade" style="margin-bottom:1.5rem;">
+        <img src="HUB_AMG_PYLORI/brand_amg/logo_amg_transparent.png" alt="AMG" style="height:22px;">
+        <span>Campaña Oficial AMG 2026</span>
+      </div>
+      <h1 class="hero-h1 s-fade delay-1">
+        ¿Tu estómago tiene<br><span class="hpyl">H. pylori</span>?
+      </h1>
+      <p class="hero-lead s-fade delay-2">
+        7 de cada 10 mexicanos portan esta bacteria sin saberlo. Silenciosa, progresiva y responsable del 90% del cáncer gástrico. Una prueba de 20 minutos puede cambiarlo todo.
+      </p>
+      <div class="hero-pills s-fade delay-2">
+        <div class="hpill">
+          <div class="hpill-n">70<span>%</span></div>
+          <div class="hpill-l">adultos mexicanos<br>con infección activa</div>
+        </div>
+        <div class="hpill">
+          <div class="hpill-n">90<span>%</span></div>
+          <div class="hpill-l">del cáncer gástrico<br>inicia con H. pylori</div>
+        </div>
+        <div class="hpill">
+          <div class="hpill-n">&gt;90<span>%</span></div>
+          <div class="hpill-l">tasa de erradicación<br>con tratamiento</div>
+        </div>
+      </div>
+      <div class="hero-acts s-fade delay-3">
+        <a href="deteccion.html" class="btn btn-navy">Conocer la prueba gratuita →</a>
+        <a href="#quiz" class="btn btn-outline">¿Tengo factores de riesgo?</a>
+      </div>
+      <p class="hero-disclaimer s-fade delay-4">
+        Campaña educativa avalada por la Asociación Mexicana de Gastroenterología A.C. · No sustituye la consulta médica.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ STATS BAND ══ -->
+<section class="stats-band">
+  <div class="stats-i">
+    <div class="stat-it s-fade">
+      <div class="stat-n">70M+</div>
+      <div class="stat-l">mexicanos adultos<br>con infección activa</div>
+      <div class="stat-src">ENSANUT / AMG</div>
+    </div>
+    <div class="stat-it s-fade delay-1">
+      <div class="stat-n">90%</div>
+      <div class="stat-l">del cáncer gástrico<br>causado por H. pylori</div>
+      <div class="stat-src">IARC / OMS</div>
+    </div>
+    <div class="stat-it s-fade delay-2">
+      <div class="stat-n">20min</div>
+      <div class="stat-l">dura la prueba<br>de aliento (UBT)</div>
+      <div class="stat-src">Estándar diagnóstico AMG</div>
+    </div>
+    <div class="stat-it s-fade delay-3">
+      <div class="stat-n">Gratis</div>
+      <div class="stat-l">prueba para pacientes<br>con factores de riesgo</div>
+      <div class="stat-src">Campaña 2026</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ AWARENESS ══ -->
+<section class="aware-sec">
+  <div class="aware-i">
+    <div class="aware-big-stat s-scale">
+      <span class="abs-num">7</span>
+      <span class="abs-denom">de cada 10</span>
+      <p class="abs-label">adultos mexicanos portan<br><em class="hpyl-dark" style="color:var(--teal-l)">Helicobacter pylori</em><br>sin saberlo</p>
+    </div>
+    <div class="aware-txt s-right">
+      <span class="ey" style="color:var(--teal-l)">El riesgo invisible</span>
+      <h2>La bacteria más prevalente de México no da señales… hasta que el daño ya es grave</h2>
+      <p>La mayoría la adquiere de niño, en casa: por agua o alimentos contaminados, o por contacto cercano — compartir cubiertos, saliva, un beso. Puede pasar años sin dar señales. Pero por dentro, activa un proceso inflamatorio crónico que puede derivar en úlceras, gastritis severa y, eventualmente, cáncer gástrico.</p>
+      <div class="aware-cta-strip">
+        <strong>La buena noticia: tiene solución.</strong><br>
+        Cuando se detecta a tiempo, la tasa de erradicación supera el 90%. El diagnóstico no requiere endoscopia — solo soplar en un tubo.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ QUIZ ══ -->
+<section class="quiz-sec" id="quiz">
+  <div class="quiz-i">
+    <div class="ql s-left">
+      <span class="ey">Test de riesgo</span>
+      <h2>¿Tienes factores de riesgo para H. pylori?</h2>
+      <p>En menos de 2 minutos, este cuestionario te ayuda a identificar si deberías hablar con tu médico sobre la prueba de detección gratuita.</p>
+      <div class="qfeats">
+        <div class="qf"><div class="qf-ico">🦠</div><div class="qf-txt"><strong>Basado en criterios AMG</strong><span>Las preguntas corresponden a los factores de elegibilidad de la Campaña 2026</span></div></div>
+        <div class="qf"><div class="qf-ico">⚡</div><div class="qf-txt"><strong>2 minutos · 5 preguntas</strong><span>Sin registro, sin datos personales. Solo información para orientarte.</span></div></div>
+        <div class="qf"><div class="qf-ico">🩺</div><div class="qf-txt"><strong>El médico decide</strong><span>Este test es orientativo. El médico es quien determina si eres candidato.</span></div></div>
+        <div class="qf"><div class="qf-ico">🔒</div><div class="qf-txt"><strong>Totalmente privado</strong><span>No guardamos tus respuestas. Todo queda en tu dispositivo.</span></div></div>
+      </div>
+    </div>
+
+    <div class="qwrap s-right">
+      <div class="qcard">
+        <div class="qhd">
+          <div class="qhd-lbl">Test de factores de riesgo · Campaña AMG 2026</div>
+          <div class="prog-row">
+            <div class="prog-dots">
+              <div class="pd act" id="pd0"></div><div class="pd" id="pd1"></div><div class="pd" id="pd2"></div><div class="pd" id="pd3"></div><div class="pd" id="pd4"></div>
+            </div>
+            <div class="prog-t" id="prog-txt">1 / 5</div>
+          </div>
+        </div>
+        <div class="qbody">
+
+          <div class="qstep act" id="q0">
+            <div class="qn">Pregunta 1 de 5</div>
+            <div class="qq">¿Con qué frecuencia sientes ardor o dolor en la boca del estómago?</div>
+            <div class="qhint">El ardor epigástrico recurrente es uno de los principales indicadores.</div>
+            <div class="qopts">
+              <button class="qo" onclick="pickOpt(this,0,0)"><em>😌</em> Casi nunca o nunca</button>
+              <button class="qo" onclick="pickOpt(this,0,1)"><em>🤔</em> Ocasionalmente (1-2 veces al mes)</button>
+              <button class="qo" onclick="pickOpt(this,0,2)"><em>😟</em> Frecuentemente (varias veces por semana)</button>
+            </div>
+            <div class="qnav"><span></span><button class="qnx" id="qnx0" onclick="nextQ(1)" disabled>Siguiente →</button></div>
+          </div>
+
+          <div class="qstep" id="q1">
+            <div class="qn">Pregunta 2 de 5</div>
+            <div class="qq">¿Te han diagnosticado gastritis más de una vez?</div>
+            <div class="qhint">La gastritis recurrente puede indicar una causa bacteriana no tratada.</div>
+            <div class="qopts">
+              <button class="qo" onclick="pickOpt(this,1,0)"><em>🙅</em> No, nunca</button>
+              <button class="qo" onclick="pickOpt(this,1,1)"><em>1️⃣</em> Sí, una vez</button>
+              <button class="qo" onclick="pickOpt(this,1,2)"><em>🔄</em> Sí, varias veces y siempre regresa</button>
+            </div>
+            <div class="qnav"><button class="qbk" onclick="prevQ(0)">← Anterior</button><button class="qnx" id="qnx1" onclick="nextQ(2)" disabled>Siguiente →</button></div>
+          </div>
+
+          <div class="qstep" id="q2">
+            <div class="qn">Pregunta 3 de 5</div>
+            <div class="qq">¿Fumas o has fumado?</div>
+            <div class="qhint">El tabaquismo amplifica el daño de H. pylori en la mucosa gástrica.</div>
+            <div class="qopts">
+              <button class="qo" onclick="pickOpt(this,2,0)"><em>🚭</em> Nunca he fumado</button>
+              <button class="qo" onclick="pickOpt(this,2,1)"><em>⏸️</em> Fumé antes, ya no fumo</button>
+              <button class="qo" onclick="pickOpt(this,2,2)"><em>🚬</em> Fumo actualmente</button>
+            </div>
+            <div class="qnav"><button class="qbk" onclick="prevQ(1)">← Anterior</button><button class="qnx" id="qnx2" onclick="nextQ(3)" disabled>Siguiente →</button></div>
+          </div>
+
+          <div class="qstep" id="q3">
+            <div class="qn">Pregunta 4 de 5</div>
+            <div class="qq">¿Algún familiar tuyo ha tenido cáncer de estómago?</div>
+            <div class="qhint">El antecedente familiar de primer grado multiplica el riesgo hasta 3 veces.</div>
+            <div class="qopts">
+              <button class="qo" onclick="pickOpt(this,3,0)"><em>❌</em> No que yo sepa</button>
+              <button class="qo" onclick="pickOpt(this,3,1)"><em>🧬</em> Sí, un familiar lejano (tío, primo)</button>
+              <button class="qo" onclick="pickOpt(this,3,2)"><em>⚠️</em> Sí, padre, madre o hermano</button>
+            </div>
+            <div class="qnav"><button class="qbk" onclick="prevQ(2)">← Anterior</button><button class="qnx" id="qnx3" onclick="nextQ(4)" disabled>Siguiente →</button></div>
+          </div>
+
+          <div class="qstep" id="q4">
+            <div class="qn">Pregunta 5 de 5</div>
+            <div class="qq">¿Tomas medicamentos para el ácido estomacal (omeprazol, pantoprazol)?</div>
+            <div class="qhint">El uso frecuente de IBP puede enmascarar síntomas de infección activa.</div>
+            <div class="qopts">
+              <button class="qo" onclick="pickOpt(this,4,0)"><em>💊</em> No, nunca</button>
+              <button class="qo" onclick="pickOpt(this,4,1)"><em>🔄</em> Los tomo ocasionalmente</button>
+              <button class="qo" onclick="pickOpt(this,4,2)"><em>📅</em> Los tomo regularmente</button>
+            </div>
+            <div class="qnav"><button class="qbk" onclick="prevQ(3)">← Anterior</button><button class="qnx" id="qnx4" onclick="showResult()" disabled>Ver mi resultado →</button></div>
+          </div>
+
+          <div id="qres">
+            <div class="res-ico" id="res-ico"></div>
+            <div class="res-lvl" id="res-lvl"></div>
+            <div class="res-ttl" id="res-ttl"></div>
+            <div class="res-bd" id="res-bd"></div>
+            <div class="res-acts">
+              <button class="res-p" onclick="window.location.href='deteccion.html'">Ver campaña de detección →</button>
+              <button class="res-s" onclick="resetQuiz()">Responder de nuevo</button>
+            </div>
+            <p class="res-disc">Test orientativo. El médico es quien determina si eres candidato.</p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ BENTO GRID ══ -->
+<section class="cats-sec">
+  <div class="cats-i">
+    <div class="cats-hd s-fade">
+      <h2>Todo lo que necesitas saber</h2>
+      <a href="articulos/index.html">Ver todos los artículos →</a>
+    </div>
+    <div class="bento">
+      <a href="articulos/pylori-silencioso.html" class="bc bc1 s-scale">
+        <img class="bc-img" src="assets/img/bacteria.png" alt="H. pylori">
+        <span class="bc-badge">🦠 Conciencia</span>
+        <div class="bc-ov">
+          <div class="bc-cat" style="color:var(--teal-l)">El enemigo silencioso</div>
+          <div class="bc-ttl">Helicobacter pylori en México: qué es, cómo se transmite y por qué importa</div>
+          <div class="bc-sub">Mayo 2026 · 6 min</div>
+        </div>
+      </a>
+      <a href="articulos/gastritis-o-pylori.html" class="bc bc2 s-scale delay-1">
+        <img class="bc-img" src="assets/img/gastritis.png" alt="Gastritis">
+        <span class="bc-badge">🔍 Diagnóstico</span>
+        <div class="bc-ov">
+          <div class="bc-cat" style="color:#a8d4ff">¿Gastritis o algo más?</div>
+          <div class="bc-ttl">Lo que tu diagnóstico no te ha dicho</div>
+          <div class="bc-sub">Junio 2026 · 7 min</div>
+        </div>
+      </a>
+      <a href="articulos/prueba-aliento.html" class="bc bc3 s-scale delay-2">
+        <img class="bc-img" src="assets/img/breath.png" alt="Prueba de aliento">
+        <span class="bc-badge">✅ Solución</span>
+        <div class="bc-ov">
+          <div class="bc-cat" style="color:var(--teal-l)">La prueba de aliento</div>
+          <div class="bc-ttl">Así funciona el urea breath test: sin piquetes, 20 minutos</div>
+          <div class="bc-sub">Julio 2026 · 5 min</div>
+        </div>
+      </a>
+      <a href="deteccion.html" class="bc bc4 s-scale delay-1">
+        <img class="bc-img" src="assets/img/transmisio.png" alt="Transmisión">
+        <div class="bc-ov">
+          <div class="bc-cat" style="color:#ffd580">🧬 Contagio</div>
+          <div class="bc-ttl">Cómo se transmite: familia, agua y contacto cotidiano</div>
+        </div>
+      </a>
+      <a href="deteccion.html" class="bc bc5 s-scale delay-2">
+        <img class="bc-img" src="assets/img/tratamiento.png" alt="Tratamiento">
+        <div class="bc-ov">
+          <div class="bc-cat" style="color:var(--teal-l)">💊 Tratamiento</div>
+          <div class="bc-ttl">El esquema que elimina la bacteria con más del 90% de éxito</div>
+        </div>
+      </a>
+      <a href="deteccion.html#registro" class="bc bc6 s-scale delay-3">
+        <img class="bc-img" src="assets/img/consulta.png" alt="Campaña detección">
+        <div class="bc-ov">
+          <div class="bc-cat" style="color:#ffd580">🔬 Campaña 2026</div>
+          <div class="bc-ttl">Prueba gratuita en sedes participantes: habla con tu médico</div>
+          <div class="bc-sub">Gratis · Sin piquetes · Sin endoscopia</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ ARTICLES ══ -->
+<section class="arts-sec">
+  <div class="arts-i">
+    <div class="arts-hd s-fade">
+      <div><span class="ey">Centro editorial AMG</span><h2>Últimos artículos</h2></div>
+      <a href="articulos/index.html">Ver todos →</a>
+    </div>
+    <div class="fpills s-fade delay-1">
+      <button class="fp act">Todos</button>
+      <button class="fp">🦠 Conciencia</button>
+      <button class="fp">🔍 Diagnóstico</button>
+      <button class="fp">✅ Solución</button>
+    </div>
+    <div class="arts-g">
+      <a href="articulos/pylori-silencioso.html" class="ac s-fade">
+        <div class="ac-img"><img src="assets/img/bacteria.png" alt="H. pylori"></div>
+        <div class="ac-body"><span class="ac-tag tag-awareness">🦠 Conciencia</span><div class="ac-ttl">El enemigo silencioso: Helicobacter pylori en México</div><div class="ac-meta"><span>Mayo 2026 · 6 min</span><span class="ac-read">Leer →</span></div></div>
+      </a>
+      <a href="articulos/gastritis-o-pylori.html" class="ac s-fade delay-1">
+        <div class="ac-img"><img src="assets/img/gastritis.png" alt="Gastritis"></div>
+        <div class="ac-body"><span class="ac-tag tag-deteccion">🔍 Diagnóstico</span><div class="ac-ttl">¿Gastritis o algo más? Lo que tu diagnóstico no te ha dicho</div><div class="ac-meta"><span>Junio 2026 · 7 min</span><span class="ac-read">Leer →</span></div></div>
+      </a>
+      <a href="articulos/prueba-aliento.html" class="ac s-fade delay-2">
+        <div class="ac-img"><img src="assets/img/breath.png" alt="Prueba de aliento"></div>
+        <div class="ac-body"><span class="ac-tag tag-tratamiento">✅ Solución</span><div class="ac-ttl">La prueba que puede cambiarlo todo: así funciona el urea breath test</div><div class="ac-meta"><span>Julio 2026 · 5 min</span><span class="ac-read">Leer →</span></div></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ DETECT CTA BAND ══ -->
+<section class="detect-band">
+  <div class="detect-band-i">
+    <div class="s-left">
+      <span class="ey" style="color:var(--teal-l)">Campaña de detección 2026</span>
+      <h2>Una prueba simple. Soplas, tomas una bebida, vuelves a soplar.</h2>
+      <p>Sin piquetes. Sin endoscopia. En 20 minutos sabes si portas la bacteria que está detrás del 90% del cáncer gástrico. Y puede ser gratuita para ti.</p>
+    </div>
+    <div class="detect-band-acts s-right">
+      <a href="deteccion.html" class="btn btn-teal btn-lg">Conocer la campaña →</a>
+      <a href="para-medicos.html" class="btn btn-outline-white">¿Eres médico? →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ AMG ENDORSEMENT ══ -->
+<section style="background:var(--bg); padding:4rem 2rem;">
+  <div class="container" style="max-width:760px; text-align:center;">
+    <div class="s-fade">
+      <img src="HUB_AMG_PYLORI/brand_amg/logo_amg_transparent.png" alt="AMG" style="height:56px; margin:0 auto 1.25rem; filter:opacity(.8);">
+      <p style="font-size:.9rem; color:var(--muted); line-height:1.75;">Todo el contenido de este hub ha sido preparado y avalado por la <strong>Asociación Mexicana de Gastroenterología A.C.</strong> como parte de la Campaña de Detección 2026. La información es de carácter educativo y no sustituye la consulta médica profesional.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-i">
+      <div class="footer-brand">
+        <img src="HUB_AMG_PYLORI/brand_amg/logo_amg_transparent.png" alt="AMG" style="filter:brightness(0) invert(1); opacity:.8;">
+        <p>Campaña educativa de detección y prevención del cáncer gástrico, avalada por la Asociación Mexicana de Gastroenterología A.C. · México 2026.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Información</h5>
+        <a href="articulos/pylori-silencioso.html">¿Qué es H. pylori?</a>
+        <a href="articulos/gastritis-o-pylori.html">Gastritis vs H. pylori</a>
+        <a href="articulos/prueba-aliento.html">La prueba de aliento</a>
+        <a href="articulos/index.html">Todos los artículos</a>
+      </div>
+      <div class="footer-col">
+        <h5>Campaña</h5>
+        <a href="deteccion.html">Detección gratuita</a>
+        <a href="deteccion.html#requisitos">¿Aplico?</a>
+        <a href="para-medicos.html">Para médicos</a>
+        <a href="para-medicos.html#registro">Registrar sede</a>
+      </div>
+      <div class="footer-col">
+        <h5>Institución</h5>
+        <a href="https://amg.edu.mx" target="_blank" rel="noopener">AMG — amg.edu.mx</a>
+        <a href="para-medicos.html">Recursos clínicos</a>
+        <a href="para-medicos.html#registro">Únete a la campaña</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-disclaimer">Campaña educativa avalada por la Asociación Mexicana de Gastroenterología. Esta información no sustituye la consulta médica profesional. © 2026 México Sin Cáncer Gástrico · mexicosincancergastrico.com.mx</p>
+      <img src="HUB_AMG_PYLORI/brand_amg/logo_amg_transparent.png" alt="AMG" style="height:36px; filter:brightness(0) invert(1); opacity:.4;">
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ── Scroll reveal ── */
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); } });
+}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.s-fade,.s-left,.s-right,.s-scale').forEach(el => obs.observe(el));
+
+/* ── Header scroll ── */
+window.addEventListener('scroll', () => {
+  document.getElementById('hdr').classList.toggle('scrolled', window.scrollY > 60);
+});
+
+/* ── Mobile nav ── */
+function toggleMob() {
+  document.getElementById('mob-nav').classList.toggle('open');
+}
+
+/* ── Quiz ── */
+const scores = [0,0,0,0,0];
+
+function pickOpt(btn, qIdx, val) {
+  btn.closest('.qopts').querySelectorAll('.qo').forEach(b => b.classList.remove('sel'));
+  btn.classList.add('sel');
+  scores[qIdx] = val;
+  document.getElementById('qnx' + qIdx).disabled = false;
+}
+
+function nextQ(idx) {
+  document.getElementById('q' + (idx-1)).classList.remove('act');
+  document.getElementById('q' + idx).classList.add('act');
+  updateProg(idx);
+}
+
+function prevQ(idx) {
+  document.getElementById('q' + (idx+1)).classList.remove('act');
+  document.getElementById('q' + idx).classList.add('act');
+  updateProg(idx);
+}
+
+function updateProg(idx) {
+  for (let i = 0; i < 5; i++) {
+    document.getElementById('pd'+i).className = 'pd' + (i < idx ? ' dn' : i === idx ? ' act' : '');
+  }
+  document.getElementById('prog-txt').textContent = (idx+1) + ' / 5';
+}
+
+function showResult() {
+  const total = scores.reduce((a,b) => a+b, 0);
+  const ico = document.getElementById('res-ico');
+  const lvl = document.getElementById('res-lvl');
+  const ttl = document.getElementById('res-ttl');
+  const bd  = document.getElementById('res-bd');
+
+  if (total <= 2) {
+    lvl.style.color = '#1F9E98'; ico.style.background = 'rgba(48,184,176,.12)';
+    ico.textContent = '✅';
+    lvl.textContent = '🟢 Riesgo bajo';
+    ttl.textContent = 'No identificamos factores de riesgo importantes';
+    bd.innerHTML = 'No encontramos indicadores de riesgo alto en tus respuestas. Aun así, si tienes dudas sobre tu salud digestiva, coméntalo en tu próxima consulta médica.';
+  } else if (total <= 5) {
+    lvl.style.color = '#b09048'; ico.style.background = 'rgba(176,144,72,.1)';
+    ico.textContent = '⚠️';
+    lvl.textContent = '🟡 Riesgo moderado';
+    ttl.textContent = 'Tienes algunos factores de riesgo';
+    bd.innerHTML = 'Identificamos uno o más factores que merecen atención. Habla con tu médico sobre la prueba de detección. Si tienes acceso a la campaña gratuita 2026, pregunta si aplicas.';
+  } else {
+    lvl.style.color = '#c0602a'; ico.style.background = 'rgba(192,96,42,.1)';
+    ico.textContent = '🚨';
+    lvl.textContent = '🔴 Riesgo elevado';
+    ttl.textContent = 'Te recomendamos hablar con tu médico pronto';
+    bd.innerHTML = 'Tus respuestas indican varios factores de riesgo importantes. Esto no es un diagnóstico — pero sí es una señal clara de que vale la pena hacer la prueba. Habla con tu médico esta semana.';
+  }
+
+  document.getElementById('q4').classList.remove('act');
+  document.getElementById('qres').style.display = 'block';
+  for (let i = 0; i < 5; i++) document.getElementById('pd'+i).className = 'pd dn';
+  document.getElementById('prog-txt').textContent = 'Completado';
+}
+
+function resetQuiz() {
+  for (let i = 0; i < 5; i++) scores[i] = 0;
+  document.getElementById('qres').style.display = 'none';
+  document.querySelectorAll('.qstep').forEach(s => s.classList.remove('act'));
+  document.getElementById('q0').classList.add('act');
+  document.querySelectorAll('.qo').forEach(b => b.classList.remove('sel'));
+  for (let i = 0; i < 5; i++) document.getElementById('qnx'+i).disabled = true;
+  updateProg(0);
+}
+
+/* ── Filter pills ── */
+document.querySelectorAll('.fp').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.fp').forEach(b => b.classList.remove('act'));
+    btn.classList.add('act');
+  });
+});
+</script>
+</body>
+</html>
