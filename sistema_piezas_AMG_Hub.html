@@ -1262,57 +1262,73 @@ body.edit-mode .sello:hover { outline: 2px solid rgba(136,112,40,0.9); }
 .var-b-tk.kc .tk-slide-hint { color: #3DC0B4; }
 
 /* ════════════════════════════════════
-   KI-CAB VARIANT A — Clean photo (no overlays)
+   KI-CAB VARIANT A — Split layout: foto arriba / texto abajo
 ════════════════════════════════════ */
 .var-a-kc {
-  position: relative; overflow: hidden; display: flex; flex-direction: column;
+  display: flex; flex-direction: column;
+  position: relative; overflow: hidden;
+  background: #0d1640;
 }
-.var-a-kc .foto-bg { position: absolute; inset: 0; background-size: cover; background-position: center top; }
-/* Very subtle bottom gradient only for text legibility */
-.var-a-kc .foto-veil {
-  position: absolute; inset: 0;
-  background: linear-gradient(to top, rgba(14,18,60,0.82) 0%, rgba(14,18,60,0.20) 40%, transparent 65%);
+/* Zona foto: ocupa ~55% del alto */
+.var-a-kc .kc-photo {
+  flex: 0 0 55%;
+  background-size: cover; background-position: center top;
+  position: relative;
 }
-/* product shot pip */
-.var-a-kc .prod-pip {
-  position: absolute; right: 10px; top: 10px;
-  width: clamp(48px, 14cqi, 90px); height: auto;
-  object-fit: contain; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.30));
+/* Zona texto: fondo cobalt, copy limpio */
+.var-a-kc .kc-text {
+  flex: 1; position: relative;
+  background: linear-gradient(160deg, #1E2EA8 0%, #0d1640 100%);
+  padding: clamp(7px,2.5cqi,16px) clamp(9px,3cqi,18px) clamp(28px,8cqi,50px);
+  display: flex; flex-direction: column; gap: clamp(3px,0.8cqi,6px);
 }
-.var-a-kc .copy-block {
-  position: absolute; bottom: 0; left: 0; right: 0;
-  padding: clamp(8px,3cqi,20px) clamp(10px,3.5cqi,22px);
+.var-a-kc .kc-cifra {
+  font-family: 'Montserrat',sans-serif; font-weight: 900;
+  font-size: clamp(18px,5.5cqi,36px); color: #3DC0B4; line-height: 1;
 }
-.var-a-kc .copy-block .cifra {
-  display: block; font-family: 'Montserrat',sans-serif; font-weight: 900;
-  font-size: clamp(26px,8cqi,64px); color: #3DC0B4; line-height: 1;
+.var-a-kc .kc-cifra-label {
+  font-size: clamp(7px,2cqi,11px); color: rgba(255,255,255,0.6);
+  font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;
 }
-.var-a-kc .copy-block .cifra-label {
-  font-size: clamp(9px,2.5cqi,14px); color: rgba(255,255,255,0.75);
-  font-weight: 600; display: block; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.06em;
-}
-.var-a-kc .copy-block .headline {
+.var-a-kc .kc-headline {
   font-family: 'Montserrat',sans-serif; font-weight: 800;
-  font-size: clamp(13px,3.8cqi,24px); color: #fff; line-height: 1.2; margin-bottom: 4px;
+  font-size: clamp(10px,3cqi,16px); color: #fff; line-height: 1.25;
 }
-.var-a-kc .copy-block .headline em { color: #3DC0B4; font-style: normal; }
-.var-a-kc .copy-block .subcopy { font-size: clamp(10px,2.8cqi,15px); color: rgba(255,255,255,0.75); font-weight: 600; }
+.var-a-kc .kc-headline em { color: #3DC0B4; font-style: normal; }
+.var-a-kc .kc-subcopy {
+  font-size: clamp(8px,2.2cqi,12px); color: rgba(255,255,255,0.65); font-weight: 600;
+}
+/* Producto: esquina inferior derecha dentro del texto */
+.var-a-kc .kc-prod {
+  position: absolute; right: clamp(6px,1.8cqi,14px); bottom: clamp(20px,6cqi,44px);
+  height: clamp(38px,11cqi,72px); width: auto; object-fit: contain;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.45));
+}
+/* Sello: sobre la foto, esquina superior izquierda */
 .var-a-kc .sello {
-  position: absolute; top: 10px; left: 10px;
-  height: clamp(32px,9cqi,60px); width: auto; object-fit: contain;
+  position: absolute; top: 8px; left: 8px; z-index: 3;
+  height: clamp(28px,8.5cqi,52px); width: auto;
 }
+/* Franja sobre el CTA bar */
 .var-a-kc .franja-bar {
-  position: absolute; bottom: 62px; left: 0; width: 100%; height: auto;
-  pointer-events: none;
+  position: absolute; bottom: clamp(14px,4.5cqi,30px); left: 0;
+  width: 100%; pointer-events: none; z-index: 1;
 }
+/* CTA bar pegado al fondo */
 .var-a-kc .cta-bar {
-  position: absolute; bottom: 0; left: 0; right: 0;
-  background: linear-gradient(90deg,#1E2EA8,#2D3ECC);
-  padding: clamp(5px,1.5cqi,10px) clamp(10px,3cqi,18px);
+  position: absolute; bottom: 0; left: 0; right: 0; z-index: 2;
+  background: linear-gradient(90deg, #1E2EA8, #2D3ECC);
+  padding: clamp(4px,1.2cqi,8px) clamp(8px,2.5cqi,16px);
   display: flex; flex-direction: column; gap: 2px;
 }
-.var-a-kc .cta-bar .cta-text { font-size: clamp(7px,2cqi,11px); color: #fff; font-weight: 700; line-height: 1.3; }
-.var-a-kc .cta-bar .disclaimer { font-size: clamp(5px,1.3cqi,8px); color: rgba(255,255,255,0.55); }
+.var-a-kc .cta-bar .cta-text { font-size: clamp(6px,1.8cqi,10px); color: #fff; font-weight: 700; line-height: 1.3; }
+.var-a-kc .cta-bar .disclaimer { font-size: clamp(5px,1.2cqi,7px); color: rgba(255,255,255,0.5); }
+/* Layout 16:9: foto izquierda / texto derecha */
+.var-a-kc.fmt-169 { flex-direction: row; }
+.var-a-kc.fmt-169 .kc-photo { flex: 0 0 50%; height: 100%; }
+.var-a-kc.fmt-169 .kc-text { flex: 1; padding-bottom: clamp(28px,4cqi,48px); }
+.var-a-kc.fmt-169 .kc-cifra { font-size: clamp(22px,4cqi,38px); }
+.var-a-kc.fmt-169 .kc-headline { font-size: clamp(11px,2cqi,16px); }
 
 /* ════════════════════════════════════
    KI-CAB VARIANT OVERRIDES
@@ -1435,11 +1451,11 @@ body.edit-mode .sello:hover { outline: 2px solid rgba(136,112,40,0.9); }
 
 <!-- ══ TABS ══ -->
 <div class="tabs-bar">
-  <button class="tab-btn active" data-var="A" onclick="switchTab('varA', this)">
+  <button class="tab-btn active" data-var="A" onclick="switchTab('A', this)">
     <span class="tab-icon">📷</span>A — Con Foto
     <span class="tab-desc">Editorial fotográfico · Feed</span>
   </button>
-  <button class="tab-btn" data-var="B" onclick="switchTab('varB', this)">
+  <button class="tab-btn" data-var="B" onclick="switchTab('B', this)">
     <span class="tab-icon">📱</span>B — TikTok / Carrusel
     <span class="tab-desc">Caption hook · texto · CTA</span>
   </button>
@@ -2075,22 +2091,25 @@ const claims2 = [
 /* ── Fotos KC: alternan mujer/hombre con caja Ki-CAB ── */
 const FK2_MUJER  = 'HUB_AMG_PYLORI/brand_kicab/kicab_mujer_caja.png';
 const FK2_HOMBRE = 'HUB_AMG_PYLORI/brand_kicab/kicab_hombre_caja.png';
-const PROD_KC    = 'HUB_AMG_PYLORI/brand_kicab/KICAB 30a.jpg';
+/* Producto alterna 10mg / 30mg por claim */
+const PROD_KC10 = 'HUB_AMG_PYLORI/brand_kicab/KICAB 10.jpg';
+const PROD_KC30 = 'HUB_AMG_PYLORI/brand_kicab/KICAB 30a.jpg';
 function fotoKC(claim) { return claim.id % 2 === 0 ? FK2_MUJER : FK2_HOMBRE; }
+function prodKC(claim)  { return claim.id % 2 === 0 ? PROD_KC10 : PROD_KC30; }
 
 function buildVarA_KC(claim, fmt) {
   const foto = fotoKC(claim);
+  const prod = prodKC(claim);
   return `
   <div class="pieza fmt-${fmt} var-a-kc" id="pieza-kca-${claim.id}-${fmt}">
-    <div class="foto-bg" style="background-image:url('${foto}'); background-position:center top;"></div>
-    <div class="foto-veil"></div>
     <img class="sello" src="${SELLO_KC}" alt="Ki-CAB">
-    <img class="prod-pip" src="${PROD_KC}" alt="Ki-CAB® producto">
-    <div class="copy-block">
-      <span class="cifra">${claim.cifra}</span>
-      ${claim.cifraLabel ? `<span class="cifra-label">${claim.cifraLabel}</span>` : ''}
-      <div class="headline">${claim.headline}</div>
-      <div class="subcopy">${claim.subcopy}</div>
+    <div class="kc-photo" style="background-image:url('${foto}');"></div>
+    <div class="kc-text">
+      <span class="kc-cifra">${claim.cifra}</span>
+      ${claim.cifraLabel ? `<span class="kc-cifra-label">${claim.cifraLabel}</span>` : ''}
+      <div class="kc-headline">${claim.headline}</div>
+      <div class="kc-subcopy">${claim.subcopy}</div>
+      <img class="kc-prod" src="${prod}" alt="Ki-CAB®">
     </div>
     <img class="franja-bar" src="${FRANJA_KC}" alt="" onerror="this.src='HUB_AMG_PYLORI/brand_amg/franja.png'">
     <div class="cta-bar">
