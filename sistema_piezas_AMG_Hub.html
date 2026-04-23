@@ -4038,12 +4038,31 @@ function stopBoxDrag() {
 /* ── IMAGEN: abrir panel ── */
 let _imgEl = null;
 
-/* Wrapper: el click viene del foto-overlay → buscamos el foto-bg hermano */
+/* Wrapper: el click viene del foto-overlay → buscamos la imagen de fondo hermana.
+   - En carrusel: usa .cr-slide (cada slide edita su propia .cr-photo)
+   - En piezas normales: usa .pieza (edita .foto-bg o .kc-photo) */
 function openImgPanelFromOverlay(e) {
   e.stopPropagation();
+  const slide = e.currentTarget.closest('.cr-slide');
+  if (slide) {
+    const ph = slide.querySelector('.cr-photo');
+    if (ph) { openImgPanel({ currentTarget: ph, stopPropagation: () => {} }); return; }
+  }
   const pieza = e.currentTarget.closest('.pieza');
   const fotoBg = pieza?.querySelector('.foto-bg') || pieza?.querySelector('.kc-photo');
   if (fotoBg) openImgPanel({ currentTarget: fotoBg, stopPropagation: () => {} });
+}
+
+/* Auto-save de edición de imagen con debounce (300ms).
+   Se dispara en sliders, nudge y stop-drag de máscara. */
+let _imgSaveTimer = null;
+function autoSaveImg() {
+  if (!_imgEl) return;
+  if (!window.HubSync || typeof HubSync.saveImg !== 'function') return;
+  clearTimeout(_imgSaveTimer);
+  _imgSaveTimer = setTimeout(() => {
+    if (_imgEl) HubSync.saveImg(_imgEl);
+  }, 300);
 }
 
 /* Abrir panel para una pieza específica por ID (desde botón debajo de la pieza) */
@@ -4114,6 +4133,7 @@ function updateImgPos() {
   _imgEl.style.backgroundPosition = x + '% ' + y + '%';
   document.getElementById('ip-x-val').textContent = Math.round(x) + '%';
   document.getElementById('ip-y-val').textContent = Math.round(y) + '%';
+  autoSaveImg();
 }
 
 function updateImgZoom() {
@@ -4121,6 +4141,7 @@ function updateImgZoom() {
   const z = document.getElementById('img-zoom').value;
   _imgEl.style.backgroundSize = z + '%';
   document.getElementById('ip-z-val').textContent = Math.round(z) + '%';
+  autoSaveImg();
 }
 
 function nudgeImg(dx, dy) {
@@ -4343,6 +4364,8 @@ function stopMaskDrag() {
   _maskDrag = null;
   document.removeEventListener('mousemove', onMaskDrag);
   document.removeEventListener('mouseup',   stopMaskDrag);
+  // Auto-save tras mover/redimensionar la máscara
+  autoSaveImg();
 }
 
 function resetMask(fotoBg) {
