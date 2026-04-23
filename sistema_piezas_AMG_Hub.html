@@ -96,15 +96,19 @@ window.HubSync = (function () {
     }
   }
   function applyImgStyles(el, e) {
-    if (e.pos)    el.style.backgroundPosition = e.pos;
-    if (e.size)   el.style.backgroundSize     = e.size;
-    if (e.left   != null) el.style.left   = e.left;
-    if (e.top    != null) el.style.top    = e.top;
-    if (e.right  != null) el.style.right  = e.right;
-    if (e.bottom != null) el.style.bottom = e.bottom;
-    if (e.width  != null) el.style.width  = e.width;
-    if (e.height != null) el.style.height = e.height;
-    if (e.bgImage) el.style.backgroundImage = e.bgImage;
+    // Usamos setProperty con prioridad important para vencer al CSS base
+    // (.cr-photo { background-position: center; background-size: cover })
+    if (e.pos)    el.style.setProperty('background-position', e.pos, 'important');
+    if (e.size)   el.style.setProperty('background-size',     e.size, 'important');
+    if (e.bgImage) el.style.setProperty('background-image', e.bgImage, 'important');
+    // Geometría de máscara (solo si fue editada — string no vacío)
+    if (e.left   && e.left   !== '') el.style.left   = e.left;
+    if (e.top    && e.top    !== '') el.style.top    = e.top;
+    if (e.right  && e.right  !== '') el.style.right  = e.right;
+    if (e.bottom && e.bottom !== '') el.style.bottom = e.bottom;
+    if (e.width  && e.width  !== '') el.style.width  = e.width;
+    if (e.height && e.height !== '') el.style.height = e.height;
+    console.info('[HubSync] ← imagen aplicada', el.closest('[id]')?.id, e.pos, e.size);
   }
   function resolveElByKey(key) {
     // formato key = "piezaId/className[/idx]"
@@ -172,7 +176,7 @@ window.HubSync = (function () {
   function saveImg(el) {
     const key = keyForImg(el);
     if (!key) { console.warn('[HubSync] no pude generar key para imagen', el); return; }
-    persist(key, {
+    const payload = {
       type:    'image',
       pos:     el.style.backgroundPosition || '',
       size:    el.style.backgroundSize     || '',
@@ -185,7 +189,9 @@ window.HubSync = (function () {
       height:  el.style.height || '',
       ts:      Date.now(),
       editor:  'Carnot/AMG'
-    });
+    };
+    console.info('[HubSync] → imagen guardada', key, payload);
+    persist(key, payload);
   }
 
   function persist(key, entry) {
@@ -4130,7 +4136,18 @@ function updateImgPos() {
   if (!_imgEl) return;
   const x = document.getElementById('img-pos-x').value;
   const y = document.getElementById('img-pos-y').value;
-  _imgEl.style.backgroundPosition = x + '% ' + y + '%';
+  // Inline style con important para ganarle al CSS base (.cr-photo cover/center)
+  _imgEl.style.setProperty('background-position', x + '% ' + y + '%', 'important');
+  // Si el tamaño aún está en "cover" (o vacío), forzamos 130% para que mover
+  // horizontal/vertical tenga efecto visible (cover no deja margen de movimiento).
+  const curSize = _imgEl.style.backgroundSize || getComputedStyle(_imgEl).backgroundSize;
+  if (!curSize || curSize === 'cover' || curSize === 'auto' || curSize.includes('cover')) {
+    _imgEl.style.setProperty('background-size', '130%', 'important');
+    const zEl = document.getElementById('img-zoom');
+    const zVal = document.getElementById('ip-z-val');
+    if (zEl) zEl.value = 130;
+    if (zVal) zVal.textContent = '130%';
+  }
   document.getElementById('ip-x-val').textContent = Math.round(x) + '%';
   document.getElementById('ip-y-val').textContent = Math.round(y) + '%';
   autoSaveImg();
@@ -4139,7 +4156,7 @@ function updateImgPos() {
 function updateImgZoom() {
   if (!_imgEl) return;
   const z = document.getElementById('img-zoom').value;
-  _imgEl.style.backgroundSize = z + '%';
+  _imgEl.style.setProperty('background-size', z + '%', 'important');
   document.getElementById('ip-z-val').textContent = Math.round(z) + '%';
   autoSaveImg();
 }
