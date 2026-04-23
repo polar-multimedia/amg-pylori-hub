@@ -6,6 +6,235 @@
 <title>Sistema Visual · Hub AMG · México Sin Cáncer Gástrico</title>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,600;0,700;0,800;0,900;1,400;1,700;1,800;1,900&family=Open+Sans:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+     HUB_SYNC · Módulo de sincronización Firebase RTDB
+     Modo Revisión Carnot/AMG: ediciones persisten para todos los visitantes.
+     Roberto reemplaza el firebaseConfig una sola vez cuando cree el proyecto;
+     mientras tanto el hub funciona sin sync y lo indica en la consola.
+     ═══════════════════════════════════════════════════════════════════════ -->
+<script>
+window.HubSync = (function () {
+  /* ══ 1. CONFIG — reemplazar con los valores reales de Firebase Console ══ */
+  const firebaseConfig = {
+    apiKey:            "REPLACE_ME",
+    authDomain:        "REPLACE_ME",
+    databaseURL:       "REPLACE_ME",
+    projectId:         "REPLACE_ME",
+    storageBucket:     "REPLACE_ME",
+    messagingSenderId: "REPLACE_ME",
+    appId:             "REPLACE_ME"
+  };
+  const NODE_ROOT = 'hub_amg/edits';  // ruta raíz en Realtime Database
+
+  let app = null, db = null, ready = false, localCache = {};
+
+  /* ══ 2. Detectar si hay config válida ══ */
+  function isConfigured() {
+    return firebaseConfig.apiKey && firebaseConfig.apiKey !== 'REPLACE_ME' &&
+           firebaseConfig.databaseURL && firebaseConfig.databaseURL !== 'REPLACE_ME';
+  }
+
+  /* ══ 3. Cargar SDK dinámicamente + init ══ */
+  async function init() {
+    if (!isConfigured()) {
+      console.info('[HubSync] Sin firebaseConfig — hub operando en modo solo-local (ediciones no persisten).');
+      setBadge('offline', '#B8922A');
+      return;
+    }
+    try {
+      await Promise.all([
+        loadScript('https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js'),
+        loadScript('https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js')
+      ]);
+      app = firebase.initializeApp(firebaseConfig);
+      db  = firebase.database();
+      ready = true;
+      console.info('[HubSync] Firebase RTDB conectado →', firebaseConfig.projectId);
+      setBadge('sync', '#30B8B0');
+      subscribeAll();
+    } catch (err) {
+      console.error('[HubSync] Error init Firebase:', err);
+      setBadge('offline', '#B8922A');
+    }
+  }
+  function loadScript(src) {
+    return new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = src; s.async = false; s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+
+  /* ══ 4. Suscripción global ══ */
+  function subscribeAll() {
+    if (!ready) return;
+    db.ref(NODE_ROOT).on('value', snap => {
+      const data = snap.val() || {};
+      localCache = data;
+      applyAllToDOM(data);
+    });
+  }
+
+  /* ══ 5. Aplicar overrides al DOM ══ */
+  function applyAllToDOM(data) {
+    Object.entries(data).forEach(([rawKey, entry]) => applyOne(rawKey, entry));
+  }
+  function applyOne(rawKey, entry) {
+    if (!entry) return;
+    // La key en Firebase viene con __ como separador (RTDB no permite /)
+    const key = rawKey.replace(/__/g, '/');
+    if (entry.type === 'image') {
+      const el = resolveImgByKey(key);
+      if (el) applyImgStyles(el, entry);
+    } else {
+      const el = resolveElByKey(key);
+      if (el && typeof entry.html === 'string' && el.innerHTML !== entry.html) {
+        const wasFocused = document.activeElement === el;
+        if (!wasFocused) el.innerHTML = entry.html;
+      }
+    }
+  }
+  function applyImgStyles(el, e) {
+    if (e.pos)    el.style.backgroundPosition = e.pos;
+    if (e.size)   el.style.backgroundSize     = e.size;
+    if (e.left   != null) el.style.left   = e.left;
+    if (e.top    != null) el.style.top    = e.top;
+    if (e.right  != null) el.style.right  = e.right;
+    if (e.bottom != null) el.style.bottom = e.bottom;
+    if (e.width  != null) el.style.width  = e.width;
+    if (e.height != null) el.style.height = e.height;
+    if (e.bgImage) el.style.backgroundImage = e.bgImage;
+  }
+  function resolveElByKey(key) {
+    // formato key = "piezaId/className[/idx]"
+    const parts = key.split('/');
+    if (parts.length < 2) return null;
+    const [piezaId, cls, idxStr] = parts;
+    const pieza = document.getElementById(piezaId);
+    if (!pieza) return null;
+    const matches = pieza.querySelectorAll('.' + cls);
+    const idx = idxStr ? parseInt(idxStr, 10) : 0;
+    return matches[idx] || null;
+  }
+  function resolveImgByKey(key) {
+    // formato key = "piezaId/img" (primera foto-bg) o "piezaId/img/idx"
+    const parts = key.split('/');
+    if (parts.length < 2 || parts[1] !== 'img') return null;
+    const pieza = document.getElementById(parts[0]);
+    if (!pieza) return null;
+    const matches = pieza.querySelectorAll('.foto-bg, .kc-photo, .cr-photo');
+    const idx = parts[2] ? parseInt(parts[2], 10) : 0;
+    return matches[idx] || null;
+  }
+
+  /* ══ 6. Generar key para un elemento editable ══ */
+  const EDITABLE_CLASSES = [
+    'hook','cifra','cifra-label','headline','subcopy','cta-text','disclaimer',
+    'vd-stat','vd-stat-label','vd-headline','vd-subcopy','vd-eyebrow',
+    'hp-giant','hp-claim','hp-sub','cta-detect','url-bottom',
+    'cr-slide-title','cr-slide-sub','cr-cta-text','cr-cta-dom','cr-slide-num',
+    'tt-beat-txt','tt-guion-title'
+  ];
+  function keyForEl(el) {
+    const pieza = el.closest('[id^="pieza-"], [id^="carrusel-"]');
+    if (!pieza || !pieza.id) return null;
+    const cls = EDITABLE_CLASSES.find(c => el.classList.contains(c));
+    if (!cls) return null;
+    const matches = pieza.querySelectorAll('.' + cls);
+    const idx = Array.from(matches).indexOf(el);
+    return pieza.id + '/' + cls + (matches.length > 1 ? '/' + idx : '');
+  }
+
+  /* ══ 7. Guardar edición de texto ══ */
+  function save(el) {
+    const key = keyForEl(el);
+    if (!key) return;
+    persist(key, {
+      type: 'text',
+      html: el.innerHTML,
+      ts:   Date.now(),
+      editor: 'Carnot/AMG'
+    });
+  }
+
+  /* Generar key para un elemento foto-bg */
+  function keyForImg(el) {
+    const pieza = el.closest('[id^="pieza-"], [id^="carrusel-"]');
+    if (!pieza || !pieza.id) return null;
+    const matches = pieza.querySelectorAll('.foto-bg, .kc-photo, .cr-photo');
+    const idx = Array.from(matches).indexOf(el);
+    if (idx < 0) return null;
+    return pieza.id + '/img' + (matches.length > 1 ? '/' + idx : '');
+  }
+
+  /* Guardar edición de imagen */
+  function saveImg(el) {
+    const key = keyForImg(el);
+    if (!key) { console.warn('[HubSync] no pude generar key para imagen', el); return; }
+    persist(key, {
+      type:    'image',
+      pos:     el.style.backgroundPosition || '',
+      size:    el.style.backgroundSize     || '',
+      bgImage: el.style.backgroundImage    || '',
+      left:    el.style.left   || '',
+      top:     el.style.top    || '',
+      right:   el.style.right  || '',
+      bottom:  el.style.bottom || '',
+      width:   el.style.width  || '',
+      height:  el.style.height || '',
+      ts:      Date.now(),
+      editor:  'Carnot/AMG'
+    });
+  }
+
+  function persist(key, entry) {
+    localCache[key] = entry;
+    if (ready) {
+      setBadge('guardando…', '#B8922A');
+      db.ref(NODE_ROOT + '/' + key.replace(/\//g, '__')).set(entry)
+        .then(() => setBadge('✓ sync', '#30B8B0'))
+        .catch(err => { console.error('[HubSync] save error:', err); setBadge('error', '#c03030'); });
+    } else {
+      console.info('[HubSync] Edición local (sin Firebase):', key, entry);
+      setBadge('local', '#B8922A');
+    }
+  }
+
+  /* ══ 8. Reset de una edición ══ */
+  function resetKey(key) {
+    delete localCache[key];
+    if (ready) db.ref(NODE_ROOT + '/' + key.replace(/\//g, '__')).remove();
+  }
+
+  /* ══ 9. Badge visual de estado ══ */
+  function setBadge(text, color) {
+    const b = document.getElementById('fab-sync-badge');
+    if (!b) return;
+    b.textContent = text;
+    b.style.background = color || 'rgba(0,0,0,0.25)';
+    b.style.display = 'inline-block';
+    if (text === '✓ sync') {
+      setTimeout(() => { if (b.textContent === '✓ sync') b.style.display = 'none'; }, 2000);
+    }
+  }
+
+  /* ══ 10. API pública ══ */
+  return {
+    init, save, saveImg, resetKey, keyForEl, keyForImg,
+    isConfigured: () => isConfigured(),
+    isReady:      () => ready,
+    cache:        () => localCache
+  };
+})();
+
+/* Auto-init cuando DOM y claims[] estén listos */
+window.addEventListener('DOMContentLoaded', () => {
+  // Damos tiempo a que renderCalendario() termine (se ejecuta inline al final del <script>)
+  setTimeout(() => HubSync.init(), 300);
+});
+</script>
+
 <style>
 :root {
   --navy: #183888;
@@ -814,14 +1043,60 @@ body { font-family: 'Open Sans', sans-serif; background: #0f1629; color: #fff; m
    MODO EDICIÓN
 ══════════════════════════════════════ */
 #btn-edit-mode {
-  margin-left: 16px;
-  background: rgba(48,184,176,0.12); border: 1px solid rgba(48,184,176,0.5);
-  color: var(--teal); padding: 7px 16px; border-radius: 8px;
-  font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 12px;
-  cursor: pointer; transition: all 0.2s; white-space: nowrap; flex-shrink: 0;
+  position: fixed !important;
+  bottom: 26px; right: 26px;
+  z-index: 9998;
+  margin: 0 !important;
+  background: linear-gradient(135deg, #183888, #30B8B0);
+  border: 1.5px solid rgba(48,184,176,0.6);
+  color: #fff;
+  padding: 14px 22px;
+  border-radius: 50px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800; font-size: 13px;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(.4,0,.2,1);
+  box-shadow: 0 6px 24px rgba(0,0,0,0.45), 0 0 0 1px rgba(48,184,176,0.4);
+  white-space: nowrap;
+  display: flex; align-items: center; gap: 8px;
 }
-#btn-edit-mode:hover  { background: rgba(48,184,176,0.25); }
-#btn-edit-mode.active { background: var(--teal); color: #fff; border-color: var(--teal); }
+#btn-edit-mode::before {
+  content: '';
+  width: 8px; height: 8px;
+  background: #9FFCF0;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #9FFCF0;
+  animation: fab-pulse 2s ease-in-out infinite;
+}
+@keyframes fab-pulse {
+  0%, 100% { opacity: 0.55; transform: scale(0.9); }
+  50%      { opacity: 1;    transform: scale(1.15); }
+}
+#btn-edit-mode:hover  {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 32px rgba(48,184,176,0.5), 0 0 0 2px rgba(48,184,176,0.7);
+}
+#btn-edit-mode.active {
+  background: linear-gradient(135deg, #B8922A, #E8D9B0);
+  color: #0D1B6E;
+  border-color: #E8D9B0;
+}
+#btn-edit-mode.active::before {
+  background: #0D1B6E;
+  box-shadow: 0 0 8px #0D1B6E;
+}
+/* Badge de estado de sincronización (aparece al guardar en Firebase) */
+#btn-edit-mode .fab-sync-badge {
+  font-size: 10px; font-weight: 700;
+  padding: 2px 7px; border-radius: 8px;
+  background: rgba(0,0,0,0.25);
+  letter-spacing: 0.05em;
+}
+
+/* Botón edición por semana: oculto hasta que modo edición esté activo */
+.cal-week-hdr .btn-edit-semana { display: none !important; }
+body.edit-mode .cal-week-hdr .btn-edit-semana { display: inline-flex !important; }
 
 /* Toolbar flotante */
 #edit-toolbar {
@@ -899,7 +1174,24 @@ body { font-family: 'Open Sans', sans-serif; background: #0f1629; color: #fff; m
   font-size: 12px; cursor: pointer; transition: background 0.15s;
 }
 .ip-nudge button:hover { background: rgba(48,184,176,0.3); }
-.ip-actions { padding: 6px 12px 10px; }
+.ip-actions {
+  padding: 6px 12px 10px;
+  display: flex; gap: 6px; flex-direction: column;
+}
+.ip-save {
+  width: 100%;
+  background: linear-gradient(135deg, #183888, #30B8B0);
+  border: 1px solid rgba(48,184,176,0.6);
+  color: #fff; padding: 8px; border-radius: 6px;
+  font-size: 11px; font-weight: 800; cursor: pointer;
+  font-family: 'Montserrat', sans-serif;
+  letter-spacing: 0.03em;
+  transition: all 0.2s;
+}
+.ip-save:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(48,184,176,0.3); }
+.ip-save.saved {
+  background: linear-gradient(135deg, #2a9a9a, #7FD8D2);
+}
 .ip-reset {
   width: 100%; background: rgba(255,100,100,0.1); border: 1px solid rgba(255,100,100,0.3);
   color: #ff9a9a; padding: 5px; border-radius: 5px;
@@ -1520,17 +1812,31 @@ body.edit-mode .sello:hover { outline: 2px solid rgba(136,112,40,0.9); }
 .cr-slide {
   flex: 0 0 216px; aspect-ratio: 4/5; position: relative;
   border-radius: 10px; overflow: hidden;
-  background-size: cover; background-position: center;
   display: flex; flex-direction: column; justify-content: flex-end;
   padding: 18px 14px; color: #fff;
   scroll-snap-align: start;
   font-family: 'Open Sans', sans-serif;
 }
 .cr-overlay {
-  position: absolute; inset: 0;
+  position: absolute; inset: 0; z-index: 2;
   background: linear-gradient(180deg, rgba(13,27,110,0.2) 0%, rgba(13,27,110,0.92) 100%);
 }
-.cr-slide > * { position: relative; z-index: 2; }
+/* Foto por slide (editable independientemente) */
+.cr-slide .cr-photo {
+  position: absolute; inset: 0; z-index: 1;
+  background-size: cover; background-position: center;
+  transition: opacity 0.3s;
+}
+.cr-slide .foto-overlay {
+  position: absolute; inset: 0; z-index: 3;
+  background: transparent;
+  pointer-events: none;
+}
+body.edit-mode .cr-slide .foto-overlay { pointer-events: auto; }
+/* Forzar que el contenido de cada slide quede sobre foto + overlays */
+.cr-slide > *:not(.cr-photo):not(.foto-overlay):not(.cr-overlay) {
+  position: relative; z-index: 4;
+}
 .cr-logo {
   position: absolute; top: 10px; right: 10px; z-index: 3;
   height: 28px; width: auto;
@@ -1769,10 +2075,14 @@ body.edit-mode .sello:hover { outline: 2px solid rgba(136,112,40,0.9); }
   <img class="logo-header" src="HUB_AMG_PYLORI/brand_amg/logo_amg_oscuro.png" alt="AMG">
   <h1>Sistema Visual · Hub AMG<br><span>México Sin Cáncer Gástrico 2026</span></h1>
   <div class="badge">Campaña avalada AMG · Mayo–Diciembre 2026 · 35 semanas · 175 piezas</div>
-  <button id="btn-edit-mode" onclick="toggleEditMode()" title="Activar modo edición: haz clic en cualquier texto de las piezas para editarlo">
-    ✏️ Modo Edición
-  </button>
 </div>
+
+<!-- ══ FAB · MODO REVISIÓN CARNOT/AMG (esquina inferior derecha) ══ -->
+<button id="btn-edit-mode" onclick="toggleEditMode()"
+        title="Modo Revisión Carnot/AMG: haz clic para habilitar edición de textos. Los cambios se sincronizan a todos los visitantes.">
+  <span id="fab-label">Modo Revisión</span>
+  <span class="fab-sync-badge" id="fab-sync-badge" style="display:none">…</span>
+</button>
 
 <!-- ══ BRAZO SELECTOR · Brazo 2 desactivado 2026-04-23 ══ -->
 <div class="brazo-bar">
@@ -1831,7 +2141,8 @@ body.edit-mode .sello:hover { outline: 2px solid rgba(136,112,40,0.9); }
     <button onclick="nudgeImg(0,5)">↓</button>
   </div>
   <div class="ip-actions">
-    <button onclick="resetImg()" class="ip-reset">↺ Reset imagen</button>
+    <button onclick="saveImgToSync()" class="ip-save" title="Guarda esta imagen (posición + zoom + recorte) en Firebase para que todos los visitantes la vean">💾 Guardar cambios</button>
+    <button onclick="resetImg()" class="ip-reset">↺ Reset</button>
   </div>
 </div>
 
@@ -2588,51 +2899,64 @@ function buildVarB(claim, fmt) {
    Cover (cifra+hook) · 3 slides de dato/síntoma/llamado · CTA+AMG
 ══════════════════════════════════════════════════════════════ */
 function buildCarrusel5(claim) {
-  const fotos = `url('${claim.foto}')`;
+  const foto = claim.foto;
   const cleanHeadline = claim.headline.replace(/<[^>]*>/g,'');
+  const cid = claim.id;
+  // Cada slide con id propio y foto-bg independiente (editable por slide).
+  // Slides sin foto inicial traen bg transparente; click en edit-mode permite asignar imagen.
   const slide1 = `
-    <div class="cr-slide cr-cover" style="background-image:${fotos}">
+    <div class="cr-slide cr-cover" id="carrusel-${cid}-s1">
+      <div class="cr-photo foto-bg" style="background-image:url('${foto}')"></div>
+      <div class="foto-overlay"></div>
       <div class="cr-overlay"></div>
-      <img class="cr-logo" src="${SELLO}" alt="AMG">
-      <div class="cr-cover-cifra">${claim.cifra}</div>
-      <div class="cr-cover-label">${claim.cifraLabel}</div>
-      <div class="cr-cover-headline">${claim.headline}</div>
+      <img class="cr-logo sello" src="${SELLO}" alt="AMG">
+      <div class="cr-cover-cifra cifra">${claim.cifra}</div>
+      <div class="cr-cover-label cifra-label">${claim.cifraLabel}</div>
+      <div class="cr-cover-headline headline">${claim.headline}</div>
       <div class="cr-slide-num">1 / 5</div>
     </div>`;
   const slide2 = `
-    <div class="cr-slide cr-data">
-      <img class="cr-logo" src="${SELLO_CLARO}" alt="AMG">
+    <div class="cr-slide cr-data" id="carrusel-${cid}-s2">
+      <div class="cr-photo foto-bg" style="background-image:url('${foto}');opacity:0.18"></div>
+      <div class="foto-overlay"></div>
+      <img class="cr-logo sello" src="${SELLO_CLARO}" alt="AMG">
       <div class="cr-step">Paso 1</div>
       <div class="cr-slide-title">${claim.claimC}</div>
       <div class="cr-slide-sub">${claim.subC}</div>
       <div class="cr-slide-num">2 / 5</div>
     </div>`;
   const slide3 = `
-    <div class="cr-slide cr-symptom">
-      <img class="cr-logo" src="${SELLO}" alt="AMG">
+    <div class="cr-slide cr-symptom" id="carrusel-${cid}-s3">
+      <div class="cr-photo foto-bg" style="background-image:url('${foto}')"></div>
+      <div class="foto-overlay"></div>
+      <img class="cr-logo sello" src="${SELLO}" alt="AMG">
       <div class="cr-step">Paso 2</div>
       <div class="cr-slide-title">${claim.subcopy}</div>
       <div class="cr-slide-sub">${cleanHeadline}</div>
       <div class="cr-slide-num">3 / 5</div>
     </div>`;
   const slide4 = `
-    <div class="cr-slide cr-call">
-      <img class="cr-logo" src="${SELLO_CLARO}" alt="AMG">
+    <div class="cr-slide cr-call" id="carrusel-${cid}-s4">
+      <div class="cr-photo foto-bg" style="background-image:url('${foto}');opacity:0.12"></div>
+      <div class="foto-overlay"></div>
+      <img class="cr-logo sello" src="${SELLO_CLARO}" alt="AMG">
       <div class="cr-step">Paso 3</div>
       <div class="cr-slide-title">Habla con tu médico.</div>
       <div class="cr-slide-sub">Guarda este post. Llévalo a tu cita.</div>
       <div class="cr-slide-num">4 / 5</div>
     </div>`;
   const slide5 = `
-    <div class="cr-slide cr-cta">
-      <img class="cr-logo" src="${SELLO}" alt="AMG">
+    <div class="cr-slide cr-cta" id="carrusel-${cid}-s5">
+      <div class="cr-photo foto-bg" style="background-image:url('${foto}');opacity:0.08"></div>
+      <div class="foto-overlay"></div>
+      <img class="cr-logo sello" src="${SELLO}" alt="AMG">
       <div class="cr-cta-text">${CTA}</div>
       <div class="cr-cta-dom">mexicosincancergastrico.com.mx</div>
       <div class="cr-slide-num">5 / 5</div>
     </div>`;
   return `
-  <div class="carrusel-5" id="carrusel-${claim.id}">
-    <div class="cr-hint">◀ Desliza ▶ 5 slides · IG 4:5</div>
+  <div class="carrusel-5" id="carrusel-${cid}">
+    <div class="cr-hint">◀ Desliza ▶ 5 slides · IG 4:5 · haz clic en la imagen para editarla</div>
     <div class="cr-track">
       ${slide1}${slide2}${slide3}${slide4}${slide5}
     </div>
@@ -3231,7 +3555,7 @@ function renderCalendario() {
     const mesJust = MES_JUSTIFICACION[mes] || null;
 
     html += `
-    <div class="cal-month">
+    <div class="cal-month collapsed">
       <div class="cal-month-hdr" onclick="toggleMes(this)" style="border-left-color:${mesColor}">
         <span class="cal-mes-pill" style="background:${mesColor}">${mes} 2026</span>
         <span class="cal-mes-info">${claimsDelMes.length} semanas · ${totalPubs} publicaciones · 5 formatos</span>
@@ -3561,9 +3885,10 @@ function toggleEditMode() {
   editMode = !editMode;
   const btn     = document.getElementById('btn-edit-mode');
   const toolbar = document.getElementById('edit-toolbar');
+  const fabLabel = document.getElementById('fab-label');
   document.body.classList.toggle('edit-mode', editMode);
   btn.classList.toggle('active', editMode);
-  btn.textContent = editMode ? '✅ Editando — clic para salir' : '✏️ Modo Edición';
+  if (fabLabel) fabLabel.textContent = editMode ? 'Salir de Revisión' : 'Modo Revisión';
   toolbar.style.display = editMode ? 'flex' : 'none';
 
   /* ── Textos editables ── */
@@ -3572,9 +3897,11 @@ function toggleEditMode() {
       if (!origMap.has(el)) origMap.set(el, el.innerHTML);
       el.setAttribute('contenteditable','true');
       el.addEventListener('focus', onTextFocus);
+      el.addEventListener('blur',  onTextBlurSync);
     } else {
       el.removeAttribute('contenteditable');
       el.removeEventListener('focus', onTextFocus);
+      el.removeEventListener('blur',  onTextBlurSync);
     }
   });
 
@@ -3638,6 +3965,13 @@ function onTextFocus(e) {
     .find(c => !['pieza','fmt-45','fmt-11','fmt-916','fmt-169',
                   'var-a','var-b','var-c','var-d','is-bacteria'].includes(c)) || 'texto';
   document.getElementById('et-label-text').textContent = `.${cls}:`;
+}
+
+/* Sync de edición de texto hacia Firebase RTDB (modo revisión Carnot/AMG) */
+function onTextBlurSync(e) {
+  if (window.HubSync && typeof HubSync.save === 'function') {
+    HubSync.save(e.target);
+  }
 }
 
 /* ── TEXTO: controles ── */
@@ -3811,7 +4145,30 @@ function resetImg() {
   _imgEl.style.width  = o.width  || '';
   _imgEl.style.height = o.height || '';
   syncMaskOverlay();
+  // Remueve también el override de Firebase para esta imagen
+  if (window.HubSync && typeof HubSync.keyForImg === 'function') {
+    const key = HubSync.keyForImg(_imgEl);
+    if (key) HubSync.resetKey(key);
+  }
   openImgPanel({ currentTarget: _imgEl, stopPropagation: () => {} });
+}
+
+/* Guardar cambios de imagen en Firebase (Modo Revisión Carnot/AMG) */
+function saveImgToSync() {
+  if (!_imgEl) return;
+  if (!window.HubSync || typeof HubSync.saveImg !== 'function') {
+    alert('Sync no disponible. Configura Firebase para guardar cambios.');
+    return;
+  }
+  HubSync.saveImg(_imgEl);
+  // Feedback visual en botón
+  const btn = document.querySelector('#img-panel .ip-save');
+  if (btn) {
+    const orig = btn.textContent;
+    btn.classList.add('saved');
+    btn.textContent = '✓ Guardado';
+    setTimeout(() => { btn.classList.remove('saved'); btn.textContent = orig; }, 1500);
+  }
 }
 
 /* ── Reset completo de una pieza (texto + imagen + máscara) ── */

@@ -1,0 +1,1391 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MásQueGastritis — ¿Tu estómago tiene H. pylori?</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Open+Sans:ital,wght@0,400;0,600;1,400&display=swap');
+
+/* ══ TOKENS ══ */
+:root {
+  --navy:    #0D1B6E;
+  --navy2:   #162591;
+  --navy3:   #1E3A8A;
+  --teal:    #00B2C8;
+  --teal-l:  #3DCEDD;
+  --teal-d:  #0090A8;
+  --teal-dk: #006B80;
+  --white:   #FFFFFF;
+  --bg:      #F7F9FF;
+  --bg2:     #EEF2FB;
+  --text:    #0D1B6E;
+  --muted:   #5B6C9E;
+  --border:  #D8E0F5;
+  --gold:    #B8922A;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Open Sans',system-ui,sans-serif;background:var(--white);color:var(--text);line-height:1.6;overflow-x:hidden}
+h1,h2,h3,h4{font-family:'Montserrat',system-ui,sans-serif;font-weight:800;line-height:1.15;color:var(--navy)}
+img{display:block;max-width:100%}
+a{text-decoration:none}
+
+/* italic teal — para H. pylori */
+.hpyl{color:var(--teal);font-style:italic;font-weight:700}
+.hpyl-dark{color:var(--teal-d);font-style:italic;font-weight:700}
+.sig{color:var(--teal);font-weight:700}
+
+/* section rhythm */
+.sec{padding:6rem 2rem}
+.container{max-width:1200px;margin:0 auto}
+
+/* eyebrow */
+.ey{font-family:'Montserrat',sans-serif;font-size:.7rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;display:inline-flex;align-items:center;gap:8px;margin-bottom:.875rem;color:var(--teal-d)}
+.ey::before{content:'';display:block;width:18px;height:3px;background:var(--teal);border-radius:2px}
+
+/* divider */
+.div-teal{width:56px;height:4px;background:linear-gradient(90deg,var(--teal),var(--teal-l));border-radius:4px;margin:1rem 0 1.75rem}
+
+/* ── BUTTONS ── */
+.btn{display:inline-flex;align-items:center;gap:8px;padding:14px 32px;border-radius:50px;font-family:'Montserrat',sans-serif;font-size:.9rem;font-weight:700;cursor:pointer;border:none;transition:all .28s cubic-bezier(.34,1.56,.64,1);letter-spacing:.01em}
+.btn-navy{background:var(--navy);color:#fff;box-shadow:0 6px 24px rgba(13,27,110,.25)}
+.btn-navy:hover{background:var(--navy2);transform:translateY(-2px);box-shadow:0 12px 32px rgba(13,27,110,.35)}
+.btn-outline{background:transparent;color:var(--navy);border:2px solid var(--navy);padding:12px 30px}
+.btn-outline:hover{background:var(--navy);color:#fff;transform:translateY(-2px)}
+.btn-teal{background:var(--teal);color:#fff;box-shadow:0 6px 20px rgba(0,178,200,.3)}
+.btn-teal:hover{background:var(--teal-d);transform:translateY(-2px);box-shadow:0 10px 28px rgba(0,178,200,.4)}
+
+/* ── SCROLL REVEAL ── */
+.s-fade{opacity:0;transform:translateY(32px);transition:opacity .75s ease,transform .75s ease}
+.s-fade.in{opacity:1;transform:none}
+.s-left{opacity:0;transform:translateX(-40px);transition:opacity .8s ease,transform .8s ease}
+.s-left.in{opacity:1;transform:none}
+.s-right{opacity:0;transform:translateX(40px);transition:opacity .8s ease,transform .8s ease}
+.s-right.in{opacity:1;transform:none}
+.s-scale{opacity:0;transform:scale(.93);transition:opacity .7s ease,transform .7s ease}
+.s-scale.in{opacity:1;transform:none}
+.delay-1{transition-delay:.1s}
+.delay-2{transition-delay:.2s}
+.delay-3{transition-delay:.3s}
+.delay-4{transition-delay:.4s}
+
+/* ════════════════════════════
+   HEADER
+════════════════════════════ */
+#hdr{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 2rem;background:rgba(255,255,255,.85);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);transition:all .4s ease}
+#hdr.scrolled{background:rgba(255,255,255,.97);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);box-shadow:0 4px 24px rgba(13,27,110,.08)}
+.hdr-i{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:72px}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-mk{width:38px;height:38px;border-radius:10px;background:var(--navy);display:flex;align-items:center;justify-content:center}
+.logo-mk svg{width:22px;height:22px}
+.logo-nm{font-family:'Montserrat',sans-serif;font-size:1.05rem;font-weight:900;color:var(--navy);letter-spacing:-.02em}
+.logo-nm span{color:var(--teal)}
+/* Header always uses navy — light hero background */
+.nav-links{display:flex;align-items:center;gap:2rem}
+.nav-links a{font-family:'Montserrat',sans-serif;font-size:.825rem;font-weight:600;color:var(--navy);transition:color .2s}
+.nav-links a:hover{color:var(--teal)}
+.amg-pill{font-family:'Montserrat',sans-serif;font-size:.65rem;font-weight:800;color:var(--gold);border:1.5px solid var(--gold);padding:5px 12px;border-radius:20px;letter-spacing:.06em;text-transform:uppercase;opacity:.9}
+.nav-cta{background:var(--navy);color:#fff !important;padding:9px 22px;border-radius:50px;font-family:'Montserrat',sans-serif;font-size:.82rem;font-weight:700;cursor:pointer;border:none;transition:all .25s;box-shadow:0 4px 14px rgba(13,27,110,.25)}
+.nav-cta:hover{background:var(--navy2);transform:translateY(-1px)}
+.hbg{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px}
+.hbg span{width:22px;height:2px;background:var(--navy);border-radius:2px;transition:all .3s}
+@media(max-width:900px){.nav-links{display:none}.hbg{display:flex}.amg-pill{display:none}}
+.mob-nav{display:none;position:fixed;top:72px;left:0;right:0;background:var(--white);border-bottom:2px solid var(--border);padding:1.5rem 2rem;flex-direction:column;gap:1.25rem;z-index:999;box-shadow:0 12px 40px rgba(13,27,110,.1)}
+.mob-nav.open{display:flex}
+.mob-nav a{font-family:'Montserrat',sans-serif;font-size:1rem;font-weight:700;color:var(--navy)}
+
+/* ════════════════════════════
+   HERO — imagen izquierda, texto sobre blanco derecho
+════════════════════════════ */
+.hero{
+  min-height:100vh;
+  background: url('hero_hpylori.png') left center / auto 100% no-repeat, #fff;
+  display:flex;
+  align-items:center;
+  overflow:hidden;
+  position:relative;
+}
+/* Fallback suave si la imagen no carga */
+.hero::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(to right, transparent 0%, transparent 48%, #fff 72%, #fff 100%);
+  pointer-events:none;
+  z-index:0;
+}
+.hero-i{
+  position:relative;
+  z-index:1;
+  max-width:1300px;
+  margin:0 auto;
+  padding:140px 2rem 100px;
+  width:100%;
+  display:flex;
+  justify-content:flex-end;
+}
+/* Text panel — sobre la zona blanca derecha */
+#hero-r{
+  width:44%;
+  min-width:380px;
+}
+.hero-eyebrow{color:var(--teal-d)}
+.hero-h1{
+  font-size:clamp(2rem,3.8vw,3.4rem);
+  color:var(--navy);
+  margin-bottom:1.25rem;
+  letter-spacing:-.03em;
+  line-height:1.15;
+  font-weight:900;
+}
+.hero-h1 .hpyl{color:var(--teal-d);font-style:italic}
+.hero-lead{font-size:.95rem;color:var(--muted);max-width:440px;margin-bottom:2rem;line-height:1.85}
+.hero-acts{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:2rem}
+.hero-disclaimer{font-size:.68rem;color:var(--muted);line-height:1.6;max-width:380px}
+
+/* Stat pills — navy sobre blanco */
+.hero-pills{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:2rem}
+.hpill{
+  background:#fff;
+  border:1.5px solid var(--border);
+  border-radius:14px;
+  padding:.875rem 1.25rem;
+  flex:1;
+  min-width:110px;
+  box-shadow:0 4px 16px rgba(13,27,110,.07);
+}
+.hpill-n{font-family:'Montserrat',sans-serif;font-size:1.8rem;font-weight:900;color:var(--navy);line-height:1}
+.hpill-n span{font-size:1rem;color:var(--teal-d)}
+.hpill-l{font-size:.68rem;color:var(--muted);margin-top:.25rem;line-height:1.4}
+
+/* AMG badge */
+.hero-amg-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(184,146,42,.08);
+  border:1.5px solid rgba(184,146,42,.3);
+  border-radius:50px;
+  padding:6px 14px;
+  margin-bottom:1.5rem;
+}
+.hero-amg-badge span{font-family:'Montserrat',sans-serif;font-size:.68rem;font-weight:800;color:var(--gold);letter-spacing:.06em;text-transform:uppercase}
+
+@media(max-width:1100px){
+  .hero{background-size:auto 110% !important}
+}
+@media(max-width:900px){
+  .hero{
+    background: url('hero_hpylori.png') center top / cover no-repeat, #fff;
+    align-items:flex-end;
+  }
+  .hero::after{
+    background:linear-gradient(to top, rgba(255,255,255,1) 40%, rgba(255,255,255,.7) 70%, transparent 100%);
+  }
+  .hero-i{
+    padding:60px 1.5rem 3rem;
+    justify-content:center;
+  }
+  #hero-r{width:100%;min-width:unset;max-width:480px}
+}
+
+/* ════════════════════════════
+   STATS BAND — CAMPAIGN STYLE
+════════════════════════════ */
+.stats-band{background:var(--white);padding:4rem 2rem;border-top:1px solid var(--border)}
+.stats-i{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:2.5rem}
+.stat-it{text-align:center;padding:2rem 1rem;border-radius:20px;background:var(--bg);border:1px solid var(--border);transition:transform .3s,box-shadow .3s}
+.stat-it:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(13,27,110,.1)}
+.stat-n{font-family:'Montserrat',sans-serif;font-size:clamp(2.6rem,5vw,3.8rem);font-weight:900;color:var(--navy);line-height:1}
+.stat-it:nth-child(2) .stat-n{color:var(--teal-d)}
+.stat-l{font-size:.825rem;color:var(--muted);margin-top:.5rem;font-weight:600;line-height:1.4}
+.stat-src{font-size:.65rem;color:var(--border);margin-top:.2rem;color:#aab}
+@media(max-width:700px){.stats-i{grid-template-columns:repeat(2,1fr)}}
+
+/* ════════════════════════════
+   AWARENESS — campaign callout
+════════════════════════════ */
+.aware-sec{padding:5rem 2rem;background:linear-gradient(135deg,var(--navy) 0%,var(--navy3) 100%);position:relative;overflow:hidden}
+.aware-sec::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 50% 60% at 80% 50%,rgba(0,178,200,.2),transparent 60%)}
+.aware-i{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;position:relative;z-index:1}
+.aware-big-stat{text-align:center;padding:2.5rem;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:28px}
+.abs-num{font-family:'Montserrat',sans-serif;font-size:clamp(5rem,12vw,9rem);font-weight:900;line-height:.9;color:#fff;display:block}
+.abs-denom{font-family:'Montserrat',sans-serif;font-size:clamp(1.2rem,3vw,2rem);font-weight:900;color:var(--teal-l);display:block;margin-top:.25rem}
+.abs-label{font-size:1rem;color:rgba(255,255,255,.65);margin-top:.75rem;line-height:1.5}
+.aware-txt h2{font-size:clamp(1.8rem,3.5vw,2.8rem);color:#fff;margin-bottom:1.25rem}
+.aware-txt p{font-size:.95rem;color:rgba(255,255,255,.65);line-height:1.85;margin-bottom:1.5rem}
+.aware-cta-strip{background:rgba(0,178,200,.12);border:1px solid rgba(61,206,221,.25);border-radius:16px;padding:1.25rem 1.5rem;font-size:.9rem;color:rgba(255,255,255,.8);line-height:1.7}
+.aware-cta-strip strong{color:var(--teal-l);font-size:1.05rem}
+@media(max-width:900px){.aware-i{grid-template-columns:1fr;text-align:center}.abs-num{font-size:clamp(5rem,20vw,8rem)}}
+
+/* ════════════════════════════
+   QUIZ
+════════════════════════════ */
+.quiz-sec{padding:6rem 2rem;background:var(--bg)}
+.quiz-i{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1.2fr;gap:4.5rem;align-items:start}
+.ql h2{font-size:clamp(1.8rem,3.5vw,2.6rem);color:var(--navy);margin-bottom:1rem}
+.ql p{color:var(--muted);line-height:1.8;margin-bottom:1.75rem}
+.qfeats{display:flex;flex-direction:column;gap:.875rem}
+.qf{display:flex;align-items:flex-start;gap:12px;background:#fff;border:1.5px solid var(--border);border-radius:14px;padding:1rem 1.25rem;transition:all .2s}
+.qf:hover{border-color:var(--teal);transform:translateX(4px);box-shadow:0 4px 20px rgba(0,178,200,.12)}
+.qf-ico{width:36px;height:36px;border-radius:9px;background:rgba(0,178,200,.1);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0}
+.qf-txt strong{font-size:.875rem;font-weight:700;color:var(--navy);display:block;font-family:'Montserrat',sans-serif}
+.qf-txt span{font-size:.78rem;color:var(--muted)}
+.qwrap{position:sticky;top:96px}
+.qcard{background:#fff;border-radius:24px;box-shadow:0 16px 56px rgba(13,27,110,.12);border:1.5px solid var(--border);overflow:hidden}
+.qhd{background:linear-gradient(135deg,var(--navy),var(--navy3));padding:1.5rem 2rem}
+.qhd-lbl{font-family:'Montserrat',sans-serif;font-size:.7rem;font-weight:800;color:var(--teal-l);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.875rem}
+.prog-row{display:flex;align-items:center;gap:1rem}
+.prog-dots{display:flex;gap:4px;flex:1}
+.pd{flex:1;height:4px;border-radius:4px;background:rgba(255,255,255,.15);transition:background .4s}
+.pd.act{background:var(--teal-l)}
+.pd.dn{background:rgba(61,206,221,.45)}
+.prog-t{font-family:'Montserrat',sans-serif;font-size:.7rem;color:rgba(255,255,255,.4);white-space:nowrap}
+.qbody{padding:2rem}
+.qstep{display:none}
+.qstep.act{display:block;animation:qslide .3s ease}
+@keyframes qslide{from{opacity:0;transform:translateX(14px)}to{opacity:1;transform:none}}
+.qn{font-family:'Montserrat',sans-serif;font-size:.65rem;font-weight:800;color:var(--teal-d);letter-spacing:.12em;text-transform:uppercase;margin-bottom:.4rem}
+.qq{font-family:'Montserrat',sans-serif;font-size:1.1rem;font-weight:800;color:var(--navy);margin-bottom:.35rem;line-height:1.4}
+.qhint{font-size:.78rem;color:var(--muted);margin-bottom:1.5rem;line-height:1.55}
+.qopts{display:flex;flex-direction:column;gap:.6rem}
+.qo{display:flex;align-items:center;gap:12px;padding:1rem 1.25rem;border-radius:12px;border:2px solid var(--border);background:var(--bg);cursor:pointer;transition:all .22s cubic-bezier(.34,1.56,.64,1);font-size:.9rem;font-weight:600;color:var(--text);width:100%;text-align:left;font-family:'Open Sans',sans-serif}
+.qo:hover{border-color:var(--teal);background:rgba(0,178,200,.05);transform:translateX(4px)}
+.qo.sel{border-color:var(--teal-d);background:rgba(0,178,200,.09);color:var(--navy)}
+.qo em{font-size:1.1rem;width:26px;text-align:center;flex-shrink:0;font-style:normal}
+.qnav{display:flex;justify-content:space-between;align-items:center;margin-top:1.5rem;padding-top:1.25rem;border-top:1px solid var(--border)}
+.qbk{background:none;border:none;color:var(--muted);font-size:.85rem;font-weight:600;cursor:pointer;font-family:inherit;padding:8px 0}
+.qbk:hover{color:var(--navy)}
+.qnx{background:var(--navy);color:#fff;border:none;padding:11px 24px;border-radius:50px;font-size:.875rem;font-weight:700;cursor:pointer;transition:all .25s;font-family:'Montserrat',sans-serif;display:flex;align-items:center;gap:6px}
+.qnx:hover{background:var(--navy2);transform:translateY(-2px);box-shadow:0 8px 24px rgba(13,27,110,.3)}
+.qnx:disabled{opacity:.35;cursor:not-allowed;transform:none;box-shadow:none}
+#qres{display:none;text-align:center;padding:.5rem 0}
+.res-ico{width:80px;height:80px;border-radius:50%;margin:0 auto 1.25rem;display:flex;align-items:center;justify-content:center;font-size:2.25rem}
+.res-lvl{font-family:'Montserrat',sans-serif;font-size:.7rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.5rem}
+.res-ttl{font-family:'Montserrat',sans-serif;font-size:1.45rem;font-weight:800;color:var(--navy);margin-bottom:.75rem}
+.res-bd{font-size:.875rem;color:var(--muted);line-height:1.8;margin-bottom:1.5rem}
+.res-acts{display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap}
+.res-p{background:var(--navy);color:#fff;border:none;padding:12px 24px;border-radius:50px;font-weight:700;font-size:.875rem;cursor:pointer;font-family:'Montserrat',sans-serif;transition:all .25s}
+.res-p:hover{background:var(--navy2);transform:translateY(-2px)}
+.res-s{background:transparent;color:var(--muted);border:2px solid var(--border);padding:12px 20px;border-radius:50px;font-weight:600;font-size:.875rem;cursor:pointer;font-family:inherit;transition:all .2s}
+.res-s:hover{border-color:var(--teal);color:var(--teal-d)}
+.res-disc{font-size:.7rem;color:var(--muted);font-style:italic;margin-top:1rem}
+@media(max-width:900px){.quiz-i{grid-template-columns:1fr}.qwrap{position:static}}
+
+/* ════════════════════════════
+   CATEGORIES (BENTO)
+════════════════════════════ */
+.cats-sec{padding:6rem 2rem;background:var(--navy);overflow:hidden}
+.cats-i{max-width:1200px;margin:0 auto}
+.cats-hd{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:2.5rem;flex-wrap:wrap;gap:1rem}
+.cats-hd h2{font-size:clamp(1.8rem,3.5vw,2.8rem);color:#fff}
+.cats-hd a{font-size:.875rem;color:var(--teal-l);font-weight:700;font-family:'Montserrat',sans-serif}
+.bento{display:grid;grid-template-columns:repeat(12,1fr);grid-template-rows:260px 220px;gap:1rem}
+.bc{border-radius:20px;overflow:hidden;position:relative;cursor:pointer;transition:transform .4s cubic-bezier(.34,1.2,.64,1)}
+.bc:hover{transform:scale(1.025);z-index:2}
+.bc-img{width:100%;height:100%;object-fit:cover;transition:transform .55s ease;display:block;position:absolute;inset:0}
+.bc:hover .bc-img{transform:scale(1.08)}
+.bc1{grid-column:1/6;grid-row:1;background:linear-gradient(135deg,#0B3D6B,#0D7EA0)}
+.bc2{grid-column:6/9;grid-row:1;background:linear-gradient(135deg,#0D1B6E,#1E3A8A)}
+.bc3{grid-column:9/13;grid-row:1;background:linear-gradient(135deg,#006170,#00B2C8)}
+.bc4{grid-column:1/4;grid-row:2;background:linear-gradient(135deg,#0A2F5A,#0D5E8A)}
+.bc5{grid-column:4/8;grid-row:2;background:linear-gradient(135deg,#0D1B6E,#162591)}
+.bc6{grid-column:8/13;grid-row:2;background:linear-gradient(135deg,#004F60,#008B9E)}
+.bc-ov{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.82) 0%,rgba(0,0,0,.1) 55%,transparent 100%);display:flex;flex-direction:column;justify-content:flex-end;padding:1.5rem;z-index:2}
+.bc-cat{font-family:'Montserrat',sans-serif;font-size:.65rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.4rem}
+.bc-ttl{font-family:'Montserrat',sans-serif;font-size:1rem;font-weight:700;color:#fff;line-height:1.3}
+.bc1 .bc-ttl{font-size:1.3rem}
+.bc-sub{font-size:.78rem;color:rgba(255,255,255,.58);margin-top:.35rem}
+.bc-badge{position:absolute;top:1rem;right:1rem;background:rgba(0,178,200,.2);backdrop-filter:blur(8px);border:1px solid rgba(61,206,221,.35);color:var(--teal-l);font-family:'Montserrat',sans-serif;font-size:.63rem;font-weight:800;padding:4px 10px;border-radius:20px;letter-spacing:.06em;z-index:3}
+@media(max-width:900px){.bento{grid-template-columns:1fr 1fr;grid-template-rows:auto}.bc1,.bc2,.bc3,.bc4,.bc5,.bc6{grid-column:auto;grid-row:auto;height:200px}}
+@media(max-width:540px){.bento{grid-template-columns:1fr}.bc1,.bc2,.bc3,.bc4,.bc5,.bc6{height:220px}}
+
+/* ════════════════════════════
+   ARTICLES
+════════════════════════════ */
+.arts-sec{padding:6rem 2rem;background:#fff}
+.arts-i{max-width:1200px;margin:0 auto}
+.arts-hd{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:2rem;flex-wrap:wrap;gap:1rem}
+.arts-hd h2{font-size:clamp(1.8rem,3vw,2.5rem);color:var(--navy)}
+.arts-hd a{font-size:.875rem;color:var(--teal-d);font-weight:700;font-family:'Montserrat',sans-serif}
+.fpills{display:flex;gap:.5rem;margin-bottom:2rem;flex-wrap:wrap}
+.fp{padding:7px 18px;border-radius:50px;font-family:'Montserrat',sans-serif;font-size:.75rem;font-weight:700;border:2px solid var(--border);background:#fff;color:var(--muted);cursor:pointer;transition:all .2s}
+.fp:hover,.fp.act{border-color:var(--teal);background:rgba(0,178,200,.08);color:var(--teal-d)}
+.arts-g{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.ac{border-radius:20px;overflow:hidden;border:1.5px solid var(--border);background:#fff;transition:all .35s cubic-bezier(.34,1.2,.64,1);cursor:pointer;display:flex;flex-direction:column}
+.ac:hover{transform:translateY(-8px);box-shadow:0 20px 56px rgba(13,27,110,.12);border-color:var(--teal)}
+.ac-img{height:200px;overflow:hidden;position:relative}
+.ac-img img{width:100%;height:100%;object-fit:cover;transition:transform .55s ease}
+.ac:hover .ac-img img{transform:scale(1.07)}
+.ac:nth-child(1) .ac-img{background:linear-gradient(135deg,#DAEEFF,#B8DFFA)}
+.ac:nth-child(2) .ac-img{background:linear-gradient(135deg,#D0F4F8,#B3EAF0)}
+.ac:nth-child(3) .ac-img{background:linear-gradient(135deg,#E8EEFF,#D0D8FA)}
+.ac:nth-child(4) .ac-img{background:linear-gradient(135deg,#D0F4F8,#B3EAF0)}
+.ac:nth-child(5) .ac-img{background:linear-gradient(135deg,#DAEEFF,#B8DFFA)}
+.ac:nth-child(6) .ac-img{background:linear-gradient(135deg,#E8EEFF,#D0D8FA)}
+.ac-amg{position:absolute;top:12px;right:12px;background:rgba(13,27,110,.8);backdrop-filter:blur(8px);color:var(--teal-l);font-family:'Montserrat',sans-serif;font-size:.62rem;font-weight:800;padding:4px 10px;border-radius:20px;letter-spacing:.05em;z-index:2}
+.ac-bd{padding:1.5rem;flex:1;display:flex;flex-direction:column}
+.ac-cat{font-family:'Montserrat',sans-serif;font-size:.65rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.6rem}
+.ac-ttl{font-family:'Montserrat',sans-serif;font-size:1rem;font-weight:700;color:var(--navy);line-height:1.4;margin-bottom:.6rem}
+.ac-ex{font-size:.8rem;color:var(--muted);line-height:1.7;flex:1}
+.ac-ft{display:flex;justify-content:space-between;align-items:center;margin-top:1.25rem;padding-top:1rem;border-top:1px solid var(--bg2);font-size:.72rem;color:var(--muted)}
+.ac-rd{color:var(--teal-d);font-weight:700;font-family:'Montserrat',sans-serif}
+@media(max-width:900px){.arts-g{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.arts-g{grid-template-columns:1fr}}
+
+/* ════════════════════════════
+   INFLUENCER
+════════════════════════════ */
+.inf-sec{padding:6rem 2rem;background:var(--bg);position:relative}
+.inf-i{max-width:1200px;margin:0 auto}
+.inf-top{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:3rem;flex-wrap:wrap;gap:1.5rem}
+.inf-top h2{font-size:clamp(1.8rem,3.5vw,2.8rem);color:var(--navy);max-width:560px}
+.inf-lead{font-size:.9rem;color:var(--muted);max-width:340px;line-height:1.75}
+.voice-g{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem}
+.vc{background:#fff;border:1.5px solid var(--border);border-radius:20px;padding:1.75rem;transition:all .35s;position:relative}
+.vc:hover{transform:translateY(-6px);border-color:var(--teal);box-shadow:0 16px 48px rgba(13,27,110,.1)}
+.vc img{width:60px;height:60px;border-radius:50%;object-fit:cover;margin-bottom:1rem;border:2px solid var(--border)}
+.vc-tier{font-family:'Montserrat',sans-serif;font-size:.63rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.4rem}
+.vc-name{font-family:'Montserrat',sans-serif;font-size:1rem;font-weight:800;color:var(--navy);margin-bottom:.2rem}
+.vc-hndl{font-size:.78rem;color:var(--teal-d);margin-bottom:.75rem;font-weight:600}
+.vc-spec{font-size:.78rem;color:var(--muted);line-height:1.55}
+.vc-reach{display:flex;align-items:center;gap:6px;margin-top:1.25rem;padding-top:1rem;border-top:1px solid var(--border)}
+.vc-rn{font-family:'Montserrat',sans-serif;font-size:1.1rem;font-weight:900;color:var(--navy)}
+.vc-rl{font-size:.7rem;color:var(--muted)}
+.t1{color:#C0392B}.t2{color:var(--teal-d)}.t3{color:var(--navy3)}
+@media(max-width:900px){.voice-g{grid-template-columns:1fr;max-width:400px}}
+
+/* ════════════════════════════
+   NEWSLETTER
+════════════════════════════ */
+.nl-sec{padding:6rem 2rem;background:var(--bg2);position:relative;overflow:hidden}
+.nl-sec::before{content:'';position:absolute;bottom:-60px;right:-60px;width:340px;height:340px;border-radius:50%;background:rgba(0,178,200,.08);pointer-events:none}
+.nl-i{max-width:620px;margin:0 auto;text-align:center;position:relative;z-index:1}
+.nl-i h2{font-size:clamp(1.8rem,3.5vw,2.6rem);color:var(--navy);margin-bottom:.75rem}
+.nl-i p{color:var(--muted);margin-bottom:2rem;line-height:1.8}
+.nl-form{background:#fff;border-radius:60px;padding:.5rem;box-shadow:0 8px 40px rgba(13,27,110,.1);border:1.5px solid var(--border);display:flex;gap:.5rem;max-width:460px;margin:0 auto 1rem}
+.nl-inp{flex:1;padding:12px 16px;border:none;outline:none;font-size:.9rem;color:var(--text);background:transparent;font-family:inherit}
+.nl-btn{background:var(--navy);color:#fff;border:none;padding:12px 24px;border-radius:50px;font-weight:700;font-family:'Montserrat',sans-serif;font-size:.875rem;cursor:pointer;transition:all .25s;white-space:nowrap}
+.nl-btn:hover{background:var(--navy2);transform:translateY(-1px)}
+.nl-disc{font-size:.7rem;color:var(--muted)}
+.nl-soc{display:flex;justify-content:center;gap:.75rem;margin-top:2rem;flex-wrap:wrap}
+.spill{display:flex;align-items:center;gap:8px;padding:8px 16px;border-radius:50px;background:#fff;border:1.5px solid var(--border);font-family:'Montserrat',sans-serif;font-size:.75rem;font-weight:700;color:var(--muted);transition:all .2s}
+.spill:hover{border-color:var(--teal);color:var(--teal-d);transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,178,200,.15)}
+
+/* ════════════════════════════
+   AMG — Endorsement
+════════════════════════════ */
+.amg-sec{padding:5rem 2rem;background:#fff}
+.amg-i{max-width:960px;margin:0 auto}
+.amg-hd{text-align:center;margin-bottom:2.5rem}
+.amg-hd h2{font-size:clamp(1.8rem,3vw,2.4rem);color:var(--navy)}
+.amg-card{background:linear-gradient(135deg,var(--navy),var(--navy3));border-radius:28px;overflow:hidden;display:grid;grid-template-columns:1fr 1.5fr;box-shadow:0 16px 56px rgba(13,27,110,.2)}
+.amg-l{padding:3rem 2.5rem;display:flex;flex-direction:column;justify-content:center;border-right:1px solid rgba(255,255,255,.08)}
+.amg-logo{width:64px;height:64px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;margin-bottom:1.5rem;box-shadow:0 8px 24px rgba(184,146,42,.3)}
+.amg-logo-t{font-family:'Montserrat',sans-serif;font-size:.85rem;font-weight:900;color:var(--white)}
+.amg-l h3{font-size:1.25rem;color:#fff;margin-bottom:.5rem;font-family:'Montserrat',sans-serif}
+.amg-l p{font-size:.85rem;color:rgba(255,255,255,.58);line-height:1.75}
+.amg-dra{margin-top:1.25rem;font-size:.78rem;color:rgba(255,255,255,.45);line-height:1.6}
+.amg-dra strong{color:var(--teal-l)}
+.amg-r{padding:3rem 2.5rem}
+.amg-r h4{font-family:'Montserrat',sans-serif;font-size:.7rem;font-weight:800;color:var(--teal-l);letter-spacing:.1em;text-transform:uppercase;margin-bottom:1.25rem}
+.amg-rules{display:flex;flex-direction:column;gap:.75rem}
+.amg-rule{display:flex;align-items:flex-start;gap:10px}
+.amg-chk{width:20px;height:20px;border-radius:50%;background:rgba(61,206,221,.15);border:1px solid rgba(61,206,221,.35);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;font-size:.65rem;color:var(--teal-l);font-weight:900}
+.amg-rt{font-size:.85rem;color:rgba(255,255,255,.65);line-height:1.55}
+.amg-rt strong{color:rgba(255,255,255,.9);font-weight:600}
+@media(max-width:768px){.amg-card{grid-template-columns:1fr}.amg-l{border-right:none;border-bottom:1px solid rgba(255,255,255,.08);padding:2rem}.amg-r{padding:2rem}}
+
+/* ════════════════════════════
+   CTA STRIP — Campaign style
+   Diagonal blue-teal franjas
+════════════════════════════ */
+.cta-strip{position:relative;overflow:hidden;padding:4rem 2rem}
+.cta-strip-bg{position:absolute;inset:0;background:linear-gradient(105deg, var(--navy) 0%, var(--navy3) 35%, var(--teal-dk) 65%, var(--teal-d) 100%)}
+/* Diagonal stripe overlay — matches campaign franjas */
+.cta-strip-bg::after{
+  content:'';position:absolute;inset:0;
+  background:repeating-linear-gradient(
+    -55deg,
+    transparent 0px,
+    transparent 28px,
+    rgba(255,255,255,.04) 28px,
+    rgba(255,255,255,.04) 30px
+  )}
+.cta-strip-i{position:relative;z-index:1;max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr auto;gap:3rem;align-items:center}
+.cta-strip-txt p{font-size:1.25rem;color:#fff;font-family:'Montserrat',sans-serif;font-weight:700;line-height:1.5;max-width:680px}
+.cta-strip-txt p em{color:var(--teal-l);font-style:normal;font-weight:900}
+.cta-strip-disc{font-size:.7rem;color:rgba(255,255,255,.45);margin-top:.5rem}
+.cta-strip-btn{background:#fff;color:var(--navy);border:none;padding:14px 32px;border-radius:50px;font-family:'Montserrat',sans-serif;font-weight:800;font-size:.9rem;cursor:pointer;transition:all .3s;white-space:nowrap;box-shadow:0 8px 28px rgba(0,0,0,.2)}
+.cta-strip-btn:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 14px 40px rgba(0,0,0,.3)}
+@media(max-width:768px){.cta-strip-i{grid-template-columns:1fr;text-align:center}.cta-strip-btn{width:100%}}
+
+/* ════════════════════════════
+   FOOTER
+════════════════════════════ */
+footer{background:var(--navy);color:rgba(255,255,255,.5);padding:4rem 2rem 2rem}
+.ft-i{max-width:1200px;margin:0 auto}
+.ft-top{display:grid;grid-template-columns:2.5fr 1fr 1fr 1fr;gap:3rem;margin-bottom:3rem}
+.ft-logo{font-family:'Montserrat',sans-serif;font-size:1.2rem;font-weight:900;color:#fff;margin-bottom:.75rem}
+.ft-logo span{color:var(--teal-l)}
+.ft-brand p{font-size:.825rem;line-height:1.8;max-width:280px;margin-bottom:1.25rem}
+.ft-col h5{font-family:'Montserrat',sans-serif;font-size:.68rem;font-weight:800;color:rgba(255,255,255,.38);letter-spacing:.1em;text-transform:uppercase;margin-bottom:1rem}
+.ft-col a{display:block;font-size:.825rem;color:rgba(255,255,255,.42);margin-bottom:.6rem;transition:color .2s}
+.ft-col a:hover{color:var(--teal-l)}
+.ft-disc{font-size:.7rem;color:rgba(255,255,255,.28);line-height:1.7;margin-bottom:1.5rem;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,.06)}
+.ft-bot{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.75rem;font-size:.72rem;color:rgba(255,255,255,.28)}
+@media(max-width:900px){.ft-top{grid-template-columns:1fr 1fr;gap:2rem}}
+@media(max-width:540px){.ft-top{grid-template-columns:1fr}}
+
+/* ════════════════════════════
+   MOBILE FLOAT
+════════════════════════════ */
+.toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%) translateY(12px);background:var(--navy);color:#fff;padding:12px 26px;border-radius:50px;font-family:'Montserrat',sans-serif;font-size:.84rem;font-weight:700;opacity:0;transition:all .35s;pointer-events:none;z-index:2000;border:1px solid rgba(61,206,221,.3);box-shadow:0 8px 32px rgba(0,0,0,.25);white-space:nowrap}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.mob-float{display:none;position:fixed;bottom:0;left:0;right:0;z-index:900;padding:1rem 1.5rem;background:rgba(13,27,110,.97);backdrop-filter:blur(16px);border-top:1px solid rgba(255,255,255,.08)}
+@media(max-width:768px){.mob-float{display:block}}
+.mob-btn{width:100%;background:var(--teal);color:#fff;border:none;padding:15px;border-radius:50px;font-family:'Montserrat',sans-serif;font-weight:800;font-size:.95rem;cursor:pointer;box-shadow:0 8px 24px rgba(0,178,200,.4)}
+</style>
+</head>
+<body>
+
+<!-- ══ HEADER ══ -->
+<header id="hdr">
+  <div class="hdr-i">
+    <a class="logo" href="#">
+      <div class="logo-mk">
+        <svg viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M11 3C7.5 3 5 5.5 5 9c0 2 .8 3.7 2 4.8V17h1v2h6v-2h1v-3.2c1.2-1.1 2-2.8 2-4.8 0-3.5-2.5-6-6-6z" fill="white" opacity=".9"/>
+          <circle cx="11" cy="9" r="2.5" fill="none" stroke="white" stroke-width="1.2" opacity=".6"/>
+        </svg>
+      </div>
+      <div class="logo-nm">Más<span>Que</span>Gastritis</div>
+    </a>
+    <nav class="nav-links">
+      <a href="#quiz">Test de riesgo</a>
+      <a href="#categorias">Información</a>
+      <a href="#articulos">Artículos</a>
+      <a href="#amg">Avalado por AMG</a>
+    </nav>
+    <div style="display:flex;align-items:center;gap:1rem">
+      <div class="amg-pill">AMG</div>
+      <button class="nav-cta" onclick="showToast('¡Muy pronto disponible!')">Hacer el test</button>
+    </div>
+    <div class="hbg" onclick="toggleMobNav()"><span></span><span></span><span></span></div>
+  </div>
+</header>
+<nav class="mob-nav" id="mobNav">
+  <a href="#quiz" onclick="toggleMobNav()">Test de riesgo</a>
+  <a href="#categorias" onclick="toggleMobNav()">Información</a>
+  <a href="#articulos" onclick="toggleMobNav()">Artículos</a>
+  <a href="#amg" onclick="toggleMobNav()">Avalado por AMG</a>
+</nav>
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <div class="hero-i">
+    <div id="hero-r" class="s-right">
+      <div class="hero-amg-badge">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 2l1.5 3H13l-2.5 2 1 3L8 8.5 4.5 10l1-3L3 5h3.5L8 2z" fill="#B8922A"/></svg>
+        <span>Avalado por AMG · Asociación Mexicana de Gastroenterología</span>
+      </div>
+      <div class="ey hero-eyebrow">Campaña de concienciación sobre <span class="hpyl">H. pylori</span></div>
+      <h1 class="hero-h1">
+        ¿Tu estómago tiene<br>
+        <span class="hpyl">H. pylori</span>?<br>
+        La mayoría no lo sabe.
+      </h1>
+      <p class="hero-lead">
+        7 de cada 10 estómagos mexicanos portan la bacteria <span class="hpyl">Helicobacter pylori</span> sin saberlo. Es la primera causa infecciosa de cáncer gástrico en el mundo.
+      </p>
+      <div class="hero-pills">
+        <div class="hpill">
+          <div class="hpill-n"><span class="stat-n" data-target="70" data-suffix="%">70%</span></div>
+          <div class="hpill-l">de mexicanos infectados</div>
+        </div>
+        <div class="hpill">
+          <div class="hpill-n"><span class="stat-n" data-target="90" data-suffix="%">90%</span></div>
+          <div class="hpill-l">del cáncer gástrico inicia con <em class="hpyl">H. pylori</em></div>
+        </div>
+        <div class="hpill">
+          <div class="hpill-n"><span class="stat-n" data-target="80" data-suffix="%">80%</span></div>
+          <div class="hpill-l">reducción de riesgo al erradicarlo</div>
+        </div>
+      </div>
+      <div class="hero-acts">
+        <button class="btn btn-teal" onclick="document.getElementById('quiz').scrollIntoView({behavior:'smooth'})">
+          Hacer el test de riesgo →
+        </button>
+        <button class="btn btn-outline" onclick="document.getElementById('info').scrollIntoView({behavior:'smooth'})">
+          Explorar información
+        </button>
+      </div>
+      <p class="hero-disclaimer">Campaña educativa avalada por la Asociación Mexicana de Gastroenterología.<br>Esta información no sustituye la consulta médica.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ STATS ══ -->
+<section class="stats-band" id="info">
+  <div class="stats-i">
+    <div class="stat-it s-fade">
+      <div class="stat-n" data-target="70" data-suffix="%">70%</div>
+      <div class="stat-l">de mexicanos porta <em class="hpyl-dark">H. pylori</em> sin saberlo</div>
+      <div class="stat-src">Asociación Mexicana de Gastroenterología, 2024</div>
+    </div>
+    <div class="stat-it s-fade delay-1">
+      <div class="stat-n" data-target="90" data-suffix="%">90%</div>
+      <div class="stat-l">del cáncer gástrico inicia como infección por <em class="hpyl-dark">H. pylori</em></div>
+      <div class="stat-src">World Gastroenterology Organisation, 2023</div>
+    </div>
+    <div class="stat-it s-fade delay-2">
+      <div class="stat-n" data-target="80" data-suffix="%">80%</div>
+      <div class="stat-l">reducción del riesgo de cáncer gástrico al erradicar la bacteria</div>
+      <div class="stat-src">Lancet Gastroenterology, 2022</div>
+    </div>
+    <div class="stat-it s-fade delay-3">
+      <div class="stat-n" data-target="95" data-suffix="%">95%</div>
+      <div class="stat-l">tasa de curación con el tratamiento correcto y supervisado</div>
+      <div class="stat-src">Guías Terapéuticas AMG, 2025</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ AWARENESS CALLOUT ══ -->
+<section class="aware-sec">
+  <div class="aware-i container">
+    <div class="aware-big-stat s-left">
+      <span class="abs-num">7</span>
+      <span class="abs-denom">de cada 10</span>
+      <p class="abs-label">estómagos mexicanos<br>portan la bacteria <em class="hpyl" style="color:var(--teal-l)">H. pylori</em><br>— y la mayoría no lo sabe.</p>
+    </div>
+    <div class="aware-txt s-right">
+      <div class="ey" style="color:var(--teal-l)">¿Por qué importa?</div>
+      <h2>La infección por <em class="hpyl" style="color:var(--teal-l)">H. pylori</em> es la primera causa infecciosa de cáncer gástrico a nivel mundial.</h2>
+      <div class="div-teal"></div>
+      <p>Se presenta con síntomas como gastritis, acidez y reflujo — señales que millones de personas normalizan. Detectarla a tiempo marca la diferencia.</p>
+      <div class="aware-cta-strip">
+        <strong>Pregunta a tu médico</strong> por el tratamiento que está mejorando <span class="sig">significativamente</span> su tasa de curación.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ QUIZ ══ -->
+<section class="quiz-sec" id="quiz">
+  <div class="quiz-i">
+    <!-- Left -->
+    <div class="ql s-left">
+      <div class="ey">Evaluación de síntomas</div>
+      <h2>Test de riesgo <em class="hpyl-dark">H. pylori</em></h2>
+      <div class="div-teal"></div>
+      <p>Responde 6 preguntas rápidas sobre tus síntomas. Recibirás una evaluación de tu nivel de riesgo y orientación sobre cuándo consultar a tu médico.</p>
+      <div class="qfeats">
+        <div class="qf">
+          <div class="qf-ico">⏱️</div>
+          <div class="qf-txt"><strong>3 minutos</strong><span>Test breve, sin registro necesario</span></div>
+        </div>
+        <div class="qf">
+          <div class="qf-ico">🔒</div>
+          <div class="qf-txt"><strong>Anónimo y confidencial</strong><span>No almacenamos ni compartimos tus datos</span></div>
+        </div>
+        <div class="qf">
+          <div class="qf-ico">🩺</div>
+          <div class="qf-txt"><strong>Basado en criterios médicos AMG</strong><span>Orientación avalada por especialistas</span></div>
+        </div>
+        <div class="qf">
+          <div class="qf-ico">📋</div>
+          <div class="qf-txt"><strong>Resultado inmediato</strong><span>Con recomendación de pasos a seguir</span></div>
+        </div>
+      </div>
+    </div>
+    <!-- Right: Quiz card -->
+    <div class="qwrap s-right">
+      <div class="qcard">
+        <div class="qhd">
+          <div class="qhd-lbl">Test de Riesgo · Avalado AMG</div>
+          <div class="prog-row">
+            <div class="prog-dots" id="progDots">
+              <div class="pd act" id="pd1"></div>
+              <div class="pd" id="pd2"></div>
+              <div class="pd" id="pd3"></div>
+              <div class="pd" id="pd4"></div>
+              <div class="pd" id="pd5"></div>
+              <div class="pd" id="pd6"></div>
+            </div>
+            <div class="prog-t" id="progTxt">Pregunta 1 de 6</div>
+          </div>
+        </div>
+        <div class="qbody">
+          <!-- Q1 -->
+          <div class="qstep act" data-step="1">
+            <div class="qn">Pregunta 1</div>
+            <div class="qq">¿Con qué frecuencia tienes dolor o malestar en la zona del estómago?</div>
+            <div class="qhint">Considera el área del abdomen superior, entre el ombligo y el pecho.</div>
+            <div class="qopts">
+              <button class="qo" data-v="0" onclick="sel(this,1)"><em>😊</em> Nunca o muy rara vez</button>
+              <button class="qo" data-v="1" onclick="sel(this,1)"><em>😐</em> A veces (1–2 veces por semana)</button>
+              <button class="qo" data-v="2" onclick="sel(this,1)"><em>😟</em> Frecuentemente (casi todos los días)</button>
+              <button class="qo" data-v="3" onclick="sel(this,1)"><em>😣</em> Constantemente</button>
+            </div>
+            <div class="qnav"><button class="qbk" disabled>← Atrás</button><button class="qnx" id="qn1" onclick="nxt(1)" disabled>Siguiente →</button></div>
+          </div>
+          <!-- Q2 -->
+          <div class="qstep" data-step="2">
+            <div class="qn">Pregunta 2</div>
+            <div class="qq">¿Sientes acidez, reflujo o ardor después de comer?</div>
+            <div class="qhint">Sensación de quemadura en el pecho o garganta.</div>
+            <div class="qopts">
+              <button class="qo" data-v="0" onclick="sel(this,2)"><em>😊</em> Casi nunca</button>
+              <button class="qo" data-v="1" onclick="sel(this,2)"><em>😐</em> Después de comidas pesadas</button>
+              <button class="qo" data-v="2" onclick="sel(this,2)"><em>😟</em> Regularmente tras cualquier comida</button>
+              <button class="qo" data-v="3" onclick="sel(this,2)"><em>😣</em> Con frecuencia, independiente de lo que como</button>
+            </div>
+            <div class="qnav"><button class="qbk" onclick="back(2)">← Atrás</button><button class="qnx" id="qn2" onclick="nxt(2)" disabled>Siguiente →</button></div>
+          </div>
+          <!-- Q3 -->
+          <div class="qstep" data-step="3">
+            <div class="qn">Pregunta 3</div>
+            <div class="qq">¿Alguna vez has tenido gastritis diagnosticada o úlceras estomacales?</div>
+            <div class="qhint">Incluyendo diagnósticos anteriores aunque hayan sido tratados.</div>
+            <div class="qopts">
+              <button class="qo" data-v="0" onclick="sel(this,3)"><em>✅</em> No, nunca</button>
+              <button class="qo" data-v="1" onclick="sel(this,3)"><em>❓</em> Creo que sí pero no tengo diagnóstico formal</button>
+              <button class="qo" data-v="2" onclick="sel(this,3)"><em>📋</em> Sí, he tenido gastritis antes</button>
+              <button class="qo" data-v="3" onclick="sel(this,3)"><em>⚠️</em> Sí, úlceras o gastritis crónica</button>
+            </div>
+            <div class="qnav"><button class="qbk" onclick="back(3)">← Atrás</button><button class="qnx" id="qn3" onclick="nxt(3)" disabled>Siguiente →</button></div>
+          </div>
+          <!-- Q4 -->
+          <div class="qstep" data-step="4">
+            <div class="qn">Pregunta 4</div>
+            <div class="qq">¿Tienes familiares directos con úlceras, gastritis crónica o cáncer gástrico?</div>
+            <div class="qhint">Padres, hermanos o abuelos con estas condiciones.</div>
+            <div class="qopts">
+              <button class="qo" data-v="0" onclick="sel(this,4)"><em>✅</em> No que yo sepa</button>
+              <button class="qo" data-v="1" onclick="sel(this,4)"><em>🤔</em> Tal vez, no estoy seguro/a</button>
+              <button class="qo" data-v="2" onclick="sel(this,4)"><em>👨‍👩‍👧</em> Sí, un familiar con úlcera o gastritis</button>
+              <button class="qo" data-v="3" onclick="sel(this,4)"><em>⚠️</em> Sí, cáncer gástrico en mi familia</button>
+            </div>
+            <div class="qnav"><button class="qbk" onclick="back(4)">← Atrás</button><button class="qnx" id="qn4" onclick="nxt(4)" disabled>Siguiente →</button></div>
+          </div>
+          <!-- Q5 -->
+          <div class="qstep" data-step="5">
+            <div class="qn">Pregunta 5</div>
+            <div class="qq">¿Sientes náuseas, eructos frecuentes o sensación de llenura rápida?</div>
+            <div class="qhint">Síntomas digestivos que pueden acompañar la infección por H. pylori.</div>
+            <div class="qopts">
+              <button class="qo" data-v="0" onclick="sel(this,5)"><em>😊</em> Rara vez o nunca</button>
+              <button class="qo" data-v="1" onclick="sel(this,5)"><em>😐</em> Ocasionalmente</button>
+              <button class="qo" data-v="2" onclick="sel(this,5)"><em>😟</em> Frecuentemente</button>
+              <button class="qo" data-v="3" onclick="sel(this,5)"><em>😣</em> Casi siempre, afecta mi día a día</button>
+            </div>
+            <div class="qnav"><button class="qbk" onclick="back(5)">← Atrás</button><button class="qnx" id="qn5" onclick="nxt(5)" disabled>Siguiente →</button></div>
+          </div>
+          <!-- Q6 -->
+          <div class="qstep" data-step="6">
+            <div class="qn">Pregunta 6</div>
+            <div class="qq">¿Te has realizado alguna prueba de <em class="hpyl-dark">H. pylori</em> (aliento, endoscopía o sangre)?</div>
+            <div class="qhint">Indica si ha habido alguna evaluación médica previa para esta bacteria.</div>
+            <div class="qopts">
+              <button class="qo" data-v="0" onclick="sel(this,6)"><em>✅</em> Sí, y fue negativa</button>
+              <button class="qo" data-v="0" onclick="sel(this,6)"><em>📋</em> Sí, tuve tratamiento y me curé</button>
+              <button class="qo" data-v="2" onclick="sel(this,6)"><em>❓</em> No, nunca me he realizado ninguna prueba</button>
+              <button class="qo" data-v="3" onclick="sel(this,6)"><em>⚠️</em> Sí, fue positiva pero no recibí tratamiento</button>
+            </div>
+            <div class="qnav"><button class="qbk" onclick="back(6)">← Atrás</button><button class="qnx" id="qn6" onclick="calcRes()" disabled>Ver resultado →</button></div>
+          </div>
+          <!-- Result -->
+          <div id="qres">
+            <div id="res-ico-el" class="res-ico"></div>
+            <div id="res-lvl-el" class="res-lvl"></div>
+            <div id="res-ttl-el" class="res-ttl"></div>
+            <div id="res-bd-el" class="res-bd"></div>
+            <div class="res-acts">
+              <button class="res-p" onclick="showToast('Función disponible al lanzar masquegastritis.mx')">Encontrar médico cerca →</button>
+              <button class="res-s" onclick="resetQuiz()">Repetir test</button>
+            </div>
+            <p class="res-disc">Esta evaluación es orientativa y no constituye diagnóstico médico.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CATEGORÍAS BENTO ══ -->
+<section class="cats-sec" id="categorias">
+  <div class="cats-i">
+    <div class="cats-hd s-fade">
+      <h2>Información basada en ciencia</h2>
+      <a href="#">Ver todos los temas →</a>
+    </div>
+    <div class="bento">
+      <!-- Card 1 -->
+      <div class="bc bc1 s-scale">
+        <img class="bc-img" src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=600&q=70&fit=crop" alt="" onerror="this.remove()">
+        <div class="bc-ov">
+          <div class="bc-cat" style="color:var(--teal-l)">🦠 Entender la bacteria</div>
+          <div class="bc-ttl">¿Qué es el <em class="hpyl">Helicobacter pylori</em> y cómo te infecta?</div>
+          <div class="bc-sub">Mecanismos de infección, transmisión y por qué persiste</div>
+        </div>
+        <div class="bc-badge">Más visitado</div>
+      </div>
+      <!-- Card 2 -->
+      <div class="bc bc2 s-scale delay-1">
+        <img class="bc-img" src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=400&q=70&fit=crop" alt="" onerror="this.remove()">
+        <div class="bc-ov">
+          <div class="bc-cat" style="color:#FBB74B">🔬 Diagnóstico</div>
+          <div class="bc-ttl">Cómo detectar <em class="hpyl">H. pylori</em>: prueba de aliento, sangre y endoscopía</div>
+        </div>
+      </div>
+      <!-- Card 3 -->
+      <div class="bc bc3 s-scale delay-2">
+        <img class="bc-img" src="https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=400&q=70&fit=crop" alt="" onerror="this.remove()">
+        <div class="bc-ov">
+          <div class="bc-cat" style="color:var(--teal-l)">💊 Tratamiento</div>
+          <div class="bc-ttl">El tratamiento que mejora <em class="hpyl">significativamente</em> la tasa de curación</div>
+        </div>
+        <div class="bc-badge">Nuevo</div>
+      </div>
+      <!-- Card 4 -->
+      <div class="bc bc4 s-scale delay-1">
+        <img class="bc-img" src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&q=70&fit=crop" alt="" onerror="this.remove()">
+        <div class="bc-ov">
+          <div class="bc-cat" style="color:#FBB74B">🥗 Nutrición</div>
+          <div class="bc-ttl">Alimentos que ayudan (y evitar) durante el tratamiento</div>
+        </div>
+      </div>
+      <!-- Card 5 -->
+      <div class="bc bc5 s-scale delay-2">
+        <img class="bc-img" src="https://images.unsplash.com/photo-1559757175-0eb30cd8c063?w=500&q=70&fit=crop" alt="" onerror="this.remove()">
+        <div class="bc-ov">
+          <div class="bc-cat" style="color:var(--teal-l)">⚠️ Síntomas</div>
+          <div class="bc-ttl">Reconocer los síntomas: cuándo preocuparse y cuándo actuar</div>
+        </div>
+      </div>
+      <!-- Card 6 -->
+      <div class="bc bc6 s-scale delay-3">
+        <img class="bc-img" src="https://images.unsplash.com/photo-1551190822-a9333d879b1f?w=500&q=70&fit=crop" alt="" onerror="this.remove()">
+        <div class="bc-ov">
+          <div class="bc-cat" style="color:var(--teal-l)">🔬 Prevención</div>
+          <div class="bc-ttl">Cómo reducir el riesgo de reinfección y proteger a tu familia</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ ARTÍCULOS ══ -->
+<section class="arts-sec" id="articulos">
+  <div class="arts-i">
+    <div class="arts-hd s-fade">
+      <h2>Artículos y recursos</h2>
+      <a href="#">Ver biblioteca completa →</a>
+    </div>
+    <!-- Filter pills -->
+    <div class="fpills s-fade">
+      <button class="fp act" onclick="filterArts(this,'todos')">Todos</button>
+      <button class="fp" onclick="filterArts(this,'bacteria')">🦠 La bacteria</button>
+      <button class="fp" onclick="filterArts(this,'sintomas')">⚠️ Síntomas</button>
+      <button class="fp" onclick="filterArts(this,'tratamiento')">💊 Tratamiento</button>
+      <button class="fp" onclick="filterArts(this,'nutricion')">🥗 Nutrición</button>
+    </div>
+    <div class="arts-g">
+      <div class="ac s-fade">
+        <div class="ac-img">
+          <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=400&q=75&fit=crop" alt="H. pylori bacterias" onerror="this.remove()">
+          <div class="ac-amg">AMG</div>
+        </div>
+        <div class="ac-bd">
+          <div class="ac-cat" style="color:var(--teal-d)">🦠 La bacteria</div>
+          <div class="ac-ttl">¿Cómo se contagia el <em class="hpyl-dark">H. pylori</em>? Todo lo que debes saber</div>
+          <div class="ac-ex">La transmisión ocurre principalmente por vía oral-oral y fecal-oral. Descubre los factores de riesgo más comunes en México y cómo reducirlos.</div>
+          <div class="ac-ft"><span>8 min lectura</span><span class="ac-rd">Leer →</span></div>
+        </div>
+      </div>
+      <div class="ac s-fade delay-1">
+        <div class="ac-img">
+          <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=400&q=75&fit=crop" alt="Paciente con doctor" onerror="this.remove()">
+          <div class="ac-amg">AMG</div>
+        </div>
+        <div class="ac-bd">
+          <div class="ac-cat" style="color:#C0392B">⚠️ Síntomas</div>
+          <div class="ac-ttl">Gastritis crónica: cuándo dejar de normalizar el dolor de estómago</div>
+          <div class="ac-ex">Millones de mexicanos viven con síntomas que se confunden con "colitis nerviosa" cuando en realidad indican una infección bacteriana tratable.</div>
+          <div class="ac-ft"><span>6 min lectura</span><span class="ac-rd">Leer →</span></div>
+        </div>
+      </div>
+      <div class="ac s-fade delay-2">
+        <div class="ac-img">
+          <img src="https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=400&q=75&fit=crop" alt="Medicamento" onerror="this.remove()">
+          <div class="ac-amg">AMG</div>
+        </div>
+        <div class="ac-bd">
+          <div class="ac-cat" style="color:var(--navy)">💊 Tratamiento</div>
+          <div class="ac-ttl">Los nuevos esquemas de tratamiento y por qué la tasa de curación mejora significativamente</div>
+          <div class="ac-ex">La terapia cuádruple de rescate ha elevado las tasas de erradicación a niveles nunca antes vistos. Qué preguntarle a tu médico.</div>
+          <div class="ac-ft"><span>10 min lectura</span><span class="ac-rd">Leer →</span></div>
+        </div>
+      </div>
+      <div class="ac s-fade delay-1">
+        <div class="ac-img">
+          <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&q=75&fit=crop" alt="Alimentos saludables" onerror="this.remove()">
+        </div>
+        <div class="ac-bd">
+          <div class="ac-cat" style="color:#B8922A">🥗 Nutrición</div>
+          <div class="ac-ttl">Qué comer (y qué evitar) cuando tienes <em class="hpyl-dark">H. pylori</em></div>
+          <div class="ac-ex">La dieta no elimina la bacteria, pero puede reducir la inflamación y acompañar mejor el tratamiento médico para acelerar la recuperación.</div>
+          <div class="ac-ft"><span>7 min lectura</span><span class="ac-rd">Leer →</span></div>
+        </div>
+      </div>
+      <div class="ac s-fade delay-2">
+        <div class="ac-img">
+          <img src="https://images.unsplash.com/photo-1551190822-a9333d879b1f?w=400&q=75&fit=crop" alt="Prevención" onerror="this.remove()">
+        </div>
+        <div class="ac-bd">
+          <div class="ac-cat" style="color:var(--teal-d)">🔬 Prevención</div>
+          <div class="ac-ttl">Cómo saber si me reinfecté y qué hacer para proteger a mi familia</div>
+          <div class="ac-ex">La reinfección ocurre en menos del 5% de los casos tratados correctamente. Conoce las medidas de higiene que marcan la diferencia en casa.</div>
+          <div class="ac-ft"><span>5 min lectura</span><span class="ac-rd">Leer →</span></div>
+        </div>
+      </div>
+      <div class="ac s-fade delay-3">
+        <div class="ac-img">
+          <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=400&q=75&fit=crop" alt="Diagnóstico" onerror="this.remove()">
+          <div class="ac-amg">AMG</div>
+        </div>
+        <div class="ac-bd">
+          <div class="ac-cat" style="color:var(--navy3)">🔬 Diagnóstico</div>
+          <div class="ac-ttl">Prueba de aliento vs endoscopía: ¿cuál me corresponde?</div>
+          <div class="ac-ex">No todos los pacientes necesitan endoscopía. Tu médico elegirá la prueba según tu historial clínico, síntomas y factores de riesgo específicos.</div>
+          <div class="ac-ft"><span>9 min lectura</span><span class="ac-rd">Leer →</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ INFLUENCERS ══ -->
+<section class="inf-sec">
+  <div class="inf-i">
+    <div class="inf-top s-fade">
+      <div>
+        <div class="ey">Red de voces de salud</div>
+        <h2>Contenido avalado, voces que generan confianza</h2>
+      </div>
+      <div class="inf-lead">Colaboramos con tres perfiles de influencer con distintos niveles de alcance para amplificar el mensaje de forma auténtica.</div>
+    </div>
+    <div class="voice-g">
+      <div class="vc s-scale">
+        <img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=120&q=80&fit=crop&crop=faces" alt="" onerror="this.style.background='var(--bg2)'">
+        <div class="vc-tier t1">⭐⭐⭐ Macro influencer</div>
+        <div class="vc-name">Dra. Sofía Morales</div>
+        <div class="vc-hndl">@drasofiamorales</div>
+        <div class="vc-spec">Gastroenteróloga. Divulgación médica en redes. Educación sobre salud digestiva para público general.</div>
+        <div class="vc-reach">
+          <div><div class="vc-rn">+180K</div><div class="vc-rl">seguidores</div></div>
+          <div style="width:1px;height:30px;background:var(--border);margin:0 .75rem"></div>
+          <div><div class="vc-rn">8.4%</div><div class="vc-rl">engagement</div></div>
+        </div>
+      </div>
+      <div class="vc s-scale delay-1">
+        <img src="https://images.unsplash.com/photo-1594824476967-48c8b964273f?w=120&q=80&fit=crop&crop=faces" alt="" onerror="this.style.background='var(--bg2)'">
+        <div class="vc-tier t2">🎙️ Mid-tier influencer</div>
+        <div class="vc-name">Nutrióloga Carla V.</div>
+        <div class="vc-hndl">@nutriocarla</div>
+        <div class="vc-spec">Nutrición clínica y salud digestiva. Recetas y consejos para pacientes con gastritis y durante el tratamiento.</div>
+        <div class="vc-reach">
+          <div><div class="vc-rn">42K</div><div class="vc-rl">seguidores</div></div>
+          <div style="width:1px;height:30px;background:var(--border);margin:0 .75rem"></div>
+          <div><div class="vc-rn">12.1%</div><div class="vc-rl">engagement</div></div>
+        </div>
+      </div>
+      <div class="vc s-scale delay-2">
+        <img src="https://images.unsplash.com/photo-1595152772835-219674b2a163?w=120&q=80&fit=crop&crop=faces" alt="" onerror="this.style.background='var(--bg2)'">
+        <div class="vc-tier t3">🌱 Micro influencer</div>
+        <div class="vc-name">Paciente Testimonial</div>
+        <div class="vc-hndl">@miestomago.sano</div>
+        <div class="vc-spec">Experiencia real con H. pylori. Comunidad de pacientes. Alto índice de confianza y empatía con el público objetivo.</div>
+        <div class="vc-reach">
+          <div><div class="vc-rn">8.5K</div><div class="vc-rl">seguidores</div></div>
+          <div style="width:1px;height:30px;background:var(--border);margin:0 .75rem"></div>
+          <div><div class="vc-rn">19.6%</div><div class="vc-rl">engagement</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ NEWSLETTER ══ -->
+<section class="nl-sec">
+  <div class="nl-i">
+    <div class="ey s-fade">Mantente informado</div>
+    <h2 class="s-fade">Recibe contenido validado sobre salud gástrica</h2>
+    <p class="s-fade">Artículos, consejos de especialistas y actualizaciones del mundo de la gastroenterología, directamente en tu correo. Sin spam.</p>
+    <div class="nl-form s-fade">
+      <input class="nl-inp" type="email" placeholder="tu@correo.com">
+      <button class="nl-btn" onclick="showToast('¡Suscripción disponible al lanzar!')">Suscribirme →</button>
+    </div>
+    <p class="nl-disc s-fade">Sin spam. Puedes cancelar cuando quieras. Contenido avalado por AMG.</p>
+    <div class="nl-soc s-fade">
+      <a class="spill" href="#" onclick="showToast('¡Redes sociales próximamente!')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="var(--teal-d)"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" fill="white"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke="white" stroke-width="2"/></svg>
+        Instagram
+      </a>
+      <a class="spill" href="#" onclick="showToast('¡Redes sociales próximamente!')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="#1877F2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+        Facebook
+      </a>
+      <a class="spill" href="#" onclick="showToast('¡Redes sociales próximamente!')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="var(--navy)"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg>
+        Twitter / X
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ AMG ENDORSEMENT ══ -->
+<section class="amg-sec" id="amg">
+  <div class="amg-i">
+    <div class="amg-hd s-fade">
+      <div class="ey" style="justify-content:center">Respaldo institucional</div>
+      <h2>Avalado por la Asociación Mexicana de Gastroenterología</h2>
+    </div>
+    <div class="amg-card s-scale">
+      <div class="amg-l">
+        <div class="amg-logo">
+          <div class="amg-logo-t">AMG</div>
+        </div>
+        <h3>Asociación Mexicana de Gastroenterología</h3>
+        <p>Todo el contenido de MásQueGastritis.mx es revisado y avalado por el comité científico de la AMG, garantizando información médicamente exacta y actualizada.</p>
+        <div class="amg-dra">Revisión periódica cada 6 meses. <strong>Última actualización: Enero 2026.</strong></div>
+      </div>
+      <div class="amg-r">
+        <h4>Criterios editoriales</h4>
+        <div class="amg-rules">
+          <div class="amg-rule"><div class="amg-chk">✓</div><div class="amg-rt"><strong>Revisión científica dual:</strong> Todo artículo es revisado por al menos dos gastroenterólogos certificados antes de publicarse.</div></div>
+          <div class="amg-rule"><div class="amg-chk">✓</div><div class="amg-rt"><strong>Fuentes primarias verificadas:</strong> Se citan únicamente estudios publicados en revistas indexadas o guías clínicas de sociedades reconocidas.</div></div>
+          <div class="amg-rule"><div class="amg-chk">✓</div><div class="amg-rt"><strong>Lenguaje accesible:</strong> Información médica compleja traducida a un lenguaje que el paciente comprende, sin perder precisión clínica.</div></div>
+          <div class="amg-rule"><div class="amg-chk">✓</div><div class="amg-rt"><strong>Sin conflicto de interés editorial:</strong> La orientación a consultar al médico es siempre el mensaje central del hub.</div></div>
+          <div class="amg-rule"><div class="amg-chk">✓</div><div class="amg-rt"><strong>Actualización continua:</strong> El contenido se revisa cada vez que cambian las guías clínicas internacionales o surgen nuevas evidencias.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FUENTES CONFIABLES ══ -->
+<section class="sec" style="background:var(--bg);padding:5rem 2rem">
+  <div class="container">
+    <div class="s-fade" style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:2.5rem;flex-wrap:wrap;gap:1rem">
+      <div>
+        <div class="ey">Ciencia detrás del contenido</div>
+        <h2 style="font-size:clamp(1.8rem,3vw,2.5rem)">Fuentes de referencia verificadas</h2>
+        <div class="div-teal"></div>
+        <p style="color:var(--muted);max-width:620px;line-height:1.8">Todo artículo de MásQueGastritis.mx se basa en estas publicaciones científicas. Siempre encontrarás el enlace al estudio o guía original.</p>
+      </div>
+    </div>
+    <!-- Source cards grid -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1.25rem">
+
+      <!-- SOURCE 1 -->
+      <div class="src-card s-fade" style="background:#fff;border:1.5px solid var(--border);border-radius:20px;padding:1.5rem;transition:all .3s;cursor:pointer"
+           onmouseover="this.style.borderColor='var(--teal)';this.style.boxShadow='0 8px 32px rgba(0,178,200,.1)'"
+           onmouseout="this.style.borderColor='var(--border)';this.style.boxShadow='none'">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:1rem">
+          <div style="width:36px;height:36px;border-radius:8px;background:rgba(0,178,200,.1);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0">🌐</div>
+          <div>
+            <div style="font-family:'Montserrat',sans-serif;font-size:.62rem;font-weight:800;color:var(--teal-d);letter-spacing:.08em;text-transform:uppercase">Organización Mundial de la Salud</div>
+            <div style="font-size:.7rem;color:var(--muted)">who.int</div>
+          </div>
+        </div>
+        <div style="font-family:'Montserrat',sans-serif;font-size:.92rem;font-weight:700;color:var(--navy);line-height:1.4;margin-bottom:.75rem">
+          <em class="hpyl-dark">Helicobacter pylori</em> and Cancer — IARC Monographs
+        </div>
+        <p style="font-size:.78rem;color:var(--muted);line-height:1.65;margin-bottom:1rem">Clasificación oficial de H. pylori como carcinógeno de Grupo I y evidencia de su relación con cáncer gástrico a nivel mundial.</p>
+        <a href="https://www.who.int/news-room/fact-sheets/detail/helicobacter-pylori" target="_blank" rel="noopener"
+           style="display:inline-flex;align-items:center;gap:6px;font-family:'Montserrat',sans-serif;font-size:.75rem;font-weight:700;color:var(--teal-d);border:1.5px solid var(--teal);padding:7px 16px;border-radius:50px;transition:all .2s"
+           onmouseover="this.style.background='var(--teal)';this.style.color='#fff'"
+           onmouseout="this.style.background='transparent';this.style.color='var(--teal-d)'">
+          Ver fuente original →
+        </a>
+      </div>
+
+      <!-- SOURCE 2 -->
+      <div class="src-card s-fade delay-1" style="background:#fff;border:1.5px solid var(--border);border-radius:20px;padding:1.5rem;transition:all .3s;cursor:pointer"
+           onmouseover="this.style.borderColor='var(--teal)';this.style.boxShadow='0 8px 32px rgba(0,178,200,.1)'"
+           onmouseout="this.style.borderColor='var(--border)';this.style.boxShadow='none'">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:1rem">
+          <div style="width:36px;height:36px;border-radius:8px;background:rgba(13,27,110,.08);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0">📋</div>
+          <div>
+            <div style="font-family:'Montserrat',sans-serif;font-size:.62rem;font-weight:800;color:var(--navy);letter-spacing:.08em;text-transform:uppercase">AMG — Asociación Mexicana de Gastroenterología</div>
+            <div style="font-size:.7rem;color:var(--muted)">amg.org.mx</div>
+          </div>
+        </div>
+        <div style="font-family:'Montserrat',sans-serif;font-size:.92rem;font-weight:700;color:var(--navy);line-height:1.4;margin-bottom:.75rem">
+          Guía de Práctica Clínica para el Diagnóstico y Tratamiento de <em class="hpyl-dark">H. pylori</em> en México
+        </div>
+        <p style="font-size:.78rem;color:var(--muted);line-height:1.65;margin-bottom:1rem">Protocolo de diagnóstico, esquemas de erradicación recomendados y tasas de eficacia validadas para la población mexicana.</p>
+        <a href="https://www.amg.org.mx" target="_blank" rel="noopener"
+           style="display:inline-flex;align-items:center;gap:6px;font-family:'Montserrat',sans-serif;font-size:.75rem;font-weight:700;color:var(--teal-d);border:1.5px solid var(--teal);padding:7px 16px;border-radius:50px;transition:all .2s"
+           onmouseover="this.style.background='var(--teal)';this.style.color='#fff'"
+           onmouseout="this.style.background='transparent';this.style.color='var(--teal-d)'">
+          Ver fuente original →
+        </a>
+      </div>
+
+      <!-- SOURCE 3 -->
+      <div class="src-card s-fade delay-2" style="background:#fff;border:1.5px solid var(--border);border-radius:20px;padding:1.5rem;transition:all .3s;cursor:pointer"
+           onmouseover="this.style.borderColor='var(--teal)';this.style.boxShadow='0 8px 32px rgba(0,178,200,.1)'"
+           onmouseout="this.style.borderColor='var(--border)';this.style.boxShadow='none'">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:1rem">
+          <div style="width:36px;height:36px;border-radius:8px;background:rgba(0,100,160,.08);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0">🔬</div>
+          <div>
+            <div style="font-family:'Montserrat',sans-serif;font-size:.62rem;font-weight:800;color:#0055A5;letter-spacing:.08em;text-transform:uppercase">NCBI / PubMed</div>
+            <div style="font-size:.7rem;color:var(--muted)">pubmed.ncbi.nlm.nih.gov</div>
+          </div>
+        </div>
+        <div style="font-family:'Montserrat',sans-serif;font-size:.92rem;font-weight:700;color:var(--navy);line-height:1.4;margin-bottom:.75rem">
+          Global prevalence of <em class="hpyl-dark">H. pylori</em> infection — Systematic Review & Meta-Analysis
+        </div>
+        <p style="font-size:.78rem;color:var(--muted);line-height:1.65;margin-bottom:1rem">Revisión sistemática que estima la prevalencia global y regional de la infección, con datos específicos para América Latina.</p>
+        <a href="https://pubmed.ncbi.nlm.nih.gov/28822182/" target="_blank" rel="noopener"
+           style="display:inline-flex;align-items:center;gap:6px;font-family:'Montserrat',sans-serif;font-size:.75rem;font-weight:700;color:var(--teal-d);border:1.5px solid var(--teal);padding:7px 16px;border-radius:50px;transition:all .2s"
+           onmouseover="this.style.background='var(--teal)';this.style.color='#fff'"
+           onmouseout="this.style.background='transparent';this.style.color='var(--teal-d)'">
+          Ver fuente original →
+        </a>
+      </div>
+
+      <!-- SOURCE 4 -->
+      <div class="src-card s-fade delay-1" style="background:#fff;border:1.5px solid var(--border);border-radius:20px;padding:1.5rem;transition:all .3s;cursor:pointer"
+           onmouseover="this.style.borderColor='var(--teal)';this.style.boxShadow='0 8px 32px rgba(0,178,200,.1)'"
+           onmouseout="this.style.borderColor='var(--border)';this.style.boxShadow='none'">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:1rem">
+          <div style="width:36px;height:36px;border-radius:8px;background:rgba(180,0,0,.06);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0">📰</div>
+          <div>
+            <div style="font-family:'Montserrat',sans-serif;font-size:.62rem;font-weight:800;color:#b00;letter-spacing:.08em;text-transform:uppercase">The Lancet Gastroenterology & Hepatology</div>
+            <div style="font-size:.7rem;color:var(--muted)">thelancet.com</div>
+          </div>
+        </div>
+        <div style="font-family:'Montserrat',sans-serif;font-size:.92rem;font-weight:700;color:var(--navy);line-height:1.4;margin-bottom:.75rem">
+          <em class="hpyl-dark">H. pylori</em> eradication and gastric cancer prevention — 26-year follow-up
+        </div>
+        <p style="font-size:.78rem;color:var(--muted);line-height:1.65;margin-bottom:1rem">Estudio de seguimiento a 26 años que demuestra la reducción del 80% en riesgo de cáncer gástrico tras la erradicación exitosa.</p>
+        <a href="https://www.thelancet.com/journals/langas/article/PIIS2468-1253(20)30398-5/fulltext" target="_blank" rel="noopener"
+           style="display:inline-flex;align-items:center;gap:6px;font-family:'Montserrat',sans-serif;font-size:.75rem;font-weight:700;color:var(--teal-d);border:1.5px solid var(--teal);padding:7px 16px;border-radius:50px;transition:all .2s"
+           onmouseover="this.style.background='var(--teal)';this.style.color='#fff'"
+           onmouseout="this.style.background='transparent';this.style.color='var(--teal-d)'">
+          Ver fuente original →
+        </a>
+      </div>
+
+      <!-- SOURCE 5 -->
+      <div class="src-card s-fade delay-2" style="background:#fff;border:1.5px solid var(--border);border-radius:20px;padding:1.5rem;transition:all .3s;cursor:pointer"
+           onmouseover="this.style.borderColor='var(--teal)';this.style.boxShadow='0 8px 32px rgba(0,178,200,.1)'"
+           onmouseout="this.style.borderColor='var(--border)';this.style.boxShadow='none'">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:1rem">
+          <div style="width:36px;height:36px;border-radius:8px;background:rgba(0,120,80,.08);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0">📖</div>
+          <div>
+            <div style="font-family:'Montserrat',sans-serif;font-size:.62rem;font-weight:800;color:#006640;letter-spacing:.08em;text-transform:uppercase">World Gastroenterology Organisation</div>
+            <div style="font-size:.7rem;color:var(--muted)">worldgastroenterology.org</div>
+          </div>
+        </div>
+        <div style="font-family:'Montserrat',sans-serif;font-size:.92rem;font-weight:700;color:var(--navy);line-height:1.4;margin-bottom:.75rem">
+          WGO Global Guidelines: <em class="hpyl-dark">Helicobacter pylori</em> in Developing Countries
+        </div>
+        <p style="font-size:.78rem;color:var(--muted);line-height:1.65;margin-bottom:1rem">Guías especializadas para países en desarrollo, con protocolos adaptados a la realidad epidemiológica de América Latina.</p>
+        <a href="https://www.worldgastroenterology.org/guidelines/helicobacter-pylori" target="_blank" rel="noopener"
+           style="display:inline-flex;align-items:center;gap:6px;font-family:'Montserrat',sans-serif;font-size:.75rem;font-weight:700;color:var(--teal-d);border:1.5px solid var(--teal);padding:7px 16px;border-radius:50px;transition:all .2s"
+           onmouseover="this.style.background='var(--teal)';this.style.color='#fff'"
+           onmouseout="this.style.background='transparent';this.style.color='var(--teal-d)'">
+          Ver fuente original →
+        </a>
+      </div>
+
+      <!-- SOURCE 6 -->
+      <div class="src-card s-fade delay-3" style="background:#fff;border:1.5px solid var(--border);border-radius:20px;padding:1.5rem;transition:all .3s;cursor:pointer"
+           onmouseover="this.style.borderColor='var(--teal)';this.style.boxShadow='0 8px 32px rgba(0,178,200,.1)'"
+           onmouseout="this.style.borderColor='var(--border)';this.style.boxShadow='none'">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:1rem">
+          <div style="width:36px;height:36px;border-radius:8px;background:rgba(13,27,110,.08);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0">🏥</div>
+          <div>
+            <div style="font-family:'Montserrat',sans-serif;font-size:.62rem;font-weight:800;color:var(--navy);letter-spacing:.08em;text-transform:uppercase">Instituto Nacional de Cancerología — México</div>
+            <div style="font-size:.7rem;color:var(--muted)">incan.edu.mx</div>
+          </div>
+        </div>
+        <div style="font-family:'Montserrat',sans-serif;font-size:.92rem;font-weight:700;color:var(--navy);line-height:1.4;margin-bottom:.75rem">
+          Cáncer gástrico en México: epidemiología, factores de riesgo y detección oportuna
+        </div>
+        <p style="font-size:.78rem;color:var(--muted);line-height:1.65;margin-bottom:1rem">Estadísticas actualizadas sobre cáncer gástrico en México, con el papel central de H. pylori en su etiología.</p>
+        <a href="https://www.incan.edu.mx" target="_blank" rel="noopener"
+           style="display:inline-flex;align-items:center;gap:6px;font-family:'Montserrat',sans-serif;font-size:.75rem;font-weight:700;color:var(--teal-d);border:1.5px solid var(--teal);padding:7px 16px;border-radius:50px;transition:all .2s"
+           onmouseover="this.style.background='var(--teal)';this.style.color='#fff'"
+           onmouseout="this.style.background='transparent';this.style.color='var(--teal-d)'">
+          Ver fuente original →
+        </a>
+      </div>
+
+    </div><!-- /grid -->
+
+    <!-- Editorial note -->
+    <div class="s-fade" style="margin-top:2.5rem;padding:1.5rem 2rem;background:linear-gradient(135deg,var(--navy),var(--navy3));border-radius:16px;display:flex;align-items:flex-start;gap:1.25rem">
+      <div style="font-size:1.5rem;flex-shrink:0;margin-top:.1rem">📌</div>
+      <div>
+        <div style="font-family:'Montserrat',sans-serif;font-weight:800;color:#fff;margin-bottom:.4rem;font-size:.9rem">Criterio editorial: fuente siempre visible</div>
+        <p style="font-size:.8rem;color:rgba(255,255,255,.65);line-height:1.75">Cada artículo publicado en MásQueGastritis.mx incluye al final la sección <strong style="color:var(--teal-l)">"Basado en"</strong> con el enlace directo al estudio o guía que respalda la información. El lector puede verificar y profundizar en la fuente primaria en todo momento.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ CTA STRIP — Campaign style diagonal ══ -->
+<div class="cta-strip">
+  <div class="cta-strip-bg"></div>
+  <div class="cta-strip-i container">
+    <div class="cta-strip-txt s-left">
+      <p>Pregunta a tu médico por el tratamiento que está mejorando <em>significativamente</em> su tasa de curación.</p>
+      <div class="cta-strip-disc">Campaña educativa avalada por la Asociación Mexicana de Gastroenterología. Esta información no sustituye la consulta médica. Consulta a tu médico ante cualquier síntoma.</div>
+    </div>
+    <button class="cta-strip-btn s-right" onclick="document.getElementById('quiz').scrollIntoView({behavior:'smooth'})">Hacer el test →</button>
+  </div>
+</div>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div class="ft-i">
+    <div class="ft-top">
+      <div class="ft-brand">
+        <div class="ft-logo">Más<span>Que</span>Gastritis<span style="color:rgba(255,255,255,.3)">.mx</span></div>
+        <p>Hub de información médica sobre <em class="hpyl" style="color:var(--teal-l)">Helicobacter pylori</em> para pacientes y familias mexicanas. Contenido avalado por la AMG.</p>
+        <div style="font-size:.72rem;color:rgba(255,255,255,.3)">Contenido curado por especialistas · Avalado por la <strong style="color:rgba(255,255,255,.55)">Asociación Mexicana de Gastroenterología</strong></div>
+      </div>
+      <div class="ft-col">
+        <h5>Información</h5>
+        <a href="#">¿Qué es H. pylori?</a>
+        <a href="#">Síntomas</a>
+        <a href="#">Diagnóstico</a>
+        <a href="#">Tratamiento</a>
+        <a href="#">Nutrición</a>
+      </div>
+      <div class="ft-col">
+        <h5>Herramientas</h5>
+        <a href="#">Test de riesgo</a>
+        <a href="#">Buscador de médicos</a>
+        <a href="#">Biblioteca de artículos</a>
+        <a href="#">Newsletter</a>
+      </div>
+      <div class="ft-col">
+        <h5>Respaldo</h5>
+        <a href="#">AMG</a>
+        <a href="#">Aviso de privacidad</a>
+        <a href="#">Términos de uso</a>
+        <a href="#">Contacto</a>
+      </div>
+    </div>
+    <div class="ft-disc">
+      Esta información es de carácter educativo y no sustituye la consulta médica. Consulta siempre a un profesional de la salud ante cualquier síntoma. El uso de esta plataforma implica la aceptación de nuestros términos de uso y aviso de privacidad.
+    </div>
+    <div class="ft-bot">
+      <span>© 2026 MásQueGastritis.mx · Todos los derechos reservados.</span>
+      <span>Plataforma educativa de salud digestiva · Avalada por AMG</span>
+    </div>
+  </div>
+</footer>
+
+<!-- Mobile float CTA -->
+<div class="mob-float">
+  <button class="mob-btn" onclick="document.getElementById('quiz').scrollIntoView({behavior:'smooth'})">Hacer el test de riesgo →</button>
+</div>
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ──────────────────────────────────────
+// HEADER SCROLL
+// ──────────────────────────────────────
+const hdr = document.getElementById('hdr');
+window.addEventListener('scroll', () => {
+  hdr.classList.toggle('scrolled', window.scrollY > 30);
+}, {passive: true});
+
+// ──────────────────────────────────────
+// MOBILE NAV
+// ──────────────────────────────────────
+function toggleMobNav(){
+  document.getElementById('mobNav').classList.toggle('open');
+}
+
+// ──────────────────────────────────────
+// TOAST
+// ──────────────────────────────────────
+let toastTimer;
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+// ──────────────────────────────────────
+// SCROLL REVEAL — Intersection Observer
+// (elements are hidden via CSS, .in makes them visible)
+// ──────────────────────────────────────
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if(e.isIntersecting){
+      e.target.classList.add('in');
+      io.unobserve(e.target);
+    }
+  });
+}, {threshold: 0.1, rootMargin: '0px 0px -30px 0px'});
+
+document.querySelectorAll('.s-fade, .s-left, .s-right, .s-scale').forEach(el => {
+  // Don't observe hero — it animates on load
+  if(el.id === 'hero-r') return;
+  io.observe(el);
+});
+
+// Hero animate on load
+setTimeout(() => {
+  const hr = document.getElementById('hero-r');
+  if(hr) hr.classList.add('in');
+}, 120);
+
+// ──────────────────────────────────────
+// COUNTER ANIMATION
+// ──────────────────────────────────────
+const cio = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if(!e.isIntersecting) return;
+    const el = e.target;
+    const target = parseInt(el.dataset.target);
+    const suffix = el.dataset.suffix || '';
+    let start = 0;
+    const dur = 1600;
+    const step = (ts) => {
+      if(!start) start = ts;
+      const p = Math.min((ts - start) / dur, 1);
+      const ease = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.round(ease * target) + suffix;
+      if(p < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+    cio.unobserve(el);
+  });
+}, {threshold: 0.4});
+
+document.querySelectorAll('.stat-n[data-target]').forEach(el => cio.observe(el));
+
+// ──────────────────────────────────────
+// BENTO 3D TILT
+// ──────────────────────────────────────
+document.querySelectorAll('.bc').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const r = card.getBoundingClientRect();
+    const x = ((e.clientX - r.left) / r.width - .5) * 6;
+    const y = ((e.clientY - r.top) / r.height - .5) * -6;
+    card.style.transform = `scale(1.025) perspective(800px) rotateX(${y}deg) rotateY(${x}deg)`;
+  });
+  card.addEventListener('mouseleave', () => { card.style.transform = ''; });
+});
+
+// ──────────────────────────────────────
+// QUIZ LOGIC
+// ──────────────────────────────────────
+const A = {};
+
+function sel(el, s){
+  el.closest('.qstep').querySelectorAll('.qo').forEach(o => o.classList.remove('sel'));
+  el.classList.add('sel');
+  A[s] = +el.dataset.v;
+  const b = document.getElementById('qn' + s);
+  if(b) b.disabled = false;
+}
+
+function updProg(step){
+  for(let i = 1; i <= 6; i++){
+    const d = document.getElementById('pd' + i);
+    if(!d) continue;
+    d.classList.remove('act','dn');
+    if(i < step) d.classList.add('dn');
+    else if(i === step) d.classList.add('act');
+  }
+  document.getElementById('progTxt').textContent = `Pregunta ${step} de 6`;
+}
+
+function nxt(s){
+  document.querySelector('[data-step="'+s+'"]').classList.remove('act');
+  const nx = document.querySelector('[data-step="'+(s+1)+'"]');
+  if(nx){ nx.classList.add('act'); updProg(s+1); }
+}
+
+function back(s){
+  document.querySelector('[data-step="'+s+'"]').classList.remove('act');
+  const pv = document.querySelector('[data-step="'+(s-1)+'"]');
+  if(pv){ pv.classList.add('act'); updProg(s-1); }
+}
+
+function calcRes(){
+  document.querySelector('[data-step="6"]').classList.remove('act');
+  const tot = Object.values(A).reduce((a,b) => a+b, 0);
+  const res = document.getElementById('qres');
+  const ico = document.getElementById('res-ico-el');
+  const lvl = document.getElementById('res-lvl-el');
+  const ttl = document.getElementById('res-ttl-el');
+  const bd  = document.getElementById('res-bd-el');
+
+  if(tot <= 3){
+    ico.textContent = '✅';
+    ico.style.background = 'rgba(0,178,200,.1)';
+    lvl.textContent = 'Riesgo bajo';
+    lvl.style.color = 'var(--teal-d)';
+    ttl.textContent = '¡Buenas noticias! Tu perfil sugiere bajo riesgo';
+    bd.textContent = 'Tus respuestas no indican señales de alarma para H. pylori en este momento. Sin embargo, como el 70% de los mexicanos puede tenerla sin síntomas, sigue siendo una buena idea mencionarlo en tu próxima visita médica.';
+  } else if(tot <= 9){
+    ico.textContent = '⚠️';
+    ico.style.background = 'rgba(184,146,42,.1)';
+    lvl.textContent = 'Riesgo moderado';
+    lvl.style.color = 'var(--gold)';
+    ttl.textContent = 'Considera hablar con tu médico próximamente';
+    bd.textContent = 'Tienes algunos síntomas o factores de riesgo que vale la pena explorar. Una prueba sencilla (aliento o serológica) puede descartar o confirmar H. pylori en pocos minutos. No esperes a que los síntomas empeoren.';
+  } else {
+    ico.textContent = '🩺';
+    ico.style.background = 'rgba(192,57,43,.1)';
+    lvl.textContent = 'Riesgo elevado — actúa pronto';
+    lvl.style.color = '#C0392B';
+    ttl.textContent = 'Te recomendamos consultar a un médico esta semana';
+    bd.textContent = 'Tu perfil muestra múltiples factores de riesgo asociados a H. pylori. Busca a un gastroenterólogo o médico general. Pide específicamente una prueba de H. pylori. El tratamiento es sencillo y la curación es alta cuando se detecta a tiempo.';
+  }
+  res.style.display = 'block';
+  document.getElementById('progTxt').textContent = 'Resultado listo';
+}
+
+function resetQuiz(){
+  for(let k in A) delete A[k];
+  document.getElementById('qres').style.display = 'none';
+  document.querySelectorAll('.qstep').forEach(s => s.classList.remove('act'));
+  document.querySelector('[data-step="1"]').classList.add('act');
+  document.querySelectorAll('.qo').forEach(o => o.classList.remove('sel'));
+  document.querySelectorAll('.qnx').forEach(b => b.disabled = true);
+  updProg(1);
+}
+
+// ──────────────────────────────────────
+// ARTICLE FILTER (visual only — demo)
+// ──────────────────────────────────────
+function filterArts(btn, cat){
+  document.querySelectorAll('.fp').forEach(p => p.classList.remove('act'));
+  btn.classList.add('act');
+  showToast('Filtro "' + btn.textContent + '" activo — demo de navegación');
+}
+
+// ──────────────────────────────────────
+// SUBTLE PARALLAX on hero glow
+// ──────────────────────────────────────
+</script>
+</body>
+</html>
