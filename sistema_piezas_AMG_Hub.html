@@ -218,9 +218,10 @@ body { font-family: 'Open Sans', sans-serif; background: #0f1629; color: #fff; m
 .var-a.is-bacteria .cifra-label { color: #fff; text-shadow: 0 0 8px rgba(10,18,40,0.9); }
 .var-a.is-bacteria .headline    { color: #fff; text-shadow: 0 0 8px rgba(10,18,40,0.9); }
 .var-a.is-bacteria .subcopy     { color: rgba(255,255,255,0.75); text-shadow: 0 0 6px rgba(10,18,40,0.9); }
-.var-a.is-bacteria .cta-bar     { background: rgba(13,27,110,0.95); }
-.var-a.is-bacteria .cta-text    { color: rgba(255,255,255,0.85); }
-.var-a.is-bacteria .disclaimer  { color: rgba(255,255,255,0.45); }
+.var-a.is-bacteria .cta-bar     { background: linear-gradient(135deg, var(--teal) 0%, var(--navy-deep) 100%); }
+.var-a.is-bacteria .cta-text    { color: #fff; font-weight: 800; }
+.var-a.is-bacteria .cta-text strong { color: var(--teal-light, #7FD8D2); }
+.var-a.is-bacteria .disclaimer  { color: rgba(255,255,255,0.7); }
 .var-a .sello {
   position: absolute; z-index: 25;
   top: 4%; right: 0; width: 22%;
@@ -268,22 +269,26 @@ body { font-family: 'Open Sans', sans-serif; background: #0f1629; color: #fff; m
 .var-a .cta-bar {
   position: absolute; z-index: 30;  /* siempre encima de foto capas */
   bottom: 0; left: 0; right: 0;
-  background: #fff;
-  border-top: 2px solid #e8edf8;
+  background: linear-gradient(135deg, var(--teal) 0%, var(--navy) 100%);
+  border-top: 2px solid var(--teal);
+  display: flex; flex-direction: column; justify-content: center;
 }
+.var-a .cta-bar .cta-text { color: #fff; font-weight: 800; }
+.var-a .cta-bar .cta-text strong { color: var(--teal-light, #7FD8D2); font-weight: 900; }
+.var-a .cta-bar .disclaimer { color: rgba(255,255,255,0.7); }
 /* Clip foto-bg y overlay: no pasan del borde superior de la franja */
-.fmt-45.var-a  .foto-bg, .fmt-45.var-a  .foto-overlay, .fmt-45.var-a  .foto-halo { bottom: 59px; }
-.fmt-11.var-a  .foto-bg, .fmt-11.var-a  .foto-overlay, .fmt-11.var-a  .foto-halo { bottom: 53px; }
-.fmt-916.var-a .foto-bg, .fmt-916.var-a .foto-overlay, .fmt-916.var-a .foto-halo { bottom: 73px; }
-.fmt-169.var-a .foto-bg, .fmt-169.var-a .foto-halo                                { bottom: 47px; }
+.fmt-45.var-a  .foto-bg, .fmt-45.var-a  .foto-overlay, .fmt-45.var-a  .foto-halo { bottom: 79px; }
+.fmt-11.var-a  .foto-bg, .fmt-11.var-a  .foto-overlay, .fmt-11.var-a  .foto-halo { bottom: 70px; }
+.fmt-916.var-a .foto-bg, .fmt-916.var-a .foto-overlay, .fmt-916.var-a .foto-halo { bottom: 96px; }
+.fmt-169.var-a .foto-bg, .fmt-169.var-a .foto-halo                                { bottom: 63px; }
 .var-a .cta-text {
-  font-family: 'Montserrat', sans-serif; font-weight: 600;
-  color: var(--navy); line-height: 1.3;
+  font-family: 'Montserrat', sans-serif; font-weight: 800;
+  color: #fff; line-height: 1.15; letter-spacing: -0.005em;
 }
-.var-a .cta-text strong { font-weight: 900; font-style: italic; }
+.var-a .cta-text strong { font-weight: 900; color: var(--teal-light, #7FD8D2); }
 .var-a .disclaimer {
-  font-family: 'Open Sans', sans-serif; color: #777;
-  line-height: 1.3; margin-top: 2px;
+  font-family: 'Open Sans', sans-serif; color: rgba(255,255,255,0.78);
+  line-height: 1.25; margin-top: 3px; font-weight: 400;
 }
 
 /* ── Franja de marca sobre CTA (todas las variantes A) ── */
@@ -295,31 +300,31 @@ body { font-family: 'Open Sans', sans-serif; background: #0f1629; color: #fff; m
 
 /* --- 4:5 (246×307 px) — CTA real ~50px, franja encima --- */
 .fmt-45.var-a .copy-block  {
-  top: 26%; bottom: 62px; right: 0; left: auto;
-  width: 52%; text-align: right; overflow: hidden;
+  top: 22%; bottom: 88px; right: 0; left: auto;
+  width: 54%; text-align: right; overflow: hidden;
 }
-.fmt-45.var-a .cifra       { font-size: 28px; }
-.fmt-45.var-a .cifra-label { font-size: 9px;   margin-top: 1px; }
-.fmt-45.var-a .headline    { font-size: 9.5px; margin-top: 5px; }
-.fmt-45.var-a .subcopy     { font-size: 8px;   margin-top: 4px; }
-.fmt-45.var-a .franja-bar  { bottom: 46px; height: 7px; }
-.fmt-45.var-a .cta-bar     { padding: 7px 8px 5px; }
-.fmt-45.var-a .cta-text    { font-size: 7.5px; }
-.fmt-45.var-a .disclaimer  { font-size: 5px; }
+.fmt-45.var-a .cifra       { font-size: 36px; }
+.fmt-45.var-a .cifra-label { font-size: 11px;  margin-top: 2px; }
+.fmt-45.var-a .headline    { font-size: 12px;  margin-top: 6px; }
+.fmt-45.var-a .subcopy     { font-size: 9.5px; margin-top: 4px; }
+.fmt-45.var-a .franja-bar  { bottom: 72px; height: 7px; }
+.fmt-45.var-a .cta-bar     { padding: 10px 10px 8px; height: 72px; }
+.fmt-45.var-a .cta-text    { font-size: 10.5px; }
+.fmt-45.var-a .disclaimer  { font-size: 6px; }
 
 /* --- 1:1 (246×246 px) --- CTA real ~45px --- */
 .fmt-11.var-a .copy-block  {
-  top: 28%; bottom: 57px; right: 0; left: auto;
-  width: 52%; text-align: right; overflow: hidden;
+  top: 24%; bottom: 78px; right: 0; left: auto;
+  width: 54%; text-align: right; overflow: hidden;
 }
-.fmt-11.var-a .cifra       { font-size: 24px; }
-.fmt-11.var-a .cifra-label { font-size: 8.5px; margin-top: 1px; }
-.fmt-11.var-a .headline    { font-size: 8.5px; margin-top: 4px; }
-.fmt-11.var-a .subcopy     { font-size: 7.5px; margin-top: 4px; }
-.fmt-11.var-a .franja-bar  { bottom: 41px; height: 6px; }
-.fmt-11.var-a .cta-bar     { padding: 6px 7px 4px; }
-.fmt-11.var-a .cta-text    { font-size: 7px; }
-.fmt-11.var-a .disclaimer  { font-size: 4.5px; }
+.fmt-11.var-a .cifra       { font-size: 32px; }
+.fmt-11.var-a .cifra-label { font-size: 10.5px; margin-top: 2px; }
+.fmt-11.var-a .headline    { font-size: 11px;   margin-top: 5px; }
+.fmt-11.var-a .subcopy     { font-size: 9px;    margin-top: 4px; }
+.fmt-11.var-a .franja-bar  { bottom: 64px; height: 6px; }
+.fmt-11.var-a .cta-bar     { padding: 9px 9px 7px; height: 64px; }
+.fmt-11.var-a .cta-text    { font-size: 9.5px; }
+.fmt-11.var-a .disclaimer  { font-size: 5.5px; }
 
 /* --- 9:16 Stories --- */
 /* Persona: izquierda del frame (igual que 4:5/1:1)                       */
@@ -344,17 +349,17 @@ body { font-family: 'Open Sans', sans-serif; background: #0f1629; color: #fff; m
 /* 9:16 (173×307 px): CTA bar ~65px alto (texto wrappea en 173px) */
 /* franja encima del CTA; copy-block termina encima de la franja    */
 .fmt-916.var-a .copy-block {
-  top: 16%; bottom: 78px; right: 0; left: auto;
-  width: 58%; text-align: right; overflow: hidden;
+  top: 14%; bottom: 108px; right: 0; left: auto;
+  width: 60%; text-align: right; overflow: hidden;
 }
-.fmt-916.var-a .cifra       { font-size: 26px; color: var(--teal); }
-.fmt-916.var-a .cifra-label { font-size: 8.5px; margin-top: 1px; color: var(--navy); }
-.fmt-916.var-a .headline    { font-size: 8.5px; margin-top: 5px; color: var(--navy); }
-.fmt-916.var-a .subcopy     { font-size: 7.5px; margin-top: 4px; color: var(--navy); }
-.fmt-916.var-a .franja-bar  { bottom: 59px; height: 8px; }
-.fmt-916.var-a .cta-bar     { padding: 6px 7px 4px; }
-.fmt-916.var-a .cta-text    { font-size: 7.5px; }
-.fmt-916.var-a .disclaimer  { font-size: 5px; }
+.fmt-916.var-a .cifra       { font-size: 34px; color: var(--teal); }
+.fmt-916.var-a .cifra-label { font-size: 10.5px; margin-top: 2px; color: var(--navy); }
+.fmt-916.var-a .headline    { font-size: 11px;   margin-top: 5px; color: var(--navy); }
+.fmt-916.var-a .subcopy     { font-size: 9px;    margin-top: 4px; color: var(--navy); }
+.fmt-916.var-a .franja-bar  { bottom: 88px; height: 8px; }
+.fmt-916.var-a .cta-bar     { padding: 10px 10px 8px; height: 88px; }
+.fmt-916.var-a .cta-text    { font-size: 10px; }
+.fmt-916.var-a .disclaimer  { font-size: 6px; }
 
 /* --- 16:9 LinkedIn — 35% foto izq | separador | 65% texto der --- */
 .fmt-169.var-a {
@@ -383,17 +388,17 @@ body { font-family: 'Open Sans', sans-serif; background: #0f1629; color: #fff; m
 /* LinkedIn 16:9: CTA bar ~42px alto en 380px de ancho              */
 /* franja encima del CTA; copy-block termina encima de la franja    */
 .fmt-169.var-a .copy-block  {
-  top: 14%; bottom: 52px; right: 0; left: auto;
+  top: 12%; bottom: 72px; right: 0; left: auto;
   width: 62%; text-align: right; overflow: hidden;
 }
-.fmt-169.var-a .cifra       { font-size: 32px; }
-.fmt-169.var-a .cifra-label { font-size: 9px;  margin-top: 1px; }
-.fmt-169.var-a .headline    { font-size: 9.5px; margin-top: 5px; }
-.fmt-169.var-a .subcopy     { font-size: 8px;  margin-top: 4px; }
-.fmt-169.var-a .franja-bar  { bottom: 36px; height: 5px; }
-.fmt-169.var-a .cta-bar     { padding: 5px 8px 4px; }
-.fmt-169.var-a .cta-text    { font-size: 7px; }
-.fmt-169.var-a .disclaimer  { font-size: 4.5px; }
+.fmt-169.var-a .cifra       { font-size: 42px; }
+.fmt-169.var-a .cifra-label { font-size: 11.5px; margin-top: 2px; }
+.fmt-169.var-a .headline    { font-size: 12px;   margin-top: 5px; }
+.fmt-169.var-a .subcopy     { font-size: 9.5px;  margin-top: 4px; }
+.fmt-169.var-a .franja-bar  { bottom: 58px; height: 5px; }
+.fmt-169.var-a .cta-bar     { padding: 8px 12px 6px; height: 58px; }
+.fmt-169.var-a .cta-text    { font-size: 10px; }
+.fmt-169.var-a .disclaimer  { font-size: 6px; }
 
 /* ══════════════════════════════════════
    VARIANTE B — TIPOGRAFÍA + BLOQUES
@@ -1462,6 +1467,162 @@ body.edit-mode .sello:hover { outline: 2px solid rgba(136,112,40,0.9); }
 }
 .cal-month.collapsed .cal-month-body { display: none; }
 
+/* ═══ Justificación del mes — «¿Por qué este mensaje, este mes?» ═══ */
+.cal-mes-just {
+  margin: 0 20px 16px;
+  padding: 14px 20px;
+  background: linear-gradient(90deg, rgba(24,56,136,0.22), rgba(0,0,0,0));
+  border-left: 4px solid var(--teal);
+  border-radius: 0 8px 8px 0;
+  font-family: 'Open Sans', sans-serif;
+}
+.cal-month.collapsed .cal-mes-just { display: none; }
+.cmj-row1 {
+  display: flex; gap: 8px; align-items: baseline;
+  font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em;
+  margin-bottom: 6px;
+}
+.cmj-fase { font-weight: 800; font-family: 'Montserrat', sans-serif; }
+.cmj-hito { color: rgba(255,255,255,0.55); font-weight: 600; }
+.cmj-mensaje {
+  font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 15px;
+  font-style: italic; margin: 4px 0 8px;
+  line-height: 1.35;
+}
+.cmj-porque {
+  font-size: 13px; line-height: 1.55;
+  color: rgba(255,255,255,0.82);
+}
+.cmj-porque strong {
+  color: var(--teal);
+  font-family: 'Montserrat', sans-serif;
+  text-transform: uppercase; letter-spacing: 0.04em; font-size: 11px;
+  display: inline-block; margin-right: 4px;
+}
+
+/* ═══ Carrusel 5 slides ═══ */
+.carrusel-5 {
+  display: flex; flex-direction: column; gap: 8px;
+  width: 1100px; max-width: 100%;
+}
+.cr-hint {
+  font-size: 10px; color: rgba(255,255,255,0.45);
+  font-family: 'Montserrat', sans-serif; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase;
+}
+.cr-track {
+  display: flex; gap: 10px; overflow-x: auto;
+  padding-bottom: 8px;
+  scroll-snap-type: x mandatory;
+}
+.cr-track::-webkit-scrollbar { height: 6px; }
+.cr-track::-webkit-scrollbar-thumb { background: var(--teal); border-radius: 3px; }
+.cr-slide {
+  flex: 0 0 216px; aspect-ratio: 4/5; position: relative;
+  border-radius: 10px; overflow: hidden;
+  background-size: cover; background-position: center;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 18px 14px; color: #fff;
+  scroll-snap-align: start;
+  font-family: 'Open Sans', sans-serif;
+}
+.cr-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(13,27,110,0.2) 0%, rgba(13,27,110,0.92) 100%);
+}
+.cr-slide > * { position: relative; z-index: 2; }
+.cr-logo {
+  position: absolute; top: 10px; right: 10px; z-index: 3;
+  height: 28px; width: auto;
+}
+.cr-cover-cifra {
+  font-family: 'Montserrat', sans-serif; font-weight: 900;
+  font-size: 42px; line-height: 1; color: var(--teal);
+  letter-spacing: -0.02em;
+}
+.cr-cover-label {
+  font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em;
+  color: rgba(255,255,255,0.82); font-weight: 700;
+  margin-top: 4px;
+}
+.cr-cover-headline {
+  font-family: 'Montserrat', sans-serif; font-weight: 800;
+  font-size: 14px; line-height: 1.2;
+  margin-top: 10px;
+}
+.cr-slide.cr-data    { background: linear-gradient(135deg, #F7F9FF, #E2EAFF); color: var(--navy); }
+.cr-slide.cr-symptom { background: linear-gradient(135deg, #0D1B6E, #183888); color: #fff; }
+.cr-slide.cr-call    { background: linear-gradient(135deg, #F7F9FF, #CBDEF2); color: var(--navy); }
+.cr-slide.cr-cta     { background: linear-gradient(135deg, #0D1B6E, #00B2C8); color: #fff; }
+.cr-step {
+  font-family: 'Montserrat', sans-serif; font-weight: 800;
+  font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em;
+  margin-bottom: auto; padding-top: 42px;
+  opacity: 0.75;
+}
+.cr-slide-title {
+  font-family: 'Montserrat', sans-serif; font-weight: 700;
+  font-size: 15px; line-height: 1.25;
+  margin-bottom: 6px;
+}
+.cr-slide-sub {
+  font-size: 11px; line-height: 1.4;
+  opacity: 0.85;
+}
+.cr-cta-text {
+  font-family: 'Montserrat', sans-serif; font-weight: 700;
+  font-size: 13px; line-height: 1.3;
+  margin: 42px 0 auto;
+}
+.cr-cta-dom {
+  font-family: 'Montserrat', sans-serif; font-weight: 800;
+  font-size: 12px; color: #E8D9B0;
+  text-align: center; letter-spacing: 0.04em;
+  padding: 8px 0;
+  border-top: 1px solid rgba(232,217,176,0.3);
+}
+.cr-slide-num {
+  position: absolute; bottom: 10px; right: 14px;
+  font-family: 'Montserrat', sans-serif; font-weight: 800;
+  font-size: 9px; letter-spacing: 0.12em;
+  opacity: 0.55;
+}
+.cr-slide.cr-data .cr-logo,
+.cr-slide.cr-call .cr-logo { filter: none; }
+
+/* ═══ TikTok pack · cover + guión 3 beats ═══ */
+.tiktok-pack {
+  display: flex; flex-direction: column; gap: 10px;
+  width: 380px; max-width: 100%;
+}
+.tt-guion {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(48,184,176,0.2);
+  border-radius: 8px; padding: 10px 12px;
+  font-family: 'Open Sans', sans-serif;
+}
+.tt-guion-title {
+  font-family: 'Montserrat', sans-serif; font-weight: 800;
+  font-size: 10px; color: var(--teal);
+  text-transform: uppercase; letter-spacing: 0.08em;
+  margin-bottom: 8px;
+}
+.tt-beat {
+  display: flex; flex-direction: column; gap: 3px;
+  padding: 6px 0;
+  border-top: 1px dotted rgba(255,255,255,0.08);
+}
+.tt-beat:first-of-type { border-top: none; padding-top: 0; }
+.tt-beat-tag {
+  font-family: 'Montserrat', sans-serif; font-weight: 800;
+  font-size: 9px; color: var(--teal);
+  letter-spacing: 0.1em;
+}
+.tt-beat-txt {
+  font-size: 11px; line-height: 1.4;
+  color: rgba(255,255,255,0.85);
+}
+
 /* Week section */
 .cal-week {
   margin: 16px 0;
@@ -1496,48 +1657,84 @@ body.edit-mode .sello:hover { outline: 2px solid rgba(136,112,40,0.9); }
   transition: transform 0.25s;
 }
 .cal-week.collapsed .cal-week-toggle { transform: rotate(-90deg); }
-.cal-week-body { padding: 12px 18px 18px; }
+.cal-week-body { padding: 14px 18px 20px; }
 .cal-week.collapsed .cal-week-body { display: none; }
 
-/* Publication rows */
-.cal-pub-row {
-  display: flex; align-items: flex-start; gap: 16px;
-  padding: 14px 0;
-  border-bottom: 1px solid rgba(255,255,255,0.05);
+/* Botón editar piezas — dentro del header de semana */
+.cal-week-hdr .btn-edit-semana {
+  margin-left: 6px;
+  background: rgba(48,184,176,0.12);
+  border: 1px solid rgba(48,184,176,0.4);
+  color: var(--teal);
+  padding: 5px 12px;
+  border-radius: 4px;
+  font-size: 10px; font-weight: 800; letter-spacing: 0.02em;
+  cursor: pointer; font-family: 'Montserrat', sans-serif;
+  transition: background 0.15s, color 0.15s;
+  white-space: nowrap;
 }
-.cal-pub-row:last-of-type { border-bottom: none; }
+.cal-week-hdr .btn-edit-semana:hover { background: var(--teal); color: #fff; }
 
-.cal-pub-meta {
-  display: flex; flex-direction: column; gap: 4px;
-  min-width: 130px; padding-top: 6px;
+/* ══ Layout HORIZONTAL de piezas por semana (2026-04-23) ══
+   Flex-wrap permite que las 4 piezas se acomoden horizontalmente
+   sin comprometer las dimensiones nativas de cada formato. */
+.cal-pieces-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  margin-bottom: 4px;
 }
-.cal-pub-icon { font-size: 20px; line-height: 1; margin-bottom: 4px; }
-.cal-pub-platform {
-  font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 11px;
-  letter-spacing: 0.02em;
+
+/* Tarjeta individual de cada pieza en el grid horizontal */
+.cal-piece-card {
+  display: flex; flex-direction: column; gap: 10px; align-items: stretch;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 10px;
+  padding: 12px;
+  transition: border-color 0.2s, background 0.2s;
 }
-.cal-pub-tipo {
-  font-size: 10px; color: rgba(255,255,255,0.45);
+.cal-piece-card:hover {
+  border-color: rgba(48,184,176,0.3);
+  background: rgba(255,255,255,0.05);
+}
+
+/* Chip meta de cada pieza (plataforma + tipo + fecha) */
+.cal-piece-meta {
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  padding-bottom: 2px;
+}
+.cal-piece-meta .cpm-icon { font-size: 16px; line-height: 1; }
+.cal-piece-meta .cpm-platform {
+  font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 10px;
+  letter-spacing: 0.03em;
+}
+.cal-piece-meta .cpm-tipo {
+  font-size: 9.5px; color: rgba(255,255,255,0.55);
   font-family: 'Open Sans', sans-serif;
 }
-.cal-pub-fecha {
-  font-size: 10px; color: rgba(255,255,255,0.35);
+.cal-piece-meta .cpm-fecha {
+  font-size: 9.5px; color: rgba(255,255,255,0.4);
   font-family: 'Open Sans', sans-serif;
-  margin-top: 2px;
+  margin-left: auto;
+  background: rgba(0,0,0,0.3); padding: 2px 7px; border-radius: 10px;
 }
 
-/* Piece wrapper inside calendar */
-.cal-pub-piece {
-  display: flex; flex-direction: column; gap: 8px; align-items: center;
-}
-.cal-pub-piece .format-card {
+/* Las piezas dentro del grid se centran */
+.cal-piece-card .format-card {
   display: flex; flex-direction: column; align-items: center; gap: 8px;
 }
-.cal-pub-piece .format-label { display: none; } /* hidden in calendar context */
-.cal-pub-piece .pieza-edit-bar { display: none; } /* suppress edit bar */
-
-/* Download button small variant for calendar */
-.cal-pub-piece .btn-download {
+.cal-piece-card .format-label { display: none; }
+.cal-piece-card .pieza-edit-bar {
+  display: flex !important; gap: 4px; flex-wrap: wrap;
+  justify-content: center;
+}
+.cal-piece-card .pieza-edit-bar .btn-peb {
+  font-size: 8.5px; padding: 3px 6px;
+}
+.cal-piece-card .btn-download {
   font-size: 9px; padding: 4px 10px;
 }
 
@@ -1559,9 +1756,8 @@ body.edit-mode .sello:hover { outline: 2px solid rgba(136,112,40,0.9); }
 }
 .cal-copy-actions { display: flex; gap: 8px; flex-wrap: wrap; }
 
-/* Scrollable pieces row on narrow screens */
+/* Scroll horizontal protection */
 @media (max-width: 900px) {
-  .cal-pub-row { flex-wrap: wrap; }
   .cal-week-body { overflow-x: auto; }
 }
 </style>
@@ -1570,35 +1766,22 @@ body.edit-mode .sello:hover { outline: 2px solid rgba(136,112,40,0.9); }
 
 <!-- ══ HEADER ══ -->
 <div class="site-header">
-  <img class="logo-header" src="HUB_AMG_PYLORI/brand_amg/logo_amg_transparent.png" alt="AMG">
+  <img class="logo-header" src="HUB_AMG_PYLORI/brand_amg/logo_amg_oscuro.png" alt="AMG">
   <h1>Sistema Visual · Hub AMG<br><span>México Sin Cáncer Gástrico 2026</span></h1>
-  <div class="badge">Brazo 1 · Sin Marca · Mayo–Julio 2026 · 144 piezas</div>
+  <div class="badge">Campaña avalada AMG · Mayo–Diciembre 2026 · 35 semanas · 175 piezas</div>
   <button id="btn-edit-mode" onclick="toggleEditMode()" title="Activar modo edición: haz clic en cualquier texto de las piezas para editarlo">
     ✏️ Modo Edición
   </button>
 </div>
 
-<!-- ══ BRAZO SELECTOR ══ -->
+<!-- ══ BRAZO SELECTOR · Brazo 2 desactivado 2026-04-23 ══ -->
 <div class="brazo-bar">
   <span class="brazo-label">Campaña:</span>
   <button class="brazo-btn b1 active" onclick="switchBrazo('B1',this)">
-    <span>🦠 Brazo 1 — Sin Marca</span>
+    <span>🦠 México Sin Cáncer Gástrico</span>
     <span class="b-pill">AMG</span>
-    <small style="color:rgba(255,255,255,0.35); font-weight:400; font-size:10px;">Mayo–Julio 2026</small>
+    <small style="color:rgba(255,255,255,0.35); font-weight:400; font-size:10px;">Mayo–Diciembre 2026</small>
   </button>
-  <div class="brazo-sep"></div>
-  <button class="brazo-btn b2" onclick="switchBrazo('B2',this)">
-    <span>💊 Brazo 2 — Ki-CAB®</span>
-    <span class="b-pill">KI-CAB</span>
-    <small style="color:rgba(255,255,255,0.35); font-weight:400; font-size:10px;">Ago–Oct 2026</small>
-  </button>
-  <div class="brazo-sep"></div>
-  <a href="kicab_detailer.html" target="_blank" class="brazo-btn b2"
-     style="text-decoration:none; background:rgba(30,46,168,0.25); border-color:rgba(74,94,232,0.5)">
-    <span>🎯 Detailer Rep</span>
-    <span class="b-pill" style="background:#4A5EE8">DEMO</span>
-    <small style="color:rgba(255,255,255,0.35); font-weight:400; font-size:10px;">Presentación Ki-CAB®</small>
-  </a>
 </div>
 
 <!-- ══ TOOLBAR EDICIÓN ══ -->
@@ -1693,14 +1876,17 @@ body.edit-mode .sello:hover { outline: 2px solid rgba(136,112,40,0.9); }
 </div>
 
 <div class="site-footer">
-  Hub AMG · México Sin Cáncer Gástrico · Brazo 1 Sin Marca + Brazo 2 Ki-CAB® · Polar Multimedia para Carnot Laboratorios · 2026
+  Hub AMG · México Sin Cáncer Gástrico · Campaña avalada por la Asociación Mexicana de Gastroenterología · Polar Multimedia para Carnot Laboratorios · 2026
 </div>
 
 <script>
 /* ══════════════════════════════════
    DATA
 ══════════════════════════════════ */
-const SELLO = 'HUB_AMG_PYLORI/brand_amg/logo_amg_transparent.png';
+// ─── Logos AMG oficiales transparentes (2 variantes, actualizados 2026-04-23) ───
+const SELLO_CLARO  = 'HUB_AMG_PYLORI/brand_amg/logo_amg_claro.png';   // logo en oscuro, para fondos claros
+const SELLO_OSCURO = 'HUB_AMG_PYLORI/brand_amg/logo_amg_oscuro.png';  // logo en claro, para fondos oscuros
+const SELLO = SELLO_OSCURO; // back-compat: default = logo para fondo oscuro (piezas con foto + overlay o gradientes)
 const QR_URL = 'https://chart.googleapis.com/chart?chs=120x120&cht=qr&chl=https://mexicosincancergastrico.com.mx&choe=UTF-8&chld=M|1';
 
 /* ── FOTOS — una imagen única por claim ── */
@@ -1721,6 +1907,66 @@ const F = {
 
 /* ── HASHTAGS CANÓNICOS ── */
 const HT = '#HelicobacterPylori #CancerGastrico #SaludDigestiva #PrevenciónMX #MéxicoSinCáncerGástrico #GastritisNoEsNormal';
+
+const MES_JUSTIFICACION = {
+  'Mayo': {
+    fase: 'Lanzamiento · Despertar',
+    color: '#E8D9B0',
+    mensaje: '7 de cada 10 mexicanos la tienen. ¿Y tú?',
+    porque: 'Ancla el hub con la cifra de más alto poder de instalación: la prevalencia. Coincide con el lanzamiento del Hub y la conferencia de prensa AMG. Objetivo: alcance máximo para que cada mexicano piense «podría ser yo».',
+    hito: 'Lanzamiento Hub + Conferencia Prensa AMG'
+  },
+  'Junio': {
+    fase: 'Síntomas silenciosos',
+    color: '#B8922A',
+    mensaje: 'No es gastritis, no es estrés: podría ser H. pylori',
+    porque: 'Tras instalar conciencia de prevalencia, atacamos el falso diagnóstico más común en México. Serie Mito vs Realidad para que el paciente identifique el síntoma propio y cuestione años de tratamiento sintomático sin buscar la causa.',
+    hito: 'Serie Mito vs Realidad'
+  },
+  'Julio': {
+    fase: 'La conexión con el cáncer',
+    color: '#30B8B0',
+    mensaje: '90% del cáncer gástrico inicia aquí',
+    porque: 'Mes de escalación de stakes. Conectamos la infección con la 3ª causa de muerte por cáncer en México. Activa urgencia sin alarmismo. Amplificación con infografía prensa + testimonio médico AMG.',
+    hito: 'Testimonio médico AMG + Infografía prensa'
+  },
+  'Agosto': {
+    fase: 'Ciencia que importa · HCP push',
+    color: '#183888',
+    mensaje: 'Maastricht VI: lo que cambió en el tratamiento',
+    porque: 'Push hacia la comunidad médica. Paperwall curado + webinar HCP en LinkedIn. Fundamenta superioridad del P-CAB frente a IBP ante gastroenterólogos y médicos generales. Prepara el terreno pre-Mes Internacional.',
+    hito: 'Webinar HCP + LinkedIn push'
+  },
+  'Septiembre': {
+    fase: 'Mes Internacional · Movimiento',
+    color: '#7FD8D2',
+    mensaje: 'México sin cáncer gástrico — súmate',
+    porque: 'Pico máximo de pauta (+50% vs promedio mensual). Día Mundial del Cáncer Gástrico + evento AMG + influencers médicos. Convertir audiencia individual en movimiento social. Hashtag oficial de campaña activado.',
+    hito: 'Día Mundial · Evento AMG · Influencers'
+  },
+  'Octubre': {
+    fase: 'La conversación con tu médico',
+    color: '#0E2454',
+    mensaje: 'Cómo pedir la prueba correcta',
+    porque: 'Transición de awareness a conversión. Kit consulta + guía descargable. El paciente deja de ser espectador y entra al consultorio con vocabulario específico. Mide conversiones primarias (descargas + agendas).',
+    hito: 'Kit Consulta + Guía Descargable'
+  },
+  'Noviembre': {
+    fase: 'El tratamiento superior',
+    color: '#2a9a9a',
+    mensaje: 'Mejorando significativamente la tasa de curación',
+    porque: 'Entrega la evidencia de superioridad clínica al paciente ya informado. Conecta con el CTA único de la campaña. Sincroniza con el pico de visita médica Q4 donde el representante refuerza consultorio por consultorio.',
+    hito: 'Evidencia P-CAB vs IBP · Visita médica Q4'
+  },
+  'Diciembre': {
+    fase: 'Cierre de año · Decisión',
+    color: '#887028',
+    mensaje: 'Empieza 2027 con un estómago sin H. pylori',
+    porque: 'Recap campaña + activación de decisión personal. Aprovecha el «nuevo año, nueva salud» culturalmente arraigado. Cierra el funnel con brand recall y prepara agendas de consulta enero-febrero 2027.',
+    hito: 'Recap campaña + Brand recall 2027'
+  }
+};
+
 
 const claims = [
   /* ─────────────── MAYO ─────────────── */
@@ -1908,6 +2154,361 @@ const claims = [
     hashtags: HT,
     copyIG: '🔄 ¿Llevas años con «gastritis» que no se va?\n\nEl diagnóstico de gastritis crónica recurrente puede estar escondiendo una causa tratable: <em>Helicobacter pylori</em>.\n\nPedir una segunda opinión o una prueba específica no es desconfianza — es tomar control de tu salud.',
   },
+  {
+    id: 13, mes: 'Julio', mesColor: '#6B2FA0',
+    titulo: 'Testimonio médico + infografía prensa',
+    fecha: 'Julio · S4 · 2026-07-27',
+    foto: F.mujer1,
+    cifra: '90% del cáncer gástrico inicia',
+    cifraLabel: 'La conexión con el cáncer',
+    headline: '90% del cáncer gástrico inicia aquí',
+    subcopy: 'La conexión con el cáncer',
+    hpTitle: '<em>Helicobacter pylori</em>.',
+    claimC: '<span class="hp-highlight">90% del cáncer gástrico inicia aquí</span>',
+    subC: 'La conexión con el cáncer',
+    hashtags: HT,
+    copyIG: '90% del cáncer gástrico inicia aquí\\n\\nLa conexión con el cáncer',
+  },
+
+  /* ─────────────── AGOSTO ─────────────── */
+  {
+    id: 14, mes: 'Agosto', mesColor: '#183888',
+    titulo: 'Maastricht VI aterriza',
+    fecha: 'Agosto · S1 · 2026-08-01',
+    foto: F.bacteria6,
+    cifra: 'Maastricht VI',
+    cifraLabel: 'el consenso que cambió el manejo',
+    headline: 'Lo que cambió en el tratamiento de <em>Helicobacter pylori</em>.',
+    subcopy: 'Nuevas guías internacionales ya disponibles.',
+    hpTitle: '<em>Helicobacter pylori</em>.',
+    claimC: 'El consenso <span class="hp-highlight">Maastricht VI</span> reposiciona el manejo de la bacteria.',
+    subC: 'México se alinea con la evidencia global.',
+    hashtags: HT,
+    copyIG: '📚 El consenso Maastricht VI ha redefinido el abordaje de <em>Helicobacter pylori</em>.\n\nNuevas recomendaciones sobre pruebas, tratamiento y seguimiento. Los P-CAB emergen como alternativa de primera línea.\n\nRevisa con tu médico si tu esquema sigue las guías actualizadas.',
+  },
+  {
+    id: 15, mes: 'Agosto', mesColor: '#183888',
+    titulo: 'P-CAB vs IBP',
+    fecha: 'Agosto · S2 · 2026-08-10',
+    foto: F.bacteria7,
+    cifra: '>90%',
+    cifraLabel: 'tasa de erradicación con P-CAB',
+    headline: 'Los P-CAB están mejorando significativamente la curación.',
+    subcopy: 'Pregunta a tu médico si eres candidato a esta nueva clase.',
+    hpTitle: '<em>Helicobacter pylori</em>.',
+    claimC: '<span class="hp-highlight">P-CAB</span> · bloqueo de ácido más potente que los IBP.',
+    subC: 'Erradicación sostenida con menos píldoras.',
+    hashtags: HT,
+    copyIG: '💊 Hay una nueva generación: los P-CAB (bloqueadores competitivos de ácido).\n\nA diferencia de los IBP tradicionales, actúan más rápido y de manera sostenida. En combinación con antibióticos, están mejorando significativamente las tasas de erradicación.\n\nEl único P-CAB disponible hoy en México: tegoprazán.',
+  },
+  {
+    id: 16, mes: 'Agosto', mesColor: '#183888',
+    titulo: 'Resistencia a antibióticos',
+    fecha: 'Agosto · S3 · 2026-08-17',
+    foto: F.bacteria10,
+    cifra: '30%',
+    cifraLabel: 'cepas resistentes a claritromicina',
+    headline: 'La resistencia antimicrobiana está cambiando cómo tratamos.',
+    subcopy: 'Esquemas de primera línea ya no siempre son suficientes.',
+    hpTitle: '<em>Helicobacter pylori</em>.',
+    claimC: '<span class="hp-highlight">Cepas resistentes</span> exigen repensar la primera línea.',
+    subC: 'El P-CAB mantiene eficacia frente a resistencia a claritromicina.',
+    hashtags: HT,
+    copyIG: '🧬 La resistencia a antibióticos es real — hasta 30% de cepas resisten claritromicina en México.\n\nPor eso Maastricht VI recomienda cuadriterapia con bismuto como primera línea en zonas de alta resistencia, y esquemas con P-CAB cuando aplica.\n\nTu médico conoce el mejor esquema para tu caso.',
+  },
+  {
+    id: 17, mes: 'Agosto', mesColor: '#183888',
+    titulo: 'Webinar HCP',
+    fecha: 'Agosto · S4 · 2026-08-24',
+    foto: F.hombre4,
+    cifra: 'HCP',
+    cifraLabel: 'médico · conoce el Hub profesional',
+    headline: 'Webinar AMG: manejo actualizado de <em>H. pylori</em>.',
+    subcopy: 'Dr. Valdovinos + Dr. Coss Adame · 30 min · LinkedIn Live.',
+    hpTitle: '<em>Helicobacter pylori</em>.',
+    claimC: '<span class="hp-highlight">Hub HCP</span> · evidencia curada para gastroenterólogos y MG.',
+    subC: 'Paperwall AMG + casos clínicos + algoritmos.',
+    hashtags: HT,
+    copyIG: '🩺 Para médicos y gastroenterólogos: webinar AMG — Manejo actualizado de <em>Helicobacter pylori</em>, Maastricht VI aplicado a México.\n\nDr. Luis Raúl Valdovinos (AMG) + Dr. Enrique Coss Adame (AMG) discuten el algoritmo actual, casos clínicos y evidencia P-CAB.\n\nAgenda + registro en mexicosincancergastrico.com.mx/hcp.',
+  },
+  {
+    id: 18, mes: 'Agosto', mesColor: '#183888',
+    titulo: 'Evidencia para el consultorio',
+    fecha: 'Agosto · S5 · 2026-08-31',
+    foto: F.mujer11,
+    cifra: '1 clase',
+    cifraLabel: 'nueva para primera línea',
+    headline: 'Tu médico tiene nuevas herramientas. Pregunta.',
+    subcopy: 'Los esquemas del 2015 no son los del 2026.',
+    hpTitle: '<em>Helicobacter pylori</em>.',
+    claimC: '<span class="hp-highlight">Evidencia 2026</span> lista para llevar a tu consulta.',
+    subC: 'Tratamiento adecuado = mayor probabilidad de cura definitiva.',
+    hashtags: HT,
+    copyIG: '📋 Si te trataron hace años y volviste a tener síntomas, la historia quizá no terminó.\n\nLa evidencia 2026 abre opciones que hace 5 años no existían. Pregunta a tu médico por un retest de aliento y un esquema actualizado.\n\nErradicar bien la primera vez es el objetivo.',
+  },
+
+  /* ─────────────── SEPTIEMBRE ─────────────── */
+  {
+    id: 19, mes: 'Septiembre', mesColor: '#30B8B0',
+    titulo: 'Día Mundial del Cáncer Gástrico',
+    fecha: 'Septiembre · S1 · 2026-09-01',
+    foto: F.mujer5,
+    cifra: '21 Sep',
+    cifraLabel: 'Día Mundial · acción nacional',
+    headline: 'Un día para convertir conciencia en acción.',
+    subcopy: 'México se suma al movimiento global.',
+    hpTitle: '<em>Helicobacter pylori</em>.',
+    claimC: '<span class="hp-highlight">21 Septiembre</span> · México sin cáncer gástrico empieza contigo.',
+    subC: 'Súmate. Comparte. Pregunta.',
+    hashtags: HT,
+    copyIG: '🌎 Este 21 de septiembre es el Día Mundial del Cáncer Gástrico.\n\nLa AMG, junto con Carnot, convocan a todo México a una sola acción: hablar de <em>Helicobacter pylori</em> con alguien que quieras.\n\nUna conversación puede cambiar el pronóstico de alguien.',
+  },
+  {
+    id: 20, mes: 'Septiembre', mesColor: '#30B8B0',
+    titulo: 'Súmate al movimiento',
+    fecha: 'Septiembre · S2 · 2026-09-14',
+    foto: F.hombre8,
+    cifra: '#MéxicoSinCáncerGástrico',
+    cifraLabel: 'hashtag oficial de campaña',
+    headline: 'Un país que se informa es un país que se cuida.',
+    subcopy: 'Usa el hashtag. Suma tu historia.',
+    hpTitle: '<em>Helicobacter pylori</em>.',
+    claimC: 'Cada post con <span class="hp-highlight">#MéxicoSinCáncerGástrico</span> multiplica el alcance del movimiento.',
+    subC: 'Convocatoria nacional AMG + Carnot.',
+    hashtags: HT,
+    copyIG: '🤝 Esto no lo hace una sola marca, ni una sola asociación.\n\nEsto lo hacemos quienes estamos cansados de que México ocupe los primeros lugares en cáncer gástrico cuando hay manera de prevenirlo.\n\n¿Te sumas? Comparte este post con #MéxicoSinCáncerGástrico.',
+  },
+  {
+    id: 21, mes: 'Septiembre', mesColor: '#30B8B0',
+    titulo: 'Evento AMG + influencers',
+    fecha: 'Septiembre · S3 · 2026-09-21',
+    foto: F.mujer3,
+    cifra: 'Evento AMG',
+    cifraLabel: 'médicos · pacientes · comunidad',
+    headline: 'AMG presenta: Juntos contra el Cáncer Gástrico.',
+    subcopy: 'Transmisión en vivo + pacientes invitados + panel médico.',
+    hpTitle: '<em>Helicobacter pylori</em>.',
+    claimC: '<span class="hp-highlight">Evento AMG</span> · el primer encuentro nacional del movimiento.',
+    subC: 'Transmisión abierta. Regístrate en el hub.',
+    hashtags: HT,
+    copyIG: '🎤 Evento AMG — Juntos contra el Cáncer Gástrico.\n\nDra. Alejandra Noble (Presidencia AMG) + pacientes + panel médico + invitados de la comunidad. Transmisión en vivo desde CDMX.\n\nRegístrate en mexicosincancergastrico.com.mx y súmate.',
+  },
+  {
+    id: 22, mes: 'Septiembre', mesColor: '#30B8B0',
+    titulo: 'Historias reales',
+    fecha: 'Septiembre · S4 · 2026-09-28',
+    foto: F.hombre9,
+    cifra: '1 historia',
+    cifraLabel: 'puede prevenir 10 casos',
+    headline: 'Una historia compartida puede salvar otra vida.',
+    subcopy: 'Testimonios reales de pacientes AMG.',
+    hpTitle: '<em>Helicobacter pylori</em>.',
+    claimC: '<span class="hp-highlight">Cuando la gente habla, la gente actúa.</span>',
+    subC: 'Testimonios auditados por la AMG — todos voluntarios.',
+    hashtags: HT,
+    copyIG: '💬 «Mi papá murió de cáncer gástrico. Después de la campaña, mis hermanos y yo nos hicimos el test. Dos positivos. Hoy estamos tratados.»\n\nHistorias reales, compartidas con consentimiento. Cada testimonio publicado es una invitación a que alguien actúe.\n\n¿Tienes una historia? Escríbenos.',
+  },
+
+  /* ─────────────── OCTUBRE ─────────────── */
+  {
+    id: 23, mes: 'Octubre', mesColor: '#0E2454',
+    titulo: 'Cómo pedir la prueba',
+    fecha: 'Octubre · S1 · 2026-10-01',
+    foto: F.hombre4,
+    cifra: '3 frases',
+    cifraLabel: 'para tu próxima consulta',
+    headline: 'Entra al consultorio con las palabras exactas.',
+    subcopy: 'Te damos el guión probado por gastroenterólogos.',
+    hpTitle: '<em>Helicobacter pylori</em>.',
+    claimC: '<span class="hp-highlight">Guía paso a paso</span> para pedir el test de aliento.',
+    subC: 'Descarga + lleva a tu consulta.',
+    hashtags: HT,
+    copyIG: '🗣️ Di exactamente esto en tu próxima consulta:\n\n1. «Doctor(a), me gustaría descartar <em>Helicobacter pylori</em>.»\n2. «¿Soy candidato(a) al test de aliento?»\n3. «Si sale positivo, ¿qué opciones de tratamiento actualizadas tenemos?»\n\nGuarda este post.',
+  },
+  {
+    id: 24, mes: 'Octubre', mesColor: '#0E2454',
+    titulo: 'Guía descargable',
+    fecha: 'Octubre · S2 · 2026-10-12',
+    foto: F.mujer11,
+    cifra: 'PDF',
+    cifraLabel: 'guía paciente avalada AMG',
+    headline: 'Lleva a tu consulta la guía que tu médico validará.',
+    subcopy: 'Contenido AMG · formato breve · imprimible.',
+    hpTitle: '<em>Helicobacter pylori</em>.',
+    claimC: '<span class="hp-highlight">Guía avalada AMG</span> — la puedes imprimir o llevar en el celular.',
+    subC: '4 páginas · 3 minutos de lectura.',
+    hashtags: HT,
+    copyIG: '📄 Nueva guía descargable: «Cómo hablar de <em>Helicobacter pylori</em> con tu médico».\n\nAvalada por la AMG. 4 páginas. 3 minutos. Incluye síntomas, test recomendado, preguntas clave y bandera roja.\n\nDescarga gratis en mexicosincancergastrico.com.mx/guia.',
+  },
+  {
+    id: 25, mes: 'Octubre', mesColor: '#0E2454',
+    titulo: 'Kit consulta completo',
+    fecha: 'Octubre · S3 · 2026-10-19',
+    foto: F.mujer3,
+    cifra: '5 ítems',
+    cifraLabel: 'en tu kit paciente',
+    headline: 'Todo lo que llevas a tu cita, en un solo kit.',
+    subcopy: 'Guía + síntomas + preguntas + bitácora + directorio.',
+    hpTitle: '<em>Helicobacter pylori</em>.',
+    claimC: '<span class="hp-highlight">Kit paciente AMG</span> — 5 herramientas para una mejor consulta.',
+    subC: 'Disponible en mexicosincancergastrico.com.mx/kit.',
+    hashtags: HT,
+    copyIG: '🧰 Hicimos un kit completo para que llegues a tu consulta preparado.\n\nGuía paciente + checklist de síntomas + preguntas clave + bitácora de medicamentos + directorio AMG cercano a ti.\n\nTodo gratis. Todo avalado. Link en bio.',
+  },
+  {
+    id: 26, mes: 'Octubre', mesColor: '#0E2454',
+    titulo: 'Agenda tu consulta',
+    fecha: 'Octubre · S4 · 2026-10-26',
+    foto: F.hombre12,
+    cifra: 'HOY',
+    cifraLabel: 'es el día de agendar',
+    headline: 'No postergues otra conversación importante.',
+    subcopy: 'Agendar es el paso que cambia el pronóstico.',
+    hpTitle: '<em>Helicobacter pylori</em>.',
+    claimC: '<span class="hp-highlight">Hoy</span> · el mejor momento para agendar fue ayer. El segundo mejor es hoy.',
+    subC: 'Directorio AMG de gastroenterólogos certificados.',
+    hashtags: HT,
+    copyIG: '📆 Hoy. Esa es la respuesta.\n\nSi tienes síntomas digestivos recurrentes, antecedente familiar de cáncer gástrico, o simplemente nunca te has hecho el test — agenda hoy.\n\nDirectorio AMG de gastroenterólogos en mexicosincancergastrico.com.mx/directorio.',
+  },
+
+  /* ─────────────── NOVIEMBRE ─────────────── */
+  {
+    id: 27, mes: 'Noviembre', mesColor: '#2a9a9a',
+    titulo: 'Tasa de curación',
+    fecha: 'Noviembre · S1 · 2026-11-02',
+    foto: F.mujer1,
+    cifra: '>90%',
+    cifraLabel: 'de erradicación alcanzable hoy',
+    headline: 'Los esquemas correctos están curando significativamente más.',
+    subcopy: 'La clave: primera línea adecuada + adherencia.',
+    hpTitle: '<em>Helicobacter pylori</em>.',
+    claimC: '<span class="hp-highlight">Más del 90% de curación</span> cuando el esquema está bien elegido.',
+    subC: 'Pregunta por la opción que está mejorando significativamente su tasa.',
+    hashtags: HT,
+    copyIG: '🎯 Cuando el esquema es el correcto, la tasa de erradicación supera el 90%.\n\nLa clave: que tu médico elija la primera línea adecuada a tu caso (resistencia local, alergias, historial) y que tú cumplas los días completos.\n\nLa ciencia avanzó — aprovéchala.',
+  },
+  {
+    id: 28, mes: 'Noviembre', mesColor: '#2a9a9a',
+    titulo: 'Evidencia P-CAB',
+    fecha: 'Noviembre · S2 · 2026-11-09',
+    foto: F.bacteria7,
+    cifra: 'P-CAB',
+    cifraLabel: 'superioridad sostenida vs IBP',
+    headline: 'La nueva clase cambia el resultado.',
+    subcopy: 'Menor resistencia, mayor estabilidad de pH, cura más sostenida.',
+    hpTitle: '<em>Helicobacter pylori</em>.',
+    claimC: 'Estudios muestran que <span class="hp-highlight">P-CAB mejora la erradicación</span> frente a IBP.',
+    subC: 'Una opción que tu gastroenterólogo evaluará contigo.',
+    hashtags: HT,
+    copyIG: '📊 Estudios clínicos muestran consistentemente que los P-CAB mejoran la erradicación de <em>Helicobacter pylori</em> vs IBP tradicionales.\n\nMenor variabilidad, pH más estable, resultado más predecible.\n\nAsk your doctor — pregúntale a tu médico — si P-CAB es adecuado para tu caso.',
+  },
+  {
+    id: 29, mes: 'Noviembre', mesColor: '#2a9a9a',
+    titulo: 'Adherencia · 14 días',
+    fecha: 'Noviembre · S3 · 2026-11-16',
+    foto: F.mujer11,
+    cifra: '14 días',
+    cifraLabel: 'que pueden cambiar tu vida',
+    headline: 'No abandones el tratamiento a mitad de camino.',
+    subcopy: 'Completar los 14 días es la diferencia entre curarse o reincidir.',
+    hpTitle: '<em>Helicobacter pylori</em>.',
+    claimC: '<span class="hp-highlight">14 días completos</span> — aunque te sientas mejor en 5.',
+    subC: 'Abandonar antes de tiempo genera resistencia.',
+    hashtags: HT,
+    copyIG: '⏳ La adherencia hace el milagro.\n\n14 días parece mucho, pero es la única forma de erradicar la bacteria. Abandonar en el día 5 o 7 porque «ya me siento bien» deja cepas vivas que pueden volverse resistentes.\n\nSi el médico indica 14 días, son 14 días.',
+  },
+  {
+    id: 30, mes: 'Noviembre', mesColor: '#2a9a9a',
+    titulo: 'Retest post-tratamiento',
+    fecha: 'Noviembre · S4 · 2026-11-23',
+    foto: F.mujer5,
+    cifra: '4-8 sem',
+    cifraLabel: 'retest tras terminar tratamiento',
+    headline: 'Confirmar la cura es parte del éxito.',
+    subcopy: 'Un segundo test de aliento a las 4-8 semanas.',
+    hpTitle: '<em>Helicobacter pylori</em>.',
+    claimC: 'La <span class="hp-highlight">confirmación</span> cierra el ciclo — no se da por cumplido sin retest.',
+    subC: 'Igual que cualquier antibiótico con desenlace duro.',
+    hashtags: HT,
+    copyIG: '✅ Terminaste los 14 días. ¿Ahora qué?\n\nSegún las guías AMG, se recomienda un test de aliento de confirmación 4-8 semanas después de terminar el tratamiento (y suspendiendo IBP 2 semanas antes).\n\nConfirmar es cuidar. Pregunta a tu médico.',
+  },
+  {
+    id: 31, mes: 'Noviembre', mesColor: '#2a9a9a',
+    titulo: 'Ejemplo HCP + visita médica',
+    fecha: 'Noviembre · S5 · 2026-11-30',
+    foto: F.hombre4,
+    cifra: 'Q4',
+    cifraLabel: 'visita médica Carnot refuerza',
+    headline: 'Tu médico recibe información actualizada cada semana.',
+    subcopy: 'Reps Carnot entregan la evidencia directo al consultorio.',
+    hpTitle: '<em>Helicobacter pylori</em>.',
+    claimC: '<span class="hp-highlight">Visita médica Q4</span> — pico de reforzamiento consultorio por consultorio.',
+    subC: 'La pinza educativa funciona: paciente informado + médico informado.',
+    hashtags: HT,
+    copyIG: '🔗 La pinza funciona así:\n\n→ Tú llegas a tu consulta con la guía AMG\n→ Tu médico recibe esta misma semana la actualización vía Carnot\n→ Conversación informada y decisión basada en evidencia 2026\n\nAsí se mueve la aguja en cáncer gástrico.',
+  },
+
+  /* ─────────────── DICIEMBRE ─────────────── */
+  {
+    id: 32, mes: 'Diciembre', mesColor: '#887028',
+    titulo: 'Cierre de año',
+    fecha: 'Diciembre · S1 · 2026-12-01',
+    foto: F.hombre12,
+    cifra: 'Diciembre',
+    cifraLabel: 'cerrar pendientes de salud',
+    headline: 'Cierra este año con un estómago tratado.',
+    subcopy: 'Agendar en diciembre es empezar enero distinto.',
+    hpTitle: '<em>Helicobacter pylori</em>.',
+    claimC: '<span class="hp-highlight">Cerrar 2026</span> con la revisión gastro es un regalo para ti.',
+    subC: 'Tu salud digestiva merece prioridad.',
+    hashtags: HT,
+    copyIG: '🎄 2026 se acaba. Si dejaste pendiente la revisión gastro, este es el momento.\n\nAgenda antes de las fiestas — los consultorios AMG están abiertos hasta la semana del 22. Termina el año con una conversación que puede cambiar la próxima década.',
+  },
+  {
+    id: 33, mes: 'Diciembre', mesColor: '#887028',
+    titulo: 'Recap 2026',
+    fecha: 'Diciembre · S2 · 2026-12-14',
+    foto: F.mujer3,
+    cifra: '8 meses',
+    cifraLabel: 'de conversación nacional',
+    headline: '8 meses informando a México. Gracias por sumarte.',
+    subcopy: 'Lo que logramos + lo que falta.',
+    hpTitle: '<em>Helicobacter pylori</em>.',
+    claimC: '<span class="hp-highlight">Juntos</span>, informamos a millones. Y seguimos.',
+    subC: 'Recap visual del movimiento mexicosincancergastrico.',
+    hashtags: HT,
+    copyIG: '📈 8 meses de #MéxicoSinCáncerGástrico.\n\nMillones de impresiones. Miles de conversaciones con médico. Un país más informado sobre <em>Helicobacter pylori</em>, cáncer gástrico y tratamiento actualizado.\n\nGracias por sumarte. Esto no termina — apenas empieza.',
+  },
+  {
+    id: 34, mes: 'Diciembre', mesColor: '#887028',
+    titulo: 'Propósitos de salud 2027',
+    fecha: 'Diciembre · S3 · 2026-12-21',
+    foto: F.hombre2,
+    cifra: '2027',
+    cifraLabel: 'empieza informado',
+    headline: 'Propósitos 2027: cuidar el estómago.',
+    subcopy: 'Revisa tu agenda. Revisa tu salud.',
+    hpTitle: '<em>Helicobacter pylori</em>.',
+    claimC: '<span class="hp-highlight">Propósito realista</span>: test de aliento + cita gastro.',
+    subC: 'Cuidarse es planificar.',
+    hashtags: HT,
+    copyIG: '🎯 Propósitos 2027 que sí se cumplen:\n\n1. Test de <em>Helicobacter pylori</em> si nunca te lo has hecho\n2. Consulta gastro anual\n3. Hablar del tema con tu familia\n\nSon 3 acciones concretas. Y pueden cambiar todo.',
+  },
+  {
+    id: 35, mes: 'Diciembre', mesColor: '#887028',
+    titulo: 'Empieza 2027 sin pylori',
+    fecha: 'Diciembre · S4 · 2026-12-28',
+    foto: F.hombre12,
+    cifra: 'Enero 2027',
+    cifraLabel: 'empieza tratado',
+    headline: 'Empieza 2027 con un estómago sin <em>Helicobacter pylori</em>.',
+    subcopy: 'La mejor forma de cerrar un año es empezar el siguiente mejor.',
+    hpTitle: '<em>Helicobacter pylori</em>.',
+    claimC: '<span class="hp-highlight">Enero 2027</span> · agenda ya abierta en consultorios AMG.',
+    subC: 'Tu primer test de aliento del año.',
+    hashtags: HT,
+    copyIG: '🎆 Empieza 2027 con un estómago sin <em>Helicobacter pylori</em>.\n\nLos primeros consultorios AMG abren el 5 de enero. Agenda tu primera consulta del año. Empieza sano. Termina sano.\n\nGracias por un 2026 lleno de conversaciones importantes.',
+  },
 ];
 
 const formats = [
@@ -1978,6 +2579,91 @@ function buildVarB(claim, fmt) {
     <div class="tk-bottom">
       <span>#HelicobacterPylori #SaludDigestiva #MéxicoSinCáncerGástrico</span>
       <span class="tk-slide-hint">${slideHint}</span>
+    </div>
+  </div>`;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   CARRUSEL 5 SLIDES · IG feed 4:5
+   Cover (cifra+hook) · 3 slides de dato/síntoma/llamado · CTA+AMG
+══════════════════════════════════════════════════════════════ */
+function buildCarrusel5(claim) {
+  const fotos = `url('${claim.foto}')`;
+  const cleanHeadline = claim.headline.replace(/<[^>]*>/g,'');
+  const slide1 = `
+    <div class="cr-slide cr-cover" style="background-image:${fotos}">
+      <div class="cr-overlay"></div>
+      <img class="cr-logo" src="${SELLO}" alt="AMG">
+      <div class="cr-cover-cifra">${claim.cifra}</div>
+      <div class="cr-cover-label">${claim.cifraLabel}</div>
+      <div class="cr-cover-headline">${claim.headline}</div>
+      <div class="cr-slide-num">1 / 5</div>
+    </div>`;
+  const slide2 = `
+    <div class="cr-slide cr-data">
+      <img class="cr-logo" src="${SELLO_CLARO}" alt="AMG">
+      <div class="cr-step">Paso 1</div>
+      <div class="cr-slide-title">${claim.claimC}</div>
+      <div class="cr-slide-sub">${claim.subC}</div>
+      <div class="cr-slide-num">2 / 5</div>
+    </div>`;
+  const slide3 = `
+    <div class="cr-slide cr-symptom">
+      <img class="cr-logo" src="${SELLO}" alt="AMG">
+      <div class="cr-step">Paso 2</div>
+      <div class="cr-slide-title">${claim.subcopy}</div>
+      <div class="cr-slide-sub">${cleanHeadline}</div>
+      <div class="cr-slide-num">3 / 5</div>
+    </div>`;
+  const slide4 = `
+    <div class="cr-slide cr-call">
+      <img class="cr-logo" src="${SELLO_CLARO}" alt="AMG">
+      <div class="cr-step">Paso 3</div>
+      <div class="cr-slide-title">Habla con tu médico.</div>
+      <div class="cr-slide-sub">Guarda este post. Llévalo a tu cita.</div>
+      <div class="cr-slide-num">4 / 5</div>
+    </div>`;
+  const slide5 = `
+    <div class="cr-slide cr-cta">
+      <img class="cr-logo" src="${SELLO}" alt="AMG">
+      <div class="cr-cta-text">${CTA}</div>
+      <div class="cr-cta-dom">mexicosincancergastrico.com.mx</div>
+      <div class="cr-slide-num">5 / 5</div>
+    </div>`;
+  return `
+  <div class="carrusel-5" id="carrusel-${claim.id}">
+    <div class="cr-hint">◀ Desliza ▶ 5 slides · IG 4:5</div>
+    <div class="cr-track">
+      ${slide1}${slide2}${slide3}${slide4}${slide5}
+    </div>
+  </div>`;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   TIKTOK · cover 9:16 + guión 3 beats debajo
+══════════════════════════════════════════════════════════════ */
+function buildTikTokCover(claim) {
+  const { hook, bullets } = parseTKCopy(claim.copyIG);
+  const beat1 = hook;
+  const beat2 = bullets[0] || claim.headline.replace(/<[^>]*>/g,'');
+  const beat3 = stripHtml(CTA);
+  return `
+  <div class="tiktok-pack">
+    ${buildVarB(claim, '916')}
+    <div class="tt-guion">
+      <div class="tt-guion-title">🎬 Guión · 3 beats · 30s</div>
+      <div class="tt-beat">
+        <span class="tt-beat-tag">0-3s · HOOK</span>
+        <span class="tt-beat-txt">${beat1}</span>
+      </div>
+      <div class="tt-beat">
+        <span class="tt-beat-tag">4-20s · DESARROLLO</span>
+        <span class="tt-beat-txt">${beat2}</span>
+      </div>
+      <div class="tt-beat">
+        <span class="tt-beat-tag">21-30s · CTA</span>
+        <span class="tt-beat-txt">${beat3}</span>
+      </div>
     </div>
   </div>`;
 }
@@ -2464,10 +3150,11 @@ renderTabKC('B', buildVarB_KC);
 
 /* Plataformas por semana — día relativo al jueves de cada claim */
 const CAL_SCHEDULE = [
-  { fmtKey: '45',  varKey: 'A', platform: 'Instagram',  tipo: 'Post 4:5',      diaOffset: -3, icon: '📸', pColor: '#C13584' },
-  { fmtKey: '169', varKey: 'A', platform: 'LinkedIn',   tipo: 'Post 16:9',     diaOffset: -1, icon: '💼', pColor: '#0A66C2' },
-  { fmtKey: '916', varKey: 'B', platform: 'TikTok',     tipo: 'Video / Reel',  diaOffset:  0, icon: '🎬', pColor: '#ffffff' },
-  { fmtKey: '11',  varKey: 'A', platform: 'Instagram',  tipo: 'Carrusel 1:1',  diaOffset: +3, icon: '🖼', pColor: '#C13584' },
+  { fmtKey: '45',  varKey: 'A',   platform: 'Instagram Post', tipo: 'Post 4:5',         diaOffset: -3, icon: '📸', pColor: '#C13584' },
+  { fmtKey: '169', varKey: 'A',   platform: 'LinkedIn',       tipo: 'Post 16:9',        diaOffset: -2, icon: '💼', pColor: '#0A66C2' },
+  { fmtKey: 'CR5', varKey: 'CR5', platform: 'IG Carrusel',    tipo: 'Carrusel · 5 slides', diaOffset: -1, icon: '🖼', pColor: '#C13584' },
+  { fmtKey: 'TTK', varKey: 'TTK', platform: 'TikTok',         tipo: 'Cover + guión 30s', diaOffset:  0, icon: '🎬', pColor: '#ffffff' },
+  { fmtKey: '11',  varKey: 'A',   platform: 'Facebook',       tipo: 'Post 1:1',         diaOffset: +2, icon: '📘', pColor: '#1877F2' },
 ];
 
 /* Helpers de fecha */
@@ -2541,14 +3228,24 @@ function renderCalendario() {
     const claimsDelMes = monthMap[mes];
     const mesColor = claimsDelMes[0].mesColor;
     const totalPubs = claimsDelMes.length * CAL_SCHEDULE.length;
+    const mesJust = MES_JUSTIFICACION[mes] || null;
 
     html += `
     <div class="cal-month">
       <div class="cal-month-hdr" onclick="toggleMes(this)" style="border-left-color:${mesColor}">
         <span class="cal-mes-pill" style="background:${mesColor}">${mes} 2026</span>
-        <span class="cal-mes-info">${claimsDelMes.length} semanas · ${totalPubs} publicaciones · 3 plataformas</span>
+        <span class="cal-mes-info">${claimsDelMes.length} semanas · ${totalPubs} publicaciones · 5 formatos</span>
         <span class="cal-toggle-chevron">▾</span>
       </div>
+      ${mesJust ? `
+      <div class="cal-mes-just" style="border-left-color:${mesColor}">
+        <div class="cmj-row1">
+          <span class="cmj-fase" style="color:${mesColor}">${mesJust.fase}</span>
+          <span class="cmj-hito">· ${mesJust.hito}</span>
+        </div>
+        <div class="cmj-mensaje" style="color:${mesColor}">💬 «${mesJust.mensaje}»</div>
+        <div class="cmj-porque"><strong>¿Por qué este mes?</strong> ${mesJust.porque}</div>
+      </div>` : ''}
       <div class="cal-month-body">`;
 
     claimsDelMes.forEach((claim, wi) => {
@@ -2562,34 +3259,58 @@ function renderCalendario() {
             <span class="cal-sem-pill">S${semNum}</span>
             <span class="cal-sem-range">${weekRange}</span>
             <span class="cal-sem-topic">${claim.titulo}</span>
+            <button class="btn-edit-semana" onclick="event.stopPropagation(); if(!editMode) toggleEditMode();"
+                    title="Activar modo edición para editar textos de las piezas de esta semana">
+              ✏️ Editar piezas
+            </button>
             <span class="cal-week-toggle">▾</span>
           </div>
-          <div class="cal-week-body">`;
+          <div class="cal-week-body">
+            <div class="cal-pieces-row">`;
 
       CAL_SCHEDULE.forEach(sched => {
         const pubDate = offsetDate(baseDate, sched.diaOffset);
-        const buildFn = sched.varKey === 'A' ? buildVarA : buildVarB;
-        const pieceId = `pieza-${sched.varKey.toLowerCase()}-${claim.id}-${sched.fmtKey}`;
-        const dlName  = `AMG_C${claim.id}_${sched.platform.replace(/\s+/g,'')}_${sched.fmtKey}`;
+        let piezaHtml, hasPhoto = false, pieceId, dlName;
+
+        if (sched.varKey === 'CR5') {
+          piezaHtml = buildCarrusel5(claim);
+          pieceId = `carrusel-${claim.id}`;
+          dlName  = `AMG_C${claim.id}_Carrusel5`;
+          hasPhoto = true;
+        } else if (sched.varKey === 'TTK') {
+          piezaHtml = buildTikTokCover(claim);
+          pieceId = `pieza-b-${claim.id}-916`;
+          dlName  = `AMG_C${claim.id}_TikTok_916`;
+        } else {
+          const buildFn = sched.varKey === 'A' ? buildVarA : buildVarB;
+          piezaHtml = buildFn(claim, sched.fmtKey);
+          hasPhoto = sched.varKey === 'A';
+          pieceId = `pieza-${sched.varKey.toLowerCase()}-${claim.id}-${sched.fmtKey}`;
+          dlName  = `AMG_C${claim.id}_${sched.platform.replace(/\s+/g,'')}_${sched.fmtKey}`;
+        }
 
         html += `
-            <div class="cal-pub-row">
-              <div class="cal-pub-meta">
-                <span class="cal-pub-icon">${sched.icon}</span>
-                <span class="cal-pub-platform" style="color:${sched.pColor}">${sched.platform}</span>
-                <span class="cal-pub-tipo">${sched.tipo}</span>
-                <span class="cal-pub-fecha">${fmtDia(pubDate)}</span>
-              </div>
-              <div class="cal-pub-piece">
+              <div class="cal-piece-card">
+                <div class="cal-piece-meta">
+                  <span class="cpm-icon">${sched.icon}</span>
+                  <span class="cpm-platform" style="color:${sched.pColor}">${sched.platform}</span>
+                  <span class="cpm-tipo">· ${sched.tipo}</span>
+                  <span class="cpm-fecha">${fmtDia(pubDate)}</span>
+                </div>
                 <div class="format-card">
-                  ${buildFn(claim, sched.fmtKey)}
+                  ${piezaHtml}
+                  <div class="pieza-edit-bar">
+                    ${hasPhoto ? `<button class="btn-peb" onclick="openImgForPieza('${pieceId}')">🖼 Imagen</button>` : ''}
+                    <button class="btn-peb" style="border-color:rgba(136,112,40,0.45);color:#b09048;" onclick="openSelloForPieza('${pieceId}')">🔰 Sello</button>
+                    <button class="btn-peb btn-peb-reset" onclick="resetPiezaAll('${pieceId}')">↺ Reset</button>
+                  </div>
                   <button class="btn-download" onclick="downloadPieza('${pieceId}','${dlName}')">↓ PNG</button>
                 </div>
-              </div>
-            </div>`;
+              </div>`;
       });
 
       html += `
+            </div><!-- /cal-pieces-row -->
             <div class="cal-copy-block">
               <div class="cal-copy-text">${claim.copyIG.replace(/\n/g,'<br>')}</div>
               <div class="cal-copy-ht">${claim.hashtags}</div>

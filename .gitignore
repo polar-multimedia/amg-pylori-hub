@@ -1,0 +1,34 @@
+# Temporales de trabajo Claude
+.tmp_*
+.DS_Store
+**/.DS_Store
+
+# Directorios de producción interna (no parte del hub público)
+01_KI-CAB_Con-Marca/
+02_AMG_Sin-Marca/
+03_Master_Compartido/
+04_NotebookLM_Pack/
+99_HubSocial_Framework/
+Campaña de deteccion 2026/
+Arte Campaña HPylori/
+C-Tech/
+Previos/
+_legacy_v1/
+Skill_Hub_y_Redes/
+articulos/
+openai_image_mcp/
+amg-pylori.skill/
+polar-piezas-visuales.skill/
+
+# Archivos sueltos del workspace
+museo1.png
+museo2.png
+museo3.png
+Hpiloriv3.mp4
+logo_amg_fono-oscuro.png
+logo_amg_transparente-fondooscuro.png
+logo_amg_transparente.png
+kicab_detailer.html
+sistema_piezas_educativas_V4_V6.html
+deteccion.html
+para-medicos.html
