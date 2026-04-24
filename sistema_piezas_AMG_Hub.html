@@ -576,7 +576,297 @@ body { font-family: 'Open Sans', sans-serif; background: #0f1629; color: #fff; m
 .btn-save-pieza:hover { transform: translateY(-1px) scale(1.04); }
 .btn-save-pieza.saved { background: linear-gradient(135deg, #1d6d3a 0%, #15522c 100%); }
 .btn-save-pieza.saving { background: linear-gradient(135deg, #B8922A 0%, #8a6d20 100%); }
-body.edit-mode .btn-save-pieza { display: inline-block; }
+/* Botón flotante por pieza DESACTIVADO cuando sidebar activo — sidebar reemplaza */
+body.edit-mode .btn-save-pieza { display: none; }
+
+/* ═══════════════════════════════════════════════════════════════
+   REV-SIDEBAR · Panel contextual de edición estilo Dreamweaver
+   ═══════════════════════════════════════════════════════════════ */
+#rev-sidebar {
+  position: fixed;
+  top: 0; right: 0;
+  width: 380px;
+  height: 100vh;
+  background: linear-gradient(180deg, #0d1730 0%, #0a1124 100%);
+  border-left: 2px solid var(--teal);
+  box-shadow: -8px 0 32px rgba(0,0,0,0.65);
+  display: none;          /* edit-mode lo enciende */
+  flex-direction: column;
+  z-index: 9500;
+  font-family: 'Montserrat', sans-serif;
+  color: #fff;
+}
+body.edit-mode #rev-sidebar { display: flex; }
+body.edit-mode .content { padding-right: 400px; }   /* deja aire para el sidebar */
+
+/* Pieza activa: contorno teal */
+.pieza.rs-active {
+  outline: 3px solid var(--teal);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(48,184,176,0.25), 0 8px 30px rgba(0,0,0,0.6);
+}
+
+/* Texto destellando para indicar foco */
+.rs-flash { animation: rsFlash 0.9s ease; }
+@keyframes rsFlash {
+  0%   { box-shadow: 0 0 0 0 rgba(48,184,176,0.8); }
+  50%  { box-shadow: 0 0 0 10px rgba(48,184,176,0.2); }
+  100% { box-shadow: 0 0 0 0 rgba(48,184,176,0); }
+}
+
+/* ── Header sidebar ── */
+.rs-hdr {
+  display: flex; align-items: center; gap: 8px;
+  padding: 12px 10px;
+  background: linear-gradient(135deg, rgba(24,56,136,0.4) 0%, rgba(48,184,176,0.15) 100%);
+  border-bottom: 1px solid rgba(48,184,176,0.3);
+}
+.rs-title { flex: 1; min-width: 0; }
+.rs-title-id {
+  font-weight: 800; font-size: 13px;
+  color: var(--teal-light);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.rs-title-meta {
+  font-size: 10px;
+  color: rgba(255,255,255,0.55);
+  margin-top: 2px;
+}
+.rs-nav, .rs-close {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: #fff;
+  width: 30px; height: 30px;
+  border-radius: 8px;
+  font-size: 16px; font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.rs-nav:hover { background: rgba(48,184,176,0.3); border-color: var(--teal); }
+.rs-close:hover { background: rgba(220,60,60,0.5); border-color: #e85050; }
+
+/* ── Tabs ── */
+.rs-tabs {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  background: #0a0f1f;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.rs-tab {
+  background: none; border: none; cursor: pointer;
+  padding: 10px 4px;
+  color: rgba(255,255,255,0.5);
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700; font-size: 11px;
+  letter-spacing: 0.04em;
+  border-bottom: 3px solid transparent;
+  transition: color 0.15s, border-color 0.15s, background 0.15s;
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
+}
+.rs-tab span { font-size: 16px; }
+.rs-tab:hover { color: #fff; background: rgba(255,255,255,0.04); }
+.rs-tab.active { color: var(--teal); border-bottom-color: var(--teal); background: rgba(48,184,176,0.08); }
+
+/* ── Body panels ── */
+.rs-body {
+  flex: 1; overflow-y: auto;
+  padding: 14px 14px 80px;
+  scrollbar-width: thin; scrollbar-color: rgba(48,184,176,0.5) transparent;
+}
+.rs-body::-webkit-scrollbar { width: 6px; }
+.rs-body::-webkit-scrollbar-thumb { background: rgba(48,184,176,0.5); border-radius: 3px; }
+.rs-panel { display: none; }
+.rs-panel.active { display: block; }
+
+/* ── Typography dentro del sidebar ── */
+.rs-section-title {
+  font-size: 11px; font-weight: 800;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--teal-light);
+  margin: 14px 0 8px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid rgba(48,184,176,0.2);
+}
+.rs-section-title:first-child { margin-top: 0; }
+.rs-empty {
+  padding: 20px; text-align: center;
+  color: rgba(255,255,255,0.45);
+  font-size: 12px;
+  background: rgba(255,255,255,0.03);
+  border: 1px dashed rgba(255,255,255,0.1);
+  border-radius: 8px;
+}
+
+/* ── Fields / form widgets ── */
+.rs-field {
+  margin-bottom: 10px;
+  padding: 8px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 6px;
+}
+.rs-field label {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 0.04em;
+  color: rgba(255,255,255,0.75);
+  margin-bottom: 6px;
+}
+.rs-label-badge {
+  background: rgba(48,184,176,0.2);
+  color: var(--teal-light);
+  padding: 2px 7px;
+  border-radius: 10px;
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  flex: 1;
+}
+.rs-field input[type=range] {
+  width: 100%;
+  accent-color: var(--teal);
+}
+.rs-field input[type=text], .rs-field input[type=url], .rs-field input[type=file], .rs-textarea, .rs-field select {
+  width: 100%;
+  background: rgba(0,0,0,0.35);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: #fff;
+  padding: 7px 9px;
+  border-radius: 5px;
+  font-size: 12px;
+  font-family: 'Open Sans', sans-serif;
+}
+.rs-field input:focus, .rs-textarea:focus { outline: none; border-color: var(--teal); background: rgba(0,0,0,0.5); }
+.rs-textarea { resize: vertical; min-height: 50px; line-height: 1.4; }
+
+/* ── Mini buttons (dentro de un field) ── */
+.rs-mini {
+  background: rgba(48,184,176,0.15);
+  border: 1px solid rgba(48,184,176,0.3);
+  color: var(--teal-light);
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 9px; font-weight: 700;
+  cursor: pointer;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  transition: background 0.15s;
+}
+.rs-mini:hover { background: var(--teal); color: #fff; }
+
+/* ── Nudge grid (3×3 cruz para posicionar) ── */
+.rs-nudge-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+  padding: 8px;
+  background: rgba(0,0,0,0.25);
+  border-radius: 6px;
+  margin: 8px 0;
+}
+.rs-nudge-grid button {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: #fff;
+  height: 32px;
+  border-radius: 5px;
+  font-size: 14px; font-weight: 700;
+  cursor: pointer;
+  transition: background 0.1s;
+}
+.rs-nudge-grid button:hover { background: var(--teal); border-color: var(--teal); }
+.rs-nudge-grid button.rs-nudge-center {
+  background: rgba(136,112,40,0.3);
+  border-color: var(--gold);
+  color: #E8D9B0;
+}
+.rs-nudge-grid div { /* spacers */ }
+
+/* ── Botones de acción ── */
+.rs-btn {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: #fff;
+  padding: 9px 14px;
+  border-radius: 6px;
+  font-size: 11px; font-weight: 700;
+  cursor: pointer;
+  letter-spacing: 0.04em;
+  font-family: inherit;
+  transition: background 0.15s, transform 0.1s;
+}
+.rs-btn:hover { background: rgba(48,184,176,0.25); transform: translateY(-1px); }
+.rs-btn-primary {
+  background: linear-gradient(135deg, var(--teal) 0%, #1f8a83 100%);
+  border-color: rgba(255,255,255,0.3);
+  font-weight: 800;
+}
+.rs-btn-ok { background: linear-gradient(135deg, #1d6d3a 0%, #15522c 100%); border-color: #2a9d4d; }
+.rs-btn-sm { padding: 5px 10px; font-size: 10px; }
+.rs-reset {
+  background: rgba(184,146,42,0.15);
+  border-color: rgba(184,146,42,0.4);
+  color: #E8C878;
+}
+.rs-actions { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; }
+.rs-actions-stack { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; }
+
+/* ── Metadata ── */
+.rs-meta {
+  font-size: 11px; line-height: 1.7;
+  color: rgba(255,255,255,0.85);
+  background: rgba(0,0,0,0.3);
+  padding: 10px 12px;
+  border-radius: 6px;
+  border: 1px solid rgba(255,255,255,0.06);
+}
+.rs-meta code {
+  background: rgba(48,184,176,0.15);
+  color: var(--teal-light);
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-family: 'Courier New', monospace;
+  font-size: 10px;
+}
+
+/* ── Footer sticky ── */
+.rs-footer {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  display: flex; align-items: center; gap: 8px;
+  padding: 10px 12px;
+  background: rgba(0,0,0,0.55);
+  border-top: 1px solid rgba(48,184,176,0.25);
+  backdrop-filter: blur(8px);
+}
+.rs-sync {
+  flex: 1;
+  font-size: 11px; font-weight: 700;
+  color: var(--teal);
+  letter-spacing: 0.03em;
+}
+
+/* ── Typography quick-bar dentro del texto tab ── */
+.rs-typo-bar {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 3px;
+  background: rgba(0,0,0,0.3);
+  padding: 5px;
+  border-radius: 5px;
+  margin-top: 6px;
+}
+.rs-typo-bar button {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: #fff;
+  height: 28px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 11px; font-weight: 700;
+  transition: background 0.1s;
+}
+.rs-typo-bar button:hover { background: var(--teal); }
 .pieza.fmt-45  { width: 246px; height: 307px; }
 .pieza.fmt-11  { width: 246px; height: 246px; }
 .pieza.fmt-916 { width: 173px; height: 307px; }
@@ -641,7 +931,18 @@ body.edit-mode .btn-save-pieza { display: inline-block; }
   flex-direction: column;
   justify-content: flex-end;
   padding: 0 8px 5px 0;
+  /* Container query: si el contenido excede el alto, escala downward */
+  container-type: inline-size;
 }
+/* La cifra no debe rebasar el ancho del copy-block (auto-shrink visual) */
+.var-a .cifra {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: clip;
+  white-space: nowrap;
+}
+/* Si el texto wrappea naturalmente (cifra-label, headline, subcopy), permitir */
+.var-a .cifra-label, .var-a .headline, .var-a .subcopy { white-space: normal; }
 .var-a .cifra {
   font-weight: 900; font-style: italic;
   color: var(--teal); line-height: 1;
@@ -2326,6 +2627,42 @@ body.edit-mode .cr-slide .foto-overlay { pointer-events: auto; }
     <button onclick="resetImg()" class="ip-reset">↺ Reset</button>
   </div>
 </div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SIDEBAR CONTEXTUAL DE REVISIÓN (estilo Dreamweaver)
+     Fixed derecha · 380px · Tabs Texto/Imagen/Sello/Pieza
+     Visible solo en body.edit-mode
+     ═══════════════════════════════════════════════════════════════ -->
+<aside id="rev-sidebar" aria-hidden="true">
+  <header class="rs-hdr">
+    <button class="rs-nav" id="rs-prev" title="Pieza anterior">‹</button>
+    <div class="rs-title">
+      <div class="rs-title-id" id="rs-pieza-id">— sin selección —</div>
+      <div class="rs-title-meta" id="rs-pieza-meta">Haz clic en cualquier pieza</div>
+    </div>
+    <button class="rs-nav" id="rs-next" title="Pieza siguiente">›</button>
+    <button class="rs-close" onclick="toggleEditMode()" title="Cerrar Modo Revisión">✕</button>
+  </header>
+
+  <nav class="rs-tabs" role="tablist">
+    <button class="rs-tab active" data-tab="texto" role="tab"><span>📝</span>Texto</button>
+    <button class="rs-tab" data-tab="imagen" role="tab"><span>🖼</span>Imagen</button>
+    <button class="rs-tab" data-tab="sello" role="tab"><span>🎖</span>Sello</button>
+    <button class="rs-tab" data-tab="pieza" role="tab"><span>ℹ</span>Pieza</button>
+  </nav>
+
+  <div class="rs-body">
+    <section class="rs-panel rs-texto active" id="rs-panel-texto"></section>
+    <section class="rs-panel rs-imagen" id="rs-panel-imagen"></section>
+    <section class="rs-panel rs-sello" id="rs-panel-sello"></section>
+    <section class="rs-panel rs-pieza" id="rs-panel-pieza"></section>
+  </div>
+
+  <footer class="rs-footer">
+    <div class="rs-sync" id="rs-sync">● Inicializando…</div>
+    <button class="rs-btn rs-btn-primary" onclick="saveActivePieza()" title="Guarda todos los cambios de la pieza activa">💾 Guardar pieza</button>
+  </footer>
+</aside>
 
 <!-- ══ TABS B1 — Calendario editorial ══ -->
 <div class="tabs-bar tabs-bar-b1">
@@ -4856,6 +5193,553 @@ function resetSelloMask(selImg) {
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') { activeEl?.blur(); closeImgPanel(); }
 });
+
+/* ═══════════════════════════════════════════════════════════════
+   REV-SIDEBAR · Lógica completa del panel contextual
+   ═══════════════════════════════════════════════════════════════ */
+let _activePieza = null;
+
+/* Al entrar/salir de edit-mode → mostrar/ocultar sidebar */
+const _origToggleEditMode = toggleEditMode;
+toggleEditMode = function() {
+  _origToggleEditMode();
+  const sb = document.getElementById('rev-sidebar');
+  if (!sb) return;
+  if (editMode) {
+    sb.setAttribute('aria-hidden','false');
+    // Auto-seleccionar primera pieza visible si no hay activa
+    if (!_activePieza) {
+      const first = document.querySelector('.tab-panel.active .pieza') || document.querySelector('.pieza');
+      if (first) setActivePieza(first);
+    } else {
+      populateSidebar(_activePieza);
+    }
+    updateRsSync();
+  } else {
+    sb.setAttribute('aria-hidden','true');
+    document.querySelectorAll('.pieza.rs-active').forEach(p => p.classList.remove('rs-active'));
+    _activePieza = null;
+  }
+};
+
+/* Click en cualquier pieza la pone como activa */
+document.addEventListener('click', (e) => {
+  if (!editMode) return;
+  const p = e.target.closest('.pieza');
+  if (!p) return;
+  if (p === _activePieza) return;
+  setActivePieza(p);
+}, true);
+
+function setActivePieza(piezaEl) {
+  if (!piezaEl) return;
+  document.querySelectorAll('.pieza.rs-active').forEach(p => p.classList.remove('rs-active'));
+  piezaEl.classList.add('rs-active');
+  _activePieza = piezaEl;
+  populateSidebar(piezaEl);
+}
+
+function getPiezaMeta(p) {
+  const cls = [...p.classList];
+  const fmt = (cls.find(c => c.startsWith('fmt-')) || '').replace('fmt-','') || '?';
+  const v   = (cls.find(c => c.startsWith('var-')) || '').replace('var-','') || '?';
+  return `Formato ${fmt} · Variante ${v}`;
+}
+
+function populateSidebar(p) {
+  document.getElementById('rs-pieza-id').textContent = p.id || '(sin id)';
+  document.getElementById('rs-pieza-meta').textContent = getPiezaMeta(p);
+  populateTextoTab(p);
+  populateImagenTab(p);
+  populateSelloTab(p);
+  populatePiezaTab(p);
+}
+
+/* ── Tab TEXTO ── */
+function populateTextoTab(pieza) {
+  const panel = document.getElementById('rs-panel-texto');
+  const textSel = '.cifra,.cifra-label,.headline,.subcopy,.cta-text,.disclaimer,.vd-stat,.vd-stat-label,.vd-headline,.vd-subcopy,.vd-eyebrow,.hp-giant,.hp-claim,.hp-sub,.cta-detect,.url-bottom,.cr-cover-cifra,.cr-cover-label,.cr-cover-headline,.cr-step,.cr-slide-title,.cr-slide-sub,.cr-cta-text,.cr-cta-dom,.cr-slide-num,.tk-brand,.tk-hook,.tk-cta,.tt-guion-title,.tt-beat-tag,.tt-beat-txt';
+  const texts = Array.from(pieza.querySelectorAll(textSel));
+  if (!texts.length) {
+    panel.innerHTML = '<div class="rs-empty">Esta pieza no tiene textos editables.</div>';
+    return;
+  }
+  panel.innerHTML = '<div class="rs-section-title">Textos editables (' + texts.length + ')</div>' +
+    texts.map((el, i) => {
+      const cls = [...el.classList].find(c => c.match(/^(cifra|cifra-label|headline|subcopy|cta-text|disclaimer|vd-|hp-|cr-|tk-|tt-|cta-detect|url-bottom)/)) || 'texto';
+      const val = (el.innerText || '').replace(/</g,'&lt;');
+      return `
+        <div class="rs-field" data-idx="${i}">
+          <label>
+            <span class="rs-label-badge">${cls}</span>
+            <button class="rs-mini" data-act="focus">🎯</button>
+            <button class="rs-mini" data-act="reset">↺</button>
+          </label>
+          <textarea class="rs-textarea" rows="2" data-idx="${i}">${val}</textarea>
+          <div class="rs-typo-bar">
+            <button data-typo="bold" data-idx="${i}" title="Negrita"><b>B</b></button>
+            <button data-typo="italic" data-idx="${i}" title="Cursiva"><em>i</em></button>
+            <button data-typo="size-" data-idx="${i}" title="Más chico">A−</button>
+            <button data-typo="size+" data-idx="${i}" title="Más grande">A+</button>
+            <button data-typo="left" data-idx="${i}" title="Izquierda">⬅</button>
+            <button data-typo="center" data-idx="${i}" title="Centrar">⬛</button>
+          </div>
+        </div>`;
+    }).join('');
+  // Wire textareas
+  panel.querySelectorAll('.rs-textarea').forEach(ta => {
+    ta.addEventListener('input', () => {
+      const i = parseInt(ta.dataset.idx, 10);
+      const t = texts[i];
+      if (!t) return;
+      t.innerText = ta.value;
+      clearTimeout(ta._sv);
+      ta._sv = setTimeout(() => {
+        if (window.HubSync) HubSync.save(t);
+        updateRsSync('saving');
+        setTimeout(() => updateRsSync(), 500);
+      }, 350);
+    });
+  });
+  // Focus button
+  panel.querySelectorAll('[data-act="focus"]').forEach(b => {
+    b.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const i = parseInt(b.closest('.rs-field').dataset.idx, 10);
+      const t = texts[i];
+      if (t) { t.scrollIntoView({block:'center'}); t.classList.add('rs-flash'); setTimeout(() => t.classList.remove('rs-flash'), 900); }
+    });
+  });
+  // Reset
+  panel.querySelectorAll('[data-act="reset"]').forEach(b => {
+    b.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const i = parseInt(b.closest('.rs-field').dataset.idx, 10);
+      const t = texts[i];
+      if (t && origMap.has(t)) {
+        t.innerHTML = origMap.get(t);
+        const ta = panel.querySelector(`.rs-textarea[data-idx="${i}"]`);
+        if (ta) ta.value = t.innerText;
+        if (window.HubSync) {
+          const k = HubSync.keyForEl(t);
+          if (k) HubSync.resetKey(k);
+        }
+      }
+    });
+  });
+  // Typography quick-bar
+  panel.querySelectorAll('.rs-typo-bar button').forEach(b => {
+    b.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const i = parseInt(b.dataset.idx, 10);
+      const t = texts[i];
+      if (!t) return;
+      const act = b.dataset.typo;
+      const cs = getComputedStyle(t);
+      let fs = parseFloat(t.style.fontSize || cs.fontSize) || 14;
+      if (act === 'bold')   t.style.fontWeight = (t.style.fontWeight === '900' ? '' : '900');
+      if (act === 'italic') t.style.fontStyle  = (t.style.fontStyle === 'italic' ? '' : 'italic');
+      if (act === 'size+')  t.style.fontSize = (fs + 1) + 'px';
+      if (act === 'size-')  t.style.fontSize = Math.max(6, fs - 1) + 'px';
+      if (act === 'left')   t.style.textAlign = 'left';
+      if (act === 'center') t.style.textAlign = 'center';
+      if (window.HubSync) HubSync.save(t);
+    });
+  });
+}
+
+/* ── Tab IMAGEN — sliders + upload + URL + IA + aplicar a todo el claim ── */
+function populateImagenTab(pieza) {
+  const panel = document.getElementById('rs-panel-imagen');
+  const imgs = Array.from(pieza.querySelectorAll('.foto-bg, .kc-photo, .cr-photo'));
+  if (!imgs.length) {
+    panel.innerHTML = '<div class="rs-empty">Esta pieza no tiene imagen editable.</div>';
+    return;
+  }
+  // Detectar claim (id pattern: pieza-X-CLAIMID-FMT → CLAIMID es la parte 3)
+  const idParts = pieza.id.split('-');
+  const claimId = idParts[2] || '';
+  let html = '<div class="rs-section-title">Posición y zoom</div>';
+  if (imgs.length > 1) {
+    html += '<div class="rs-field"><label>Imagen</label><select id="rs-img-sel">' +
+      imgs.map((_,i) => `<option value="${i}">Imagen ${i+1} de ${imgs.length}</option>`).join('') +
+      '</select></div>';
+  }
+  html += `
+    <div class="rs-field">
+      <label>↔ Posición X · <span id="rs-img-x-val">50%</span></label>
+      <input type="range" id="rs-img-x" min="0" max="100" value="50">
+    </div>
+    <div class="rs-field">
+      <label>↕ Posición Y · <span id="rs-img-y-val">50%</span></label>
+      <input type="range" id="rs-img-y" min="0" max="100" value="50">
+    </div>
+    <div class="rs-field">
+      <label>🔍 Zoom · <span id="rs-img-z-val">100%</span></label>
+      <input type="range" id="rs-img-z" min="80" max="220" value="100">
+    </div>
+    <div class="rs-nudge-grid">
+      <div></div><button data-nudge="0,-5">↑</button><div></div>
+      <button data-nudge="-5,0">←</button><button data-nudge="50,50" class="rs-nudge-center">⊙</button><button data-nudge="5,0">→</button>
+      <div></div><button data-nudge="0,5">↓</button><div></div>
+    </div>
+    <div class="rs-section-title">Reemplazar imagen</div>
+    <div class="rs-field">
+      <label>📁 Subir archivo</label>
+      <input type="file" id="rs-img-file" accept="image/*">
+    </div>
+    <div class="rs-field">
+      <label>🔗 Pegar URL</label>
+      <input type="text" id="rs-img-url" placeholder="https://...">
+      <div class="rs-actions"><button class="rs-btn rs-btn-sm" id="rs-img-url-go">Aplicar URL</button></div>
+    </div>
+    <div class="rs-field">
+      <label>🎨 Generar con IA</label>
+      <textarea class="rs-textarea" id="rs-ai-prompt" rows="3" placeholder="Prompt extra (opcional). Estilo Polar AMG ya incluido."></textarea>
+      <div class="rs-actions">
+        <button class="rs-btn rs-btn-sm" id="rs-ai-go">🎨 Generar</button>
+        <button class="rs-btn rs-btn-sm" id="rs-ai-key">🔑 API key</button>
+      </div>
+      <div id="rs-ai-status" style="font-size:10px;color:rgba(255,255,255,0.55);margin-top:6px"></div>
+    </div>
+    <div class="rs-section-title">Alcance</div>
+    <label style="display:flex;align-items:center;gap:8px;font-size:11px;color:rgba(255,255,255,0.85);padding:6px 0">
+      <input type="checkbox" id="rs-img-allclaim"> Aplicar reemplazo a TODAS las piezas del claim ${claimId} (1:1, 4:5, 9:16, 16:9)
+    </label>
+    <div class="rs-actions">
+      <button class="rs-btn rs-reset" id="rs-img-reset">↺ Reset imagen</button>
+    </div>
+  `;
+  panel.innerHTML = html;
+
+  let curIdx = 0;
+  const cur = () => imgs[curIdx];
+  const refresh = () => {
+    const el = cur();
+    const cs = getComputedStyle(el);
+    const bp = el.style.backgroundPosition || cs.backgroundPosition;
+    const bs = el.style.backgroundSize || cs.backgroundSize;
+    const m = (bp || '').match(/([-\d.]+)%\s+([-\d.]+)%/);
+    if (m) {
+      document.getElementById('rs-img-x').value = Math.round(parseFloat(m[1]));
+      document.getElementById('rs-img-y').value = Math.round(parseFloat(m[2]));
+      document.getElementById('rs-img-x-val').textContent = Math.round(parseFloat(m[1])) + '%';
+      document.getElementById('rs-img-y-val').textContent = Math.round(parseFloat(m[2])) + '%';
+    }
+    const mz = (bs || '').match(/([\d.]+)%/);
+    const z = mz ? Math.round(parseFloat(mz[1])) : 100;
+    document.getElementById('rs-img-z').value = z;
+    document.getElementById('rs-img-z-val').textContent = z + '%';
+  };
+  refresh();
+  const apply = () => {
+    const el = cur();
+    const x = document.getElementById('rs-img-x').value;
+    const y = document.getElementById('rs-img-y').value;
+    const z = document.getElementById('rs-img-z').value;
+    document.getElementById('rs-img-x-val').textContent = x + '%';
+    document.getElementById('rs-img-y-val').textContent = y + '%';
+    document.getElementById('rs-img-z-val').textContent = z + '%';
+    el.style.setProperty('background-position', x + '% ' + y + '%', 'important');
+    el.style.setProperty('background-size', z + '%', 'important');
+    if (window.HubSync) {
+      clearTimeout(el._sv);
+      el._sv = setTimeout(() => { HubSync.saveImg(el); updateRsSync('saving'); setTimeout(() => updateRsSync(), 500); }, 280);
+    }
+  };
+  ['rs-img-x','rs-img-y','rs-img-z'].forEach(id => document.getElementById(id).addEventListener('input', apply));
+  panel.querySelectorAll('[data-nudge]').forEach(b => {
+    b.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const [dx,dy] = b.dataset.nudge.split(',').map(Number);
+      if (b.classList.contains('rs-nudge-center')) {
+        document.getElementById('rs-img-x').value = 50;
+        document.getElementById('rs-img-y').value = 50;
+      } else {
+        const xE = document.getElementById('rs-img-x');
+        const yE = document.getElementById('rs-img-y');
+        xE.value = Math.max(0, Math.min(100, parseInt(xE.value) + dx));
+        yE.value = Math.max(0, Math.min(100, parseInt(yE.value) + dy));
+      }
+      apply();
+    });
+  });
+  const sel = document.getElementById('rs-img-sel');
+  if (sel) sel.addEventListener('change', e => { curIdx = parseInt(e.target.value, 10); refresh(); });
+
+  // Helper para aplicar imagen a uno o varios elementos
+  const applyImageUrl = (url) => {
+    const allClaim = document.getElementById('rs-img-allclaim').checked;
+    const targets = allClaim
+      ? Array.from(document.querySelectorAll(`[id*="-${claimId}-"]`)).flatMap(p => Array.from(p.querySelectorAll('.foto-bg, .kc-photo, .cr-photo')))
+      : [cur()];
+    targets.forEach(t => {
+      t.style.setProperty('background-image', `url("${url}")`, 'important');
+      if (window.HubSync) HubSync.saveImg(t);
+    });
+    updateRsSync('saving');
+    setTimeout(() => updateRsSync(), 600);
+    return targets.length;
+  };
+
+  // File upload
+  document.getElementById('rs-img-file').addEventListener('change', e => {
+    const f = e.target.files[0];
+    if (!f) return;
+    const r = new FileReader();
+    r.onload = ev => {
+      const n = applyImageUrl(ev.target.result);
+      document.getElementById('rs-ai-status').textContent = `✓ Imagen aplicada a ${n} elemento(s)`;
+    };
+    r.readAsDataURL(f);
+  });
+  // URL apply
+  document.getElementById('rs-img-url-go').addEventListener('click', (e) => {
+    e.stopPropagation();
+    const url = document.getElementById('rs-img-url').value.trim();
+    if (!url) return;
+    const n = applyImageUrl(url);
+    document.getElementById('rs-ai-status').textContent = `✓ URL aplicada a ${n} elemento(s)`;
+  });
+  // AI generate (OpenAI Images API — requiere API key del usuario)
+  document.getElementById('rs-ai-key').addEventListener('click', (e) => {
+    e.stopPropagation();
+    const cur = localStorage.getItem('hub_openai_key') || '';
+    const k = prompt('Pega tu API key de OpenAI (se guarda solo en este navegador):', cur);
+    if (k !== null) localStorage.setItem('hub_openai_key', k);
+  });
+  document.getElementById('rs-ai-go').addEventListener('click', async (e) => {
+    e.stopPropagation();
+    const apiKey = localStorage.getItem('hub_openai_key');
+    if (!apiKey) {
+      document.getElementById('rs-ai-status').innerHTML = '⚠ Configura tu API key primero (botón 🔑)';
+      return;
+    }
+    const extra = document.getElementById('rs-ai-prompt').value.trim();
+    const PROMPT_BASE = 'Editorial photograph for a Mexican gastric cancer awareness campaign by AMG (Asociación Mexicana de Gastroenterología). Persona on the LEFT side of the frame looking at camera, soft natural lighting, neutral background with subtle teal #30B8B0 atmosphere on the left third, clear white space on the RIGHT side reserved for typography overlay. Documentary style, photorealistic, calm professional mood, age 35-55, Mexican ethnicity, no text in image. Square 1:1 composition.';
+    const fullPrompt = extra ? PROMPT_BASE + ' ' + extra : PROMPT_BASE;
+    document.getElementById('rs-ai-status').innerHTML = '⏳ Generando imagen con IA…';
+    try {
+      const r = await fetch('https://api.openai.com/v1/images/generations', {
+        method: 'POST',
+        headers: { 'Content-Type':'application/json', 'Authorization':'Bearer ' + apiKey },
+        body: JSON.stringify({ model:'gpt-image-1', prompt: fullPrompt, size:'1024x1024', n:1, quality:'high' })
+      });
+      const j = await r.json();
+      if (j.error) { document.getElementById('rs-ai-status').textContent = '❌ ' + j.error.message; return; }
+      // gpt-image-1 retorna b64_json
+      const b64 = j.data?.[0]?.b64_json;
+      const url = j.data?.[0]?.url;
+      const dataUri = b64 ? ('data:image/png;base64,' + b64) : url;
+      if (!dataUri) { document.getElementById('rs-ai-status').textContent = '❌ Sin imagen en la respuesta'; return; }
+      const n = applyImageUrl(dataUri);
+      document.getElementById('rs-ai-status').innerHTML = `✓ Imagen IA aplicada a ${n} elemento(s)`;
+    } catch (err) {
+      document.getElementById('rs-ai-status').textContent = '❌ Error: ' + err.message;
+    }
+  });
+
+  document.getElementById('rs-img-reset').addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (!confirm('Resetear imagen a su valor original?')) return;
+    const el = cur();
+    el.style.removeProperty('background-position');
+    el.style.removeProperty('background-size');
+    el.style.removeProperty('background-image');
+    el.style.left = ''; el.style.top = ''; el.style.width = ''; el.style.height = '';
+    refresh();
+    if (window.HubSync) {
+      const k = HubSync.keyForImg(el);
+      if (k) HubSync.resetKey(k);
+    }
+  });
+}
+
+/* ── Tab SELLO ── */
+function populateSelloTab(pieza) {
+  const panel = document.getElementById('rs-panel-sello');
+  const sellos = Array.from(pieza.querySelectorAll('.sello, .cr-logo'));
+  if (!sellos.length) { panel.innerHTML = '<div class="rs-empty">Esta pieza no tiene sello AMG.</div>'; return; }
+  let html = '<div class="rs-section-title">Sello AMG</div>';
+  if (sellos.length > 1) {
+    html += '<div class="rs-field"><label>Sello</label><select id="rs-sello-sel">' +
+      sellos.map((_,i) => `<option value="${i}">Sello ${i+1}</option>`).join('') + '</select></div>';
+  }
+  html += `
+    <div class="rs-field"><label>← Left · <span id="rs-sello-l-val">—</span></label><input type="range" id="rs-sello-l" min="-50" max="500" value="0"></div>
+    <div class="rs-field"><label>↑ Top · <span id="rs-sello-t-val">—</span></label><input type="range" id="rs-sello-t" min="-50" max="500" value="0"></div>
+    <div class="rs-field"><label>⇲ Ancho · <span id="rs-sello-w-val">—</span></label><input type="range" id="rs-sello-w" min="20" max="300" value="80"></div>
+    <div class="rs-nudge-grid">
+      <div></div><button data-snudge="0,-2">↑</button><div></div>
+      <button data-snudge="-2,0">←</button><button data-sreset="1" class="rs-nudge-center">⊙</button><button data-snudge="2,0">→</button>
+      <div></div><button data-snudge="0,2">↓</button><div></div>
+    </div>
+    <div class="rs-actions">
+      <button class="rs-btn rs-reset" id="rs-sello-reset">↺ Reset sello</button>
+    </div>
+  `;
+  panel.innerHTML = html;
+  let cur = 0;
+  const get = () => sellos[cur];
+  const refresh = () => {
+    const el = get();
+    const par = el.closest('.pieza');
+    if (!par) return;
+    const pr = par.getBoundingClientRect();
+    const sr = el.getBoundingClientRect();
+    const l = Math.round(sr.left - pr.left), t = Math.round(sr.top - pr.top), w = Math.round(sr.width);
+    document.getElementById('rs-sello-l').value = l;
+    document.getElementById('rs-sello-t').value = t;
+    document.getElementById('rs-sello-w').value = w;
+    document.getElementById('rs-sello-l-val').textContent = l + 'px';
+    document.getElementById('rs-sello-t-val').textContent = t + 'px';
+    document.getElementById('rs-sello-w-val').textContent = w + 'px';
+  };
+  refresh();
+  const apply = () => {
+    const el = get();
+    const l = document.getElementById('rs-sello-l').value;
+    const t = document.getElementById('rs-sello-t').value;
+    const w = document.getElementById('rs-sello-w').value;
+    el.style.left = l + 'px'; el.style.top = t + 'px';
+    el.style.right = 'auto'; el.style.bottom = 'auto';
+    el.style.width = w + 'px'; el.style.height = 'auto';
+    document.getElementById('rs-sello-l-val').textContent = l + 'px';
+    document.getElementById('rs-sello-t-val').textContent = t + 'px';
+    document.getElementById('rs-sello-w-val').textContent = w + 'px';
+    if (window.HubSync) {
+      clearTimeout(el._sv);
+      el._sv = setTimeout(() => { HubSync.saveSello(el); updateRsSync('saving'); setTimeout(() => updateRsSync(), 500); }, 280);
+    }
+  };
+  ['rs-sello-l','rs-sello-t','rs-sello-w'].forEach(id => document.getElementById(id).addEventListener('input', apply));
+  panel.querySelectorAll('[data-snudge]').forEach(b => {
+    b.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const [dx,dy] = b.dataset.snudge.split(',').map(Number);
+      const lE = document.getElementById('rs-sello-l');
+      const tE = document.getElementById('rs-sello-t');
+      lE.value = parseInt(lE.value) + dx; tE.value = parseInt(tE.value) + dy;
+      apply();
+    });
+  });
+  panel.querySelectorAll('[data-sreset]').forEach(b => {
+    b.addEventListener('click', (e) => { e.stopPropagation(); refresh(); });
+  });
+  const selS = document.getElementById('rs-sello-sel');
+  if (selS) selS.addEventListener('change', e => { cur = parseInt(e.target.value,10); refresh(); });
+  document.getElementById('rs-sello-reset').addEventListener('click', (e) => {
+    e.stopPropagation();
+    const el = get();
+    el.style.left=''; el.style.top=''; el.style.right=''; el.style.bottom=''; el.style.width=''; el.style.height='';
+    refresh();
+    if (window.HubSync) {
+      const k = HubSync.keyForSello(el);
+      if (k) HubSync.resetKey(k);
+    }
+  });
+}
+
+/* ── Tab PIEZA ── */
+function populatePiezaTab(pieza) {
+  const panel = document.getElementById('rs-panel-pieza');
+  const id = pieza.id;
+  const cls = [...pieza.classList];
+  const fmt = (cls.find(c => c.startsWith('fmt-')) || '').replace('fmt-','') || '?';
+  const v   = (cls.find(c => c.startsWith('var-')) || '').replace('var-','') || '?';
+  const cache = (window.HubSync && HubSync.cache) ? HubSync.cache() : {};
+  const prefix = id.replace(/\//g,'__') + '__';
+  const piezaEdits = Object.keys(cache).filter(k => k.startsWith(prefix)).length;
+  panel.innerHTML = `
+    <div class="rs-section-title">Metadatos</div>
+    <div class="rs-meta">
+      <div><b>ID:</b> <code>${id}</code></div>
+      <div><b>Formato:</b> ${fmt}</div>
+      <div><b>Variante:</b> ${v}</div>
+      <div><b>Cambios guardados:</b> <code>${piezaEdits}</code></div>
+    </div>
+    <div class="rs-section-title">Acciones</div>
+    <div class="rs-actions-stack">
+      <button class="rs-btn rs-btn-primary" id="rs-pieza-save">💾 Guardar pieza completa</button>
+      <button class="rs-btn rs-btn-ok" id="rs-pieza-approve">✓ Marcar como aprobada</button>
+      <button class="rs-btn rs-reset" id="rs-pieza-reset">↺ Resetear pieza completa</button>
+    </div>
+    <div class="rs-section-title">Comentario revisión</div>
+    <textarea class="rs-textarea" rows="3" placeholder="Notas para el equipo Carnot/AMG…" id="rs-pieza-comment"></textarea>
+  `;
+  document.getElementById('rs-pieza-save').addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (!window.HubSync || !HubSync.savePiezaAll) return;
+    const r = HubSync.savePiezaAll(pieza);
+    document.getElementById('rs-pieza-save').textContent = `✓ Guardado (${r.texts}T·${r.images}I·${r.sellos}S)`;
+    setTimeout(() => document.getElementById('rs-pieza-save').textContent = '💾 Guardar pieza completa', 2000);
+  });
+  document.getElementById('rs-pieza-reset').addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (!confirm(`Resetear TODOS los cambios de ${id}? Esta acción no se puede deshacer.`)) return;
+    const cache = HubSync.cache();
+    Object.keys(cache).filter(k => k.startsWith(prefix.replace(/__/g,'/'))).forEach(k => HubSync.resetKey(k));
+    location.reload();
+  });
+  document.getElementById('rs-pieza-approve').addEventListener('click', (e) => {
+    e.stopPropagation();
+    pieza.classList.add('rs-approved');
+    pieza.style.outline = '3px solid #2a9d4d';
+    document.getElementById('rs-pieza-approve').textContent = '✓ Aprobada';
+  });
+}
+
+/* Saves para footer y nav */
+function saveActivePieza() {
+  if (!_activePieza) { alert('Selecciona una pieza primero (haz clic en cualquier arte)'); return; }
+  if (!window.HubSync || !HubSync.savePiezaAll) return;
+  const r = HubSync.savePiezaAll(_activePieza);
+  updateRsSync('saving');
+  setTimeout(() => updateRsSync(), 500);
+  console.info('[Sidebar] Guardado:', r);
+}
+
+function navPieza(dir) {
+  const all = Array.from(document.querySelectorAll('.tab-panel.active .pieza, .pieza'));
+  const uniq = Array.from(new Set(all));
+  if (!uniq.length) return;
+  const idx = _activePieza ? uniq.indexOf(_activePieza) : -1;
+  const next = uniq[((idx + dir) + uniq.length) % uniq.length];
+  if (next) { setActivePieza(next); next.scrollIntoView({behavior:'smooth', block:'center'}); }
+}
+
+document.addEventListener('click', (e) => {
+  if (e.target.id === 'rs-prev') { e.stopPropagation(); navPieza(-1); }
+  if (e.target.id === 'rs-next') { e.stopPropagation(); navPieza(+1); }
+});
+
+/* Tab switching */
+document.addEventListener('click', (e) => {
+  const tab = e.target.closest('.rs-tab');
+  if (!tab) return;
+  const which = tab.dataset.tab;
+  document.querySelectorAll('.rs-tab').forEach(t => t.classList.toggle('active', t === tab));
+  document.querySelectorAll('.rs-panel').forEach(p => p.classList.toggle('active', p.classList.contains('rs-' + which)));
+});
+
+/* Sync badge en sidebar */
+function updateRsSync(state) {
+  const el = document.getElementById('rs-sync');
+  if (!el) return;
+  if (!state) {
+    state = (window.HubSync && HubSync.isReady && HubSync.isReady()) ? 'ok' : 'local';
+  }
+  const map = {
+    ok:      { txt:'✓ Sincronizado a Firebase', color:'#30B8B0' },
+    saving:  { txt:'⏳ Guardando…', color:'#B8922A' },
+    local:   { txt:'● Solo localStorage', color:'#B8922A' },
+    offline: { txt:'○ Sin conexión', color:'#999' }
+  };
+  const m = map[state] || map.ok;
+  el.textContent = m.txt;
+  el.style.color = m.color;
+}
+setInterval(() => { if (editMode) updateRsSync(); }, 4000);
 </script>
 </body>
 </html>
