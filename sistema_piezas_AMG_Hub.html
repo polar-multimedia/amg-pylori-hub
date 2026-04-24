@@ -96,6 +96,9 @@ window.HubSync = (function () {
                   !e.right && !e.bottom && !e.width && !e.height;
       } else if (e.type === 'sello') {
         isEmpty = !e.left && !e.top && !e.right && !e.bottom && !e.width && !e.height;
+      } else if (e.type === 'box') {
+        isEmpty = !e.top && !e.bottom && !e.left && !e.right && !e.width && !e.height &&
+                  !e.paddingTop && !e.paddingRight && !e.paddingBottom && !e.paddingLeft;
       } else if (e.type === 'text') {
         isEmpty = (typeof e.html !== 'string') || e.html === '';
       }
@@ -123,6 +126,9 @@ window.HubSync = (function () {
     } else if (entry.type === 'sello') {
       const el = resolveSelloByKey(key);
       if (el) applySelloStyles(el, entry);
+    } else if (entry.type === 'box') {
+      const el = resolveBoxByKey(key);
+      if (el) applyBoxStyles(el, entry);
     } else {
       const el = resolveElByKey(key);
       if (el && typeof entry.html === 'string') {
@@ -194,6 +200,28 @@ window.HubSync = (function () {
     if (e.height !== undefined)      el.style.height = e.height;
     console.info('[HubSync] ← sello aplicado', el.closest('[id]')?.id, e.left, e.top, e.width);
   }
+  function applyBoxStyles(el, e) {
+    ['top','bottom','left','right','width','height','padding','paddingTop','paddingRight','paddingBottom','paddingLeft']
+      .forEach(k => {
+        if (e[k] !== undefined && e[k] !== null && e[k] !== '') {
+          el.style.setProperty(k.replace(/[A-Z]/g, m => '-' + m.toLowerCase()), e[k], 'important');
+        }
+      });
+    console.info('[HubSync] ← caja aplicada', el.closest('[id]')?.id,
+      'T=' + (e.top||'—'), 'B=' + (e.bottom||'—'), 'W=' + (e.width||'—'));
+  }
+  const BOX_SEL_HS = '.copy-block, .vd-body, .vd-right, .tk-card, .tt-beat, .hp-card, .cr-copy';
+  function resolveBoxByKey(key) {
+    // formato: "piezaId/box/className[/idx]"
+    const parts = key.split('/');
+    if (parts.length < 3 || parts[1] !== 'box') return null;
+    const pieza = document.getElementById(parts[0]);
+    if (!pieza) return null;
+    const cls = parts[2];
+    const idx = parts[3] ? parseInt(parts[3], 10) : 0;
+    const matches = pieza.querySelectorAll('.' + cls);
+    return matches[idx] || null;
+  }
 
   /* ══ 6. Generar key para un elemento editable ══ */
   const EDITABLE_CLASSES = [
@@ -239,6 +267,50 @@ window.HubSync = (function () {
     const idx = Array.from(matches).indexOf(el);
     if (idx < 0) return null;
     return pieza.id + '/img' + (matches.length > 1 ? '/' + idx : '');
+  }
+
+  /* Generar key para un box (copy-block, vd-body, etc.) */
+  function keyForBox(el) {
+    const pieza = el.closest('[id^="pieza-"], [id^="carrusel-"]');
+    if (!pieza || !pieza.id) return null;
+    // Buscar qué clase de box es (la primera del BOX_SEL_HS)
+    const classList = [...el.classList];
+    const boxClasses = ['copy-block','vd-body','vd-right','tk-card','tt-beat','hp-card','cr-copy'];
+    const cls = boxClasses.find(c => classList.includes(c));
+    if (!cls) return null;
+    const matches = pieza.querySelectorAll('.' + cls);
+    const idx = Array.from(matches).indexOf(el);
+    return pieza.id + '/box/' + cls + (matches.length > 1 ? '/' + idx : '');
+  }
+
+  /* Guardar edición de box (contenedor del texto) */
+  function saveBox(el) {
+    const key = keyForBox(el);
+    if (!key) { console.warn('[HubSync] no pude generar key para box', el); return; }
+    const payload = {
+      type:          'box',
+      top:           el.style.top || '',
+      bottom:        el.style.bottom || '',
+      left:          el.style.left || '',
+      right:         el.style.right || '',
+      width:         el.style.width || '',
+      height:        el.style.height || '',
+      paddingTop:    el.style.paddingTop || '',
+      paddingRight:  el.style.paddingRight || '',
+      paddingBottom: el.style.paddingBottom || '',
+      paddingLeft:   el.style.paddingLeft || '',
+      ts: Date.now(),
+      editor: 'Carnot/AMG'
+    };
+    const hasReal = payload.top || payload.bottom || payload.left || payload.right ||
+                    payload.width || payload.height ||
+                    payload.paddingTop || payload.paddingRight || payload.paddingBottom || payload.paddingLeft;
+    if (!hasReal) {
+      console.info('[HubSync] ⊘ caja sin cambios reales — skip', key);
+      return;
+    }
+    console.info('[HubSync] → caja guardada', key, payload);
+    persist(key, payload);
   }
 
   /* Generar key para un elemento sello (AMG shield) */
@@ -378,8 +450,8 @@ window.HubSync = (function () {
 
   /* Guardar TODOS los elementos editables de una pieza (botón explícito) */
   function savePiezaAll(piezaEl) {
-    if (!piezaEl) return { texts: 0, images: 0, sellos: 0 };
-    let texts = 0, images = 0, sellos = 0;
+    if (!piezaEl) return { texts: 0, images: 0, sellos: 0, boxes: 0 };
+    let texts = 0, images = 0, sellos = 0, boxes = 0;
     // Textos
     const textSel = EDITABLE_CLASSES.map(c => '.' + c).join(', ');
     piezaEl.querySelectorAll(textSel).forEach(el => {
@@ -399,8 +471,15 @@ window.HubSync = (function () {
                         el.style.right || el.style.bottom || el.style.height;
       if (hasInline) { try { saveSello(el); sellos++; } catch (_) {} }
     });
-    console.info('[HubSync] 💾 savePiezaAll', piezaEl.id, { texts, images, sellos });
-    return { texts, images, sellos };
+    // Cajas (copy-block, vd-body, etc.) modificadas
+    piezaEl.querySelectorAll('.copy-block, .vd-body, .vd-right, .tk-card, .tt-beat, .hp-card, .cr-copy').forEach(el => {
+      const hasInline = el.style.top || el.style.bottom || el.style.left || el.style.right ||
+                        el.style.width || el.style.height ||
+                        el.style.paddingTop || el.style.paddingRight || el.style.paddingBottom || el.style.paddingLeft;
+      if (hasInline) { try { saveBox(el); boxes++; } catch (_) {} }
+    });
+    console.info('[HubSync] 💾 savePiezaAll', piezaEl.id, { texts, images, sellos, boxes });
+    return { texts, images, sellos, boxes };
   }
 
   /* ══ 8. Reset de una edición ══ */
@@ -423,7 +502,7 @@ window.HubSync = (function () {
 
   /* ══ 10. API pública ══ */
   return {
-    init, save, saveImg, saveSello, savePiezaAll, resetKey, keyForEl, keyForImg, keyForSello,
+    init, save, saveImg, saveSello, saveBox, savePiezaAll, resetKey, keyForEl, keyForImg, keyForSello, keyForBox,
     isConfigured: () => isConfigured(),
     isReady:      () => ready,
     cache:        () => localCache
@@ -5602,6 +5681,68 @@ function populateTextoTab(pieza) {
     <div class="rs-actions">
       <button class="rs-btn rs-btn-sm rs-reset" id="rs-char-clear">↺ Resetear estilos</button>
     </div>
+
+    <div class="rs-section-title">Caja (contenedor)</div>
+    <div class="rs-tip" style="margin-bottom:6px;font-size:10px;color:rgba(255,255,255,0.5)">
+      Modifica las dimensiones y márgenes de la caja que contiene el texto seleccionado.
+    </div>
+    <div class="rs-box-id" id="rs-box-id" style="font-size:10px;color:var(--teal-light);margin-bottom:6px;font-family:'Courier New',monospace"></div>
+    <div class="rs-duo">
+      <div class="rs-field">
+        <label>Top · <span id="rs-box-t-val">—</span></label>
+        <input type="range" id="rs-box-t" min="0" max="100" step="0.5" value="0">
+      </div>
+      <div class="rs-field">
+        <label>Bottom · <span id="rs-box-b-val">—</span></label>
+        <input type="range" id="rs-box-b" min="0" max="200" step="1" value="0">
+      </div>
+    </div>
+    <div class="rs-duo">
+      <div class="rs-field">
+        <label>Left · <span id="rs-box-l-val">—</span></label>
+        <input type="range" id="rs-box-l" min="0" max="100" step="0.5" value="0">
+      </div>
+      <div class="rs-field">
+        <label>Right · <span id="rs-box-r-val">—</span></label>
+        <input type="range" id="rs-box-r" min="0" max="100" step="0.5" value="0">
+      </div>
+    </div>
+    <div class="rs-duo">
+      <div class="rs-field">
+        <label>Width · <span id="rs-box-w-val">—</span></label>
+        <input type="range" id="rs-box-w" min="10" max="100" step="0.5" value="50">
+      </div>
+      <div class="rs-field">
+        <label>Height · <span id="rs-box-h-val">auto</span></label>
+        <input type="range" id="rs-box-h" min="0" max="100" step="0.5" value="0">
+      </div>
+    </div>
+    <div class="rs-section-title" style="font-size:10px">Padding (interior)</div>
+    <div class="rs-duo">
+      <div class="rs-field">
+        <label>Top · <span id="rs-box-pt-val">—</span></label>
+        <input type="range" id="rs-box-pt" min="0" max="40" step="0.5" value="0">
+      </div>
+      <div class="rs-field">
+        <label>Right · <span id="rs-box-pr-val">—</span></label>
+        <input type="range" id="rs-box-pr" min="0" max="40" step="0.5" value="0">
+      </div>
+    </div>
+    <div class="rs-duo">
+      <div class="rs-field">
+        <label>Bottom · <span id="rs-box-pb-val">—</span></label>
+        <input type="range" id="rs-box-pb" min="0" max="40" step="0.5" value="0">
+      </div>
+      <div class="rs-field">
+        <label>Left · <span id="rs-box-pl-val">—</span></label>
+        <input type="range" id="rs-box-pl" min="0" max="40" step="0.5" value="0">
+      </div>
+    </div>
+    <div class="rs-actions">
+      <button class="rs-btn rs-btn-sm" id="rs-box-unit-pct" title="Top/Left/Right/Width en %">% %</button>
+      <button class="rs-btn rs-btn-sm" id="rs-box-unit-px" title="Top/Left/Right/Width en px">px</button>
+      <button class="rs-btn rs-btn-sm rs-reset" id="rs-box-clear">↺ Reset caja</button>
+    </div>
   `;
 
   // === Referencias a los controles del sidebar ===
@@ -5741,6 +5882,143 @@ function populateTextoTab(pieza) {
     if (window.HubSync) HubSync.save(_rsTextSelected);
     refreshCharPanel();
   });
+
+  // === BOX panel (caja contenedora del texto) ===
+  let _boxUnit = 'px';   // 'px' o '%'
+  const getBox = () => _rsTextSelected
+    ? _rsTextSelected.closest('.copy-block, .vd-body, .vd-right, .tk-card, .tt-beat, .hp-card, .cr-copy')
+    : null;
+
+  const boxInputs = {
+    t:  document.getElementById('rs-box-t'),
+    b:  document.getElementById('rs-box-b'),
+    l:  document.getElementById('rs-box-l'),
+    r:  document.getElementById('rs-box-r'),
+    w:  document.getElementById('rs-box-w'),
+    h:  document.getElementById('rs-box-h'),
+    pt: document.getElementById('rs-box-pt'),
+    pr: document.getElementById('rs-box-pr'),
+    pb: document.getElementById('rs-box-pb'),
+    pl: document.getElementById('rs-box-pl'),
+  };
+  const boxVals = {
+    t:  document.getElementById('rs-box-t-val'),
+    b:  document.getElementById('rs-box-b-val'),
+    l:  document.getElementById('rs-box-l-val'),
+    r:  document.getElementById('rs-box-r-val'),
+    w:  document.getElementById('rs-box-w-val'),
+    h:  document.getElementById('rs-box-h-val'),
+    pt: document.getElementById('rs-box-pt-val'),
+    pr: document.getElementById('rs-box-pr-val'),
+    pb: document.getElementById('rs-box-pb-val'),
+    pl: document.getElementById('rs-box-pl-val'),
+  };
+
+  function refreshBoxPanel() {
+    const box = getBox();
+    const boxIdEl = document.getElementById('rs-box-id');
+    if (!box) {
+      if (boxIdEl) boxIdEl.textContent = '(sin caja detectada)';
+      return;
+    }
+    const boxClass = ['copy-block','vd-body','vd-right','tk-card','tt-beat','hp-card','cr-copy'].find(c => box.classList.contains(c)) || '?';
+    if (boxIdEl) boxIdEl.textContent = '.' + boxClass;
+    const cs = getComputedStyle(box);
+    // Para sliders, usar % si está en % o px según _boxUnit actual del style inline; fallback a computed
+    const readDim = (prop) => {
+      const inline = box.style[prop];
+      if (inline && inline.endsWith('%')) return { val: parseFloat(inline), unit: '%' };
+      if (inline && inline.endsWith('px')) return { val: parseFloat(inline), unit: 'px' };
+      const compu = cs[prop];
+      if (compu && compu !== 'auto') return { val: parseFloat(compu), unit: 'px' };
+      return { val: 0, unit: 'px' };
+    };
+    const set = (k, prop, maxPx, maxPct) => {
+      const r = readDim(prop);
+      boxInputs[k].max = r.unit === '%' ? maxPct : maxPx;
+      boxInputs[k].value = r.val.toFixed(1);
+      boxVals[k].textContent = r.val.toFixed(1) + r.unit;
+    };
+    set('t',  'top',    600, 100);
+    set('b',  'bottom', 600, 100);
+    set('l',  'left',   600, 100);
+    set('r',  'right',  600, 100);
+    set('w',  'width',  600, 100);
+    set('h',  'height', 600, 100);
+    ['pt','pr','pb','pl'].forEach(k => {
+      const prop = {pt:'paddingTop',pr:'paddingRight',pb:'paddingBottom',pl:'paddingLeft'}[k];
+      const r = readDim(prop);
+      boxInputs[k].value = r.val.toFixed(1);
+      boxVals[k].textContent = r.val.toFixed(1) + 'px';
+    });
+  }
+
+  const applyBoxProp = (prop, v, unit) => {
+    const box = getBox();
+    if (!box) return;
+    if (v === '' || v === null) {
+      box.style.removeProperty(prop.replace(/[A-Z]/g, m => '-' + m.toLowerCase()));
+    } else {
+      box.style.setProperty(prop.replace(/[A-Z]/g, m => '-' + m.toLowerCase()), v + unit, 'important');
+    }
+    clearTimeout(box._sv);
+    box._sv = setTimeout(() => {
+      if (window.HubSync) HubSync.saveBox(box);
+      updateRsSync('saving');
+      setTimeout(() => updateRsSync(), 500);
+    }, 280);
+  };
+
+  // Wire sliders de posición/dimensión (respetan la unidad seleccionada)
+  const dimMap = { t:'top', b:'bottom', l:'left', r:'right', w:'width', h:'height' };
+  Object.entries(dimMap).forEach(([k, prop]) => {
+    boxInputs[k].addEventListener('input', () => {
+      const v = boxInputs[k].value;
+      applyBoxProp(prop, v, _boxUnit);
+      boxVals[k].textContent = v + _boxUnit;
+    });
+  });
+  // Wire sliders de padding (siempre en px)
+  const padMap = { pt:'paddingTop', pr:'paddingRight', pb:'paddingBottom', pl:'paddingLeft' };
+  Object.entries(padMap).forEach(([k, prop]) => {
+    boxInputs[k].addEventListener('input', () => {
+      const v = boxInputs[k].value;
+      applyBoxProp(prop, v, 'px');
+      boxVals[k].textContent = v + 'px';
+    });
+  });
+
+  // Botones de unidad
+  document.getElementById('rs-box-unit-pct').addEventListener('click', (e) => {
+    e.stopPropagation();
+    _boxUnit = '%';
+    document.getElementById('rs-box-unit-pct').classList.add('active');
+    document.getElementById('rs-box-unit-px').classList.remove('active');
+    refreshBoxPanel();
+  });
+  document.getElementById('rs-box-unit-px').addEventListener('click', (e) => {
+    e.stopPropagation();
+    _boxUnit = 'px';
+    document.getElementById('rs-box-unit-px').classList.add('active');
+    document.getElementById('rs-box-unit-pct').classList.remove('active');
+    refreshBoxPanel();
+  });
+
+  // Reset caja
+  document.getElementById('rs-box-clear').addEventListener('click', (e) => {
+    e.stopPropagation();
+    const box = getBox();
+    if (!box) return;
+    ['top','bottom','left','right','width','height','paddingTop','paddingRight','paddingBottom','paddingLeft']
+      .forEach(p => box.style.removeProperty(p.replace(/[A-Z]/g, m => '-' + m.toLowerCase())));
+    if (window.HubSync) {
+      const k = HubSync.keyForBox(box);
+      if (k) HubSync.resetKey(k);
+    }
+    refreshBoxPanel();
+  });
+
+  refreshBoxPanel();  // llenar al inicio
 
   function refreshCharPanel() {
     if (!_rsTextSelected) return;
