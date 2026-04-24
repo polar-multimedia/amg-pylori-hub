@@ -141,7 +141,10 @@ window.HubSync = (function () {
     if (e.bottom && e.bottom !== '') el.style.bottom = e.bottom;
     if (e.width  && e.width  !== '') el.style.width  = e.width;
     if (e.height && e.height !== '') el.style.height = e.height;
-    console.info('[HubSync] ← imagen aplicada', el.closest('[id]')?.id, e.pos, e.size);
+    console.info('[HubSync] ← imagen aplicada', el.closest('[id]')?.id,
+      'pos=' + (e.pos||'—'), 'size=' + (e.size||'—'),
+      'bgImage=' + (e.bgImage ? e.bgImage.substring(0,60) + '…' : '—'),
+      'mask=' + ((e.left||e.top||e.width||e.height) ? 'sí' : 'no'));
   }
   function resolveElByKey(key) {
     // formato key = "piezaId/className[/idx]"
@@ -309,15 +312,57 @@ window.HubSync = (function () {
   function persist(key, entry) {
     localCache[key] = entry;
     saveLocal();                                // ← siempre guarda en localStorage
+    logPersist(key, entry);                     // ← bitácora visible en sidebar
     if (ready) {
       setBadge('guardando…', '#B8922A');
       db.ref(NODE_ROOT + '/' + key.replace(/\//g, '__')).set(entry)
-        .then(() => setBadge('✓ sync', '#30B8B0'))
-        .catch(err => { console.error('[HubSync] save error:', err); setBadge('solo local', '#B8922A'); });
+        .then(() => {
+          setBadge('✓ sync', '#30B8B0');
+          logPersistOk(key);
+        })
+        .catch(err => {
+          console.error('[HubSync] save error:', err);
+          setBadge('solo local', '#B8922A');
+          logPersistErr(key, err.message);
+        });
     } else {
       console.info('[HubSync] Edición guardada en localStorage:', key);
       setBadge('solo local', '#B8922A');
     }
+  }
+  /* Bitácora visible en el sidebar — últimas 8 acciones */
+  const _persistLog = [];
+  function logPersist(key, entry) {
+    const t = new Date().toLocaleTimeString('es-MX', {hour12:false});
+    const type = entry.type || 'text';
+    const preview = type === 'text' ? (entry.html||'').substring(0,30)
+                 : type === 'image' ? (entry.bgImage ? '🖼 imagen nueva' : (entry.pos ? `pos ${entry.pos}` : 'máscara'))
+                 : type === 'sello' ? `sello ${entry.left}/${entry.top} ${entry.width}` : '—';
+    _persistLog.unshift({ t, key, type, preview, status:'…' });
+    if (_persistLog.length > 8) _persistLog.pop();
+    renderPersistLog();
+  }
+  function logPersistOk(key) {
+    const rec = _persistLog.find(r => r.key === key && r.status === '…');
+    if (rec) rec.status = '✓';
+    renderPersistLog();
+  }
+  function logPersistErr(key, msg) {
+    const rec = _persistLog.find(r => r.key === key && r.status === '…');
+    if (rec) { rec.status = '❌'; rec.err = msg; }
+    renderPersistLog();
+  }
+  function renderPersistLog() {
+    const el = document.getElementById('rs-log');
+    if (!el) return;
+    el.innerHTML = _persistLog.length
+      ? _persistLog.map(r => `<div class="rs-log-row ${r.status==='❌'?'rs-log-err':''}">
+          <span class="rs-log-st">${r.status}</span>
+          <span class="rs-log-t">${r.t}</span>
+          <span class="rs-log-k">${r.key}</span>
+          <span class="rs-log-p">${r.preview}</span>
+        </div>`).join('')
+      : '<div style="opacity:0.5;padding:6px;font-size:10px">Sin cambios recientes</div>';
   }
 
   /* Guardar TODOS los elementos editables de una pieza (botón explícito) */
@@ -867,6 +912,43 @@ body.edit-mode .content { padding-right: 400px; }   /* deja aire para el sidebar
   transition: background 0.1s;
 }
 .rs-typo-bar button:hover { background: var(--teal); }
+
+/* ── Bitácora de saves recientes (dentro del sidebar) ── */
+.rs-log {
+  max-height: 180px;
+  overflow-y: auto;
+  font-family: 'Courier New', monospace;
+  font-size: 10px;
+  background: rgba(0,0,0,0.35);
+  border: 1px solid rgba(48,184,176,0.15);
+  border-radius: 6px;
+  padding: 4px;
+  margin-top: 8px;
+}
+.rs-log-row {
+  display: grid;
+  grid-template-columns: 20px 55px 1fr 80px;
+  gap: 4px;
+  align-items: center;
+  padding: 3px 4px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  white-space: nowrap;
+  overflow: hidden;
+}
+.rs-log-row:last-child { border-bottom: none; }
+.rs-log-st { text-align: center; font-weight: 700; }
+.rs-log-t { color: rgba(255,255,255,0.45); }
+.rs-log-k {
+  color: var(--teal-light);
+  overflow: hidden; text-overflow: ellipsis;
+}
+.rs-log-p {
+  color: rgba(255,255,255,0.65);
+  overflow: hidden; text-overflow: ellipsis;
+  text-align: right;
+}
+.rs-log-err { background: rgba(180,40,40,0.15); }
+.rs-log-err .rs-log-st { color: #ff6464; }
 .pieza.fmt-45  { width: 246px; height: 307px; }
 .pieza.fmt-11  { width: 246px; height: 246px; }
 .pieza.fmt-916 { width: 173px; height: 307px; }
@@ -5666,7 +5748,11 @@ function populatePiezaTab(pieza) {
     </div>
     <div class="rs-section-title">Comentario revisión</div>
     <textarea class="rs-textarea" rows="3" placeholder="Notas para el equipo Carnot/AMG…" id="rs-pieza-comment"></textarea>
+    <div class="rs-section-title">Bitácora de sync (últimas 8)</div>
+    <div class="rs-log" id="rs-log"></div>
   `;
+  // Render log inmediatamente si hay historia previa
+  if (typeof renderPersistLog === 'function') renderPersistLog();
   document.getElementById('rs-pieza-save').addEventListener('click', (e) => {
     e.stopPropagation();
     if (!window.HubSync || !HubSync.savePiezaAll) return;
