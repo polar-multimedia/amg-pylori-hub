@@ -78,8 +78,31 @@ window.HubSync = (function () {
     if (!ready) return;
     db.ref(NODE_ROOT).on('value', snap => {
       const data = snap.val() || {};
+      cleanupEmptyEntries(data);   // limpia saves fantasma vacíos
       localCache = data;
       applyAllToDOM(data);
+    });
+  }
+
+  /* Limpia entradas vacías (saves fantasma) tanto de cache como de Firebase */
+  function cleanupEmptyEntries(data) {
+    Object.keys(data).forEach(rawKey => {
+      const e = data[rawKey];
+      if (!e) return;
+      let isEmpty = false;
+      if (e.type === 'image') {
+        isEmpty = !e.pos && !e.size && !e.bgImage && !e.left && !e.top &&
+                  !e.right && !e.bottom && !e.width && !e.height;
+      } else if (e.type === 'sello') {
+        isEmpty = !e.left && !e.top && !e.right && !e.bottom && !e.width && !e.height;
+      } else if (e.type === 'text') {
+        isEmpty = (typeof e.html !== 'string') || e.html === '';
+      }
+      if (isEmpty) {
+        console.info('[HubSync] 🗑 limpiando entrada fantasma:', rawKey);
+        delete data[rawKey];
+        if (ready) db.ref(NODE_ROOT + '/' + rawKey).remove();
+      }
     });
   }
 
@@ -229,6 +252,12 @@ window.HubSync = (function () {
       ts:     Date.now(),
       editor: 'Carnot/AMG'
     };
+    const hasReal = payload.left || payload.top || payload.right ||
+                    payload.bottom || payload.width || payload.height;
+    if (!hasReal) {
+      console.info('[HubSync] ⊘ sello sin cambios reales — skip', key);
+      return;
+    }
     console.info('[HubSync] → sello guardado', key, payload);
     persist(key, payload);
   }
@@ -251,6 +280,15 @@ window.HubSync = (function () {
       ts:      Date.now(),
       editor:  'Carnot/AMG'
     };
+    // Defensa: NO guardar si todo está vacío (evita sobrescribir saves buenos
+    // con saves fantasma cuando savePiezaAll detecta inline incidental)
+    const hasReal = payload.pos || payload.size || payload.bgImage ||
+                    payload.left || payload.top || payload.right ||
+                    payload.bottom || payload.width || payload.height;
+    if (!hasReal) {
+      console.info('[HubSync] ⊘ imagen sin cambios reales — skip', key);
+      return;
+    }
     console.info('[HubSync] → imagen guardada', key, payload);
     persist(key, payload);
   }
