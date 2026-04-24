@@ -37,9 +37,16 @@ window.HubSync = (function () {
 
   /* ══ 3. Cargar SDK dinámicamente + init ══ */
   async function init() {
+    // Paso 0 — aplicar de inmediato lo que hay en localStorage (aunque Firebase tarde o falle)
+    const local = loadLocal();
+    if (Object.keys(local).length) {
+      console.info('[HubSync] Cache localStorage con ' + Object.keys(local).length + ' edits — aplicando…');
+      localCache = local;
+      applyAllToDOM(local);
+    }
     if (!isConfigured()) {
-      console.info('[HubSync] Sin firebaseConfig — hub operando en modo solo-local (ediciones no persisten).');
-      setBadge('offline', '#B8922A');
+      console.info('[HubSync] Sin firebaseConfig — hub operando en modo solo-local (localStorage).');
+      setBadge('solo local', '#B8922A');
       return;
     }
     try {
@@ -54,8 +61,8 @@ window.HubSync = (function () {
       setBadge('sync', '#30B8B0');
       subscribeAll();
     } catch (err) {
-      console.error('[HubSync] Error init Firebase:', err);
-      setBadge('offline', '#B8922A');
+      console.error('[HubSync] Error init Firebase (fallback localStorage):', err);
+      setBadge('solo local', '#B8922A');
     }
   }
   function loadScript(src) {
@@ -87,6 +94,9 @@ window.HubSync = (function () {
     if (entry.type === 'image') {
       const el = resolveImgByKey(key);
       if (el) applyImgStyles(el, entry);
+    } else if (entry.type === 'sello') {
+      const el = resolveSelloByKey(key);
+      if (el) applySelloStyles(el, entry);
     } else {
       const el = resolveElByKey(key);
       if (el && typeof entry.html === 'string' && el.innerHTML !== entry.html) {
@@ -131,14 +141,36 @@ window.HubSync = (function () {
     const idx = parts[2] ? parseInt(parts[2], 10) : 0;
     return matches[idx] || null;
   }
+  function resolveSelloByKey(key) {
+    // formato key = "piezaId/sello" o "piezaId/sello/idx"
+    const parts = key.split('/');
+    if (parts.length < 2 || parts[1] !== 'sello') return null;
+    const pieza = document.getElementById(parts[0]);
+    if (!pieza) return null;
+    const matches = pieza.querySelectorAll('.sello, .cr-logo');
+    const idx = parts[2] ? parseInt(parts[2], 10) : 0;
+    return matches[idx] || null;
+  }
+  function applySelloStyles(el, e) {
+    // El sello usa inline left/top/right/bottom/width/height (aspect ratio preservado por object-fit)
+    if (e.left   && e.left   !== '') el.style.left   = e.left;
+    if (e.top    && e.top    !== '') el.style.top    = e.top;
+    if (e.right  !== undefined)      el.style.right  = e.right;
+    if (e.bottom !== undefined)      el.style.bottom = e.bottom;
+    if (e.width  && e.width  !== '') el.style.width  = e.width;
+    if (e.height !== undefined)      el.style.height = e.height;
+    console.info('[HubSync] ← sello aplicado', el.closest('[id]')?.id, e.left, e.top, e.width);
+  }
 
   /* ══ 6. Generar key para un elemento editable ══ */
   const EDITABLE_CLASSES = [
     'hook','cifra','cifra-label','headline','subcopy','cta-text','disclaimer',
     'vd-stat','vd-stat-label','vd-headline','vd-subcopy','vd-eyebrow',
     'hp-giant','hp-claim','hp-sub','cta-detect','url-bottom',
+    'cr-cover-cifra','cr-cover-label','cr-cover-headline','cr-step',
     'cr-slide-title','cr-slide-sub','cr-cta-text','cr-cta-dom','cr-slide-num',
-    'tt-beat-txt','tt-guion-title'
+    'tk-brand','tk-hook','tk-cta',
+    'tt-beat-tag','tt-beat-txt','tt-guion-title'
   ];
   function keyForEl(el) {
     const pieza = el.closest('[id^="pieza-"], [id^="carrusel-"]');
@@ -172,6 +204,35 @@ window.HubSync = (function () {
     return pieza.id + '/img' + (matches.length > 1 ? '/' + idx : '');
   }
 
+  /* Generar key para un elemento sello (AMG shield) */
+  function keyForSello(el) {
+    const pieza = el.closest('[id^="pieza-"], [id^="carrusel-"]');
+    if (!pieza || !pieza.id) return null;
+    const matches = pieza.querySelectorAll('.sello, .cr-logo');
+    const idx = Array.from(matches).indexOf(el);
+    if (idx < 0) return null;
+    return pieza.id + '/sello' + (matches.length > 1 ? '/' + idx : '');
+  }
+
+  /* Guardar edición del sello (posición + tamaño) */
+  function saveSello(el) {
+    const key = keyForSello(el);
+    if (!key) { console.warn('[HubSync] no pude generar key para sello', el); return; }
+    const payload = {
+      type:   'sello',
+      left:   el.style.left   || '',
+      top:    el.style.top    || '',
+      right:  el.style.right  || '',
+      bottom: el.style.bottom || '',
+      width:  el.style.width  || '',
+      height: el.style.height || '',
+      ts:     Date.now(),
+      editor: 'Carnot/AMG'
+    };
+    console.info('[HubSync] → sello guardado', key, payload);
+    persist(key, payload);
+  }
+
   /* Guardar edición de imagen */
   function saveImg(el) {
     const key = keyForImg(el);
@@ -194,16 +255,30 @@ window.HubSync = (function () {
     persist(key, payload);
   }
 
+  /* localStorage fallback — sobrevive aunque Firebase esté caído o bloqueado */
+  const LS_KEY = 'hub_amg_edits_v1';
+  function saveLocal() {
+    try { localStorage.setItem(LS_KEY, JSON.stringify(localCache)); } catch (_) {}
+  }
+  function loadLocal() {
+    try {
+      const raw = localStorage.getItem(LS_KEY);
+      if (!raw) return {};
+      return JSON.parse(raw);
+    } catch (_) { return {}; }
+  }
+
   function persist(key, entry) {
     localCache[key] = entry;
+    saveLocal();                                // ← siempre guarda en localStorage
     if (ready) {
       setBadge('guardando…', '#B8922A');
       db.ref(NODE_ROOT + '/' + key.replace(/\//g, '__')).set(entry)
         .then(() => setBadge('✓ sync', '#30B8B0'))
-        .catch(err => { console.error('[HubSync] save error:', err); setBadge('error', '#c03030'); });
+        .catch(err => { console.error('[HubSync] save error:', err); setBadge('solo local', '#B8922A'); });
     } else {
-      console.info('[HubSync] Edición local (sin Firebase):', key, entry);
-      setBadge('local', '#B8922A');
+      console.info('[HubSync] Edición guardada en localStorage:', key);
+      setBadge('solo local', '#B8922A');
     }
   }
 
@@ -227,7 +302,7 @@ window.HubSync = (function () {
 
   /* ══ 10. API pública ══ */
   return {
-    init, save, saveImg, resetKey, keyForEl, keyForImg,
+    init, save, saveImg, saveSello, resetKey, keyForEl, keyForImg, keyForSello,
     isConfigured: () => isConfigured(),
     isReady:      () => ready,
     cache:        () => localCache
@@ -1367,6 +1442,15 @@ body.edit-mode .sello {
   border-radius: 3px;
 }
 body.edit-mode .sello:hover { outline: 2px solid rgba(136,112,40,0.9); }
+
+/* ── Anti-estirado global del sello AMG ──
+   Aunque el sistema de máscara manipule width/height, object-fit:contain
+   garantiza que el PNG mantenga su aspect ratio y nunca se deforme.
+   Aplica a todos los .sello y .cr-logo en cualquier variante. */
+.sello, .cr-logo {
+  object-fit: contain !important;
+  object-position: center !important;
+}
 
 /* Overlay dorado del sello */
 .sello-mask-overlay {
@@ -3872,10 +3956,19 @@ async function downloadMes(varKey, mes) {
 ══════════════════════════════════════════════════════ */
 
 const EDITABLE_SEL = [
+  /* ── Piezas A / C / D (fotográficas) ── */
   '.cifra','.cifra-label','.headline','.subcopy',
   '.cta-text','.disclaimer',
+  /* ── Visita médica + hero prensa ── */
   '.vd-stat','.vd-stat-label','.vd-headline','.vd-subcopy','.vd-eyebrow',
   '.hp-giant','.hp-claim','.hp-sub','.cta-detect','.url-bottom',
+  /* ── Carrusel 5 slides (cada slide con sus propios textos) ── */
+  '.cr-cover-cifra','.cr-cover-label','.cr-cover-headline','.cr-step',
+  '.cr-slide-title','.cr-slide-sub','.cr-cta-text','.cr-cta-dom','.cr-slide-num',
+  /* ── TikTok cover (var-b-tk) ── */
+  '.tk-brand','.tk-hook','.tk-point span','.tk-cta',
+  /* ── TikTok · guión de 3 beats (pack) ── */
+  '.tt-guion-title','.tt-beat-tag','.tt-beat-txt',
 ].join(', ');
 
 const BOX_SEL = '.copy-block, .vd-body, .vd-right';
@@ -4579,9 +4672,15 @@ function onSelloDrag(e) {
 }
 
 function stopSelloDrag() {
+  const sel = _selloDrag?.selImg || _selloEl;
   _selloDrag = null;
   document.removeEventListener('mousemove', onSelloDrag);
   document.removeEventListener('mouseup',   stopSelloDrag);
+  // Auto-save a HubSync (Firebase + localStorage) al soltar
+  if (sel && window.HubSync && typeof HubSync.saveSello === 'function') {
+    try { HubSync.saveSello(sel); }
+    catch (err) { console.warn('[HubSync] saveSello falló:', err); }
+  }
 }
 
 function resetSelloMask(selImg) {
