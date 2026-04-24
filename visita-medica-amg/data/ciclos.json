@@ -1,0 +1,135 @@
+{
+  "campana": {
+    "nombre": "México Sin Cáncer Gástrico 2026",
+    "cliente": "Carnot Laboratorios · Asociación Mexicana de Gastroenterología (AMG)",
+    "producto": "Ki-CAB (tegoprazán) — erradicación de H. pylori",
+    "ciclos_totales": 8,
+    "periodo": "Mayo a Diciembre 2026",
+    "rep_count": 150,
+    "sync_node": "vm_amg_2026"
+  },
+  "ciclos": [
+    {
+      "id": "c1",
+      "numero": 1,
+      "mes": "Mayo 2026",
+      "titulo": "La bacteria silenciosa",
+      "objetivo": "Instalar la magnitud del problema: 7 de 10 mexicanos portan H. pylori. Convertir la detección en un acto clínico urgente.",
+      "duracion_estimada_min": 7,
+      "claims": [
+        {
+          "id": "c1-01",
+          "cifra": "7 de 10",
+          "titulo": "mexicanos la portan",
+          "headline": "La mayoría la adquiere en la infancia.",
+          "subcopy": "Y puede pasar años sin dar síntomas.",
+          "cta": "Pregunta a tu médico por el tratamiento que está mejorando significativamente su tasa de curación.",
+          "imagen": "../HUB_AMG_PYLORI/brand_amg/hispanica_mujer_c1_gastritis.png",
+          "referencia_clinica": "Porras-Hurtado GL, et al. Rev Gastroenterol Mex 2019; prevalencia nacional 70%.",
+          "interactivo": "calculadora-riesgo"
+        },
+        {
+          "id": "c1-02",
+          "cifra": "90%",
+          "titulo": "del cáncer gástrico",
+          "headline": "inicia como infección por Helicobacter pylori",
+          "subcopy": "No es alarma. Es información.",
+          "cta": "La detección temprana cambia pronósticos.",
+          "imagen": "../HUB_AMG_PYLORI/brand_amg/hispanico_hombre_c2_transmisio.png",
+          "referencia_clinica": "IARC-WHO clasificación Grupo 1 carcinógeno. Plummer M, 2015.",
+          "interactivo": "visor-3d-estomago"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "numero": 2,
+      "mes": "Junio 2026",
+      "titulo": "Diagnóstico sin pretextos",
+      "objetivo": "Romper la inercia del diagnóstico. Mostrar los métodos actuales (antígeno fecal, aliento, endoscopía) y cuándo usar cada uno.",
+      "duracion_estimada_min": 7,
+      "claims": [
+        {
+          "id": "c2-01",
+          "cifra": "3 pruebas",
+          "titulo": "no invasivas y precisas",
+          "headline": "Antígeno fecal · Aliento · Serología",
+          "subcopy": "La detección ya no requiere endoscopía en la mayoría de los casos.",
+          "cta": "Elige la que mejor se adapte a tu paciente.",
+          "imagen": "../HUB_AMG_PYLORI/brand_amg/hispanica_mujer_c3_auto.png",
+          "referencia_clinica": "Maastricht VI/Florence Consensus 2022. Gut 2022;71:1724-1762.",
+          "interactivo": "comparador-pruebas"
+        },
+        {
+          "id": "c2-02",
+          "cifra": "48 hrs",
+          "titulo": "para un resultado",
+          "headline": "antígeno fecal de tercera generación",
+          "subcopy": "Sensibilidad >95%. Costo accesible. Disponible en México.",
+          "cta": "Agenda la prueba en la siguiente consulta.",
+          "imagen": "../HUB_AMG_PYLORI/brand_amg/hispanico_hombre_c4_consulta.png",
+          "referencia_clinica": "Gisbert JP, Pajares JM. Stool antigen test. Aliment Pharmacol Ther.",
+          "interactivo": "visor-3d-estomago"
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "numero": 3,
+      "mes": "Julio 2026",
+      "titulo": "Tratamiento que funciona",
+      "objetivo": "Presentar Ki-CAB (tegoprazán) como nuevo estándar de terapia. Diferenciar vs triple terapia tradicional. Mostrar evidencia de erradicación y adherencia.",
+      "duracion_estimada_min": 8,
+      "claims": [
+        {
+          "id": "c3-01",
+          "cifra": "92%",
+          "titulo": "de erradicación",
+          "headline": "con la terapia basada en tegoprazán",
+          "subcopy": "Superior a triple terapia tradicional en contextos de alta resistencia a claritromicina.",
+          "cta": "El nuevo estándar para tu paciente.",
+          "imagen": "../HUB_AMG_PYLORI/brand_amg/hispanica_mujer_c5_dispepsia.png",
+          "referencia_clinica": "Chey WD, et al. Am J Gastroenterol 2022. Estudio ProK-CAB.",
+          "interactivo": "comparador-kicab"
+        },
+        {
+          "id": "c3-02",
+          "cifra": "7 días",
+          "titulo": "vs 14 de triple tradicional",
+          "headline": "menos días de tratamiento",
+          "subcopy": "Mayor adherencia. Menos interacciones. Mismo o mejor resultado clínico.",
+          "cta": "Simplifica el régimen.",
+          "imagen": "../HUB_AMG_PYLORI/brand_amg/bacteria_c7_tratamiento.png",
+          "referencia_clinica": "Savarino V, et al. Expert Rev Gastroenterol Hepatol 2023; PCAB vs PPI.",
+          "interactivo": "qr-seguimiento"
+        }
+      ]
+    }
+  ],
+  "interactivos_disponibles": [
+    {
+      "id": "calculadora-riesgo",
+      "nombre": "Calculadora de riesgo H. pylori",
+      "descripcion": "6 preguntas que generan score de riesgo + recomendación de prueba. Offline.",
+      "ruta": "componentes/calculadora-riesgo.html"
+    },
+    {
+      "id": "visor-3d-estomago",
+      "nombre": "Visor 3D anatómico",
+      "descripcion": "Modelo navegable del estómago con hotspots de H. pylori y progresión de Correa.",
+      "ruta": "componentes/visor-3d.html"
+    },
+    {
+      "id": "comparador-kicab",
+      "nombre": "Comparador Ki-CAB vs triple terapia",
+      "descripcion": "Gráfica lado-a-lado de eficacia, duración, interacciones y resistencias.",
+      "ruta": "componentes/comparador-kicab.html"
+    },
+    {
+      "id": "qr-seguimiento",
+      "nombre": "QR de seguimiento al médico",
+      "descripcion": "Genera QR con URL persistente al material del ciclo + registro del médico.",
+      "ruta": "componentes/qr-seguimiento.html"
+    }
+  ]
+}

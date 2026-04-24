@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<meta name="theme-color" content="#183888">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Visita Médica · AMG Ki-CAB</title>
+<link rel="manifest" href="./manifest.json">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23183888'/%3E%3Ctext x='32' y='42' text-anchor='middle' font-family='sans-serif' font-size='28' font-weight='900' fill='%2330B8B0'%3EVM%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,700;0,800;0,900;1,400;1,900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./css/rep-stack.css">
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="vm-topbar">
+  <div class="vm-topbar__logo">🩺</div>
+  <div class="vm-topbar__title">
+    <span id="vm-topbar-title">Visita Médica AMG</span>
+    <small id="vm-topbar-title-sub">Home</small>
+  </div>
+  <div class="vm-topbar__rep">
+    <span id="vm-rep-id">—</span>
+    <span class="vm-topbar__sync" id="vm-sync-dot" title="Estado de sincronización"></span>
+  </div>
+  <button class="vm-topbar__btn" onclick="VM.volverHome()" title="Volver al home">🏠</button>
+</div>
+
+<!-- HOME (visible al inicio) -->
+<div id="vm-home"></div>
+
+<!-- DECK (slides del ciclo, oculto hasta abrir) -->
+<div id="vm-deck" style="display:none"></div>
+
+<!-- FOOTER navegación -->
+<div class="vm-footer">
+  <button class="vm-footer__prev" id="vm-prev" onclick="VM.prevSlide()">‹</button>
+  <div class="vm-footer__progress"></div>
+  <div class="vm-footer__counter" id="vm-counter">— / —</div>
+  <button class="vm-footer__next" id="vm-next" onclick="VM.nextSlide()">›</button>
+</div>
+
+<!-- MODAL para interactivos -->
+<div class="vm-modal" id="vm-modal">
+  <div class="vm-modal__header">
+    <div class="vm-topbar__logo" style="background:rgba(48,184,176,0.25);border-color:var(--teal-light)">💡</div>
+    <div class="vm-modal__title" id="vm-modal-title">Interactivo</div>
+    <button class="vm-modal__close" onclick="VM.cerrarInteractivo()">✕</button>
+  </div>
+  <div class="vm-modal__body" id="vm-modal-body"></div>
+</div>
+
+<!-- PWA install banner -->
+<div class="vm-install">
+  <div class="vm-install__txt">
+    Instala esta app en tu tablet para usarla sin internet. Tap "Añadir a pantalla de inicio".
+  </div>
+  <button class="vm-install__btn" onclick="
+    if (window._deferredInstall) {
+      window._deferredInstall.prompt();
+      document.querySelector('.vm-install').classList.remove('show');
+    }
+  ">Instalar</button>
+  <button class="vm-install__close" onclick="document.querySelector('.vm-install').classList.remove('show')">×</button>
+</div>
+
+<script src="./js/rep-engine.js"></script>
+
+<!-- Swipe navigation (gestos touch, carga inline) -->
+<script>
+(function() {
+  let touchStartX = 0;
+  let touchStartY = 0;
+  document.getElementById('vm-deck').addEventListener('touchstart', e => {
+    if (e.touches.length !== 1) return;
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+  }, { passive: true });
+  document.getElementById('vm-deck').addEventListener('touchend', e => {
+    if (e.changedTouches.length !== 1) return;
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    const dy = e.changedTouches[0].clientY - touchStartY;
+    if (Math.abs(dx) > 60 && Math.abs(dy) < 40) {
+      if (dx < 0) VM.nextSlide(); else VM.prevSlide();
+    }
+  }, { passive: true });
+})();
+</script>
+
+</body>
+</html>

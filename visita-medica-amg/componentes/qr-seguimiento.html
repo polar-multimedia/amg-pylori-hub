@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>QR de seguimiento — AMG</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Inter:wght@400;500;700&display=block" rel="stylesheet">
+<style>
+:root {
+  --navy:#183888; --teal:#30B8B0; --teal-light:#3DCEDD; --gold:#887028;
+  --gray-100:#F3F4F6; --gray-400:#9CA3AF; --gray-600:#4B5563;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: linear-gradient(135deg, #fff 0%, #E8EEF7 100%);
+  min-height: 100vh;
+  padding: 24px;
+}
+h1, h2, h3 { font-family: 'Montserrat', sans-serif; font-weight: 800; }
+
+.hdr {
+  background: linear-gradient(135deg, var(--navy) 0%, #0D2248 100%);
+  color: #fff;
+  padding: 24px 26px; border-radius: 14px;
+  margin-bottom: 22px;
+}
+.hdr h1 { font-size: 20px; margin-bottom: 6px; }
+.hdr p { font-size: 13px; color: rgba(255,255,255,0.8); line-height: 1.5; }
+
+.grid {
+  display: grid; grid-template-columns: 1fr 1.1fr; gap: 22px;
+}
+@media (max-width: 800px) { .grid { grid-template-columns: 1fr; } }
+
+.card {
+  background: #fff; border-radius: 14px; padding: 20px;
+  box-shadow: 0 3px 14px rgba(24,56,136,0.08);
+}
+
+.card h2 {
+  font-size: 14px; color: var(--navy);
+  margin-bottom: 14px;
+  letter-spacing: 0.04em; text-transform: uppercase;
+}
+
+/* Formulario */
+.field { margin-bottom: 14px; }
+.field label {
+  display: block;
+  font-size: 10.5px; font-weight: 700; color: var(--gray-600);
+  letter-spacing: 0.04em; text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.field input, .field select, .field textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1.5px solid var(--gray-100);
+  border-radius: 8px;
+  font-size: 13px;
+  font-family: inherit;
+  background: #fff;
+  color: var(--navy);
+  transition: border-color 0.15s;
+}
+.field input:focus, .field select:focus, .field textarea:focus {
+  outline: none;
+  border-color: var(--teal);
+  box-shadow: 0 0 0 3px rgba(48,184,176,0.15);
+}
+.chip-row { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 4px; }
+.chip-opt {
+  flex: 1; min-width: 80px;
+  padding: 8px 10px;
+  background: var(--gray-100);
+  border: 2px solid transparent;
+  border-radius: 7px;
+  font-size: 11px; font-weight: 700; color: var(--gray-600);
+  cursor: pointer; font-family: inherit;
+}
+.chip-opt:active { transform: scale(0.96); }
+.chip-opt.active {
+  background: var(--teal); color: #fff; border-color: var(--navy);
+}
+
+/* QR display */
+.qr-host {
+  background: #fff;
+  padding: 24px;
+  border-radius: 14px;
+  text-align: center;
+  box-shadow: 0 4px 18px rgba(24,56,136,0.12);
+  border: 3px solid var(--teal);
+}
+#qr-canvas {
+  padding: 18px;
+  background: #fff;
+  border-radius: 8px;
+  display: inline-block;
+  margin: 0 auto;
+}
+.qr-host h3 { font-size: 14px; color: var(--navy); margin-bottom: 6px; }
+.qr-host .sub { font-size: 11px; color: var(--gray-600); margin-bottom: 14px; }
+
+.qr-url {
+  font-family: 'Courier New', monospace;
+  font-size: 10px; color: var(--teal);
+  word-break: break-all;
+  padding: 8px 10px;
+  background: rgba(48,184,176,0.1);
+  border-radius: 6px;
+  margin-top: 10px;
+  line-height: 1.4;
+}
+
+.actions {
+  display: flex; gap: 8px; margin-top: 18px; flex-wrap: wrap;
+}
+.btn {
+  flex: 1; min-width: 110px;
+  padding: 11px 14px;
+  border: none; border-radius: 8px;
+  font-family: inherit; font-size: 11.5px; font-weight: 800;
+  cursor: pointer;
+  letter-spacing: 0.04em;
+}
+.btn-primary { background: var(--navy); color: #fff; }
+.btn-primary:active { background: var(--teal); }
+.btn-ghost { background: var(--gray-100); color: var(--gray-600); }
+
+.pill {
+  display: inline-block;
+  background: rgba(48,184,176,0.15); color: var(--teal);
+  padding: 3px 10px; border-radius: 12px;
+  font-size: 9px; font-weight: 800; letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.ref {
+  margin-top: 18px; padding: 12px 14px;
+  background: var(--gray-100);
+  border-left: 3px solid var(--teal);
+  border-radius: 6px;
+  font-size: 10.5px; line-height: 1.5; color: var(--gray-600);
+}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div class="pill" style="background:rgba(255,255,255,0.15);color:var(--teal-light)">Cierre · Seguimiento al médico</div>
+  <h1>📱 QR personalizado</h1>
+  <p>Genera un código QR con el resumen del ciclo y los datos del médico. Al escanearlo lo lleva al portal con materiales y lo registra en el CRM de Polar.</p>
+</div>
+
+<div class="grid">
+  <!-- Formulario -->
+  <div class="card">
+    <h2>Datos del médico visitado</h2>
+    <div class="field">
+      <label>Nombre del médico</label>
+      <input type="text" id="doc-nombre" placeholder="Dr. / Dra. Apellido">
+    </div>
+    <div class="field">
+      <label>Especialidad</label>
+      <select id="doc-esp">
+        <option value="gastro">Gastroenterología</option>
+        <option value="mi">Medicina Interna</option>
+        <option value="mf">Medicina Familiar</option>
+        <option value="onco">Oncología</option>
+        <option value="cx">Cirugía</option>
+        <option value="otra">Otra</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Ciudad</label>
+      <input type="text" id="doc-ciudad" placeholder="CDMX, Monterrey, Guadalajara…">
+    </div>
+    <div class="field">
+      <label>Temperatura de la visita</label>
+      <div class="chip-row" id="temp-row">
+        <button class="chip-opt" data-temp="frio">❄ Frío</button>
+        <button class="chip-opt active" data-temp="tibio">⚪ Tibio</button>
+        <button class="chip-opt" data-temp="caliente">🔥 Caliente</button>
+        <button class="chip-opt" data-temp="prescribe">💊 Ya prescribe</button>
+      </div>
+    </div>
+    <div class="field">
+      <label>Compromiso del médico</label>
+      <div class="chip-row" id="comp-row">
+        <button class="chip-opt" data-comp="info">Solo info</button>
+        <button class="chip-opt active" data-comp="prueba">Probar con 1-2 pacientes</button>
+        <button class="chip-opt" data-comp="revisar">Revisar evidencia</button>
+        <button class="chip-opt" data-comp="referir">Agendar muestra</button>
+      </div>
+    </div>
+    <div class="field">
+      <label>Notas para el siguiente ciclo</label>
+      <textarea id="doc-notas" rows="3" placeholder="Ej. pidió folleto para pacientes en lenguaje simple…"></textarea>
+    </div>
+    <div class="actions">
+      <button class="btn btn-primary" onclick="generarQR()">🎯 Generar QR + Sync</button>
+      <button class="btn btn-ghost" onclick="clearForm()">↺ Limpiar</button>
+    </div>
+  </div>
+
+  <!-- QR -->
+  <div class="card qr-host">
+    <div class="pill">Listo para escanear</div>
+    <h3 id="qr-title">Esperando datos…</h3>
+    <div class="sub" id="qr-sub">Completa el formulario y presiona "Generar QR + Sync"</div>
+    <div id="qr-canvas"></div>
+    <div class="qr-url" id="qr-url" style="display:none"></div>
+    <div class="actions">
+      <button class="btn btn-ghost" onclick="descargarQR()" id="btn-download" disabled>⬇ Descargar PNG</button>
+    </div>
+    <div class="ref" id="sync-status">Estado de sincronización: pendiente</div>
+  </div>
+</div>
+
+<!-- Librería QR (CDN, cacheada por Service Worker del PWA) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+<script>
+// Chip toggles
+document.querySelectorAll('.chip-row').forEach(row => {
+  row.querySelectorAll('.chip-opt').forEach(ch => {
+    ch.addEventListener('click', () => {
+      row.querySelectorAll('.chip-opt').forEach(c => c.classList.remove('active'));
+      ch.classList.add('active');
+    });
+  });
+});
+
+let currentQR = null;
+
+function getFormData() {
+  return {
+    medico: document.getElementById('doc-nombre').value.trim(),
+    especialidad: document.getElementById('doc-esp').value,
+    ciudad: document.getElementById('doc-ciudad').value.trim(),
+    temperatura: document.querySelector('#temp-row .chip-opt.active')?.dataset.temp,
+    compromiso: document.querySelector('#comp-row .chip-opt.active')?.dataset.comp,
+    notas: document.getElementById('doc-notas').value.trim(),
+    ts: Date.now()
+  };
+}
+
+function generarQR() {
+  const data = getFormData();
+  if (!data.medico) { alert('Captura el nombre del médico.'); return; }
+  // ID único de visita
+  const visitaId = 'v-' + Date.now().toString(36) + '-' + Math.random().toString(36).substring(2, 8);
+  data.visitaId = visitaId;
+  // Rep ID del parent
+  try { data.repId = window.parent.VM?.getRepId() || 'REP-ANON'; } catch (_) { data.repId = 'REP-ANON'; }
+  // Ciclo del parent
+  try { data.ciclo = window.parent.VM?.getCiclo()?.id || 'c-0'; } catch (_) { data.ciclo = 'c-0'; }
+
+  const url = 'https://mexicosincancergastrico.com.mx/seguimiento?v=' + visitaId
+            + '&c=' + data.ciclo + '&m=' + encodeURIComponent(data.medico).substring(0, 40);
+
+  // Render QR
+  const host = document.getElementById('qr-canvas');
+  host.innerHTML = '';
+  currentQR = new QRCode(host, {
+    text: url,
+    width: 240, height: 240,
+    colorDark: '#183888',
+    colorLight: '#ffffff',
+    correctLevel: QRCode.CorrectLevel.H
+  });
+  document.getElementById('qr-title').textContent = data.medico;
+  document.getElementById('qr-sub').textContent = data.ciudad + ' · ' + data.especialidad;
+  const urlEl = document.getElementById('qr-url');
+  urlEl.textContent = url;
+  urlEl.style.display = 'block';
+  document.getElementById('btn-download').disabled = false;
+
+  // Sync al parent/Firebase
+  try {
+    if (window.parent.VM) {
+      window.parent.VM.logEvent('visita_qr_generado', data);
+      document.getElementById('sync-status').innerHTML =
+        '✓ Registrado en cola local. Se sincronizará al backend cuando haya internet.';
+    }
+  } catch (_) {}
+}
+
+function descargarQR() {
+  if (!currentQR) return;
+  const img = document.querySelector('#qr-canvas img') || document.querySelector('#qr-canvas canvas');
+  if (!img) return;
+  const data = getFormData();
+  const a = document.createElement('a');
+  a.download = 'QR_' + (data.medico || 'medico').replace(/\s+/g,'_') + '.png';
+  if (img.tagName === 'IMG') a.href = img.src;
+  else a.href = img.toDataURL('image/png');
+  a.click();
+}
+
+function clearForm() {
+  document.querySelectorAll('input, textarea').forEach(e => e.value = '');
+  document.getElementById('doc-esp').selectedIndex = 0;
+  document.getElementById('qr-canvas').innerHTML = '';
+  document.getElementById('qr-title').textContent = 'Esperando datos…';
+  document.getElementById('qr-sub').textContent = 'Completa el formulario y presiona "Generar QR + Sync"';
+  document.getElementById('qr-url').style.display = 'none';
+  document.getElementById('btn-download').disabled = true;
+  currentQR = null;
+}
+</script>
+
+</body>
+</html>

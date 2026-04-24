@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Calculadora de riesgo — H. pylori</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800;900&family=Inter:wght@400;500;700&display=block" rel="stylesheet">
+<style>
+:root {
+  --navy:#183888; --teal:#30B8B0; --teal-light:#3DCEDD; --gold:#887028;
+  --offwhite:#F5F7FA; --gray-100:#F3F4F6; --gray-400:#9CA3AF; --gray-600:#4B5563;
+  --danger:#DC2626; --warning:#F59E0B; --success:#16A34A;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: linear-gradient(135deg, #fff 0%, #F0F5FD 100%);
+  color: #2A2A2A;
+  padding: 20px;
+  min-height: 100vh;
+}
+h1, h2 { font-family: 'Montserrat', sans-serif; font-weight: 800; }
+.hdr {
+  background: linear-gradient(135deg, var(--navy) 0%, #0D2248 100%);
+  color: #fff;
+  padding: 22px 26px;
+  border-radius: 14px;
+  margin-bottom: 22px;
+}
+.hdr h1 { font-size: 22px; margin-bottom: 6px; }
+.hdr p { font-size: 13px; color: rgba(255,255,255,0.8); line-height: 1.5; }
+.hdr .ref { font-size: 10px; color: rgba(255,255,255,0.5); margin-top: 8px; font-style: italic; }
+
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+@media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
+
+.card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 20px;
+  box-shadow: 0 4px 18px rgba(24,56,136,0.08);
+  border: 1px solid var(--gray-100);
+}
+
+.q {
+  margin-bottom: 16px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--gray-100);
+}
+.q:last-child { border-bottom: none; }
+.q__label {
+  font-size: 13px; font-weight: 700; color: var(--navy);
+  margin-bottom: 10px;
+  display: flex; align-items: center; gap: 8px;
+}
+.q__num {
+  background: var(--teal); color: #fff;
+  width: 22px; height: 22px; border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 900;
+}
+.opts { display: flex; flex-wrap: wrap; gap: 6px; }
+.opt {
+  flex: 1; min-width: 80px;
+  background: var(--gray-100);
+  border: 2px solid transparent;
+  padding: 10px 14px; border-radius: 8px;
+  font-size: 12px; font-weight: 600; color: var(--gray-600);
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: inherit;
+  text-align: center;
+}
+.opt:active { transform: scale(0.96); }
+.opt.active {
+  background: var(--teal);
+  color: #fff;
+  border-color: var(--navy);
+  box-shadow: 0 2px 8px rgba(48,184,176,0.4);
+}
+
+/* Resultado */
+.result {
+  text-align: center;
+  padding: 10px;
+}
+.gauge {
+  position: relative;
+  width: 220px; height: 140px;
+  margin: 0 auto 12px;
+}
+.gauge svg { width: 100%; height: 100%; }
+.gauge__score {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 52px; font-weight: 900;
+  color: var(--navy);
+  line-height: 1;
+}
+.gauge__max { font-size: 18px; color: var(--gray-400); }
+.risk-label {
+  font-size: 20px; font-weight: 800;
+  margin: 8px 0;
+}
+.risk-label.low { color: var(--success); }
+.risk-label.mid { color: var(--warning); }
+.risk-label.hi  { color: var(--danger); }
+
+.reco {
+  margin-top: 16px;
+  padding: 14px 18px;
+  background: var(--gray-100);
+  border-left: 4px solid var(--teal);
+  border-radius: 6px;
+  text-align: left;
+  font-size: 13px; line-height: 1.5;
+}
+.reco h3 { font-size: 13px; color: var(--navy); margin-bottom: 6px; letter-spacing: 0.04em; text-transform: uppercase; }
+.reco.hi { border-left-color: var(--danger); background: #FEF2F2; }
+.reco.mid { border-left-color: var(--warning); background: #FFFBEB; }
+.reco.low { border-left-color: var(--success); background: #F0FDF4; }
+
+.actions {
+  display: flex; gap: 10px; margin-top: 18px;
+  flex-wrap: wrap;
+}
+.btn {
+  flex: 1; min-width: 130px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 12px; font-weight: 700;
+  cursor: pointer; border: none;
+  font-family: inherit;
+}
+.btn-primary { background: var(--teal); color: #fff; }
+.btn-primary:active { background: var(--navy); }
+.btn-ghost { background: var(--gray-100); color: var(--gray-600); }
+
+.badge {
+  display: inline-block;
+  background: rgba(48,184,176,0.15); color: var(--teal);
+  padding: 3px 10px; border-radius: 12px;
+  font-size: 10px; font-weight: 800; letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div class="badge" style="background:rgba(255,255,255,0.15);color:var(--teal-light);margin-bottom:8px">Calculadora · Ciclo 1 · Detección</div>
+  <h1>🎯 Riesgo de infección por H. pylori</h1>
+  <p>Evaluación rápida basada en factores epidemiológicos y clínicos. Útil para decidir si agendar prueba diagnóstica.</p>
+  <div class="ref">Basada en Maastricht VI Consensus 2022 · IARC Monographs · Plummer M 2015 · Porras-Hurtado GL 2019</div>
+</div>
+
+<div class="grid">
+  <!-- Preguntas -->
+  <div class="card">
+    <h2 style="font-size:14px;color:var(--navy);margin-bottom:14px;letter-spacing:0.04em;text-transform:uppercase">Cuestionario clínico</h2>
+
+    <div class="q" data-q="edad">
+      <div class="q__label"><span class="q__num">1</span> Edad del paciente</div>
+      <div class="opts">
+        <button class="opt" data-val="0">&lt; 30 años</button>
+        <button class="opt" data-val="1">30-50</button>
+        <button class="opt" data-val="2">51-65</button>
+        <button class="opt" data-val="3">&gt; 65</button>
+      </div>
+    </div>
+
+    <div class="q" data-q="sintomas">
+      <div class="q__label"><span class="q__num">2</span> Síntomas digestivos superiores</div>
+      <div class="opts">
+        <button class="opt" data-val="0">Ninguno</button>
+        <button class="opt" data-val="1">Leves / ocasionales</button>
+        <button class="opt" data-val="2">Persistentes &gt; 4 semanas</button>
+        <button class="opt" data-val="3">Alarma (hematemesis, pérdida peso)</button>
+      </div>
+    </div>
+
+    <div class="q" data-q="familiar">
+      <div class="q__label"><span class="q__num">3</span> Historia familiar de cáncer gástrico</div>
+      <div class="opts">
+        <button class="opt" data-val="0">No</button>
+        <button class="opt" data-val="2">Sí (2º grado)</button>
+        <button class="opt" data-val="3">Sí (1er grado directo)</button>
+      </div>
+    </div>
+
+    <div class="q" data-q="zona">
+      <div class="q__label"><span class="q__num">4</span> Zona geográfica de residencia</div>
+      <div class="opts">
+        <button class="opt" data-val="0">Urbana, nivel socioeconómico alto</button>
+        <button class="opt" data-val="2">Urbana, medio-bajo</button>
+        <button class="opt" data-val="3">Rural / alta marginación</button>
+      </div>
+    </div>
+
+    <div class="q" data-q="aines">
+      <div class="q__label"><span class="q__num">5</span> Uso crónico de AINES o aspirina</div>
+      <div class="opts">
+        <button class="opt" data-val="0">No</button>
+        <button class="opt" data-val="1">&lt; 3 veces/semana</button>
+        <button class="opt" data-val="2">Diario (&gt; 3 meses)</button>
+      </div>
+    </div>
+
+    <div class="q" data-q="prev">
+      <div class="q__label"><span class="q__num">6</span> ¿Se ha tratado previamente para H. pylori?</div>
+      <div class="opts">
+        <button class="opt" data-val="0">No</button>
+        <button class="opt" data-val="2">Sí, pero sin comprobación de erradicación</button>
+        <button class="opt" data-val="3">Sí, falló erradicación</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Resultado -->
+  <div class="card">
+    <h2 style="font-size:14px;color:var(--navy);margin-bottom:14px;letter-spacing:0.04em;text-transform:uppercase">Resultado</h2>
+
+    <div class="result">
+      <div class="gauge">
+        <svg viewBox="0 0 200 120">
+          <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="var(--gray-100)" stroke-width="16" stroke-linecap="round"/>
+          <path id="gauge-arc" d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="var(--teal)" stroke-width="16" stroke-linecap="round"
+                stroke-dasharray="251.3" stroke-dashoffset="251.3" style="transition: stroke-dashoffset 0.8s ease, stroke 0.4s"/>
+        </svg>
+        <div class="gauge__score">
+          <span id="score-val">—</span><span class="gauge__max"> / 17</span>
+        </div>
+      </div>
+      <div class="risk-label" id="risk-label">Completa el cuestionario</div>
+      <div style="font-size:12px;color:var(--gray-600)" id="risk-desc">Selecciona al menos las 6 respuestas para calcular el nivel de riesgo.</div>
+    </div>
+
+    <div class="reco" id="reco" style="display:none">
+      <h3>Recomendación clínica</h3>
+      <div id="reco-body"></div>
+    </div>
+
+    <div class="actions">
+      <button class="btn btn-primary" onclick="generarReporte()">📄 Generar resumen</button>
+      <button class="btn btn-ghost" onclick="reset()">↺ Nuevo paciente</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const respuestas = {};
+const MAX = 17;
+
+document.querySelectorAll('.q').forEach(qEl => {
+  const qId = qEl.dataset.q;
+  qEl.querySelectorAll('.opt').forEach(btn => {
+    btn.addEventListener('click', () => {
+      qEl.querySelectorAll('.opt').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      respuestas[qId] = parseInt(btn.dataset.val, 10);
+      actualizar();
+    });
+  });
+});
+
+function actualizar() {
+  const claves = ['edad','sintomas','familiar','zona','aines','prev'];
+  if (claves.some(k => respuestas[k] === undefined)) return;
+  const score = claves.reduce((s, k) => s + (respuestas[k] || 0), 0);
+  document.getElementById('score-val').textContent = score;
+  const pct = score / MAX;
+  const arc = document.getElementById('gauge-arc');
+  arc.style.strokeDashoffset = 251.3 * (1 - pct);
+
+  let level, labelTxt, labelCls, descTxt, recoHtml;
+  if (score <= 5) {
+    level = 'low'; labelTxt = 'Riesgo BAJO'; labelCls = 'low';
+    arc.style.stroke = 'var(--success)';
+    descTxt = 'Perfil de riesgo bajo con los factores declarados.';
+    recoHtml = `
+      <strong>No se requiere prueba inmediata.</strong> Seguimiento clínico ante nuevos síntomas.
+      Considerar antígeno fecal si aparece dispepsia persistente.<br><br>
+      <em>Referencia:</em> Maastricht VI §3.4 — test-and-treat reservado para pacientes sintomáticos.
+    `;
+  } else if (score <= 10) {
+    level = 'mid'; labelTxt = 'Riesgo MODERADO'; labelCls = 'mid';
+    arc.style.stroke = 'var(--warning)';
+    descTxt = 'Perfil que justifica diagnóstico no invasivo.';
+    recoHtml = `
+      <strong>Solicitar antígeno fecal</strong> de tercera generación (sensibilidad &gt;95%).<br>
+      Alternativa: prueba de aliento con urea marcada C13.<br>
+      Evitar serología (no distingue infección activa vs pasada).<br><br>
+      <em>Referencia:</em> Gisbert JP, Pajares JM. Aliment Pharmacol Ther.
+    `;
+  } else {
+    level = 'hi'; labelTxt = 'Riesgo ALTO'; labelCls = 'hi';
+    arc.style.stroke = 'var(--danger)';
+    descTxt = 'Perfil que amerita evaluación inmediata y considerar endoscopía.';
+    recoHtml = `
+      <strong>Endoscopía alta con biopsia</strong> para histología + test de ureasa.
+      Si positivo, iniciar tratamiento de erradicación basado en Ki-CAB (tegoprazán)
+      por mayor eficacia en contextos de alta resistencia a claritromicina.<br><br>
+      Considerar vigilancia por protocolo OLGA si hay atrofia gástrica.<br><br>
+      <em>Referencia:</em> Chey WD et al. Am J Gastroenterol 2022 · Correa P 1988.
+    `;
+  }
+  const label = document.getElementById('risk-label');
+  label.textContent = labelTxt;
+  label.className = 'risk-label ' + labelCls;
+  document.getElementById('risk-desc').textContent = descTxt;
+  const reco = document.getElementById('reco');
+  reco.className = 'reco ' + level;
+  reco.style.display = 'block';
+  document.getElementById('reco-body').innerHTML = recoHtml;
+
+  // Log al parent
+  try {
+    if (window.parent && window.parent.VM) {
+      window.parent.VM.logEvent('calc_riesgo_completada', { score, level, respuestas });
+    }
+  } catch (_) {}
+}
+
+function reset() {
+  document.querySelectorAll('.opt').forEach(b => b.classList.remove('active'));
+  Object.keys(respuestas).forEach(k => delete respuestas[k]);
+  document.getElementById('score-val').textContent = '—';
+  const arc = document.getElementById('gauge-arc');
+  arc.style.strokeDashoffset = 251.3;
+  arc.style.stroke = 'var(--teal)';
+  document.getElementById('risk-label').textContent = 'Completa el cuestionario';
+  document.getElementById('risk-label').className = 'risk-label';
+  document.getElementById('risk-desc').textContent = 'Selecciona al menos las 6 respuestas para calcular el nivel de riesgo.';
+  document.getElementById('reco').style.display = 'none';
+}
+
+function generarReporte() {
+  const score = Object.values(respuestas).reduce((s, v) => s + v, 0);
+  const reporte = `CALCULADORA H. PYLORI — ${new Date().toLocaleDateString('es-MX')}\n\n` +
+    `Score: ${score} / 17\n` +
+    `Edad: ${respuestas.edad ?? '—'} · Síntomas: ${respuestas.sintomas ?? '—'}\n` +
+    `Familiar: ${respuestas.familiar ?? '—'} · Zona: ${respuestas.zona ?? '—'}\n` +
+    `AINES: ${respuestas.aines ?? '—'} · Tratamiento previo: ${respuestas.prev ?? '—'}\n\n` +
+    document.getElementById('reco-body').textContent;
+  alert(reporte);
+}
+</script>
+
+</body>
+</html>
