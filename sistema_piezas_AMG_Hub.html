@@ -642,7 +642,11 @@ body.edit-mode #edit-toolbar  { display: none !important; }
 body.edit-mode #img-panel     { display: none !important; }
 /* Los botones por-claim "✏️ Editar piezas" tampoco aportan con sidebar activo */
 body.edit-mode .btn-edit-claim,
-body.edit-mode .btn-edit-semana { display: none !important; }
+body.edit-mode .btn-edit-semana,
+body.edit-mode .btn-peb { display: none !important; }
+/* Los botones Imagen / Sello / Reset / +PNG debajo de cada arte se esconden TAMBIÉN
+   fuera de edit-mode — el sidebar es el único camino de edición ahora. */
+.btn-peb { display: none !important; }
 
 /* ═══════════════════════════════════════════════════════════════
    REV-SIDEBAR · Panel contextual de edición estilo Dreamweaver
@@ -5600,6 +5604,17 @@ function populateTextoTab(pieza) {
     </div>
   `;
 
+  // === Referencias a los controles del sidebar ===
+  const taContent  = document.getElementById('rs-txt-content');
+  const charFamily = document.getElementById('rs-char-family');
+  const charSize   = document.getElementById('rs-char-size');
+  const charWeight = document.getElementById('rs-char-weight');
+  const charStyle  = document.getElementById('rs-char-style');
+  const charLs     = document.getElementById('rs-char-ls');
+  const charColor  = document.getElementById('rs-char-color');
+  const parLh      = document.getElementById('rs-par-lh');
+  const parTi      = document.getElementById('rs-par-ti');
+
   // === Selección de texto ===
   const selectItem = (t) => {
     _rsTextSelected = t;
@@ -5617,7 +5632,6 @@ function populateTextoTab(pieza) {
   selectItem(_rsTextSelected);
 
   // === Sync de content textarea ===
-  const taContent = document.getElementById('rs-txt-content');
   taContent.addEventListener('input', () => {
     if (!_rsTextSelected) return;
     _rsTextSelected.innerText = taContent.value;
@@ -5650,15 +5664,6 @@ function populateTextoTab(pieza) {
   });
 
   // === Character panel wiring ===
-  const charFamily = document.getElementById('rs-char-family');
-  const charSize   = document.getElementById('rs-char-size');
-  const charWeight = document.getElementById('rs-char-weight');
-  const charStyle  = document.getElementById('rs-char-style');
-  const charLs     = document.getElementById('rs-char-ls');
-  const charColor  = document.getElementById('rs-char-color');
-  const parLh      = document.getElementById('rs-par-lh');
-  const parTi      = document.getElementById('rs-par-ti');
-
   charFamily.addEventListener('change', () => { _rsTextSelected.style.fontFamily = charFamily.value; scheduleTextSave(_rsTextSelected); });
   charSize.addEventListener('input', () => {
     document.getElementById('rs-char-size-val').textContent = charSize.value + 'px';
