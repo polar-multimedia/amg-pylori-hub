@@ -527,7 +527,18 @@ window.addEventListener('DOMContentLoaded', () => {
   --gray: #2A2A2A;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: 'Open Sans', sans-serif; background: #0f1629; color: #fff; min-height: 100vh; }
+/* ═══════════════════════════════════════════════════════════════
+   LOOK & FEEL LIGHT — alineado con portal público
+   mexicosincancergastrico.com.mx (2026-04-24)
+   Fondo off-white con tipografía navy. Header y piezas siguen
+   siendo oscuros por contraste visual y storytelling.
+   ═══════════════════════════════════════════════════════════════ */
+body {
+  font-family: 'Open Sans', sans-serif;
+  background: var(--offwhite);      /* #F5F7FA */
+  color: var(--navy);                /* #183888 */
+  min-height: 100vh;
+}
 
 /* ── HEADER ── */
 .site-header {
@@ -546,25 +557,26 @@ body { font-family: 'Open Sans', sans-serif; background: #0f1629; color: #fff; m
   font-size: 11px; font-weight: 600; white-space: nowrap;
 }
 
-/* ── TABS ── */
+/* ── TABS ── (light, alineadas con portal público) */
 .tabs-bar {
-  background: #141e3a;
+  background: #FFFFFF;
   padding: 0 40px;
   display: flex; gap: 4px;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
+  border-bottom: 1px solid #E5EAF3;
+  box-shadow: 0 2px 8px rgba(24,56,136,0.04);
 }
 .tab-btn {
   background: none; border: none; cursor: pointer;
   padding: 14px 24px;
-  color: rgba(255,255,255,0.45);
+  color: rgba(24,56,136,0.55);
   font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 13px;
   border-bottom: 3px solid transparent; transition: all 0.2s;
   letter-spacing: 0.03em;
 }
-.tab-btn:hover { color: rgba(255,255,255,0.8); }
-.tab-btn.active { color: #fff; border-bottom-color: var(--teal); }
+.tab-btn:hover { color: var(--navy); background: rgba(48,184,176,0.06); }
+.tab-btn.active { color: var(--navy); border-bottom-color: var(--teal); background: rgba(48,184,176,0.04); }
 .tab-btn .tab-icon { margin-right: 8px; font-size: 15px; }
-.tab-desc { font-size: 10px; font-weight: 400; display: block; margin-top: 2px; color: rgba(255,255,255,0.4); }
+.tab-desc { font-size: 10px; font-weight: 400; display: block; margin-top: 2px; color: rgba(24,56,136,0.5); }
 
 /* ── CONTENT AREA ── */
 .content { padding: 32px 40px; }
@@ -574,16 +586,17 @@ body { font-family: 'Open Sans', sans-serif; background: #0f1629; color: #fff; m
 /* ── CLAIM SECTION ── */
 .claim-section {
   margin-bottom: 48px;
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.07);
-  border-radius: 12px;
+  background: #FFFFFF;
+  border: 1px solid #E5EAF3;
+  border-radius: 14px;
   overflow: hidden;
+  box-shadow: 0 4px 18px rgba(24,56,136,0.06);
 }
 .claim-header {
-  background: rgba(24,56,136,0.5);
+  background: linear-gradient(135deg, rgba(24,56,136,0.04) 0%, rgba(48,184,176,0.06) 100%);
   padding: 14px 24px;
   display: flex; align-items: center; gap: 12px;
-  border-bottom: 1px solid rgba(255,255,255,0.06);
+  border-bottom: 1px solid #E5EAF3;
 }
 .claim-num {
   background: var(--teal); color: #fff;
@@ -592,8 +605,8 @@ body { font-family: 'Open Sans', sans-serif; background: #0f1629; color: #fff; m
   font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 11px;
   flex-shrink: 0;
 }
-.claim-title { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 14px; }
-.claim-fecha { margin-left: auto; font-size: 11px; color: rgba(255,255,255,0.4); }
+.claim-title { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 14px; color: var(--navy); }
+.claim-fecha { margin-left: auto; font-size: 11px; color: rgba(24,56,136,0.5); }
 
 /* ── FORMATS GRID ── */
 .formats-row {
@@ -607,14 +620,14 @@ body { font-family: 'Open Sans', sans-serif; background: #0f1629; color: #fff; m
   font-family: 'Montserrat', sans-serif; font-weight: 700;
   font-size: 10px; color: var(--teal); letter-spacing: 0.08em; text-transform: uppercase;
 }
-.format-info { font-size: 9px; color: rgba(255,255,255,0.35); }
+.format-info { font-size: 9px; color: rgba(24,56,136,0.45); }
 .btn-download {
-  background: var(--navy); border: 1px solid var(--teal);
-  color: var(--teal); padding: 6px 14px; border-radius: 6px;
+  background: var(--navy); border: 1px solid var(--navy);
+  color: #fff; padding: 6px 14px; border-radius: 6px;
   font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 10px;
   cursor: pointer; transition: all 0.2s; white-space: nowrap;
 }
-.btn-download:hover { background: var(--teal); color: #fff; }
+.btn-download:hover { background: var(--teal); border-color: var(--teal); color: #fff; }
 .btn-download:active { transform: scale(0.97); }
 .btn-download.loading { opacity: 0.6; cursor: wait; }
 
@@ -623,9 +636,11 @@ body { font-family: 'Open Sans', sans-serif; background: #0f1629; color: #fff; m
   display: flex; align-items: center; gap: 14px;
   margin: 36px 0 12px;
   padding: 14px 20px;
-  background: rgba(255,255,255,0.03);
+  background: #FFFFFF;
+  border: 1px solid #E5EAF3;
   border-left: 4px solid var(--teal);
-  border-radius: 0 8px 8px 0;
+  border-radius: 0 10px 10px 0;
+  box-shadow: 0 2px 10px rgba(24,56,136,0.04);
 }
 .mes-label {
   font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 13px;
@@ -633,7 +648,7 @@ body { font-family: 'Open Sans', sans-serif; background: #0f1629; color: #fff; m
   white-space: nowrap;
 }
 .mes-total {
-  font-size: 11px; color: rgba(255,255,255,0.45);
+  font-size: 11px; color: rgba(24,56,136,0.55);
 }
 .btn-mes-dl {
   margin-left: auto;
@@ -649,28 +664,28 @@ body { font-family: 'Open Sans', sans-serif; background: #0f1629; color: #fff; m
 .btn-copy-toggle {
   margin-left: auto;
   background: rgba(48,184,176,0.08); border: 1px solid rgba(48,184,176,0.3);
-  color: rgba(255,255,255,0.65); padding: 5px 12px; border-radius: 6px;
+  color: var(--navy); padding: 5px 12px; border-radius: 6px;
   font-size: 10px; font-family: 'Montserrat', sans-serif; font-weight: 600;
   cursor: pointer; transition: all 0.2s;
 }
-.btn-copy-toggle:hover { background: rgba(48,184,176,0.2); color: #fff; }
+.btn-copy-toggle:hover { background: rgba(48,184,176,0.2); color: var(--navy); }
 
 /* ── COPY PANEL ── */
 .copy-panel {
   max-height: 0; overflow: hidden;
   transition: max-height 0.35s ease, padding 0.2s;
-  background: rgba(13,27,110,0.4);
-  border-top: 1px solid rgba(48,184,176,0.15);
+  background: #F9FAFB;
+  border-top: 1px solid #E5EAF3;
 }
 .copy-panel.open { max-height: 400px; }
 .copy-panel-inner { padding: 16px 24px; }
 .copy-text {
-  font-size: 12px; line-height: 1.7; color: rgba(255,255,255,0.82);
+  font-size: 12px; line-height: 1.7; color: #2A2A2A;
   white-space: pre-wrap; margin-bottom: 10px;
 }
 .copy-hashtags {
-  font-size: 11px; color: var(--teal); opacity: 0.8;
-  margin-bottom: 12px; word-spacing: 4px;
+  font-size: 11px; color: var(--teal); opacity: 0.9;
+  margin-bottom: 12px; word-spacing: 4px; font-weight: 600;
 }
 .copy-actions { display: flex; gap: 8px; }
 .btn-copiar {
@@ -2823,6 +2838,122 @@ body.edit-mode .cr-slide .foto-overlay { pointer-events: auto; }
 @media (max-width: 900px) {
   .cal-week-body { overflow-x: auto; }
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   LIGHT OVERRIDES — Sistema visual AMG alineado al portal público
+   (2026-04-24)
+   Capa final que transforma el calendario editorial y week sections
+   a estética light sin tocar piezas internas ni sidebar (que
+   mantienen fondo oscuro por contraste).
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Calendario — contenedor de mes */
+.cal-month {
+  background: #FFFFFF !important;
+  border: 1px solid #E5EAF3 !important;
+  border-radius: 14px !important;
+  margin-bottom: 22px !important;
+  box-shadow: 0 6px 24px rgba(24,56,136,0.07) !important;
+  overflow: hidden;
+}
+.cal-month-hdr {
+  background: linear-gradient(135deg, rgba(24,56,136,0.05) 0%, rgba(48,184,176,0.08) 100%) !important;
+  border-bottom: 1px solid #E5EAF3;
+}
+.cal-month-hdr:hover {
+  background: linear-gradient(135deg, rgba(24,56,136,0.10) 0%, rgba(48,184,176,0.13) 100%) !important;
+}
+.cal-mes-info { color: rgba(24,56,136,0.58) !important; }
+
+.cal-mes-just {
+  background: linear-gradient(90deg, rgba(24,56,136,0.06), rgba(48,184,176,0.04)) !important;
+  border-left: 4px solid var(--teal) !important;
+}
+.cmj-fase { color: var(--navy); }
+.cmj-hito { color: rgba(24,56,136,0.55) !important; }
+.cmj-mensaje { color: var(--navy); }
+.cmj-porque { color: #2A2A2A !important; }
+.cmj-porque strong { color: var(--teal); }
+
+/* Week */
+.cal-week {
+  background: #FAFBFD !important;
+  border: 1px solid #E5EAF3 !important;
+}
+.cal-week-hdr {
+  background: linear-gradient(90deg, #FFFFFF 0%, #F0F4FA 100%) !important;
+  color: var(--navy);
+  border-bottom: 1px solid #E5EAF3;
+}
+.cal-week-hdr:hover {
+  background: linear-gradient(90deg, #F5F8FD 0%, #E8EEF7 100%) !important;
+}
+.cal-sem-range { color: rgba(24,56,136,0.58) !important; }
+.cal-sem-topic { color: var(--navy) !important; }
+.cal-week-toggle { color: rgba(24,56,136,0.5) !important; }
+
+/* Pieza card en calendario */
+.cal-piece-card {
+  background: #FFFFFF !important;
+  border: 1px solid #E5EAF3 !important;
+  box-shadow: 0 2px 10px rgba(24,56,136,0.04) !important;
+}
+.cal-piece-card:hover {
+  border-color: rgba(48,184,176,0.5) !important;
+  background: #F8FBFD !important;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(24,56,136,0.08) !important;
+}
+.cal-piece-meta .cpm-tipo { color: rgba(24,56,136,0.55) !important; }
+.cal-piece-meta .cpm-fecha {
+  color: var(--navy) !important;
+  background: rgba(48,184,176,0.12) !important;
+  border: 1px solid rgba(48,184,176,0.25);
+}
+
+/* Copy block per week */
+.cal-copy-block {
+  background: linear-gradient(90deg, rgba(24,56,136,0.05), rgba(48,184,176,0.03)) !important;
+  border-left: 3px solid var(--teal) !important;
+}
+.cal-copy-text { color: #2A2A2A !important; }
+
+/* Carrusel y variantes internas siguen con su fondo canónico
+   (las piezas en sí son navy/teal oscuros — es identidad visual).
+   Solo cambian los CONTENEDORES que las envuelven. */
+
+/* Footer / sello en el header del sitio */
+.site-header {
+  border-bottom: 3px solid var(--teal) !important;
+  box-shadow: 0 4px 18px rgba(24,56,136,0.12);
+}
+
+/* Labels y textos secundarios que quedaron con rgba blanco */
+.format-info { color: rgba(24,56,136,0.50) !important; }
+.format-label { color: var(--teal) !important; }
+
+/* Breadcrumb de claims */
+.claim-num { box-shadow: 0 2px 8px rgba(48,184,176,0.3); }
+
+/* FAB de Modo Revisión — contorno más visible sobre fondo claro */
+#btn-edit-mode {
+  box-shadow: 0 8px 24px rgba(24,56,136,0.25), 0 0 0 3px rgba(48,184,176,0.15) !important;
+}
+
+/* Botones en general */
+.btn-mes-dl, .btn-copy-toggle, .btn-copiar {
+  box-shadow: 0 1px 4px rgba(24,56,136,0.08);
+}
+
+/* Scrollbar general light */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: #EDF1F7; }
+::-webkit-scrollbar-thumb { background: rgba(48,184,176,0.6); border-radius: 5px; }
+::-webkit-scrollbar-thumb:hover { background: var(--teal); }
+
+/* Ocultar cualquier overlay oscuro residual del body */
+body::before, body::after { display: none !important; }
+
 </style>
 </head>
 <body>
