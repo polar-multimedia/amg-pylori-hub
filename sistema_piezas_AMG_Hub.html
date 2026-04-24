@@ -4,7 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Sistema Visual · Hub AMG · México Sin Cáncer Gástrico</title>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,600;0,700;0,800;0,900;1,400;1,700;1,800;1,900&family=Open+Sans:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,600;0,700;0,800;0,900;1,400;1,700;1,800;1,900&family=Open+Sans:ital,wght@0,400;0,600;1,400&display=block" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
 <!-- ═══════════════════════════════════════════════════════════════════════
@@ -1013,17 +1014,16 @@ body.edit-mode .content { padding-right: 400px; }   /* deja aire para el sidebar
   flex-direction: column;
   justify-content: flex-end;
   padding: 0 8px 5px 0;
-  /* Container query: si el contenido excede el alto, escala downward */
-  container-type: inline-size;
 }
-/* La cifra no debe rebasar el ancho del copy-block (auto-shrink visual) */
-.var-a .cifra {
-  max-width: 100%;
-  overflow: hidden;
-  text-overflow: clip;
-  white-space: nowrap;
+/* Wrap interno: wrapper que JS va a escalar con transform:scale si rebasa */
+.var-a .copy-block > .copy-fit {
+  display: flex;
+  flex-direction: column;
+  transform-origin: bottom right;
+  will-change: transform;
 }
-/* Si el texto wrappea naturalmente (cifra-label, headline, subcopy), permitir */
+/* La cifra debe permitir wrap para "7 de 10" → "7 / de 10" si no cabe */
+.var-a .cifra { max-width: 100%; }
 .var-a .cifra-label, .var-a .headline, .var-a .subcopy { white-space: normal; }
 .var-a .cifra {
   font-weight: 900; font-style: italic;
@@ -5826,6 +5826,54 @@ function updateRsSync(state) {
   el.style.color = m.color;
 }
 setInterval(() => { if (editMode) updateRsSync(); }, 4000);
+
+/* ═══════════════════════════════════════════════════════════════
+   COPY-BLOCK AUTO-FIT
+   Envuelve el contenido en .copy-fit y aplica transform:scale()
+   si el contenido rebasa el alto. Garantiza layout idéntico
+   con/sin edit-mode, con/sin fonts cargados.
+   ═══════════════════════════════════════════════════════════════ */
+function copyFitAll() {
+  document.querySelectorAll('.copy-block').forEach(cb => {
+    // Asegura wrapper .copy-fit que envuelve todos los hijos (excepto ed-move-handle)
+    let fit = cb.querySelector(':scope > .copy-fit');
+    if (!fit) {
+      fit = document.createElement('div');
+      fit.className = 'copy-fit';
+      // Mover todos los hijos que NO son ed-move-handle ni copy-fit ni franja-bar ni cta-bar al wrapper
+      const keep = ['ed-move-handle','cta-bar','franja-bar','sello','foto-halo','foto-bg','foto-overlay'];
+      const kids = Array.from(cb.childNodes);
+      kids.forEach(n => {
+        if (n.nodeType === 1 && keep.some(c => n.classList?.contains(c))) return;
+        fit.appendChild(n);
+      });
+      cb.appendChild(fit);
+    }
+    // Reset scale antes de medir
+    fit.style.transform = '';
+    // Medir overflow
+    const maxH = cb.clientHeight - parseFloat(getComputedStyle(cb).paddingTop || 0) - parseFloat(getComputedStyle(cb).paddingBottom || 0);
+    const contentH = fit.scrollHeight;
+    if (contentH > maxH && maxH > 0) {
+      const scale = Math.max(0.5, maxH / contentH);
+      fit.style.transform = `scale(${scale.toFixed(3)})`;
+    }
+  });
+}
+/* Ejecuta cuando el DOM está listo + cuando los fonts cargan + después de edits */
+if (document.readyState === 'complete' || document.readyState === 'interactive') {
+  setTimeout(copyFitAll, 100);
+} else {
+  document.addEventListener('DOMContentLoaded', () => setTimeout(copyFitAll, 100));
+}
+if (document.fonts && document.fonts.ready) {
+  document.fonts.ready.then(() => copyFitAll());
+}
+window.addEventListener('load', () => setTimeout(copyFitAll, 300));
+/* Re-fit al toggle edit-mode y al aplicar edits desde HubSync */
+const _origApplyAll = (typeof applyAllToDOM !== 'undefined') ? null : null;
+setInterval(copyFitAll, 1500); // safety net
+window.copyFitAll = copyFitAll;
 </script>
 </body>
 </html>
