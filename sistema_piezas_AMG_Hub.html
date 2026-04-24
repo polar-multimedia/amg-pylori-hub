@@ -282,6 +282,33 @@ window.HubSync = (function () {
     }
   }
 
+  /* Guardar TODOS los elementos editables de una pieza (botón explícito) */
+  function savePiezaAll(piezaEl) {
+    if (!piezaEl) return { texts: 0, images: 0, sellos: 0 };
+    let texts = 0, images = 0, sellos = 0;
+    // Textos
+    const textSel = EDITABLE_CLASSES.map(c => '.' + c).join(', ');
+    piezaEl.querySelectorAll(textSel).forEach(el => {
+      try { save(el); texts++; } catch (_) {}
+    });
+    // Imágenes (foto-bg, kc-photo, cr-photo)
+    piezaEl.querySelectorAll('.foto-bg, .kc-photo, .cr-photo').forEach(el => {
+      // Solo guardar si tiene estilos inline (señal de que fue editada)
+      const hasInline = el.style.backgroundPosition || el.style.backgroundSize ||
+                        el.style.backgroundImage || el.style.left || el.style.top ||
+                        el.style.width || el.style.height;
+      if (hasInline) { try { saveImg(el); images++; } catch (_) {} }
+    });
+    // Sellos AMG
+    piezaEl.querySelectorAll('.sello, .cr-logo').forEach(el => {
+      const hasInline = el.style.left || el.style.top || el.style.width ||
+                        el.style.right || el.style.bottom || el.style.height;
+      if (hasInline) { try { saveSello(el); sellos++; } catch (_) {} }
+    });
+    console.info('[HubSync] 💾 savePiezaAll', piezaEl.id, { texts, images, sellos });
+    return { texts, images, sellos };
+  }
+
   /* ══ 8. Reset de una edición ══ */
   function resetKey(key) {
     delete localCache[key];
@@ -302,7 +329,7 @@ window.HubSync = (function () {
 
   /* ══ 10. API pública ══ */
   return {
-    init, save, saveImg, saveSello, resetKey, keyForEl, keyForImg, keyForSello,
+    init, save, saveImg, saveSello, savePiezaAll, resetKey, keyForEl, keyForImg, keyForSello,
     isConfigured: () => isConfigured(),
     isReady:      () => ready,
     cache:        () => localCache
@@ -486,6 +513,32 @@ body { font-family: 'Open Sans', sans-serif; background: #0f1629; color: #fff; m
    PIECE WRAPPERS — fixed display sizes
 ══════════════════════════════════════ */
 .pieza { position: relative; overflow: hidden; flex-shrink: 0; }
+
+/* Botón Guardar flotante por pieza (solo visible en edit mode) */
+.btn-save-pieza {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  z-index: 100;
+  background: linear-gradient(135deg, #30B8B0 0%, #1f8a83 100%);
+  color: #fff;
+  border: 2px solid rgba(255,255,255,0.85);
+  border-radius: 999px;
+  padding: 8px 16px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.45), 0 0 0 1px rgba(48,184,176,0.4);
+  display: none;          /* default oculto, edit-mode lo enciende */
+  user-select: none;
+  transition: transform .15s ease, background .15s ease;
+}
+.btn-save-pieza:hover { transform: translateY(-1px) scale(1.04); }
+.btn-save-pieza.saved { background: linear-gradient(135deg, #1d6d3a 0%, #15522c 100%); }
+.btn-save-pieza.saving { background: linear-gradient(135deg, #B8922A 0%, #8a6d20 100%); }
+body.edit-mode .btn-save-pieza { display: inline-block; }
 .pieza.fmt-45  { width: 246px; height: 307px; }
 .pieza.fmt-11  { width: 246px; height: 246px; }
 .pieza.fmt-916 { width: 173px; height: 307px; }
@@ -3979,6 +4032,44 @@ const origMap = new WeakMap(); // texto original
 const origBox = new WeakMap(); // estilos originales de caja
 const origImg = new WeakMap(); // bgPosition/bgSize originales
 
+/* ── BOTÓN GUARDAR POR PIEZA ── */
+function ensureSaveButtonOnPieza(pieza) {
+  if (!pieza || pieza.querySelector('.btn-save-pieza')) return;
+  const b = document.createElement('button');
+  b.className = 'btn-save-pieza';
+  b.type = 'button';
+  b.textContent = '💾 Guardar pieza';
+  b.title = 'Guardar todos los cambios de esta pieza en Firebase + localStorage';
+  b.addEventListener('click', (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+    if (!window.HubSync || typeof HubSync.savePiezaAll !== 'function') {
+      console.warn('[HubSync] savePiezaAll no disponible');
+      return;
+    }
+    b.classList.remove('saved');
+    b.classList.add('saving');
+    b.textContent = '⏳ Guardando…';
+    const counts = HubSync.savePiezaAll(pieza);
+    setTimeout(() => {
+      b.classList.remove('saving');
+      b.classList.add('saved');
+      b.textContent = `✓ Guardado (${counts.texts}T·${counts.images}I·${counts.sellos}S)`;
+      setTimeout(() => {
+        b.classList.remove('saved');
+        b.textContent = '💾 Guardar pieza';
+      }, 2200);
+    }, 200);
+  });
+  pieza.appendChild(b);
+}
+function removeSaveButtonsFromAllPiezas() {
+  document.querySelectorAll('.btn-save-pieza').forEach(b => b.remove());
+}
+function injectSaveButtonsAllPiezas() {
+  document.querySelectorAll('.pieza').forEach(ensureSaveButtonOnPieza);
+}
+
 /* ── TOGGLE MODO ── */
 function toggleEditMode() {
   editMode = !editMode;
@@ -4047,6 +4138,13 @@ function toggleEditMode() {
   });
 
   if (!editMode) { removeSelloOverlay(); }
+
+  /* ── Botón Guardar por pieza (CSS lo muestra/oculta vía body.edit-mode) ── */
+  if (editMode) {
+    injectSaveButtonsAllPiezas();
+  } else {
+    removeSaveButtonsFromAllPiezas();
+  }
 
   /* Sincronizar estado de botones edit por claim */
   document.querySelectorAll('.btn-edit-claim').forEach(btn => {
@@ -4158,9 +4256,10 @@ let _imgSaveTimer = null;
 function autoSaveImg() {
   if (!_imgEl) return;
   if (!window.HubSync || typeof HubSync.saveImg !== 'function') return;
+  const elSnap = _imgEl;            // captura referencia actual (no la viva)
   clearTimeout(_imgSaveTimer);
   _imgSaveTimer = setTimeout(() => {
-    if (_imgEl) HubSync.saveImg(_imgEl);
+    if (elSnap && elSnap.isConnected) HubSync.saveImg(elSnap);
   }, 300);
 }
 
