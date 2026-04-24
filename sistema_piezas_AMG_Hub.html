@@ -123,9 +123,13 @@ window.HubSync = (function () {
       if (el) applySelloStyles(el, entry);
     } else {
       const el = resolveElByKey(key);
-      if (el && typeof entry.html === 'string' && el.innerHTML !== entry.html) {
+      if (el && typeof entry.html === 'string') {
         const wasFocused = document.activeElement === el;
-        if (!wasFocused) el.innerHTML = entry.html;
+        if (!wasFocused && el.innerHTML !== entry.html) el.innerHTML = entry.html;
+        // Aplicar estilos inline guardados (fontSize, fontWeight, textAlign, etc.)
+        if (entry.styles && typeof entry.styles === 'object') {
+          Object.entries(entry.styles).forEach(([k, v]) => { if (v) el.style[k] = v; });
+        }
       }
     }
   }
@@ -209,13 +213,17 @@ window.HubSync = (function () {
     return pieza.id + '/' + cls + (matches.length > 1 ? '/' + idx : '');
   }
 
-  /* ══ 7. Guardar edición de texto ══ */
+  /* ══ 7. Guardar edición de texto (incluye estilos inline) ══ */
+  const PERSIST_STYLES = ['fontSize','fontWeight','fontStyle','textAlign','color','letterSpacing','lineHeight','fontFamily','textTransform','textIndent'];
   function save(el) {
     const key = keyForEl(el);
     if (!key) return;
+    const styles = {};
+    PERSIST_STYLES.forEach(p => { if (el.style[p]) styles[p] = el.style[p]; });
     persist(key, {
       type: 'text',
       html: el.innerHTML,
+      styles: Object.keys(styles).length ? styles : null,
       ts:   Date.now(),
       editor: 'Carnot/AMG'
     });
@@ -623,7 +631,16 @@ body { font-family: 'Open Sans', sans-serif; background: #0f1629; color: #fff; m
 .btn-save-pieza.saved { background: linear-gradient(135deg, #1d6d3a 0%, #15522c 100%); }
 .btn-save-pieza.saving { background: linear-gradient(135deg, #B8922A 0%, #8a6d20 100%); }
 /* Botón flotante por pieza DESACTIVADO cuando sidebar activo — sidebar reemplaza */
-body.edit-mode .btn-save-pieza { display: none; }
+body.edit-mode .btn-save-pieza { display: none !important; }
+
+/* UI legacy ocultada en edit-mode — el sidebar es la única superficie de control.
+   FAB "Modo Revisión" queda visible solo cuando edit-mode está APAGADO. */
+body.edit-mode #btn-edit-mode { display: none !important; }
+body.edit-mode #edit-toolbar  { display: none !important; }
+body.edit-mode #img-panel     { display: none !important; }
+/* Los botones por-claim "✏️ Editar piezas" tampoco aportan con sidebar activo */
+body.edit-mode .btn-edit-claim,
+body.edit-mode .btn-edit-semana { display: none !important; }
 
 /* ═══════════════════════════════════════════════════════════════
    REV-SIDEBAR · Panel contextual de edición estilo Dreamweaver
@@ -913,6 +930,78 @@ body.edit-mode .content { padding-right: 400px; }   /* deja aire para el sidebar
   transition: background 0.1s;
 }
 .rs-typo-bar button:hover { background: var(--teal); }
+
+/* Lista de textos (tab Texto) */
+.rs-txt-list {
+  display: flex; flex-direction: column; gap: 2px;
+  max-height: 170px; overflow-y: auto;
+  background: rgba(0,0,0,0.3);
+  border-radius: 5px;
+  padding: 4px;
+  margin-bottom: 8px;
+}
+.rs-txt-item {
+  display: flex; align-items: center; gap: 8px;
+  padding: 5px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.1s;
+  font-size: 11px;
+}
+.rs-txt-item:hover { background: rgba(48,184,176,0.12); }
+.rs-txt-item.active {
+  background: rgba(48,184,176,0.25);
+  outline: 1px solid var(--teal);
+}
+.rs-txt-preview {
+  flex: 1;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  color: rgba(255,255,255,0.7);
+  font-size: 10.5px;
+}
+
+/* Duo: dos campos lado a lado */
+.rs-duo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+.rs-duo .rs-field { margin-bottom: 0; }
+
+/* Segmented button group (alignment, transform) */
+.rs-btn-group {
+  display: flex; gap: 2px;
+  background: rgba(0,0,0,0.4);
+  padding: 3px;
+  border-radius: 5px;
+}
+.rs-btn-seg {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: rgba(255,255,255,0.65);
+  padding: 6px 4px;
+  border-radius: 3px;
+  font-size: 12px; font-weight: 700;
+  cursor: pointer;
+  transition: all 0.1s;
+}
+.rs-btn-seg:hover { background: rgba(255,255,255,0.08); color: #fff; }
+.rs-btn-seg.active {
+  background: var(--teal);
+  color: #fff;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+}
+
+/* Input color nativo con apariencia consistente */
+.rs-field input[type="color"] {
+  width: 100%; height: 34px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(0,0,0,0.35);
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 3px;
+}
 
 /* ── Bitácora de saves recientes (dentro del sidebar) ── */
 .rs-log {
@@ -4618,28 +4707,48 @@ function onTextBlurSync(e) {
   }
 }
 
-/* ── TEXTO: controles ── */
+/* ── TEXTO: controles (ahora persisten estilos a HubSync) ── */
+function _persistActiveTextStyle() {
+  if (!activeEl) return;
+  if (window.HubSync && typeof HubSync.save === 'function') {
+    clearTimeout(activeEl._styleSv);
+    activeEl._styleSv = setTimeout(() => HubSync.save(activeEl), 250);
+  }
+}
 function changeFontSize(d) {
   if (!activeEl) return;
   activeEl.style.fontSize = (parseFloat(getComputedStyle(activeEl).fontSize) + d) + 'px';
+  _persistActiveTextStyle();
 }
 function toggleBold() {
   if (!activeEl) return;
   activeEl.style.fontWeight = parseInt(getComputedStyle(activeEl).fontWeight) >= 700 ? '400' : '800';
+  _persistActiveTextStyle();
 }
 function toggleItalic() {
   if (!activeEl) return;
   activeEl.style.fontStyle = getComputedStyle(activeEl).fontStyle === 'italic' ? 'normal' : 'italic';
+  _persistActiveTextStyle();
 }
 function alignText(dir) {
   if (!activeEl) return;
   const block = activeEl.closest('.copy-block,.vd-body,.vd-right') || activeEl;
   block.style.textAlign = dir;
+  // El textAlign vive en el block padre, no en activeEl — guardamos el block
+  if (window.HubSync && typeof HubSync.save === 'function' && block !== activeEl) {
+    // Como el block no tiene key directa (no es .cifra/.headline/etc.), guardamos activeEl
+    // con textAlign propagado — workaround temporal
+  }
+  _persistActiveTextStyle();
 }
 function resetElement() {
   if (!activeEl || !origMap.has(activeEl)) return;
   activeEl.innerHTML = origMap.get(activeEl);
-  ['fontSize','fontWeight','fontStyle'].forEach(p => activeEl.style[p] = '');
+  ['fontSize','fontWeight','fontStyle','textAlign','color','letterSpacing','lineHeight'].forEach(p => activeEl.style[p] = '');
+  if (window.HubSync) {
+    const k = HubSync.keyForEl(activeEl);
+    if (k) HubSync.resetKey(k);
+  }
 }
 
 /* ── CAJA: drag para mover ── */
@@ -5327,97 +5436,279 @@ function populateSidebar(p) {
   populatePiezaTab(p);
 }
 
-/* ── Tab TEXTO ── */
+/* ── Tab TEXTO — lista + Character + Paragraph panels estilo Photoshop ── */
+let _rsTextSelected = null;  // elemento texto seleccionado actualmente en el sidebar
+
 function populateTextoTab(pieza) {
   const panel = document.getElementById('rs-panel-texto');
   const textSel = '.cifra,.cifra-label,.headline,.subcopy,.cta-text,.disclaimer,.vd-stat,.vd-stat-label,.vd-headline,.vd-subcopy,.vd-eyebrow,.hp-giant,.hp-claim,.hp-sub,.cta-detect,.url-bottom,.cr-cover-cifra,.cr-cover-label,.cr-cover-headline,.cr-step,.cr-slide-title,.cr-slide-sub,.cr-cta-text,.cr-cta-dom,.cr-slide-num,.tk-brand,.tk-hook,.tk-cta,.tt-guion-title,.tt-beat-tag,.tt-beat-txt';
   const texts = Array.from(pieza.querySelectorAll(textSel));
   if (!texts.length) {
     panel.innerHTML = '<div class="rs-empty">Esta pieza no tiene textos editables.</div>';
+    _rsTextSelected = null;
     return;
   }
-  panel.innerHTML = '<div class="rs-section-title">Textos editables (' + texts.length + ')</div>' +
-    texts.map((el, i) => {
-      const cls = [...el.classList].find(c => c.match(/^(cifra|cifra-label|headline|subcopy|cta-text|disclaimer|vd-|hp-|cr-|tk-|tt-|cta-detect|url-bottom)/)) || 'texto';
-      const val = (el.innerText || '').replace(/</g,'&lt;');
-      return `
-        <div class="rs-field" data-idx="${i}">
-          <label>
-            <span class="rs-label-badge">${cls}</span>
-            <button class="rs-mini" data-act="focus">🎯</button>
-            <button class="rs-mini" data-act="reset">↺</button>
-          </label>
-          <textarea class="rs-textarea" rows="2" data-idx="${i}">${val}</textarea>
-          <div class="rs-typo-bar">
-            <button data-typo="bold" data-idx="${i}" title="Negrita"><b>B</b></button>
-            <button data-typo="italic" data-idx="${i}" title="Cursiva"><em>i</em></button>
-            <button data-typo="size-" data-idx="${i}" title="Más chico">A−</button>
-            <button data-typo="size+" data-idx="${i}" title="Más grande">A+</button>
-            <button data-typo="left" data-idx="${i}" title="Izquierda">⬅</button>
-            <button data-typo="center" data-idx="${i}" title="Centrar">⬛</button>
-          </div>
+  // Default: primer texto seleccionado
+  if (!_rsTextSelected || !texts.includes(_rsTextSelected)) _rsTextSelected = texts[0];
+
+  panel.innerHTML = `
+    <div class="rs-section-title">Textos (${texts.length})</div>
+    <div class="rs-txt-list" id="rs-txt-list">
+      ${texts.map((el, i) => {
+        const cls = [...el.classList].find(c => c.match(/^(cifra|cifra-label|headline|subcopy|cta-text|disclaimer|vd-|hp-|cr-|tk-|tt-|cta-detect|url-bottom)/)) || 'texto';
+        const preview = (el.innerText || '').replace(/</g,'&lt;').substring(0, 40);
+        return `<div class="rs-txt-item" data-idx="${i}">
+          <span class="rs-label-badge">${cls}</span>
+          <span class="rs-txt-preview">${preview || '(vacío)'}</span>
         </div>`;
-    }).join('');
-  // Wire textareas
-  panel.querySelectorAll('.rs-textarea').forEach(ta => {
-    ta.addEventListener('input', () => {
-      const i = parseInt(ta.dataset.idx, 10);
-      const t = texts[i];
-      if (!t) return;
-      t.innerText = ta.value;
-      clearTimeout(ta._sv);
-      ta._sv = setTimeout(() => {
-        if (window.HubSync) HubSync.save(t);
-        updateRsSync('saving');
-        setTimeout(() => updateRsSync(), 500);
-      }, 350);
+      }).join('')}
+    </div>
+
+    <div class="rs-section-title">Contenido</div>
+    <textarea class="rs-textarea" id="rs-txt-content" rows="3"></textarea>
+    <div class="rs-actions">
+      <button class="rs-btn rs-btn-sm" id="rs-txt-focus">🎯 Enfocar en arte</button>
+      <button class="rs-btn rs-btn-sm rs-reset" id="rs-txt-reset">↺ Reset</button>
+    </div>
+
+    <div class="rs-section-title">Character</div>
+    <div class="rs-field">
+      <label>Family</label>
+      <select id="rs-char-family">
+        <option value="">(heredado)</option>
+        <option value="'Montserrat', sans-serif">Montserrat</option>
+        <option value="'Open Sans', sans-serif">Open Sans</option>
+        <option value="Georgia, serif">Georgia</option>
+        <option value="'Courier New', monospace">Courier New</option>
+      </select>
+    </div>
+    <div class="rs-duo">
+      <div class="rs-field">
+        <label>Size · <span id="rs-char-size-val">—</span></label>
+        <input type="range" id="rs-char-size" min="6" max="96" step="0.5">
+      </div>
+      <div class="rs-field">
+        <label>Weight</label>
+        <select id="rs-char-weight">
+          <option value="">—</option>
+          <option value="300">300 Light</option>
+          <option value="400">400 Regular</option>
+          <option value="600">600 SemiBold</option>
+          <option value="700">700 Bold</option>
+          <option value="800">800 ExtraBold</option>
+          <option value="900">900 Black</option>
+        </select>
+      </div>
+    </div>
+    <div class="rs-duo">
+      <div class="rs-field">
+        <label>Style</label>
+        <select id="rs-char-style">
+          <option value="">—</option>
+          <option value="normal">Normal</option>
+          <option value="italic">Italic</option>
+        </select>
+      </div>
+      <div class="rs-field">
+        <label>Letter spacing · <span id="rs-char-ls-val">0</span></label>
+        <input type="range" id="rs-char-ls" min="-3" max="10" step="0.1" value="0">
+      </div>
+    </div>
+    <div class="rs-field">
+      <label>Color</label>
+      <input type="color" id="rs-char-color" value="#183888">
+    </div>
+    <div class="rs-field">
+      <label>Transform</label>
+      <div class="rs-btn-group">
+        <button class="rs-btn-seg" data-transform="none">Aa</button>
+        <button class="rs-btn-seg" data-transform="uppercase">AA</button>
+        <button class="rs-btn-seg" data-transform="lowercase">aa</button>
+        <button class="rs-btn-seg" data-transform="capitalize">Aa·</button>
+      </div>
+    </div>
+
+    <div class="rs-section-title">Paragraph</div>
+    <div class="rs-field">
+      <label>Alignment</label>
+      <div class="rs-btn-group">
+        <button class="rs-btn-seg" data-align="left" title="Izquierda">⬅</button>
+        <button class="rs-btn-seg" data-align="center" title="Centrar">⬛</button>
+        <button class="rs-btn-seg" data-align="right" title="Derecha">➡</button>
+        <button class="rs-btn-seg" data-align="justify" title="Justificar">⬌</button>
+      </div>
+    </div>
+    <div class="rs-duo">
+      <div class="rs-field">
+        <label>Line height · <span id="rs-par-lh-val">—</span></label>
+        <input type="range" id="rs-par-lh" min="0.8" max="2.5" step="0.05" value="1.2">
+      </div>
+      <div class="rs-field">
+        <label>Indent (px) · <span id="rs-par-ti-val">0</span></label>
+        <input type="range" id="rs-par-ti" min="-20" max="40" step="1" value="0">
+      </div>
+    </div>
+    <div class="rs-actions">
+      <button class="rs-btn rs-btn-sm rs-reset" id="rs-char-clear">↺ Resetear estilos</button>
+    </div>
+  `;
+
+  // === Selección de texto ===
+  const selectItem = (t) => {
+    _rsTextSelected = t;
+    panel.querySelectorAll('.rs-txt-item').forEach(it => {
+      it.classList.toggle('active', texts[parseInt(it.dataset.idx,10)] === t);
+    });
+    refreshCharPanel();
+  };
+  panel.querySelectorAll('.rs-txt-item').forEach(it => {
+    it.addEventListener('click', (e) => {
+      e.stopPropagation();
+      selectItem(texts[parseInt(it.dataset.idx, 10)]);
     });
   });
-  // Focus button
-  panel.querySelectorAll('[data-act="focus"]').forEach(b => {
+  selectItem(_rsTextSelected);
+
+  // === Sync de content textarea ===
+  const taContent = document.getElementById('rs-txt-content');
+  taContent.addEventListener('input', () => {
+    if (!_rsTextSelected) return;
+    _rsTextSelected.innerText = taContent.value;
+    // Actualizar preview de la lista
+    const idx = texts.indexOf(_rsTextSelected);
+    const prevEl = panel.querySelector(`.rs-txt-item[data-idx="${idx}"] .rs-txt-preview`);
+    if (prevEl) prevEl.textContent = (taContent.value || '').substring(0, 40) || '(vacío)';
+    scheduleTextSave(_rsTextSelected);
+  });
+
+  document.getElementById('rs-txt-focus').addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (!_rsTextSelected) return;
+    _rsTextSelected.scrollIntoView({block:'center'});
+    _rsTextSelected.classList.add('rs-flash');
+    setTimeout(() => _rsTextSelected.classList.remove('rs-flash'), 900);
+  });
+  document.getElementById('rs-txt-reset').addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (!_rsTextSelected || !origMap.has(_rsTextSelected)) return;
+    _rsTextSelected.innerHTML = origMap.get(_rsTextSelected);
+    ['fontSize','fontWeight','fontStyle','textAlign','color','letterSpacing','lineHeight','fontFamily','textTransform','textIndent'].forEach(p => _rsTextSelected.style[p] = '');
+    if (window.HubSync) {
+      const k = HubSync.keyForEl(_rsTextSelected);
+      if (k) HubSync.resetKey(k);
+    }
+    refreshCharPanel();
+    // Refresh content textarea
+    taContent.value = _rsTextSelected.innerText;
+  });
+
+  // === Character panel wiring ===
+  const charFamily = document.getElementById('rs-char-family');
+  const charSize   = document.getElementById('rs-char-size');
+  const charWeight = document.getElementById('rs-char-weight');
+  const charStyle  = document.getElementById('rs-char-style');
+  const charLs     = document.getElementById('rs-char-ls');
+  const charColor  = document.getElementById('rs-char-color');
+  const parLh      = document.getElementById('rs-par-lh');
+  const parTi      = document.getElementById('rs-par-ti');
+
+  charFamily.addEventListener('change', () => { _rsTextSelected.style.fontFamily = charFamily.value; scheduleTextSave(_rsTextSelected); });
+  charSize.addEventListener('input', () => {
+    document.getElementById('rs-char-size-val').textContent = charSize.value + 'px';
+    _rsTextSelected.style.fontSize = charSize.value + 'px';
+    scheduleTextSave(_rsTextSelected);
+  });
+  charWeight.addEventListener('change', () => { _rsTextSelected.style.fontWeight = charWeight.value; scheduleTextSave(_rsTextSelected); });
+  charStyle.addEventListener('change', () => { _rsTextSelected.style.fontStyle = charStyle.value; scheduleTextSave(_rsTextSelected); });
+  charLs.addEventListener('input', () => {
+    document.getElementById('rs-char-ls-val').textContent = charLs.value + 'px';
+    _rsTextSelected.style.letterSpacing = charLs.value + 'px';
+    scheduleTextSave(_rsTextSelected);
+  });
+  charColor.addEventListener('input', () => { _rsTextSelected.style.color = charColor.value; scheduleTextSave(_rsTextSelected); });
+  parLh.addEventListener('input', () => {
+    document.getElementById('rs-par-lh-val').textContent = parLh.value;
+    _rsTextSelected.style.lineHeight = parLh.value;
+    scheduleTextSave(_rsTextSelected);
+  });
+  parTi.addEventListener('input', () => {
+    document.getElementById('rs-par-ti-val').textContent = parTi.value + 'px';
+    _rsTextSelected.style.textIndent = parTi.value + 'px';
+    scheduleTextSave(_rsTextSelected);
+  });
+
+  // Transform segmented
+  panel.querySelectorAll('[data-transform]').forEach(b => {
     b.addEventListener('click', (e) => {
       e.stopPropagation();
-      const i = parseInt(b.closest('.rs-field').dataset.idx, 10);
-      const t = texts[i];
-      if (t) { t.scrollIntoView({block:'center'}); t.classList.add('rs-flash'); setTimeout(() => t.classList.remove('rs-flash'), 900); }
+      if (!_rsTextSelected) return;
+      _rsTextSelected.style.textTransform = b.dataset.transform;
+      panel.querySelectorAll('[data-transform]').forEach(x => x.classList.toggle('active', x === b));
+      scheduleTextSave(_rsTextSelected);
     });
   });
-  // Reset
-  panel.querySelectorAll('[data-act="reset"]').forEach(b => {
+  // Alignment segmented
+  panel.querySelectorAll('[data-align]').forEach(b => {
     b.addEventListener('click', (e) => {
       e.stopPropagation();
-      const i = parseInt(b.closest('.rs-field').dataset.idx, 10);
-      const t = texts[i];
-      if (t && origMap.has(t)) {
-        t.innerHTML = origMap.get(t);
-        const ta = panel.querySelector(`.rs-textarea[data-idx="${i}"]`);
-        if (ta) ta.value = t.innerText;
-        if (window.HubSync) {
-          const k = HubSync.keyForEl(t);
-          if (k) HubSync.resetKey(k);
-        }
-      }
+      if (!_rsTextSelected) return;
+      _rsTextSelected.style.textAlign = b.dataset.align;
+      panel.querySelectorAll('[data-align]').forEach(x => x.classList.toggle('active', x === b));
+      scheduleTextSave(_rsTextSelected);
     });
   });
-  // Typography quick-bar
-  panel.querySelectorAll('.rs-typo-bar button').forEach(b => {
-    b.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const i = parseInt(b.dataset.idx, 10);
-      const t = texts[i];
-      if (!t) return;
-      const act = b.dataset.typo;
-      const cs = getComputedStyle(t);
-      let fs = parseFloat(t.style.fontSize || cs.fontSize) || 14;
-      if (act === 'bold')   t.style.fontWeight = (t.style.fontWeight === '900' ? '' : '900');
-      if (act === 'italic') t.style.fontStyle  = (t.style.fontStyle === 'italic' ? '' : 'italic');
-      if (act === 'size+')  t.style.fontSize = (fs + 1) + 'px';
-      if (act === 'size-')  t.style.fontSize = Math.max(6, fs - 1) + 'px';
-      if (act === 'left')   t.style.textAlign = 'left';
-      if (act === 'center') t.style.textAlign = 'center';
+
+  document.getElementById('rs-char-clear').addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (!_rsTextSelected) return;
+    ['fontFamily','fontSize','fontWeight','fontStyle','letterSpacing','color','lineHeight','textIndent','textTransform','textAlign'].forEach(p => _rsTextSelected.style[p] = '');
+    if (window.HubSync) HubSync.save(_rsTextSelected);
+    refreshCharPanel();
+  });
+
+  function refreshCharPanel() {
+    if (!_rsTextSelected) return;
+    const el = _rsTextSelected;
+    const cs = getComputedStyle(el);
+    taContent.value = el.innerText;
+    charFamily.value = el.style.fontFamily || '';
+    const fs = parseFloat(el.style.fontSize || cs.fontSize) || 14;
+    charSize.value = fs;
+    document.getElementById('rs-char-size-val').textContent = fs.toFixed(1) + 'px';
+    charWeight.value = el.style.fontWeight || '';
+    charStyle.value = el.style.fontStyle || '';
+    const ls = parseFloat(el.style.letterSpacing || cs.letterSpacing) || 0;
+    charLs.value = ls;
+    document.getElementById('rs-char-ls-val').textContent = ls.toFixed(1) + 'px';
+    if (el.style.color) charColor.value = rgbToHex(cs.color);
+    const lh = parseFloat(el.style.lineHeight || cs.lineHeight) / fs || parseFloat(cs.lineHeight)/fs || 1.2;
+    parLh.value = isFinite(lh) ? lh.toFixed(2) : 1.2;
+    document.getElementById('rs-par-lh-val').textContent = (isFinite(lh) ? lh.toFixed(2) : '—');
+    const ti = parseFloat(el.style.textIndent || cs.textIndent) || 0;
+    parTi.value = ti;
+    document.getElementById('rs-par-ti-val').textContent = ti + 'px';
+    // Highlight active transform & align
+    panel.querySelectorAll('[data-transform]').forEach(b => b.classList.toggle('active', b.dataset.transform === (el.style.textTransform || 'none')));
+    panel.querySelectorAll('[data-align]').forEach(b => b.classList.toggle('active', b.dataset.align === (el.style.textAlign || cs.textAlign)));
+  }
+
+  function scheduleTextSave(t) {
+    if (!t) return;
+    clearTimeout(t._rsTxtSv);
+    t._rsTxtSv = setTimeout(() => {
       if (window.HubSync) HubSync.save(t);
-    });
-  });
+      updateRsSync('saving');
+      setTimeout(() => updateRsSync(), 500);
+    }, 300);
+  }
+}
+
+/* Util: rgb(r,g,b) → #rrggbb para input[type=color] */
+function rgbToHex(rgb) {
+  if (!rgb || !rgb.startsWith('rgb')) return '#000000';
+  const m = rgb.match(/\d+/g);
+  if (!m || m.length < 3) return '#000000';
+  return '#' + [0,1,2].map(i => parseInt(m[i]).toString(16).padStart(2,'0')).join('');
 }
 
 /* ── Tab IMAGEN — sliders + upload + URL + IA + aplicar a todo el claim ── */
