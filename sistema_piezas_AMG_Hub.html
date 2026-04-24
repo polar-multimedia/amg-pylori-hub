@@ -997,12 +997,41 @@ body.edit-mode .content { padding-right: 400px; }   /* deja aire para el sidebar
 
 /* Input color nativo con apariencia consistente */
 .rs-field input[type="color"] {
-  width: 100%; height: 34px;
+  height: 34px;
   border: 1px solid rgba(255,255,255,0.12);
   background: rgba(0,0,0,0.35);
   border-radius: 5px;
   cursor: pointer;
   padding: 3px;
+}
+.rs-color-row {
+  display: grid;
+  grid-template-columns: 48px 1fr 1fr;
+  gap: 5px;
+  align-items: center;
+}
+.rs-color-row input[type="color"] { width: 48px; }
+.rs-swatches {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 4px;
+  margin-top: 6px;
+}
+.rs-sw {
+  width: 100%; aspect-ratio: 1;
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: transform 0.1s, border-color 0.1s;
+  padding: 0;
+}
+.rs-sw:hover { transform: scale(1.15); border-color: var(--teal); z-index: 1; }
+.rs-tip {
+  font-weight: 400;
+  color: rgba(255,255,255,0.45);
+  font-size: 9px;
+  text-transform: none;
+  letter-spacing: 0;
 }
 
 /* ── Bitácora de saves recientes (dentro del sidebar) ── */
@@ -5519,8 +5548,22 @@ function populateTextoTab(pieza) {
       </div>
     </div>
     <div class="rs-field">
-      <label>Color</label>
-      <input type="color" id="rs-char-color" value="#183888">
+      <label>Color · <span class="rs-tip">(arrastra para seleccionar texto parcial antes de aplicar)</span></label>
+      <div class="rs-color-row">
+        <input type="color" id="rs-char-color" value="#183888">
+        <button class="rs-btn-sm" id="rs-char-color-sel" title="Aplicar color SOLO al texto seleccionado dentro del arte">🎯 Selección</button>
+        <button class="rs-btn-sm" id="rs-char-color-all" title="Aplicar color a TODO el campo">Todo</button>
+      </div>
+      <div class="rs-swatches" id="rs-char-swatches">
+        <button class="rs-sw" data-c="#183888" style="background:#183888" title="Navy Carnot"></button>
+        <button class="rs-sw" data-c="#30B8B0" style="background:#30B8B0" title="Teal AMG"></button>
+        <button class="rs-sw" data-c="#887028" style="background:#887028" title="Dorado AMG"></button>
+        <button class="rs-sw" data-c="#3DCEDD" style="background:#3DCEDD" title="Teal claro"></button>
+        <button class="rs-sw" data-c="#E8D9B0" style="background:#E8D9B0" title="Dorado claro"></button>
+        <button class="rs-sw" data-c="#FFFFFF" style="background:#FFFFFF;border:1px solid #666" title="Blanco"></button>
+        <button class="rs-sw" data-c="#0C0A06" style="background:#0C0A06" title="Negro"></button>
+        <button class="rs-sw" data-c="#B8922A" style="background:#B8922A" title="Ámbar"></button>
+      </div>
     </div>
     <div class="rs-field">
       <label>Transform</label>
@@ -5629,7 +5672,31 @@ function populateTextoTab(pieza) {
     _rsTextSelected.style.letterSpacing = charLs.value + 'px';
     scheduleTextSave(_rsTextSelected);
   });
-  charColor.addEventListener('input', () => { _rsTextSelected.style.color = charColor.value; scheduleTextSave(_rsTextSelected); });
+  charColor.addEventListener('input', () => {
+    // El input color solo actualiza el picker — la aplicación es explícita con los botones
+    document.getElementById('rs-char-color-sel').style.background = 'linear-gradient(135deg, ' + charColor.value + ' 0%, rgba(48,184,176,0.2) 100%)';
+  });
+  // Aplicar a SELECCIÓN (solo al texto seleccionado por el usuario dentro del arte)
+  document.getElementById('rs-char-color-sel').addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (!_rsTextSelected) return;
+    applyColorToSelection(_rsTextSelected, charColor.value);
+  });
+  // Aplicar a TODO el elemento
+  document.getElementById('rs-char-color-all').addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (!_rsTextSelected) return;
+    _rsTextSelected.style.color = charColor.value;
+    scheduleTextSave(_rsTextSelected);
+  });
+  // Paleta rápida: click en swatch pone el color en el picker
+  panel.querySelectorAll('.rs-sw').forEach(sw => {
+    sw.addEventListener('click', (e) => {
+      e.stopPropagation();
+      charColor.value = sw.dataset.c;
+      charColor.dispatchEvent(new Event('input'));
+    });
+  });
   parLh.addEventListener('input', () => {
     document.getElementById('rs-par-lh-val').textContent = parLh.value;
     _rsTextSelected.style.lineHeight = parLh.value;
@@ -5713,6 +5780,45 @@ function rgbToHex(rgb) {
   const m = rgb.match(/\d+/g);
   if (!m || m.length < 3) return '#000000';
   return '#' + [0,1,2].map(i => parseInt(m[i]).toString(16).padStart(2,'0')).join('');
+}
+
+/* Aplica color SOLO al rango de texto seleccionado por el usuario dentro de el.
+   Si no hay selección dentro de el (porque selección en sidebar o null), aplica a todo. */
+function applyColorToSelection(el, color) {
+  const sel = window.getSelection();
+  let ranges = [];
+  if (sel && sel.rangeCount > 0) {
+    for (let i = 0; i < sel.rangeCount; i++) {
+      const r = sel.getRangeAt(i);
+      // Verificar que la selección esté dentro de el o contenida
+      if (el.contains(r.commonAncestorContainer) && !r.collapsed) {
+        ranges.push(r);
+      }
+    }
+  }
+  if (!ranges.length) {
+    // No hay selección dentro del elemento → aplica a todo
+    el.style.color = color;
+    if (window.HubSync) HubSync.save(el);
+    return false;
+  }
+  // Hay selección: envolver cada rango en <span style="color:X">
+  ranges.forEach(r => {
+    const span = document.createElement('span');
+    span.style.color = color;
+    try {
+      const contents = r.extractContents();
+      span.appendChild(contents);
+      r.insertNode(span);
+    } catch (err) {
+      console.warn('[applyColor] no se pudo envolver selección:', err);
+    }
+  });
+  // Guardar el elemento (su innerHTML ahora tiene los spans)
+  if (window.HubSync) HubSync.save(el);
+  // Limpiar selección del browser
+  if (sel && sel.removeAllRanges) sel.removeAllRanges();
+  return true;
 }
 
 /* ── Tab IMAGEN — sliders + upload + URL + IA + aplicar a todo el claim ── */
@@ -6118,69 +6224,37 @@ setInterval(() => { if (editMode) updateRsSync(); }, 4000);
    font-size de headline/subcopy en pasos hasta que quepa.
    NO toca la estructura DOM, NO usa transform:scale.
    ═══════════════════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════════════
+   COPY-FIT DESACTIVADO (2026-04-23)
+   Roberto prefiere ajustar manualmente los pocos casos donde
+   el texto rebasa, en vez de tener reducciones automáticas que
+   cambien la apariencia visual de las piezas.
+   Solo se conserva la LIMPIEZA de wrappers .copy-fit legacy
+   y la RESTAURACIÓN de font-sizes que pudieron haber sido
+   reducidos por deploys anteriores.
+   ═══════════════════════════════════════════════════════════════ */
 function copyFitAll() {
-  // Limpieza retroactiva: deshace wrappers .copy-fit de deploys anteriores
+  // Deshace wrappers .copy-fit de deploys anteriores
   document.querySelectorAll('.copy-block > .copy-fit').forEach(fit => {
     const parent = fit.parentElement;
     while (fit.firstChild) parent.insertBefore(fit.firstChild, fit);
     fit.remove();
   });
-  // Auto-fit: recalcula tamaños para que todo el contenido quepa
-  document.querySelectorAll('.copy-block').forEach(cb => {
-    // Limpia reducciones previas
-    cb.querySelectorAll('[data-autofit-reduced]').forEach(el => {
-      el.style.fontSize = '';
-      el.removeAttribute('data-autofit-reduced');
-    });
-    // Si ya cabe, no hacer nada
-    if (cb.scrollHeight <= cb.clientHeight + 1) return;
-
-    // FASE 1: reducir headline/subcopy/cifra-label (textos chicos primero)
-    const reducSmall = Array.from(cb.querySelectorAll('.headline, .subcopy, .cifra-label'));
-    let step = 0;
-    while (cb.scrollHeight > cb.clientHeight + 1 && step < 8 && reducSmall.length) {
-      reducSmall.forEach(el => {
-        const cur = parseFloat(getComputedStyle(el).fontSize) || 10;
-        const next = Math.max(5.5, cur - 0.5);
-        el.style.fontSize = next + 'px';
-        el.setAttribute('data-autofit-reduced', '1');
-      });
-      step++;
-    }
-
-    // FASE 2: si aún no cabe, reducir la cifra grande (último recurso)
-    const cifra = cb.querySelector('.cifra');
-    if (cifra && cb.scrollHeight > cb.clientHeight + 1) {
-      let stepC = 0;
-      while (cb.scrollHeight > cb.clientHeight + 1 && stepC < 10) {
-        const cur = parseFloat(getComputedStyle(cifra).fontSize) || 32;
-        const next = Math.max(14, cur - 1);
-        if (next === cur) break;
-        cifra.style.fontSize = next + 'px';
-        cifra.setAttribute('data-autofit-reduced', '1');
-        stepC++;
-      }
-    }
-
-    // Diagnóstico: loguear si aún no cabe
-    if (cb.scrollHeight > cb.clientHeight + 2) {
-      const piezaId = cb.closest('[id]')?.id || '?';
-      console.warn('[copyFit] ⚠ aún rebasa en', piezaId,
-        'scrollH=' + cb.scrollHeight, 'clientH=' + cb.clientHeight);
-    }
+  // Restaura tamaños reducidos por auto-fit anterior
+  document.querySelectorAll('[data-autofit-reduced]').forEach(el => {
+    el.style.fontSize = '';
+    el.removeAttribute('data-autofit-reduced');
   });
 }
-/* Re-fit cada vez que el DOM cambia tras una rehidración de HubSync */
 function scheduleCopyFit() {
   clearTimeout(window._cfTimer);
   window._cfTimer = setTimeout(copyFitAll, 120);
 }
-/* Ejecuta cuando DOM + fonts están listos */
+/* Corre una sola vez al cargar para limpiar daños previos */
 if (document.fonts && document.fonts.ready) {
   document.fonts.ready.then(() => setTimeout(copyFitAll, 50));
 }
 window.addEventListener('load', () => setTimeout(copyFitAll, 300));
-/* Re-fit al toggle edit-mode — re-ejecuta cuando el usuario edita */
 window.copyFitAll = copyFitAll;
 </script>
 </body>
