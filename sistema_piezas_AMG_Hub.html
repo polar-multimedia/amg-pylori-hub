@@ -1015,16 +1015,6 @@ body.edit-mode .content { padding-right: 400px; }   /* deja aire para el sidebar
   justify-content: flex-end;
   padding: 0 8px 5px 0;
 }
-/* Wrap interno: wrapper que JS va a escalar con transform:scale si rebasa */
-.var-a .copy-block > .copy-fit {
-  display: flex;
-  flex-direction: column;
-  transform-origin: bottom right;
-  will-change: transform;
-}
-/* La cifra debe permitir wrap para "7 de 10" → "7 / de 10" si no cabe */
-.var-a .cifra { max-width: 100%; }
-.var-a .cifra-label, .var-a .headline, .var-a .subcopy { white-space: normal; }
 .var-a .cifra {
   font-weight: 900; font-style: italic;
   color: var(--teal); line-height: 1;
@@ -5828,51 +5818,49 @@ function updateRsSync(state) {
 setInterval(() => { if (editMode) updateRsSync(); }, 4000);
 
 /* ═══════════════════════════════════════════════════════════════
-   COPY-BLOCK AUTO-FIT
-   Envuelve el contenido en .copy-fit y aplica transform:scale()
-   si el contenido rebasa el alto. Garantiza layout idéntico
-   con/sin edit-mode, con/sin fonts cargados.
+   COPY-BLOCK AUTO-FIT (v2: solo reduce font-size, no transform)
+   Si el contenido rebasa el alto disponible, va reduciendo el
+   font-size de headline/subcopy en pasos hasta que quepa.
+   NO toca la estructura DOM, NO usa transform:scale.
    ═══════════════════════════════════════════════════════════════ */
 function copyFitAll() {
+  // Limpieza retroactiva: si algún deploy anterior creó wrappers .copy-fit,
+  // saca los hijos y elimina el wrapper para volver a la estructura original.
+  document.querySelectorAll('.copy-block > .copy-fit').forEach(fit => {
+    const parent = fit.parentElement;
+    while (fit.firstChild) parent.insertBefore(fit.firstChild, fit);
+    fit.remove();
+  });
+  // Auto-fit: solo si contenido rebasa verticalmente
   document.querySelectorAll('.copy-block').forEach(cb => {
-    // Asegura wrapper .copy-fit que envuelve todos los hijos (excepto ed-move-handle)
-    let fit = cb.querySelector(':scope > .copy-fit');
-    if (!fit) {
-      fit = document.createElement('div');
-      fit.className = 'copy-fit';
-      // Mover todos los hijos que NO son ed-move-handle ni copy-fit ni franja-bar ni cta-bar al wrapper
-      const keep = ['ed-move-handle','cta-bar','franja-bar','sello','foto-halo','foto-bg','foto-overlay'];
-      const kids = Array.from(cb.childNodes);
-      kids.forEach(n => {
-        if (n.nodeType === 1 && keep.some(c => n.classList?.contains(c))) return;
-        fit.appendChild(n);
+    // Limpia reducciones previas (quita data-attribute y estilos de font-size)
+    cb.querySelectorAll('[data-autofit-reduced]').forEach(el => {
+      el.style.fontSize = '';
+      el.removeAttribute('data-autofit-reduced');
+    });
+    // Si ya cabe, no hacer nada
+    if (cb.scrollHeight <= cb.clientHeight + 1) return;
+    // Reducir font-size de headline/subcopy en pasos hasta que quepa, máximo 6 iteraciones
+    const reducibles = Array.from(cb.querySelectorAll('.headline, .subcopy, .cifra-label'));
+    if (!reducibles.length) return;
+    let step = 0;
+    while (cb.scrollHeight > cb.clientHeight + 1 && step < 6) {
+      reducibles.forEach(el => {
+        const cur = parseFloat(getComputedStyle(el).fontSize) || 10;
+        const next = Math.max(6, cur - 0.75);
+        el.style.fontSize = next + 'px';
+        el.setAttribute('data-autofit-reduced', '1');
       });
-      cb.appendChild(fit);
-    }
-    // Reset scale antes de medir
-    fit.style.transform = '';
-    // Medir overflow
-    const maxH = cb.clientHeight - parseFloat(getComputedStyle(cb).paddingTop || 0) - parseFloat(getComputedStyle(cb).paddingBottom || 0);
-    const contentH = fit.scrollHeight;
-    if (contentH > maxH && maxH > 0) {
-      const scale = Math.max(0.5, maxH / contentH);
-      fit.style.transform = `scale(${scale.toFixed(3)})`;
+      step++;
     }
   });
 }
-/* Ejecuta cuando el DOM está listo + cuando los fonts cargan + después de edits */
-if (document.readyState === 'complete' || document.readyState === 'interactive') {
-  setTimeout(copyFitAll, 100);
-} else {
-  document.addEventListener('DOMContentLoaded', () => setTimeout(copyFitAll, 100));
-}
+/* Ejecuta cuando DOM + fonts están listos */
 if (document.fonts && document.fonts.ready) {
-  document.fonts.ready.then(() => copyFitAll());
+  document.fonts.ready.then(() => setTimeout(copyFitAll, 50));
 }
 window.addEventListener('load', () => setTimeout(copyFitAll, 300));
-/* Re-fit al toggle edit-mode y al aplicar edits desde HubSync */
-const _origApplyAll = (typeof applyAllToDOM !== 'undefined') ? null : null;
-setInterval(copyFitAll, 1500); // safety net
+/* Re-fit al toggle edit-mode — re-ejecuta cuando el usuario edita */
 window.copyFitAll = copyFitAll;
 </script>
 </body>
