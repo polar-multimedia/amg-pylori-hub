@@ -110,6 +110,8 @@ window.HubSync = (function () {
   /* ══ 5. Aplicar overrides al DOM ══ */
   function applyAllToDOM(data) {
     Object.entries(data).forEach(([rawKey, entry]) => applyOne(rawKey, entry));
+    // Re-fit del contenido de copy-blocks después de rehidratar
+    if (typeof window.scheduleCopyFit === 'function') window.scheduleCopyFit();
   }
   function applyOne(rawKey, entry) {
     if (!entry) return;
@@ -5401,6 +5403,8 @@ toggleEditMode = function() {
     document.querySelectorAll('.pieza.rs-active').forEach(p => p.classList.remove('rs-active'));
     _activePieza = null;
   }
+  // Re-fit al entrar/salir de edit-mode: el contenteditable puede cambiar métricas
+  if (typeof scheduleCopyFit === 'function') scheduleCopyFit();
 };
 
 /* Click en cualquier pieza la pone como activa */
@@ -6115,36 +6119,61 @@ setInterval(() => { if (editMode) updateRsSync(); }, 4000);
    NO toca la estructura DOM, NO usa transform:scale.
    ═══════════════════════════════════════════════════════════════ */
 function copyFitAll() {
-  // Limpieza retroactiva: si algún deploy anterior creó wrappers .copy-fit,
-  // saca los hijos y elimina el wrapper para volver a la estructura original.
+  // Limpieza retroactiva: deshace wrappers .copy-fit de deploys anteriores
   document.querySelectorAll('.copy-block > .copy-fit').forEach(fit => {
     const parent = fit.parentElement;
     while (fit.firstChild) parent.insertBefore(fit.firstChild, fit);
     fit.remove();
   });
-  // Auto-fit: solo si contenido rebasa verticalmente
+  // Auto-fit: recalcula tamaños para que todo el contenido quepa
   document.querySelectorAll('.copy-block').forEach(cb => {
-    // Limpia reducciones previas (quita data-attribute y estilos de font-size)
+    // Limpia reducciones previas
     cb.querySelectorAll('[data-autofit-reduced]').forEach(el => {
       el.style.fontSize = '';
       el.removeAttribute('data-autofit-reduced');
     });
     // Si ya cabe, no hacer nada
     if (cb.scrollHeight <= cb.clientHeight + 1) return;
-    // Reducir font-size de headline/subcopy en pasos hasta que quepa, máximo 6 iteraciones
-    const reducibles = Array.from(cb.querySelectorAll('.headline, .subcopy, .cifra-label'));
-    if (!reducibles.length) return;
+
+    // FASE 1: reducir headline/subcopy/cifra-label (textos chicos primero)
+    const reducSmall = Array.from(cb.querySelectorAll('.headline, .subcopy, .cifra-label'));
     let step = 0;
-    while (cb.scrollHeight > cb.clientHeight + 1 && step < 6) {
-      reducibles.forEach(el => {
+    while (cb.scrollHeight > cb.clientHeight + 1 && step < 8 && reducSmall.length) {
+      reducSmall.forEach(el => {
         const cur = parseFloat(getComputedStyle(el).fontSize) || 10;
-        const next = Math.max(6, cur - 0.75);
+        const next = Math.max(5.5, cur - 0.5);
         el.style.fontSize = next + 'px';
         el.setAttribute('data-autofit-reduced', '1');
       });
       step++;
     }
+
+    // FASE 2: si aún no cabe, reducir la cifra grande (último recurso)
+    const cifra = cb.querySelector('.cifra');
+    if (cifra && cb.scrollHeight > cb.clientHeight + 1) {
+      let stepC = 0;
+      while (cb.scrollHeight > cb.clientHeight + 1 && stepC < 10) {
+        const cur = parseFloat(getComputedStyle(cifra).fontSize) || 32;
+        const next = Math.max(14, cur - 1);
+        if (next === cur) break;
+        cifra.style.fontSize = next + 'px';
+        cifra.setAttribute('data-autofit-reduced', '1');
+        stepC++;
+      }
+    }
+
+    // Diagnóstico: loguear si aún no cabe
+    if (cb.scrollHeight > cb.clientHeight + 2) {
+      const piezaId = cb.closest('[id]')?.id || '?';
+      console.warn('[copyFit] ⚠ aún rebasa en', piezaId,
+        'scrollH=' + cb.scrollHeight, 'clientH=' + cb.clientHeight);
+    }
   });
+}
+/* Re-fit cada vez que el DOM cambia tras una rehidración de HubSync */
+function scheduleCopyFit() {
+  clearTimeout(window._cfTimer);
+  window._cfTimer = setTimeout(copyFitAll, 120);
 }
 /* Ejecuta cuando DOM + fonts están listos */
 if (document.fonts && document.fonts.ready) {
