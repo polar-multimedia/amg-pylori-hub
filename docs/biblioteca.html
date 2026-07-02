@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="description" content="Biblioteca de contenido científico verificado sobre H. pylori y cáncer gástrico. Artículos, evidence briefs, guías clínicas y estudios en español para México.">
+<title>Biblioteca · México sin Cáncer Gástrico</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Open+Sans:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0D1B6E;--navy2:#162591;--navy3:#1E3A8A;
+  --teal:#00B2C8;--teal-l:#3DCEDD;--teal-d:#0090A8;
+  --gold:#B8922A;
+  --bg:#F7F9FF;--bg2:#EEF2FB;--border:#D8E0F5;--muted:#5B6C9E;
+}
+body{font-family:'Open Sans',sans-serif;color:var(--navy);background:var(--bg);min-height:100vh}
+.hpyl{color:var(--teal);font-style:italic;font-weight:700}
+
+/* ── NAV ── */
+nav{position:sticky;top:0;z-index:100;background:#fff;border-bottom:1px solid var(--border);padding:.75rem 2rem;display:flex;align-items:center;justify-content:space-between}
+.nav-logo img{height:58px;width:auto;object-fit:contain}
+.nav-back{font-family:'Montserrat',sans-serif;font-size:.8rem;font-weight:700;color:var(--navy);border:1.5px solid var(--border);padding:6px 16px;border-radius:50px;transition:all .2s;cursor:pointer}
+.nav-back:hover{border-color:var(--teal);color:var(--teal)}
+
+/* ── HEADER ── */
+.lib-hero{background:linear-gradient(135deg,var(--navy) 0%,var(--navy3) 100%);padding:3rem 2rem 2.5rem;text-align:center}
+.lib-hero-inner{max-width:760px;margin:0 auto}
+.lib-eyebrow{font-family:'Montserrat',sans-serif;font-size:.62rem;font-weight:800;letter-spacing:.15em;text-transform:uppercase;color:var(--teal-l);margin-bottom:.875rem;display:flex;align-items:center;justify-content:center;gap:8px}
+.lib-eyebrow::before,.lib-eyebrow::after{content:'';display:block;width:20px;height:2px;background:var(--teal);border-radius:2px}
+.lib-hero h1{font-family:'Montserrat',sans-serif;font-size:clamp(1.7rem,4vw,2.6rem);font-weight:900;color:#fff;margin-bottom:.875rem;line-height:1.15}
+.lib-hero p{font-size:.9rem;color:rgba(255,255,255,.6);max-width:540px;margin:0 auto;line-height:1.8}
+
+/* ── SEARCH + FILTERS ── */
+.controls{background:#fff;border-bottom:1px solid var(--border);padding:1.25rem 2rem;position:sticky;top:73px;z-index:99}
+.controls-inner{max-width:1200px;margin:0 auto;display:flex;flex-direction:column;gap:1rem}
+.search-row{display:flex;gap:.75rem;align-items:center}
+.search-wrap{flex:1;position:relative;max-width:420px}
+.search-wrap input{width:100%;padding:10px 16px 10px 40px;border:1.5px solid var(--border);border-radius:50px;font-family:'Open Sans',sans-serif;font-size:.87rem;color:var(--navy);background:#fff;outline:none;transition:all .2s}
+.search-wrap input:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(0,178,200,.1)}
+.search-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:.9rem;pointer-events:none}
+.result-count{font-family:'Montserrat',sans-serif;font-size:.75rem;font-weight:700;color:var(--muted);white-space:nowrap}
+
+/* Filter pill groups */
+.filter-row{display:flex;align-items:center;gap:.625rem;flex-wrap:wrap}
+.filter-group-label{font-family:'Montserrat',sans-serif;font-size:.58rem;font-weight:800;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-right:.25rem;white-space:nowrap}
+.fp{padding:6px 16px;border-radius:50px;font-family:'Montserrat',sans-serif;font-size:.75rem;font-weight:700;border:1.5px solid var(--border);background:#fff;color:var(--muted);cursor:pointer;transition:all .2s;white-space:nowrap}
+.fp:hover{border-color:var(--teal);color:var(--teal-d)}
+.fp.act{border-color:var(--teal);background:rgba(0,178,200,.1);color:var(--teal-d)}
+.fp.act-type{border-color:var(--navy);background:rgba(13,27,110,.08);color:var(--navy)}
+.filter-sep{width:1px;height:20px;background:var(--border);flex-shrink:0}
+
+/* ── GRID ── */
+.lib-main{max-width:1200px;margin:0 auto;padding:2rem}
+
+/* Segment labels */
+.seg-label{font-family:'Montserrat',sans-serif;font-size:.6rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:1.25rem;display:flex;align-items:center;gap:10px}
+.seg-label::before{content:'';display:block;width:20px;height:2px;background:var(--border);border-radius:2px}
+.seg-count{background:var(--bg2);border-radius:50px;padding:2px 10px;font-size:.62rem;color:var(--muted)}
+
+.lib-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:1rem;margin-bottom:3rem}
+
+/* Content card — Article type */
+.lib-card{background:#fff;border:1.5px solid var(--border);border-radius:20px;overflow:hidden;cursor:pointer;transition:all .3s;display:block;text-decoration:none}
+.lib-card:hover{border-color:var(--teal);box-shadow:0 8px 32px rgba(0,178,200,.12);transform:translateY(-3px)}
+.lib-card.hidden{display:none}
+
+/* Card top bar (type indicator) */
+.card-type-bar{height:3px;width:100%}
+.type-article .card-type-bar{background:linear-gradient(90deg,var(--teal),var(--teal-l))}
+.type-brief .card-type-bar{background:linear-gradient(90deg,var(--gold),#D4AA44)}
+.type-guide .card-type-bar{background:linear-gradient(90deg,var(--navy2),var(--navy3))}
+
+.card-inner{padding:1.25rem 1.5rem 1.5rem}
+
+/* Format badge */
+.card-format{display:inline-flex;align-items:center;gap:5px;font-family:'Montserrat',sans-serif;font-size:.58rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:3px 10px;border-radius:50px;margin-bottom:1rem}
+.fmt-article{background:rgba(0,178,200,.1);color:var(--teal-d)}
+.fmt-brief{background:rgba(184,146,42,.12);color:var(--gold)}
+.fmt-guide{background:rgba(13,27,110,.08);color:var(--navy2)}
+
+.card-cat{font-size:.72rem;color:var(--muted);margin-bottom:.4rem;font-family:'Montserrat',sans-serif;font-weight:700}
+.card-title{font-family:'Montserrat',sans-serif;font-size:.97rem;font-weight:800;color:var(--navy);line-height:1.35;margin-bottom:.625rem}
+.card-excerpt{font-size:.8rem;color:var(--muted);line-height:1.65;margin-bottom:1rem}
+
+/* Evidence brief variant — stat-forward */
+.card-stat{font-family:'Montserrat',sans-serif;font-size:2.5rem;font-weight:900;color:var(--gold);line-height:.9;letter-spacing:-.03em;margin-bottom:.5rem}
+.type-brief .card-stat{color:var(--gold)}
+.type-brief .card-title{font-size:.88rem}
+
+.card-meta{display:flex;align-items:center;gap:.625rem;font-size:.72rem;color:var(--muted);flex-wrap:wrap}
+.card-dot{width:3px;height:3px;border-radius:50%;background:var(--border)}
+.card-time{font-family:'Montserrat',sans-serif;font-weight:700}
+.card-source-tag{font-family:'Montserrat',sans-serif;font-size:.6rem;font-weight:800;padding:2px 8px;border-radius:20px;letter-spacing:.06em;text-transform:uppercase}
+.src-lancet{background:rgba(180,0,0,.08);color:#880000}
+.src-oms{background:rgba(0,100,160,.08);color:#004A8F}
+.src-amg{background:rgba(13,27,110,.08);color:var(--navy)}
+.src-frontiers{background:rgba(0,150,100,.08);color:#005A3C}
+.src-imss{background:rgba(184,146,42,.1);color:var(--gold)}
+
+/* Read more arrow */
+.card-arrow{display:inline-flex;align-items:center;gap:6px;font-family:'Montserrat',sans-serif;font-size:.75rem;font-weight:800;color:var(--teal-d);margin-top:.75rem;transition:gap .2s}
+.lib-card:hover .card-arrow{gap:10px}
+
+/* ── EMPTY STATE ── */
+.empty-state{text-align:center;padding:4rem 2rem;display:none}
+.empty-state.show{display:block}
+.empty-state h3{font-family:'Montserrat',sans-serif;font-size:1.1rem;font-weight:800;color:var(--muted);margin-bottom:.5rem}
+.empty-state p{font-size:.85rem;color:var(--muted)}
+
+/* ── FOOTER ── */
+footer{background:var(--navy);color:rgba(255,255,255,.45);text-align:center;padding:2rem;font-size:.77rem;margin-top:3rem}
+footer a{color:var(--teal-l)}
+
+@media(max-width:900px){.filter-sep{display:none}.controls{top:65px}}
+@media(max-width:640px){
+  .lib-hero{padding:2rem 1.25rem 2rem}
+  .controls{padding:1rem 1.25rem}
+  .lib-main{padding:1.5rem 1rem}
+  .search-row{flex-direction:column;align-items:stretch}
+  .search-wrap{max-width:100%}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo"><img src="img/logo-mscg.png" alt="México sin Cáncer Gástrico" onerror="this.style.display='none'"></div>
+  <a href="index.html" class="nav-back">← Inicio</a>
+</nav>
+
+<!-- HERO -->
+<header class="lib-hero">
+  <div class="lib-hero-inner">
+    <div class="lib-eyebrow">Repositorio de contenido</div>
+    <h1>Biblioteca · <span class="hpyl" style="color:var(--teal-l)">H. pylori</span> y cáncer gástrico</h1>
+    <p>Artículos educativos, evidence briefs y guías clínicas verificadas. Todo en español, con fuente siempre visible.</p>
+  </div>
+</header>
+
+<!-- CONTROLS -->
+<div class="controls">
+  <div class="controls-inner">
+
+    <!-- Search + count -->
+    <div class="search-row">
+      <div class="search-wrap">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="search-input" placeholder="Buscar artículos, estudios…" oninput="applyFilters()">
+      </div>
+      <span class="result-count" id="result-count">12 publicaciones</span>
+    </div>
+
+    <!-- Filters -->
+    <div class="filter-row">
+      <span class="filter-group-label">Tema</span>
+      <button class="fp act" data-tema="todos" onclick="setTema(this,'todos')">Todos</button>
+      <button class="fp" data-tema="diagnostico" onclick="setTema(this,'diagnostico')">🔬 Diagnóstico</button>
+      <button class="fp" data-tema="tratamiento" onclick="setTema(this,'tratamiento')">💊 Tratamiento</button>
+      <button class="fp" data-tema="prevencion" onclick="setTema(this,'prevencion')">🛡 Prevención</button>
+      <button class="fp" data-tema="nutricion" onclick="setTema(this,'nutricion')">🥗 Nutrición</button>
+      <button class="fp" data-tema="cancer" onclick="setTema(this,'cancer')">⚕️ Cáncer gástrico</button>
+
+      <div class="filter-sep"></div>
+
+      <span class="filter-group-label">Formato</span>
+      <button class="fp act-type" data-tipo="todos" onclick="setTipo(this,'todos')">Todos</button>
+      <button class="fp" data-tipo="article" onclick="setTipo(this,'article')">📄 Artículo</button>
+      <button class="fp" data-tipo="brief" onclick="setTipo(this,'brief')">⚡ Evidence Brief</button>
+      <button class="fp" data-tipo="guide" onclick="setTipo(this,'guide')">📋 Guía / Consenso</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- MAIN GRID -->
+<main class="lib-main">
+
+  <div class="seg-label">
+    Todas las publicaciones <span class="seg-count" id="seg-count">12</span>
+  </div>
+
+  <div class="lib-grid" id="lib-grid">
+
+    <!-- ── ARTÍCULOS EDITORIALES ── -->
+    <a href="art-contagio.html" class="lib-card type-article" data-tema="diagnostico prevencion" data-tipo="article" data-title="cómo se contagia h pylori transmisión">
+      <div class="card-type-bar"></div>
+      <div class="card-inner">
+        <span class="card-format fmt-article">📄 Artículo</span>
+        <div class="card-cat">🦠 Entender la bacteria</div>
+        <div class="card-title">¿Cómo se contagia el <span class="hpyl">H. pylori</span>? Mecanismos de transmisión y factores de riesgo</div>
+        <div class="card-excerpt">La bacteria más común del estómago se transmite principalmente por vía oral-fecal y oral-oral. Entender cómo viaja es el primer paso para protegerte.</div>
+        <div class="card-meta">
+          <span class="card-time">7 min</span>
+          <span class="card-dot"></span>
+          <span>Jun 2026</span>
+        </div>
+        <div class="card-arrow">Leer artículo →</div>
+      </div>
+    </a>
+
+    <a href="art-diagnostico.html" class="lib-card type-article" data-tema="diagnostico" data-tipo="article" data-title="cómo detectar h pylori prueba aliento diagnóstico">
+      <div class="card-type-bar"></div>
+      <div class="card-inner">
+        <span class="card-format fmt-article">📄 Artículo</span>
+        <div class="card-cat">🔬 Diagnóstico</div>
+        <div class="card-title">Cómo detectar el <span class="hpyl">H. pylori</span>: prueba de aliento, sangre y endoscopía</div>
+        <div class="card-excerpt">Sin piquetes, sin internamiento. La prueba de aliento es hoy el método de referencia para detectar la infección de manera no invasiva.</div>
+        <div class="card-meta">
+          <span class="card-time">8 min</span>
+          <span class="card-dot"></span>
+          <span>Jun 2026</span>
+        </div>
+        <div class="card-arrow">Leer artículo →</div>
+      </div>
+    </a>
+
+    <a href="art-gastritis.html" class="lib-card type-article" data-tema="cancer diagnostico" data-tipo="article" data-title="gastritis cáncer gástrico progresión">
+      <div class="card-type-bar"></div>
+      <div class="card-inner">
+        <span class="card-format fmt-article">📄 Artículo</span>
+        <div class="card-cat">⚕️ Cáncer gástrico</div>
+        <div class="card-title">De gastritis a cáncer: cómo progresa la infección sin tratamiento</div>
+        <div class="card-excerpt">La progresión de la gastritis crónica a displasia y adenocarcinoma sigue una secuencia conocida — y completamente interrumpible si se actúa a tiempo.</div>
+        <div class="card-meta">
+          <span class="card-time">9 min</span>
+          <span class="card-dot"></span>
+          <span>Jun 2026</span>
+        </div>
+        <div class="card-arrow">Leer artículo →</div>
+      </div>
+    </a>
+
+    <a href="art-tratamiento.html" class="lib-card type-article" data-tema="tratamiento" data-tipo="article" data-title="tratamiento esquemas erradicación curación">
+      <div class="card-type-bar"></div>
+      <div class="card-inner">
+        <span class="card-format fmt-article">📄 Artículo</span>
+        <div class="card-cat">💊 Tratamiento</div>
+        <div class="card-title">Los nuevos esquemas de tratamiento y por qué la tasa de curación mejora significativamente</div>
+        <div class="card-excerpt">Los esquemas modernos de erradicación alcanzan tasas por encima del 90%. Entender por qué cambiaron las guías puede marcar la diferencia entre curarse o enfrentar una cepa resistente.</div>
+        <div class="card-meta">
+          <span class="card-time">7 min</span>
+          <span class="card-dot"></span>
+          <span>Jun 2026</span>
+        </div>
+        <div class="card-arrow">Leer artículo →</div>
+      </div>
+    </a>
+
+    <a href="art-nutricion.html" class="lib-card type-article" data-tema="nutricion tratamiento" data-tipo="article" data-title="nutrición alimentos tratamiento dieta">
+      <div class="card-type-bar"></div>
+      <div class="card-inner">
+        <span class="card-format fmt-article">📄 Artículo</span>
+        <div class="card-cat">🥗 Nutrición</div>
+        <div class="card-title">Alimentos que ayudan (y cuáles evitar) durante el tratamiento</div>
+        <div class="card-excerpt">La dieta no cura la infección, pero puede fortalecer la mucosa gástrica, reducir la inflamación y mejorar la tolerancia al esquema antibiótico.</div>
+        <div class="card-meta">
+          <span class="card-time">6 min</span>
+          <span class="card-dot"></span>
+          <span>Jun 2026</span>
+        </div>
+        <div class="card-arrow">Leer artículo →</div>
+      </div>
+    </a>
+
+    <a href="art-reinfeccion.html" class="lib-card type-article" data-tema="prevencion tratamiento" data-tipo="article" data-title="reinfección prevención recaída familia">
+      <div class="card-type-bar"></div>
+      <div class="card-inner">
+        <span class="card-format fmt-article">📄 Artículo</span>
+        <div class="card-cat">🔬 Prevención</div>
+        <div class="card-title">Cómo reducir el riesgo de reinfección y proteger a tu familia</div>
+        <div class="card-excerpt">Curarse no garantiza no volver a infectarse. Las medidas de higiene y la detección en el núcleo familiar son tan importantes como el tratamiento.</div>
+        <div class="card-meta">
+          <span class="card-time">6 min</span>
+          <span class="card-dot"></span>
+          <span>Jun 2026</span>
+        </div>
+        <div class="card-arrow">Leer artículo →</div>
+      </div>
+    </a>
+
+    <!-- ── EVIDENCE BRIEFS ── -->
+    <a href="brief-lancet-80.html" class="lib-card type-brief" data-tema="prevencion cancer tratamiento" data-tipo="brief" data-title="80% riesgo cáncer erradicación lancet estudio">
+      <div class="card-type-bar"></div>
+      <div class="card-inner">
+        <span class="card-format fmt-brief">⚡ Evidence Brief</span>
+        <div class="card-cat">⚕️ Prevención · Cáncer gástrico</div>
+        <div class="card-stat">80%</div>
+        <div class="card-title">Erradicar el <span class="hpyl">H. pylori</span> reduce en 80% el riesgo de cáncer gástrico — 26 años de evidencia</div>
+        <div class="card-meta">
+          <span class="card-time">2 min</span>
+          <span class="card-dot"></span>
+          <span class="card-source-tag src-lancet">The Lancet</span>
+        </div>
+        <div class="card-arrow">Leer brief →</div>
+      </div>
+    </a>
+
+    <a href="brief-incan-70.html" class="lib-card type-brief" data-tema="cancer prevencion" data-tipo="brief" data-title="70% cáncer etapas avanzadas detección tardía incan">
+      <div class="card-type-bar"></div>
+      <div class="card-inner">
+        <span class="card-format fmt-brief">⚡ Evidence Brief</span>
+        <div class="card-cat">⚕️ Cáncer gástrico</div>
+        <div class="card-stat">70%</div>
+        <div class="card-title">7 de cada 10 casos de cáncer gástrico en México se detectan ya en etapas avanzadas</div>
+        <div class="card-meta">
+          <span class="card-time">2 min</span>
+          <span class="card-dot"></span>
+          <span class="card-source-tag src-imss">SS México · INCAN</span>
+        </div>
+        <div class="card-arrow">Leer brief →</div>
+      </div>
+    </a>
+
+    <a href="brief-iarc-90.html" class="lib-card type-brief" data-tema="cancer prevencion" data-tipo="brief" data-title="90% tumores gástricos h pylori iarc oms carcinógeno">
+      <div class="card-type-bar"></div>
+      <div class="card-inner">
+        <span class="card-format fmt-brief">⚡ Evidence Brief</span>
+        <div class="card-cat">⚕️ Cáncer gástrico</div>
+        <div class="card-stat">90%</div>
+        <div class="card-title">La OMS clasifica el <span class="hpyl">H. pylori</span> como carcinógeno de Grupo I — el nivel más alto de evidencia</div>
+        <div class="card-meta">
+          <span class="card-time">2 min</span>
+          <span class="card-dot"></span>
+          <span class="card-source-tag src-oms">IARC · OMS</span>
+        </div>
+        <div class="card-arrow">Leer brief →</div>
+      </div>
+    </a>
+
+    <a href="brief-imss-7de10.html" class="lib-card type-brief" data-tema="diagnostico prevencion" data-tipo="brief" data-title="7 de cada 10 mexicanos h pylori imss prevalencia">
+      <div class="card-type-bar"></div>
+      <div class="card-inner">
+        <span class="card-format fmt-brief">⚡ Evidence Brief</span>
+        <div class="card-cat">🔬 Diagnóstico · Prevalencia</div>
+        <div class="card-stat">7/10</div>
+        <div class="card-title">7 de cada 10 mexicanos porta el <span class="hpyl">H. pylori</span> sin saberlo — y sin síntomas claros</div>
+        <div class="card-meta">
+          <span class="card-time">2 min</span>
+          <span class="card-dot"></span>
+          <span class="card-source-tag src-imss">IMSS</span>
+        </div>
+        <div class="card-arrow">Leer brief →</div>
+      </div>
+    </a>
+
+    <a href="brief-frontiers-96.html" class="lib-card type-brief" data-tema="tratamiento" data-tipo="brief" data-title="96% tasa erradicación tratamiento moderno frontiers 2025">
+      <div class="card-type-bar"></div>
+      <div class="card-inner">
+        <span class="card-format fmt-brief">⚡ Evidence Brief</span>
+        <div class="card-cat">💊 Tratamiento</div>
+        <div class="card-stat">96%</div>
+        <div class="card-title">Los esquemas de tratamiento más modernos alcanzan tasas de erradicación del 96%</div>
+        <div class="card-meta">
+          <span class="card-time">2 min</span>
+          <span class="card-dot"></span>
+          <span class="card-source-tag src-frontiers">Frontiers 2025</span>
+        </div>
+        <div class="card-arrow">Leer brief →</div>
+      </div>
+    </a>
+
+    <a href="brief-incan-6k.html" class="lib-card type-brief" data-tema="cancer" data-tipo="brief" data-title="6000 8000 casos nuevos cáncer gástrico incan méxico">
+      <div class="card-type-bar"></div>
+      <div class="card-inner">
+        <span class="card-format fmt-brief">⚡ Evidence Brief</span>
+        <div class="card-cat">⚕️ Cáncer gástrico · México</div>
+        <div class="card-stat" style="font-size:1.9rem">6–8K</div>
+        <div class="card-title">Más de 6,000 casos nuevos de cáncer gástrico al año en México — y cómo prevenirlos</div>
+        <div class="card-meta">
+          <span class="card-time">2 min</span>
+          <span class="card-dot"></span>
+          <span class="card-source-tag src-imss">INCAN México</span>
+        </div>
+        <div class="card-arrow">Leer brief →</div>
+      </div>
+    </a>
+
+  </div><!-- /grid -->
+
+  <!-- EMPTY STATE -->
+  <div class="empty-state" id="empty-state">
+    <h3>Sin resultados</h3>
+    <p>Intenta con otros filtros o términos de búsqueda.</p>
+  </div>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <p style="margin-bottom:.5rem"><a href="index.html">México sin Cáncer Gástrico</a> · Campaña de concientización 2026</p>
+  <p>Esta información no sustituye la consulta médica. · <a href="#">Aviso de privacidad</a></p>
+</footer>
+
+<script>
+// ── FILTER STATE ──
+let activeTema = 'todos';
+let activeTipo = 'todos';
+
+function setTema(btn, val){
+  document.querySelectorAll('[data-tema-btn],.fp[data-tema]').forEach(b => b.classList.remove('act'));
+  btn.classList.add('act');
+  activeTema = val;
+  applyFilters();
+}
+
+function setTipo(btn, val){
+  document.querySelectorAll('.fp[data-tipo]').forEach(b => b.classList.remove('act-type'));
+  btn.classList.add('act-type');
+  activeTipo = val;
+  applyFilters();
+}
+
+function applyFilters(){
+  const q = document.getElementById('search-input').value.toLowerCase().trim();
+  const cards = document.querySelectorAll('.lib-card');
+  let visible = 0;
+
+  cards.forEach(card => {
+    const temas = card.dataset.tema || '';
+    const tipo  = card.dataset.tipo  || '';
+    const title = card.dataset.title || '';
+    const fullText = (card.textContent || '').toLowerCase();
+
+    const temaOk = activeTema === 'todos' || temas.includes(activeTema);
+    const tipoOk = activeTipo === 'todos' || tipo === activeTipo;
+    const queryOk = !q || fullText.includes(q) || title.includes(q);
+
+    if(temaOk && tipoOk && queryOk){
+      card.classList.remove('hidden');
+      visible++;
+    } else {
+      card.classList.add('hidden');
+    }
+  });
+
+  document.getElementById('result-count').textContent = visible + ' publicación' + (visible !== 1 ? 'es' : '');
+  document.getElementById('seg-count').textContent = visible;
+  const empty = document.getElementById('empty-state');
+  if(visible === 0) empty.classList.add('show');
+  else empty.classList.remove('show');
+}
+</script>
+</body>
+</html>

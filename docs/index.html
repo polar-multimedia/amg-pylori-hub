@@ -1,0 +1,1429 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>México sin Cáncer Gástrico — Información médica avalada</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Open+Sans:ital,wght@0,400;0,600;1,400&display=swap');
+
+/* ══ TOKENS ══ */
+:root {
+  --navy:    #0D1B6E;
+  --navy2:   #162591;
+  --navy3:   #1E3A8A;
+  --teal:    #00B2C8;
+  --teal-l:  #3DCEDD;
+  --teal-d:  #0090A8;
+  --teal-dk: #006B80;
+  --white:   #FFFFFF;
+  --bg:      #F7F9FF;
+  --bg2:     #EEF2FB;
+  --text:    #0D1B6E;
+  --muted:   #5B6C9E;
+  --border:  #D8E0F5;
+  --gold:    #B8922A;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Open Sans',system-ui,sans-serif;background:var(--white);color:var(--text);line-height:1.6;overflow-x:hidden}
+h1,h2,h3,h4{font-family:'Montserrat',system-ui,sans-serif;font-weight:800;line-height:1.15;color:var(--navy)}
+img{display:block;max-width:100%}
+a{text-decoration:none}
+
+/* italic teal — para H. pylori */
+.hpyl{color:var(--teal);font-style:italic;font-weight:700}
+.hpyl-dark{color:var(--teal-d);font-style:italic;font-weight:700}
+.sig{color:var(--teal);font-weight:700}
+
+/* section rhythm */
+.sec{padding:6rem 2rem}
+.container{max-width:1200px;margin:0 auto}
+
+/* eyebrow */
+.ey{font-family:'Montserrat',sans-serif;font-size:.7rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;display:inline-flex;align-items:center;gap:8px;margin-bottom:.875rem;color:var(--teal-d)}
+.ey::before{content:'';display:block;width:18px;height:3px;background:var(--teal);border-radius:2px}
+
+/* divider */
+.div-teal{width:56px;height:4px;background:linear-gradient(90deg,var(--teal),var(--teal-l));border-radius:4px;margin:1rem 0 1.75rem}
+
+/* ── BUTTONS ── */
+.btn{display:inline-flex;align-items:center;gap:8px;padding:14px 32px;border-radius:50px;font-family:'Montserrat',sans-serif;font-size:.9rem;font-weight:700;cursor:pointer;border:none;transition:all .28s cubic-bezier(.34,1.56,.64,1);letter-spacing:.01em}
+.btn-navy{background:var(--navy);color:#fff;box-shadow:0 6px 24px rgba(13,27,110,.25)}
+.btn-navy:hover{background:var(--navy2);transform:translateY(-2px);box-shadow:0 12px 32px rgba(13,27,110,.35)}
+.btn-outline{background:transparent;color:#fff;border:2px solid rgba(255,255,255,.6);padding:12px 30px}
+.btn-outline:hover{background:rgba(255,255,255,.15);color:#fff;border-color:#fff;transform:translateY(-2px)}
+.btn-teal{background:var(--teal);color:#fff;box-shadow:0 6px 20px rgba(0,178,200,.3)}
+.btn-teal:hover{background:var(--teal-d);transform:translateY(-2px);box-shadow:0 10px 28px rgba(0,178,200,.4)}
+
+/* ── SCROLL REVEAL ── */
+.s-fade{opacity:0;transform:translateY(32px);transition:opacity .75s ease,transform .75s ease}
+.s-fade.in{opacity:1;transform:none}
+.s-left{opacity:0;transform:translateX(-40px);transition:opacity .8s ease,transform .8s ease}
+.s-left.in{opacity:1;transform:none}
+.s-right{opacity:0;transform:translateX(40px);transition:opacity .8s ease,transform .8s ease}
+.s-right.in{opacity:1;transform:none}
+.s-scale{opacity:0;transform:scale(.93);transition:opacity .7s ease,transform .7s ease}
+.s-scale.in{opacity:1;transform:none}
+.delay-1{transition-delay:.1s}
+.delay-2{transition-delay:.2s}
+.delay-3{transition-delay:.3s}
+.delay-4{transition-delay:.4s}
+
+/* ════════════════════════════
+   PAUTA COMERCIAL — leaderboard
+════════════════════════════ */
+.adslot{
+  width:100%;
+  background:#f3f3f3;
+  border-bottom:1px solid #e0e0e0;
+  padding:4px 0 0;
+  text-align:center;
+  overflow:hidden;
+}
+.adslot-lbl{
+  font-family:'Montserrat',sans-serif;
+  font-size:.58rem;
+  font-weight:600;
+  color:#aaa;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  margin-bottom:2px;
+}
+.adslot img{
+  width:100%;
+  height:auto;
+  display:block;
+  object-fit:cover;
+}
+/* empuja el body para que no quede bajo el header + banner */
+body{padding-top:0}
+
+/* ════════════════════════════
+   HEADER
+════════════════════════════ */
+#hdr{position:sticky;top:0;left:0;right:0;z-index:1000;padding:0 2rem;background:rgba(255,255,255,.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);transition:all .4s ease}
+#hdr.scrolled{background:rgba(255,255,255,.97);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);box-shadow:0 4px 24px rgba(13,27,110,.08)}
+.hdr-i{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:72px}
+.logo{display:flex;align-items:center}
+/* Header always uses navy — light hero background */
+.nav-links{display:flex;align-items:center;gap:2rem}
+.nav-links a{font-family:'Montserrat',sans-serif;font-size:.825rem;font-weight:600;color:var(--navy);transition:color .2s}
+.nav-links a:hover{color:var(--teal)}
+.amg-pill{font-family:'Montserrat',sans-serif;font-size:.65rem;font-weight:800;color:var(--gold);border:1.5px solid var(--gold);padding:5px 12px;border-radius:20px;letter-spacing:.06em;text-transform:uppercase;opacity:.9}
+.nav-cta{background:var(--navy);color:#fff !important;padding:9px 22px;border-radius:50px;font-family:'Montserrat',sans-serif;font-size:.82rem;font-weight:700;cursor:pointer;border:none;transition:all .25s;box-shadow:0 4px 14px rgba(13,27,110,.25)}
+.nav-cta:hover{background:var(--navy2);transform:translateY(-1px)}
+.hbg{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px}
+.hbg span{width:22px;height:2px;background:var(--navy);border-radius:2px;transition:all .3s}
+@media(max-width:900px){.nav-links{display:none}.hbg{display:flex}.amg-pill{display:none}}
+.mob-nav{display:none;position:fixed;top:72px;left:0;right:0;background:var(--white);border-bottom:2px solid var(--border);padding:1.5rem 2rem;flex-direction:column;gap:1.25rem;z-index:999;box-shadow:0 12px 40px rgba(13,27,110,.1)}
+.mob-nav.open{display:flex}
+.mob-nav a{font-family:'Montserrat',sans-serif;font-size:1rem;font-weight:700;color:var(--navy)}
+
+/* ════════════════════════════
+   HERO — imagen izquierda, texto sobre blanco derecho
+════════════════════════════ */
+.hero{
+  min-height:100vh;
+  position:relative;
+  display:flex;
+  align-items:center;
+  overflow:hidden;
+}
+.hero::after{display:none}
+/* Imagen full-bleed */
+.hero-img-col{
+  position:absolute;
+  inset:0;
+  z-index:0;
+}
+.hero-img-col img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center center;
+  display:block;
+}
+/* Overlay gradiente navy izquierda → transparente derecha */
+.hero-img-col::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(
+    to right,
+    rgba(11,22,90,0.94) 0%,
+    rgba(11,22,90,0.82) 25%,
+    rgba(11,22,90,0.50) 52%,
+    rgba(11,22,90,0.12) 75%,
+    transparent 100%
+  );
+}
+/* Contenedor de contenido */
+.hero-i{
+  position:relative;
+  z-index:1;
+  max-width:1300px;
+  margin:0 auto;
+  padding:120px 2rem 80px;
+  width:100%;
+  display:flex;
+  justify-content:flex-start;
+}
+/* Panel de texto — ocupa la zona oscura */
+#hero-r{
+  width:48%;
+  max-width:520px;
+}
+.hero-eyebrow{color:var(--teal-l)}
+.hero-h1{
+  font-size:clamp(2rem,3.8vw,3.4rem);
+  color:#fff;
+  margin-bottom:1.25rem;
+  letter-spacing:-.03em;
+  line-height:1.15;
+  font-weight:900;
+}
+.hero-h1 .hpyl{color:var(--teal-l);font-style:italic}
+.hero-lead{font-size:.95rem;color:rgba(255,255,255,.78);max-width:440px;margin-bottom:2rem;line-height:1.85}
+.hero-acts{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:2rem}
+.hero-disclaimer{font-size:.68rem;color:rgba(255,255,255,.5);line-height:1.6;max-width:380px}
+
+/* Stat pills — sobre fondo oscuro */
+.hero-pills{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:2rem}
+.hpill{
+  background:rgba(255,255,255,.10);
+  border:1.5px solid rgba(255,255,255,.22);
+  border-radius:14px;
+  padding:.875rem 1.25rem;
+  flex:1;
+  min-width:110px;
+  backdrop-filter:blur(6px);
+}
+.hpill-n{font-family:'Montserrat',sans-serif;font-size:1.8rem;font-weight:900;color:#fff;line-height:1}
+.hpill-n span{font-size:1rem;color:var(--teal-l)}
+.hpill-l{font-size:.68rem;color:rgba(255,255,255,.65);margin-top:.25rem;line-height:1.4}
+
+/* AMG badge */
+.hero-amg-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(184,146,42,.08);
+  border:1.5px solid rgba(184,146,42,.3);
+  border-radius:50px;
+  padding:6px 14px;
+  margin-bottom:1.5rem;
+}
+.hero-amg-badge span{font-family:'Montserrat',sans-serif;font-size:.68rem;font-weight:800;color:var(--gold);letter-spacing:.06em;text-transform:uppercase}
+
+@media(max-width:1024px){
+  #hero-r{width:58%}
+}
+@media(max-width:768px){
+  .hero-img-col::after{
+    background:linear-gradient(
+      to bottom,
+      rgba(11,22,90,0.30) 0%,
+      rgba(11,22,90,0.60) 40%,
+      rgba(11,22,90,0.92) 70%,
+      rgba(11,22,90,0.97) 100%
+    );
+  }
+  .hero-i{
+    padding:2.5rem 1.5rem 3.5rem;
+    align-items:flex-end;
+    min-height:100vh;
+    box-sizing:border-box;
+  }
+  #hero-r{width:100%;max-width:100%}
+}
+
+/* ════════════════════════════
+   STATS MAGAZINE — números enormes
+════════════════════════════ */
+.stats-band{background:var(--navy);padding:5rem 2rem 4rem;border-top:none;position:relative;overflow:hidden}
+.stats-band::before{content:'';position:absolute;top:-80px;right:-80px;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(0,178,200,.15),transparent 70%);pointer-events:none}
+.stats-i{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:0}
+.stat-it{text-align:center;padding:2.5rem 1.5rem;position:relative}
+.stat-it+.stat-it::before{content:'';position:absolute;left:0;top:20%;height:60%;width:1px;background:rgba(255,255,255,.12)}
+.stat-it:hover .stat-n{color:var(--teal-l);transition:color .3s}
+.stat-n{font-family:'Montserrat',sans-serif;font-size:clamp(4rem,8vw,7rem);font-weight:900;color:#fff;line-height:.9;display:block;letter-spacing:-.03em;transition:color .3s}
+.stat-it:nth-child(2) .stat-n{color:var(--teal)}
+.stat-l{font-size:.8rem;color:rgba(255,255,255,.55);margin-top:.875rem;font-weight:600;line-height:1.5;max-width:160px;margin-left:auto;margin-right:auto}
+.stat-src{font-size:.62rem;color:rgba(255,255,255,.25);margin-top:.4rem}
+/* News ticker */
+.ticker-wrap{background:var(--teal-dk);padding:.6rem 0;overflow:hidden;white-space:nowrap}
+.ticker{display:inline-block;animation:ticker 28s linear infinite}
+@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.ticker span{font-family:'Montserrat',sans-serif;font-size:.72rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.75);padding:0 2.5rem}
+.ticker span.dot{color:var(--teal-l);padding:0}
+@media(max-width:700px){.stats-i{grid-template-columns:repeat(2,1fr)}.stat-it+.stat-it::before{display:none}}
+
+/* ════════════════════════════
+   AWARENESS — campaign callout
+════════════════════════════ */
+.aware-sec{padding:5rem 2rem;background:linear-gradient(135deg,var(--navy) 0%,var(--navy3) 100%);position:relative;overflow:hidden}
+.aware-sec::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 50% 60% at 80% 50%,rgba(0,178,200,.2),transparent 60%)}
+.aware-i{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;position:relative;z-index:1}
+.aware-big-stat{text-align:center;padding:2.5rem;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:28px}
+.abs-num{font-family:'Montserrat',sans-serif;font-size:clamp(7rem,18vw,13rem);font-weight:900;line-height:.85;color:#fff;display:block;letter-spacing:-.04em}
+.abs-denom{font-family:'Montserrat',sans-serif;font-size:clamp(1.4rem,3.5vw,2.4rem);font-weight:900;color:var(--teal-l);display:block;margin-top:.35rem;letter-spacing:-.02em}
+.abs-label{font-size:1rem;color:rgba(255,255,255,.65);margin-top:.75rem;line-height:1.5}
+.aware-txt h2{font-size:clamp(1.8rem,3.5vw,2.8rem);color:#fff;margin-bottom:1.25rem}
+.aware-txt p{font-size:.95rem;color:rgba(255,255,255,.65);line-height:1.85;margin-bottom:1.5rem}
+.aware-cta-strip{background:rgba(0,178,200,.12);border:1px solid rgba(61,206,221,.25);border-radius:16px;padding:1.25rem 1.5rem;font-size:.9rem;color:rgba(255,255,255,.8);line-height:1.7}
+.aware-cta-strip strong{color:var(--teal-l);font-size:1.05rem}
+@media(max-width:900px){.aware-i{grid-template-columns:1fr;text-align:center}.abs-num{font-size:clamp(5rem,20vw,8rem)}}
+
+/* ════════════════════════════
+   QUIZ
+════════════════════════════ */
+.quiz-sec{padding:6rem 2rem;background:var(--bg)}
+.quiz-i{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1.2fr;gap:4.5rem;align-items:start}
+.ql h2{font-size:clamp(1.8rem,3.5vw,2.6rem);color:var(--navy);margin-bottom:1rem}
+.ql p{color:var(--muted);line-height:1.8;margin-bottom:1.75rem}
+.qfeats{display:flex;flex-direction:column;gap:.875rem}
+.qf{display:flex;align-items:flex-start;gap:12px;background:#fff;border:1.5px solid var(--border);border-radius:14px;padding:1rem 1.25rem;transition:all .2s}
+.qf:hover{border-color:var(--teal);transform:translateX(4px);box-shadow:0 4px 20px rgba(0,178,200,.12)}
+.qf-ico{width:36px;height:36px;border-radius:9px;background:rgba(0,178,200,.1);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0}
+.qf-txt strong{font-size:.875rem;font-weight:700;color:var(--navy);display:block;font-family:'Montserrat',sans-serif}
+.qf-txt span{font-size:.78rem;color:var(--muted)}
+.qwrap{position:sticky;top:96px}
+.qcard{background:#fff;border-radius:24px;box-shadow:0 16px 56px rgba(13,27,110,.12);border:1.5px solid var(--border);overflow:hidden}
+.qhd{background:linear-gradient(135deg,var(--navy),var(--navy3));padding:1.5rem 2rem}
+.qhd-lbl{font-family:'Montserrat',sans-serif;font-size:.7rem;font-weight:800;color:var(--teal-l);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.875rem}
+.prog-row{display:flex;align-items:center;gap:1rem}
+.prog-dots{display:flex;gap:4px;flex:1}
+.pd{flex:1;height:4px;border-radius:4px;background:rgba(255,255,255,.15);transition:background .4s}
+.pd.act{background:var(--teal-l)}
+.pd.dn{background:rgba(61,206,221,.45)}
+.prog-t{font-family:'Montserrat',sans-serif;font-size:.7rem;color:rgba(255,255,255,.4);white-space:nowrap}
+.qbody{padding:2rem}
+.qstep{display:none}
+.qstep.act{display:block;animation:qslide .3s ease}
+@keyframes qslide{from{opacity:0;transform:translateX(14px)}to{opacity:1;transform:none}}
+.qn{font-family:'Montserrat',sans-serif;font-size:.65rem;font-weight:800;color:var(--teal-d);letter-spacing:.12em;text-transform:uppercase;margin-bottom:.4rem}
+.qq{font-family:'Montserrat',sans-serif;font-size:1.1rem;font-weight:800;color:var(--navy);margin-bottom:.35rem;line-height:1.4}
+.qhint{font-size:.78rem;color:var(--muted);margin-bottom:1.5rem;line-height:1.55}
+.qopts{display:flex;flex-direction:column;gap:.6rem}
+.qo{display:flex;align-items:center;gap:12px;padding:1rem 1.25rem;border-radius:12px;border:2px solid var(--border);background:var(--bg);cursor:pointer;transition:all .22s cubic-bezier(.34,1.56,.64,1);font-size:.9rem;font-weight:600;color:var(--text);width:100%;text-align:left;font-family:'Open Sans',sans-serif}
+.qo:hover{border-color:var(--teal);background:rgba(0,178,200,.05);transform:translateX(4px)}
+.qo.sel{border-color:var(--teal-d);background:rgba(0,178,200,.09);color:var(--navy)}
+.qo em{font-size:1.1rem;width:26px;text-align:center;flex-shrink:0;font-style:normal}
+.qnav{display:flex;justify-content:space-between;align-items:center;margin-top:1.5rem;padding-top:1.25rem;border-top:1px solid var(--border)}
+.qbk{background:none;border:none;color:var(--muted);font-size:.85rem;font-weight:600;cursor:pointer;font-family:inherit;padding:8px 0}
+.qbk:hover{color:var(--navy)}
+.qnx{background:var(--navy);color:#fff;border:none;padding:11px 24px;border-radius:50px;font-size:.875rem;font-weight:700;cursor:pointer;transition:all .25s;font-family:'Montserrat',sans-serif;display:flex;align-items:center;gap:6px}
+.qnx:hover{background:var(--navy2);transform:translateY(-2px);box-shadow:0 8px 24px rgba(13,27,110,.3)}
+.qnx:disabled{opacity:.35;cursor:not-allowed;transform:none;box-shadow:none}
+#qres{display:none;text-align:center;padding:.5rem 0}
+.res-ico{width:80px;height:80px;border-radius:50%;margin:0 auto 1.25rem;display:flex;align-items:center;justify-content:center;font-size:2.25rem}
+.res-lvl{font-family:'Montserrat',sans-serif;font-size:.7rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.5rem}
+.res-ttl{font-family:'Montserrat',sans-serif;font-size:1.45rem;font-weight:800;color:var(--navy);margin-bottom:.75rem}
+.res-bd{font-size:.875rem;color:var(--muted);line-height:1.8;margin-bottom:1.5rem}
+.res-acts{display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap}
+.res-p{background:var(--navy);color:#fff;border:none;padding:12px 24px;border-radius:50px;font-weight:700;font-size:.875rem;cursor:pointer;font-family:'Montserrat',sans-serif;transition:all .25s}
+.res-p:hover{background:var(--navy2);transform:translateY(-2px)}
+.res-s{background:transparent;color:var(--muted);border:2px solid var(--border);padding:12px 20px;border-radius:50px;font-weight:600;font-size:.875rem;cursor:pointer;font-family:inherit;transition:all .2s}
+.res-s:hover{border-color:var(--teal);color:var(--teal-d)}
+.res-disc{font-size:.7rem;color:var(--muted);font-style:italic;margin-top:1rem}
+@media(max-width:900px){.quiz-i{grid-template-columns:1fr}.qwrap{position:static}}
+
+/* ════════════════════════════
+   CATEGORIES (BENTO)
+════════════════════════════ */
+.cats-sec{padding:6rem 2rem;background:var(--navy);overflow:hidden}
+.cats-i{max-width:1200px;margin:0 auto}
+.cats-hd{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:2.5rem;flex-wrap:wrap;gap:1rem}
+.cats-hd h2{font-size:clamp(1.8rem,3.5vw,2.8rem);color:#fff}
+.cats-hd a{font-size:.875rem;color:var(--teal-l);font-weight:700;font-family:'Montserrat',sans-serif}
+.bento{display:grid;grid-template-columns:repeat(12,1fr);grid-template-rows:260px 220px;gap:1rem}
+.bc{border-radius:20px;overflow:hidden;position:relative;cursor:pointer;transition:transform .4s cubic-bezier(.34,1.2,.64,1);display:block;text-decoration:none;color:inherit}
+.bc:hover{transform:scale(1.025);z-index:2}
+.bc-img{width:100%;height:100%;object-fit:cover;transition:transform .55s ease;display:block;position:absolute;inset:0}
+.bc:hover .bc-img{transform:scale(1.08)}
+.bc1{grid-column:1/6;grid-row:1;background:linear-gradient(135deg,#0B3D6B,#0D7EA0)}
+.bc2{grid-column:6/9;grid-row:1;background:linear-gradient(135deg,#0D1B6E,#1E3A8A)}
+.bc3{grid-column:9/13;grid-row:1;background:linear-gradient(135deg,#006170,#00B2C8)}
+.bc4{grid-column:1/4;grid-row:2;background:linear-gradient(135deg,#0A2F5A,#0D5E8A)}
+.bc5{grid-column:4/8;grid-row:2;background:linear-gradient(135deg,#0D1B6E,#162591)}
+.bc6{grid-column:8/13;grid-row:2;background:linear-gradient(135deg,#004F60,#008B9E)}
+.bc-ov{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.82) 0%,rgba(0,0,0,.1) 55%,transparent 100%);display:flex;flex-direction:column;justify-content:flex-end;padding:1.5rem;z-index:2}
+.bc-cat{font-family:'Montserrat',sans-serif;font-size:.65rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.4rem}
+.bc-ttl{font-family:'Montserrat',sans-serif;font-size:1rem;font-weight:700;color:#fff;line-height:1.3}
+.bc1 .bc-ttl{font-size:1.3rem}
+.bc-sub{font-size:.78rem;color:rgba(255,255,255,.58);margin-top:.35rem}
+.bc-badge{position:absolute;top:1rem;right:1rem;background:rgba(0,178,200,.2);backdrop-filter:blur(8px);border:1px solid rgba(61,206,221,.35);color:var(--teal-l);font-family:'Montserrat',sans-serif;font-size:.63rem;font-weight:800;padding:4px 10px;border-radius:20px;letter-spacing:.06em;z-index:3}
+@media(max-width:900px){.bento{grid-template-columns:1fr 1fr;grid-template-rows:auto}.bc1,.bc2,.bc3,.bc4,.bc5,.bc6{grid-column:auto;grid-row:auto;height:200px}}
+@media(max-width:540px){.bento{grid-template-columns:1fr}.bc1,.bc2,.bc3,.bc4,.bc5,.bc6{height:220px}}
+
+/* ════════════════════════════
+   ARTICLES — MAGAZINE EDITORIAL
+════════════════════════════ */
+.arts-sec{padding:5rem 2rem 6rem;background:#fff}
+.arts-i{max-width:1200px;margin:0 auto}
+.arts-hd{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:.75rem;flex-wrap:wrap;gap:1rem}
+.arts-hd h2{font-size:clamp(2rem,4vw,3rem);color:var(--navy);font-weight:900;letter-spacing:-.03em}
+.arts-hd a{font-size:.875rem;color:var(--teal-d);font-weight:700;font-family:'Montserrat',sans-serif;border:1.5px solid var(--teal);padding:6px 18px;border-radius:50px;transition:all .2s}
+.arts-hd a:hover{background:var(--teal);color:#fff}
+.fpills{display:flex;gap:.5rem;margin-bottom:2rem;flex-wrap:wrap}
+.fp{padding:7px 18px;border-radius:50px;font-family:'Montserrat',sans-serif;font-size:.75rem;font-weight:700;border:2px solid var(--border);background:#fff;color:var(--muted);cursor:pointer;transition:all .2s}
+.fp:hover,.fp.act{border-color:var(--teal);background:rgba(0,178,200,.08);color:var(--teal-d)}
+/* Editorial layout — top row */
+.arts-top{display:grid;grid-template-columns:1.5fr 1fr;gap:1.25rem;margin-bottom:1.25rem}
+.arts-bot{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem}
+/* Feature card — big with photo background */
+.ac-feat{border-radius:20px;overflow:hidden;position:relative;height:460px;cursor:pointer;display:block;text-decoration:none}
+.ac-feat::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(5,10,50,.88) 0%,rgba(5,10,50,.4) 50%,transparent 100%)}
+.ac-feat-img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease;display:block}
+.ac-feat:hover .ac-feat-img{transform:scale(1.05)}
+.ac-feat-body{position:absolute;bottom:0;left:0;right:0;padding:2rem;z-index:2}
+.ac-feat .ac-cat{font-family:'Montserrat',sans-serif;font-size:.65rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.6rem;display:inline-block;background:rgba(0,178,200,.25);backdrop-filter:blur(8px);border:1px solid rgba(61,206,221,.4);color:var(--teal-l);padding:3px 10px;border-radius:20px}
+.ac-feat .ac-ttl{font-family:'Montserrat',sans-serif;font-size:clamp(1.2rem,2.2vw,1.6rem);font-weight:900;color:#fff;line-height:1.25;margin-bottom:.75rem;letter-spacing:-.02em}
+.ac-feat .ac-ft{font-size:.75rem;color:rgba(255,255,255,.55);display:flex;align-items:center;justify-content:space-between}
+.ac-feat .ac-rd{color:var(--teal-l);font-weight:700;font-family:'Montserrat',sans-serif}
+/* Stack cards — medium with photo background */
+.arts-stack{display:flex;flex-direction:column;gap:1.25rem}
+.ac-med{border-radius:16px;overflow:hidden;position:relative;height:216px;cursor:pointer;display:block;text-decoration:none}
+.ac-med::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(5,10,50,.85) 0%,rgba(5,10,50,.3) 60%,transparent 100%)}
+.ac-med-img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease;display:block}
+.ac-med:hover .ac-med-img{transform:scale(1.06)}
+.ac-med-body{position:absolute;bottom:0;left:0;right:0;padding:1.25rem;z-index:2}
+.ac-med .ac-cat{font-family:'Montserrat',sans-serif;font-size:.6rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.4rem;color:var(--teal-l);display:block}
+.ac-med .ac-ttl{font-family:'Montserrat',sans-serif;font-size:.95rem;font-weight:800;color:#fff;line-height:1.3;letter-spacing:-.01em}
+/* Small cards — text forward */
+.ac{border-radius:16px;overflow:hidden;border:1.5px solid var(--border);background:#fff;transition:all .3s cubic-bezier(.34,1.2,.64,1);cursor:pointer;display:flex;flex-direction:column}
+.ac:hover{transform:translateY(-6px);box-shadow:0 16px 40px rgba(13,27,110,.1);border-color:var(--teal)}
+.ac-img{height:160px;overflow:hidden;position:relative}
+.ac-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+.ac:hover .ac-img img{transform:scale(1.07)}
+.ac:nth-child(1) .ac-img{background:linear-gradient(135deg,#DAEEFF,#B8DFFA)}
+.ac:nth-child(2) .ac-img{background:linear-gradient(135deg,#D0F4F8,#B3EAF0)}
+.ac:nth-child(3) .ac-img{background:linear-gradient(135deg,#E8EEFF,#D0D8FA)}
+.ac-amg{position:absolute;top:10px;right:10px;background:rgba(13,27,110,.8);backdrop-filter:blur(8px);color:var(--teal-l);font-family:'Montserrat',sans-serif;font-size:.6rem;font-weight:800;padding:3px 8px;border-radius:20px;letter-spacing:.05em;z-index:2}
+.ac-bd{padding:1.25rem;flex:1;display:flex;flex-direction:column}
+.ac-cat{font-family:'Montserrat',sans-serif;font-size:.62rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.5rem}
+.ac-ttl{font-family:'Montserrat',sans-serif;font-size:.92rem;font-weight:700;color:var(--navy);line-height:1.4;margin-bottom:.5rem}
+.ac-ex{font-size:.78rem;color:var(--muted);line-height:1.7;flex:1}
+.ac-ft{display:flex;justify-content:space-between;align-items:center;margin-top:1rem;padding-top:.875rem;border-top:1px solid var(--bg2);font-size:.7rem;color:var(--muted)}
+.ac-rd{color:var(--teal-d);font-weight:700;font-family:'Montserrat',sans-serif}
+@media(max-width:900px){.arts-top{grid-template-columns:1fr}.ac-feat{height:340px}.arts-bot{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.arts-bot{grid-template-columns:1fr}}
+
+/* ════════════════════════════
+   INFLUENCER
+════════════════════════════ */
+.inf-sec{padding:6rem 2rem;background:var(--bg);position:relative}
+.inf-i{max-width:1200px;margin:0 auto}
+.inf-top{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:3rem;flex-wrap:wrap;gap:1.5rem}
+.inf-top h2{font-size:clamp(1.8rem,3.5vw,2.8rem);color:var(--navy);max-width:560px}
+.inf-lead{font-size:.9rem;color:var(--muted);max-width:340px;line-height:1.75}
+.voice-g{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem}
+.vc{background:#fff;border:1.5px solid var(--border);border-radius:20px;padding:1.75rem;transition:all .35s;position:relative}
+.vc:hover{transform:translateY(-6px);border-color:var(--teal);box-shadow:0 16px 48px rgba(13,27,110,.1)}
+.vc img{width:60px;height:60px;border-radius:50%;object-fit:cover;margin-bottom:1rem;border:2px solid var(--border)}
+.vc-tier{font-family:'Montserrat',sans-serif;font-size:.63rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.4rem}
+.vc-name{font-family:'Montserrat',sans-serif;font-size:1rem;font-weight:800;color:var(--navy);margin-bottom:.2rem}
+.vc-hndl{font-size:.78rem;color:var(--teal-d);margin-bottom:.75rem;font-weight:600}
+.vc-spec{font-size:.78rem;color:var(--muted);line-height:1.55}
+.vc-reach{display:flex;align-items:center;gap:6px;margin-top:1.25rem;padding-top:1rem;border-top:1px solid var(--border)}
+.vc-rn{font-family:'Montserrat',sans-serif;font-size:1.1rem;font-weight:900;color:var(--navy)}
+.vc-rl{font-size:.7rem;color:var(--muted)}
+.t1{color:#C0392B}.t2{color:var(--teal-d)}.t3{color:var(--navy3)}
+@media(max-width:900px){.voice-g{grid-template-columns:1fr;max-width:400px}}
+
+/* ════════════════════════════
+   NEWSLETTER
+════════════════════════════ */
+.nl-sec{padding:6rem 2rem;background:var(--bg2);position:relative;overflow:hidden}
+.nl-sec::before{content:'';position:absolute;bottom:-60px;right:-60px;width:340px;height:340px;border-radius:50%;background:rgba(0,178,200,.08);pointer-events:none}
+.nl-i{max-width:620px;margin:0 auto;text-align:center;position:relative;z-index:1}
+.nl-i h2{font-size:clamp(1.8rem,3.5vw,2.6rem);color:var(--navy);margin-bottom:.75rem}
+.nl-i p{color:var(--muted);margin-bottom:2rem;line-height:1.8}
+.nl-form{background:#fff;border-radius:60px;padding:.5rem;box-shadow:0 8px 40px rgba(13,27,110,.1);border:1.5px solid var(--border);display:flex;gap:.5rem;max-width:460px;margin:0 auto 1rem}
+.nl-inp{flex:1;padding:12px 16px;border:none;outline:none;font-size:.9rem;color:var(--text);background:transparent;font-family:inherit}
+.nl-btn{background:var(--navy);color:#fff;border:none;padding:12px 24px;border-radius:50px;font-weight:700;font-family:'Montserrat',sans-serif;font-size:.875rem;cursor:pointer;transition:all .25s;white-space:nowrap}
+.nl-btn:hover{background:var(--navy2);transform:translateY(-1px)}
+.nl-disc{font-size:.7rem;color:var(--muted)}
+.nl-soc{display:flex;justify-content:center;gap:.75rem;margin-top:2rem;flex-wrap:wrap}
+.spill{display:flex;align-items:center;gap:8px;padding:8px 16px;border-radius:50px;background:#fff;border:1.5px solid var(--border);font-family:'Montserrat',sans-serif;font-size:.75rem;font-weight:700;color:var(--muted);transition:all .2s}
+.spill:hover{border-color:var(--teal);color:var(--teal-d);transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,178,200,.15)}
+
+/* ════════════════════════════
+   AMG — Endorsement
+════════════════════════════ */
+.amg-sec{padding:5rem 2rem;background:#fff}
+.amg-i{max-width:960px;margin:0 auto}
+.amg-hd{text-align:center;margin-bottom:2.5rem}
+.amg-hd h2{font-size:clamp(1.8rem,3vw,2.4rem);color:var(--navy)}
+.amg-card{background:linear-gradient(135deg,var(--navy),var(--navy3));border-radius:28px;overflow:hidden;display:grid;grid-template-columns:1fr 1.5fr;box-shadow:0 16px 56px rgba(13,27,110,.2)}
+.amg-l{padding:3rem 2.5rem;display:flex;flex-direction:column;justify-content:center;border-right:1px solid rgba(255,255,255,.08)}
+.amg-logo{width:64px;height:64px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;margin-bottom:1.5rem;box-shadow:0 8px 24px rgba(184,146,42,.3)}
+.amg-logo-t{font-family:'Montserrat',sans-serif;font-size:.85rem;font-weight:900;color:var(--white)}
+.amg-l h3{font-size:1.25rem;color:#fff;margin-bottom:.5rem;font-family:'Montserrat',sans-serif}
+.amg-l p{font-size:.85rem;color:rgba(255,255,255,.58);line-height:1.75}
+.amg-dra{margin-top:1.25rem;font-size:.78rem;color:rgba(255,255,255,.45);line-height:1.6}
+.amg-dra strong{color:var(--teal-l)}
+.amg-r{padding:3rem 2.5rem}
+.amg-r h4{font-family:'Montserrat',sans-serif;font-size:.7rem;font-weight:800;color:var(--teal-l);letter-spacing:.1em;text-transform:uppercase;margin-bottom:1.25rem}
+.amg-rules{display:flex;flex-direction:column;gap:.75rem}
+.amg-rule{display:flex;align-items:flex-start;gap:10px}
+.amg-chk{width:20px;height:20px;border-radius:50%;background:rgba(61,206,221,.15);border:1px solid rgba(61,206,221,.35);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;font-size:.65rem;color:var(--teal-l);font-weight:900}
+.amg-rt{font-size:.85rem;color:rgba(255,255,255,.65);line-height:1.55}
+.amg-rt strong{color:rgba(255,255,255,.9);font-weight:600}
+@media(max-width:768px){.amg-card{grid-template-columns:1fr}.amg-l{border-right:none;border-bottom:1px solid rgba(255,255,255,.08);padding:2rem}.amg-r{padding:2rem}}
+
+/* ════════════════════════════
+   CTA STRIP — Campaign style
+   Diagonal blue-teal franjas
+════════════════════════════ */
+.cta-strip{position:relative;overflow:hidden;padding:4rem 2rem}
+.cta-strip-bg{position:absolute;inset:0;background:linear-gradient(105deg, var(--navy) 0%, var(--navy3) 35%, var(--teal-dk) 65%, var(--teal-d) 100%)}
+/* Diagonal stripe overlay — matches campaign franjas */
+.cta-strip-bg::after{
+  content:'';position:absolute;inset:0;
+  background:repeating-linear-gradient(
+    -55deg,
+    transparent 0px,
+    transparent 28px,
+    rgba(255,255,255,.04) 28px,
+    rgba(255,255,255,.04) 30px
+  )}
+.cta-strip-i{position:relative;z-index:1;max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr auto;gap:3rem;align-items:center}
+.cta-strip-txt p{font-size:1.25rem;color:#fff;font-family:'Montserrat',sans-serif;font-weight:700;line-height:1.5;max-width:680px}
+.cta-strip-txt p em{color:var(--teal-l);font-style:normal;font-weight:900}
+.cta-strip-disc{font-size:.7rem;color:rgba(255,255,255,.45);margin-top:.5rem}
+.cta-strip-btn{background:#fff;color:var(--navy);border:none;padding:14px 32px;border-radius:50px;font-family:'Montserrat',sans-serif;font-weight:800;font-size:.9rem;cursor:pointer;transition:all .3s;white-space:nowrap;box-shadow:0 8px 28px rgba(0,0,0,.2)}
+.cta-strip-btn:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 14px 40px rgba(0,0,0,.3)}
+@media(max-width:768px){.cta-strip-i{grid-template-columns:1fr;text-align:center}.cta-strip-btn{width:100%}}
+
+/* ════════════════════════════
+   FOOTER
+════════════════════════════ */
+footer{background:var(--navy);color:rgba(255,255,255,.5);padding:4rem 2rem 2rem}
+.ft-i{max-width:1200px;margin:0 auto}
+.ft-top{display:grid;grid-template-columns:2.5fr 1fr 1fr 1fr;gap:3rem;margin-bottom:3rem}
+.ft-logo{font-family:'Montserrat',sans-serif;font-size:1.2rem;font-weight:900;color:#fff;margin-bottom:.75rem}
+.ft-logo span{color:var(--teal-l)}
+.ft-brand p{font-size:.825rem;line-height:1.8;max-width:280px;margin-bottom:1.25rem}
+.ft-col h5{font-family:'Montserrat',sans-serif;font-size:.68rem;font-weight:800;color:rgba(255,255,255,.38);letter-spacing:.1em;text-transform:uppercase;margin-bottom:1rem}
+.ft-col a{display:block;font-size:.825rem;color:rgba(255,255,255,.42);margin-bottom:.6rem;transition:color .2s}
+.ft-col a:hover{color:var(--teal-l)}
+.ft-disc{font-size:.7rem;color:rgba(255,255,255,.28);line-height:1.7;margin-bottom:1.5rem;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,.06)}
+.ft-bot{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.75rem;font-size:.72rem;color:rgba(255,255,255,.28)}
+@media(max-width:900px){.ft-top{grid-template-columns:1fr 1fr;gap:2rem}}
+@media(max-width:540px){.ft-top{grid-template-columns:1fr}}
+
+/* ════════════════════════════
+   MOBILE FLOAT
+════════════════════════════ */
+.toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%) translateY(12px);background:var(--navy);color:#fff;padding:12px 26px;border-radius:50px;font-family:'Montserrat',sans-serif;font-size:.84rem;font-weight:700;opacity:0;transition:all .35s;pointer-events:none;z-index:2000;border:1px solid rgba(61,206,221,.3);box-shadow:0 8px 32px rgba(0,0,0,.25);white-space:nowrap}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.mob-float{display:none;position:fixed;bottom:0;left:0;right:0;z-index:900;padding:1rem 1.5rem;background:rgba(13,27,110,.97);backdrop-filter:blur(16px);border-top:1px solid rgba(255,255,255,.08)}
+@media(max-width:768px){.mob-float{display:block}}
+.mob-btn{width:100%;background:var(--teal);color:#fff;border:none;padding:15px;border-radius:50px;font-family:'Montserrat',sans-serif;font-weight:800;font-size:.95rem;cursor:pointer;box-shadow:0 8px 24px rgba(0,178,200,.4)}
+</style>
+</head>
+<body>
+
+<!-- ══ HEADER ══ -->
+<header id="hdr">
+  <div class="hdr-i">
+    <a class="logo" href="#">
+      <img src="img/logo-mscg.png" alt="México sin Cáncer Gástrico" style="height:70px;width:auto;object-fit:contain;">
+    </a>
+    <nav class="nav-links">
+      <a href="#quiz">Test de riesgo</a>
+      <a href="#categorias">Información</a>
+      <a href="#articulos">Artículos</a>
+      <a href="#amg">Avalado por AMG</a>
+    </nav>
+    <div style="display:flex;align-items:center;gap:1rem">
+      <div class="amg-pill" style="display:flex;align-items:center;gap:8px;padding:4px 14px 4px 6px;">
+        <img src="img/logo-amg.png" alt="AMG" style="width:34px;height:34px;object-fit:contain;">
+        <span>Avalado AMG</span>
+      </div>
+      <button class="nav-cta" onclick="document.getElementById('quiz').scrollIntoView({behavior:'smooth'})">Hacer el test</button>
+    </div>
+    <div class="hbg" onclick="toggleMobNav()"><span></span><span></span><span></span></div>
+  </div>
+</header>
+<nav class="mob-nav" id="mobNav">
+  <a href="#quiz" onclick="toggleMobNav()">Test de riesgo</a>
+  <a href="#categorias" onclick="toggleMobNav()">Información</a>
+  <a href="#articulos" onclick="toggleMobNav()">Artículos</a>
+  <a href="#amg" onclick="toggleMobNav()">Avalado por AMG</a>
+</nav>
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <div class="hero-img-col">
+    <img src="img/hero_a1.png" alt="Campaña México sin Cáncer Gástrico — metro CDMX">
+  </div>
+  <div class="hero-i">
+    <div id="hero-r" class="s-right">
+      <div class="ey hero-eyebrow">Campaña de concienciación sobre <span class="hpyl">H. pylori</span></div>
+      <h1 class="hero-h1">
+        7 de cada 10 mexicanos tienen la bacteria <span class="hpyl">Helicobacter pylori</span> en el estómago.<br>
+        Y la mayoría no lo sabe.
+      </h1>
+      <!-- AMG logo destacado -->
+      <div style="display:flex;align-items:center;gap:16px;margin:1.5rem 0;padding:1rem 1.25rem;background:rgba(184,146,42,.07);border:1.5px solid rgba(184,146,42,.25);border-radius:16px;">
+        <img src="img/logo-amg.png" alt="Asociación Mexicana de Gastroenterología" style="width:80px;height:80px;object-fit:contain;flex-shrink:0;">
+        <div>
+          <div style="font-family:'Montserrat',sans-serif;font-size:.62rem;font-weight:800;color:var(--gold);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.3rem">Aval científico</div>
+          <div style="font-family:'Montserrat',sans-serif;font-size:.88rem;font-weight:700;color:#fff;line-height:1.35">Asociación Mexicana<br>de Gastroenterología</div>
+          <div style="font-size:.7rem;color:rgba(255,255,255,.6);margin-top:.25rem">Contenido revisado y avalado por especialistas</div>
+        </div>
+      </div>
+      <div class="hero-pills">
+        <div class="hpill">
+          <div class="hpill-n"><span class="stat-n" data-target="70" data-suffix="%">70%</span></div>
+          <div class="hpill-l">de mexicanos infectados</div>
+        </div>
+        <div class="hpill">
+          <div class="hpill-n"><span class="stat-n" data-target="90" data-suffix="%">90%</span></div>
+          <div class="hpill-l">del cáncer gástrico inicia con <em class="hpyl">H. pylori</em></div>
+        </div>
+        <div class="hpill">
+          <div class="hpill-n"><span class="stat-n" data-target="80" data-suffix="%">80%</span></div>
+          <div class="hpill-l">reducción de riesgo al erradicarlo</div>
+        </div>
+      </div>
+      <div class="hero-acts">
+        <button class="btn btn-teal" onclick="document.getElementById('quiz').scrollIntoView({behavior:'smooth'})">
+          Hacer el test de riesgo →
+        </button>
+        <button class="btn btn-outline" onclick="document.getElementById('info').scrollIntoView({behavior:'smooth'})">
+          Explorar información
+        </button>
+      </div>
+      <p class="hero-disclaimer">Campaña educativa avalada por la Asociación Mexicana de Gastroenterología.<br>Esta información no sustituye la consulta médica.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ ARTÍCULOS ══ -->
+<section class="arts-sec" id="articulos">
+  <div class="arts-i">
+    <div class="arts-hd s-fade">
+      <h2>Artículos y recursos</h2>
+      <a href="biblioteca.html">Ver biblioteca completa →</a>
+    </div>
+    <div class="fpills s-fade">
+      <button class="fp act" onclick="filterArts(this,'todos')">Todos</button>
+      <button class="fp" onclick="filterArts(this,'bacteria')">🦠 La bacteria</button>
+      <button class="fp" onclick="filterArts(this,'sintomas')">⚠️ Síntomas</button>
+      <button class="fp" onclick="filterArts(this,'tratamiento')">💊 Tratamiento</button>
+      <button class="fp" onclick="filterArts(this,'nutricion')">🥗 Nutrición</button>
+    </div>
+
+    <!-- TOP ROW: Featured (big) + 2 stacked -->
+    <div class="arts-top s-fade">
+      <!-- FEATURED -->
+      <a class="ac-feat" href="art-tratamiento.html">
+        <img class="ac-feat-img" src="img/brand_amg/bacteria_c7_tratamiento.png" alt="Tratamiento H. pylori" style="object-position:center center">
+        <div class="ac-feat-body">
+          <span class="ac-cat">💊 Tratamiento</span>
+          <div class="ac-ttl">Los nuevos esquemas de tratamiento y por qué la tasa de curación mejora significativamente</div>
+          <div class="ac-ft">
+            <span>7 min lectura · Avalado AMG</span>
+            <span class="ac-rd">Leer artículo →</span>
+          </div>
+        </div>
+      </a>
+      <!-- STACK 2 medium -->
+      <div class="arts-stack">
+        <a class="ac-med" href="art-contagio.html">
+          <img class="ac-med-img" src="img/brand_amg/hispanico_hombre_c2_transmisio.png" alt="Contagio H. pylori" style="object-position:center 15%">
+          <div class="ac-med-body">
+            <span class="ac-cat">🦠 La bacteria</span>
+            <div class="ac-ttl">¿Cómo se contagia el H. pylori? Todo lo que debes saber</div>
+          </div>
+        </a>
+        <a class="ac-med" href="art-gastritis.html">
+          <img class="ac-med-img" src="img/brand_amg/hispanica_mujer_c1_gastritis.png" alt="Gastritis síntomas" style="object-position:center 15%">
+          <div class="ac-med-body">
+            <span class="ac-cat" style="color:#FFA0A0">⚠️ Síntomas</span>
+            <div class="ac-ttl">Gastritis crónica: cuándo dejar de normalizar el dolor de estómago</div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- BOTTOM ROW: 3 small cards -->
+    <div class="arts-bot">
+      <a class="ac s-fade" href="art-nutricion.html" style="text-decoration:none">
+        <div class="ac-img" style="background:linear-gradient(135deg,#D0F4F8,#B3EAF0)">
+          <img src="img/brand_amg/hispanica_mujer_c3_169.png" alt="Nutrición y dieta" style="width:100%;height:100%;object-fit:cover;object-position:center 20%">
+        </div>
+        <div class="ac-bd">
+          <div class="ac-cat" style="color:#B8922A">🥗 Nutrición</div>
+          <div class="ac-ttl">Qué comer (y qué evitar) cuando tienes <em class="hpyl-dark">H. pylori</em></div>
+          <div class="ac-ex">La dieta no cura, pero puede reducir la inflamación y acompañar el tratamiento.</div>
+          <div class="ac-ft"><span>6 min</span><span class="ac-rd">Leer →</span></div>
+        </div>
+      </a>
+      <a class="ac s-fade delay-1" href="art-reinfeccion.html" style="text-decoration:none">
+        <div class="ac-img" style="background:linear-gradient(135deg,#DAEEFF,#B8DFFA)">
+          <img src="img/brand_amg/hispanico_hombre_c2_169.png" alt="Prevención reinfección" style="width:100%;height:100%;object-fit:cover;object-position:center 20%">
+        </div>
+        <div class="ac-bd">
+          <div class="ac-cat" style="color:var(--teal-d)">🛡️ Prevención</div>
+          <div class="ac-ttl">Cómo saber si me reinfecté y qué hacer para proteger a mi familia</div>
+          <div class="ac-ex">Reinfección &lt;5% con tratamiento correcto. Las claves de la higiene familiar.</div>
+          <div class="ac-ft"><span>5 min</span><span class="ac-rd">Leer →</span></div>
+        </div>
+      </a>
+      <a class="ac s-fade delay-2" href="art-diagnostico.html" style="text-decoration:none">
+        <div class="ac-img" style="background:linear-gradient(135deg,#E8EEFF,#D0D8FA)">
+          <img src="img/brand_amg/test_c1_mujer.png" alt="Diagnóstico prueba" style="width:100%;height:100%;object-fit:cover;object-position:center top">
+          <div class="ac-amg">AMG</div>
+        </div>
+        <div class="ac-bd">
+          <div class="ac-cat" style="color:var(--navy3)">🔬 Diagnóstico</div>
+          <div class="ac-ttl">Prueba de aliento vs endoscopía: ¿cuál me corresponde?</div>
+          <div class="ac-ex">No todos necesitan endoscopía. Tu médico elige la prueba según tus síntomas.</div>
+          <div class="ac-ft"><span>6 min</span><span class="ac-rd">Leer →</span></div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ VOCES CALIFICADAS AMG ══ -->
+<section class="inf-sec">
+  <div class="inf-i">
+    <div class="inf-top s-fade">
+      <div>
+        <div class="ey">Gastroenterología de alto nivel</div>
+        <h2>Especialistas de la <a href="https://www.gastro.org.mx/" target="_blank" rel="noopener" style="color:var(--teal-d);text-decoration:none;border-bottom:2px solid var(--teal);padding-bottom:1px">Asociación Mexicana de Gastroenterología</a></h2>
+      </div>
+      <div class="inf-lead">Voces reconocidas de la gastroenterología mexicana que comparten su conocimiento sobre la infección por <em style="color:var(--teal-d);font-style:italic;font-weight:700">H. pylori</em> y su impacto en la salud digestiva de los mexicanos.</div>
+    </div>
+    <div class="voice-g">
+
+      <!-- KOL 1 -->
+      <div class="vc s-scale">
+        <div style="width:68px;height:68px;border-radius:50%;background:linear-gradient(135deg,var(--navy),var(--navy3));display:flex;align-items:center;justify-content:center;margin-bottom:1rem;flex-shrink:0;border:2.5px solid var(--gold)">
+          <span style="font-family:'Montserrat',sans-serif;font-weight:900;font-size:1.3rem;color:var(--gold)">AN</span>
+        </div>
+        <div class="vc-tier t1" style="color:var(--gold);font-size:.62rem">Presidenta 2026 · AMG</div>
+        <div class="vc-name">Dra. Alejandra Noble Lugo</div>
+        <div class="vc-hndl" style="color:var(--muted);font-size:.75rem">Asociación Mexicana de Gastroenterología</div>
+        <div class="vc-spec">"La detección oportuna de <em style="color:var(--teal-d);font-style:italic;font-weight:700">H. pylori</em> es una prioridad de salud pública en México. Este hub es el primer paso: informar para actuar."</div>
+        <div style="margin-top:1.25rem;padding-top:1rem;border-top:1px solid var(--border)">
+          <div style="font-family:'Montserrat',sans-serif;font-size:.62rem;font-weight:800;color:var(--teal-d);letter-spacing:.08em;text-transform:uppercase">Rol en la campaña</div>
+          <div style="font-size:.78rem;color:var(--muted);margin-top:.25rem">Aval institucional del hub educativo mexicosincancergastrico.com.mx</div>
+        </div>
+        <div style="margin-top:1rem;display:flex;gap:.6rem;flex-wrap:wrap">
+          <a href="https://www.gastro.org.mx/la-amg/estructura-organizacional" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:.3rem;font-family:'Montserrat',sans-serif;font-size:.62rem;font-weight:700;color:var(--teal-d);border:1px solid var(--teal);border-radius:20px;padding:.3rem .7rem;text-decoration:none;transition:all .2s" onmouseover="this.style.background='var(--teal)';this.style.color='#fff'" onmouseout="this.style.background='transparent';this.style.color='var(--teal-d)'">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            Perfil AMG</a>
+          <a href="https://www.instagram.com/amg.org.mx/" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:.3rem;font-family:'Montserrat',sans-serif;font-size:.62rem;font-weight:700;color:#C13584;border:1px solid #C13584;border-radius:20px;padding:.3rem .7rem;text-decoration:none;transition:all .2s" onmouseover="this.style.background='#C13584';this.style.color='#fff'" onmouseout="this.style.background='transparent';this.style.color='#C13584'">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+            Instagram</a>
+        </div>
+      </div>
+
+      <!-- KOL 2 -->
+      <div class="vc s-scale delay-1">
+        <div style="width:68px;height:68px;border-radius:50%;background:linear-gradient(135deg,var(--navy),var(--navy3));display:flex;align-items:center;justify-content:center;margin-bottom:1rem;flex-shrink:0;border:2.5px solid var(--teal)">
+          <span style="font-family:'Montserrat',sans-serif;font-weight:900;font-size:1.3rem;color:var(--teal-l)">LV</span>
+        </div>
+        <div class="vc-tier t2" style="color:var(--teal-d);font-size:.62rem">Gastroenterólogo · INCMNSZ · UNAM</div>
+        <div class="vc-name">Dr. Luis Raúl Valdovinos García</div>
+        <div class="vc-hndl" style="color:var(--muted);font-size:.75rem">Gastroenterología · Motilidad gastrointestinal</div>
+        <div class="vc-spec">"El avance en los esquemas de erradicación representa una oportunidad real de reducir la incidencia de cáncer gástrico en nuestra población."</div>
+        <div style="margin-top:1.25rem;padding-top:1rem;border-top:1px solid var(--border)">
+          <div style="font-family:'Montserrat',sans-serif;font-size:.62rem;font-weight:800;color:var(--teal-d);letter-spacing:.08em;text-transform:uppercase">Especialidad</div>
+          <div style="font-size:.78rem;color:var(--muted);margin-top:.25rem">Gastroenterología · Motilidad gastrointestinal · Erradicación de <em style="color:var(--teal-d);font-style:italic">H. pylori</em></div>
+        </div>
+        <div style="margin-top:1rem;display:flex;gap:.6rem;flex-wrap:wrap">
+          <a href="https://www.revistagastroenterologiamexico.org/es-comite-editorial" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:.3rem;font-family:'Montserrat',sans-serif;font-size:.62rem;font-weight:700;color:var(--teal-d);border:1px solid var(--teal);border-radius:20px;padding:.3rem .7rem;text-decoration:none;transition:all .2s" onmouseover="this.style.background='var(--teal)';this.style.color='#fff'" onmouseout="this.style.background='transparent';this.style.color='var(--teal-d)'">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            Comité Editorial</a>
+          <a href="https://pubmed.ncbi.nlm.nih.gov/?term=Valdovinos-Garc%C3%ADa+LR%5BAuthor%5D" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:.3rem;font-family:'Montserrat',sans-serif;font-size:.62rem;font-weight:700;color:var(--navy);border:1px solid var(--navy3);border-radius:20px;padding:.3rem .7rem;text-decoration:none;transition:all .2s" onmouseover="this.style.background='var(--navy)';this.style.color='#fff'" onmouseout="this.style.background='transparent';this.style.color='var(--navy)'">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            PubMed</a>
+        </div>
+      </div>
+
+      <!-- KOL 3 -->
+      <div class="vc s-scale delay-2">
+        <div style="width:68px;height:68px;border-radius:50%;background:linear-gradient(135deg,var(--navy),var(--navy3));display:flex;align-items:center;justify-content:center;margin-bottom:1rem;flex-shrink:0;border:2.5px solid var(--teal)">
+          <span style="font-family:'Montserrat',sans-serif;font-weight:900;font-size:1.3rem;color:var(--teal-l)">EC</span>
+        </div>
+        <div class="vc-tier t3" style="color:var(--teal-d);font-size:.62rem">Coordinador Lab. Motilidad GI · INCMNSZ</div>
+        <div class="vc-name">Dr. Enrique Coss Adame</div>
+        <div class="vc-hndl" style="color:var(--muted);font-size:.75rem">INCMNSZ · Resistencia Antibiótica</div>
+        <div class="vc-spec">"Comprender la resistencia bacteriana es clave para elegir el tratamiento correcto. La educación al paciente hace la diferencia en el éxito terapéutico."</div>
+        <div style="margin-top:1.25rem;padding-top:1rem;border-top:1px solid var(--border)">
+          <div style="font-family:'Montserrat',sans-serif;font-size:.62rem;font-weight:800;color:var(--teal-d);letter-spacing:.08em;text-transform:uppercase">Especialidad</div>
+          <div style="font-size:.78rem;color:var(--muted);margin-top:.25rem">Motilidad GI · Resistencia antibiótica · Investigación clínica INCMNSZ</div>
+        </div>
+        <div style="margin-top:1rem;display:flex;gap:.6rem;flex-wrap:wrap">
+          <a href="https://www.incmnsz.mx/Investigacion/investigador.jsp?id=91" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:.3rem;font-family:'Montserrat',sans-serif;font-size:.62rem;font-weight:700;color:var(--teal-d);border:1px solid var(--teal);border-radius:20px;padding:.3rem .7rem;text-decoration:none;transition:all .2s" onmouseover="this.style.background='var(--teal)';this.style.color='#fff'" onmouseout="this.style.background='transparent';this.style.color='var(--teal-d)'">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            Perfil INCMNSZ</a>
+          <a href="https://pubmed.ncbi.nlm.nih.gov/?term=Coss-Adame+E%5BAuthor%5D" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:.3rem;font-family:'Montserrat',sans-serif;font-size:.62rem;font-weight:700;color:var(--navy);border:1px solid var(--navy3);border-radius:20px;padding:.3rem .7rem;text-decoration:none;transition:all .2s" onmouseover="this.style.background='var(--navy)';this.style.color='#fff'" onmouseout="this.style.background='transparent';this.style.color='var(--navy)'">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            PubMed</a>
+          <a href="https://www.revistagastroenterologiamexico.org/es-v-consenso-mexicano-sobre-el-articulo-S0375090625001697" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:.3rem;font-family:'Montserrat',sans-serif;font-size:.62rem;font-weight:700;color:var(--gold);border:1px solid var(--gold);border-radius:20px;padding:.3rem .7rem;text-decoration:none;transition:all .2s" onmouseover="this.style.background='var(--gold)';this.style.color='#fff'" onmouseout="this.style.background='transparent';this.style.color='var(--gold)'">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            V Consenso H. pylori</a>
+        </div>
+      </div>
+
+    </div>
+    <!-- AMG institutional note -->
+    <div class="s-fade" style="margin-top:2rem;padding:1.25rem 1.75rem;background:rgba(13,27,110,.04);border:1.5px solid var(--border);border-radius:16px;display:flex;align-items:center;gap:1.25rem;flex-wrap:wrap">
+      <img src="img/logo-amg.png" alt="AMG" style="height:48px;width:auto;object-fit:contain;flex-shrink:0;">
+      <p style="font-size:.8rem;color:var(--muted);line-height:1.7;flex:1;min-width:240px">La <strong style="color:var(--navy)">Asociación Mexicana de Gastroenterología</strong> es la principal sociedad científica en salud digestiva en México. Sigue sus redes: <a href="https://www.instagram.com/amg.org.mx/" target="_blank" rel="noopener" style="color:var(--teal-d)">@amg.org.mx</a> · <a href="https://x.com/gastromx" target="_blank" rel="noopener" style="color:var(--teal-d)">@gastromx</a> · <a href="https://www.facebook.com/gastromx" target="_blank" rel="noopener" style="color:var(--teal-d)">Facebook</a></p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CIENCIA + EVIDENCIA (merged) ══ -->
+<section class="cats-sec" id="categorias" style="position:relative;overflow:hidden">
+  <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 85% 15%,rgba(0,178,200,.07) 0%,transparent 55%),radial-gradient(ellipse at 10% 80%,rgba(0,178,200,.05) 0%,transparent 50%);pointer-events:none"></div>
+  <div class="cats-i" style="position:relative;z-index:1">
+
+    <!-- Encabezado unificado -->
+    <div class="s-fade" style="margin-bottom:3rem">
+      <div class="ey" style="color:var(--teal-l)">México frente al H. pylori</div>
+      <div style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:1rem;margin-bottom:1rem">
+        <h2 style="color:#fff;font-size:clamp(1.8rem,3.5vw,2.8rem)">Ciencia y Evidencia</h2>
+        <a href="biblioteca.html" style="font-size:.875rem;color:var(--teal-l);font-weight:700;font-family:'Montserrat',sans-serif">Ver todos los temas →</a>
+      </div>
+      <div class="div-teal"></div>
+      <p style="color:rgba(255,255,255,.6);max-width:600px;line-height:1.85">Temas educativos y cifras verificadas de instituciones mexicanas e investigaciones clínicas publicadas en revistas arbitradas internacionales.</p>
+    </div>
+
+    <!-- ─ PARTE 1: Bento de temas ─ -->
+    <div class="s-fade" style="margin-bottom:1.25rem">
+      <div style="font-family:'Montserrat',sans-serif;font-size:.6rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--teal-l);display:flex;align-items:center;gap:8px">
+        <span style="width:16px;height:2px;background:var(--teal);display:block;border-radius:2px"></span>EXPLORA LOS TEMAS
+      </div>
+    </div>
+    <div class="bento" style="margin-bottom:4.5rem">
+      <!-- Card 1 -->
+      <a class="bc bc1 s-scale" href="art-contagio.html">
+        <img class="bc-img" src="img/brand_amg/imagen_bacteria.png" alt="H. pylori bacteria" style="object-position:center 30%">
+        <div class="bc-ov">
+          <div class="bc-cat" style="color:var(--teal-l)">🦠 Entender la bacteria</div>
+          <div class="bc-ttl">¿Qué es el <em class="hpyl">Helicobacter pylori</em> y cómo te infecta?</div>
+          <div class="bc-sub">Mecanismos de infección, transmisión y por qué persiste</div>
+        </div>
+        <div class="bc-badge">Más visitado</div>
+      </a>
+      <!-- Card 2 -->
+      <a class="bc bc2 s-scale delay-1" href="art-diagnostico.html">
+        <img class="bc-img" src="img/brand_amg/test_c1_mujer.png" alt="Diagnóstico H. pylori" style="object-position:center top">
+        <div class="bc-ov">
+          <div class="bc-cat" style="color:#FBB74B">🔬 Diagnóstico</div>
+          <div class="bc-ttl">Cómo detectar <em class="hpyl">H. pylori</em>: prueba de aliento, sangre y endoscopía</div>
+        </div>
+      </a>
+      <!-- Card 3 -->
+      <a class="bc bc3 s-scale delay-2" href="art-tratamiento.html">
+        <img class="bc-img" src="img/brand_amg/bacteria_c7_tratamiento.png" alt="Tratamiento H. pylori" style="object-position:center center">
+        <div class="bc-ov">
+          <div class="bc-cat" style="color:var(--teal-l)">💊 Tratamiento</div>
+          <div class="bc-ttl">El tratamiento que mejora <em class="hpyl">significativamente</em> la tasa de curación</div>
+        </div>
+        <div class="bc-badge">Nuevo</div>
+      </a>
+      <!-- Card 4 -->
+      <a class="bc bc4 s-scale delay-1" href="art-nutricion.html">
+        <img class="bc-img" src="img/brand_amg/hispanica_mujer_c1_169.png" alt="Nutrición y H. pylori" style="object-position:center 20%">
+        <div class="bc-ov">
+          <div class="bc-cat" style="color:#FBB74B">🥗 Nutrición</div>
+          <div class="bc-ttl">Alimentos que ayudan (y evitar) durante el tratamiento</div>
+        </div>
+      </a>
+      <!-- Card 5 -->
+      <a class="bc bc5 s-scale delay-2" href="art-gastritis.html">
+        <img class="bc-img" src="img/brand_amg/hispanica_mujer_c1_gastritis.png" alt="Síntomas gastritis" style="object-position:center 20%">
+        <div class="bc-ov">
+          <div class="bc-cat" style="color:var(--teal-l)">⚠️ Síntomas</div>
+          <div class="bc-ttl">Reconocer los síntomas: cuándo preocuparse y cuándo actuar</div>
+        </div>
+      </a>
+      <!-- Card 6 -->
+      <a class="bc bc6 s-scale delay-3" href="art-reinfeccion.html">
+        <img class="bc-img" src="img/brand_amg/hispanico_hombre_c4_consulta.png" alt="Prevención y reinfección" style="object-position:center 20%">
+        <div class="bc-ov">
+          <div class="bc-cat" style="color:var(--teal-l)">🔬 Prevención</div>
+          <div class="bc-ttl">Cómo reducir el riesgo de reinfección y proteger a tu familia</div>
+        </div>
+      </a>
+    </div>
+
+    <!-- Separador -->
+    <div class="s-fade" style="display:flex;align-items:center;gap:1.5rem;margin-bottom:3rem">
+      <div style="flex:1;height:1px;background:rgba(255,255,255,.12)"></div>
+      <div style="font-family:'Montserrat',sans-serif;font-size:.58rem;font-weight:800;color:var(--gold);letter-spacing:.14em;text-transform:uppercase;white-space:nowrap;display:flex;align-items:center;gap:8px">
+        <span style="width:12px;height:2px;background:var(--gold);display:block;border-radius:2px"></span>DATOS VERIFICADOS<span style="width:12px;height:2px;background:var(--gold);display:block;border-radius:2px"></span>
+      </div>
+      <div style="flex:1;height:1px;background:rgba(255,255,255,.12)"></div>
+    </div>
+
+    <!-- ─ PARTE 2: Data cards de evidencia ─ -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.25rem;margin-bottom:3.5rem">
+
+      <!-- Card E1: Prevalencia IMSS -->
+      <div class="s-scale" style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-top:3px solid var(--teal);border-radius:16px;padding:1.75rem;transition:all .3s;cursor:default" onmouseover="this.style.background='rgba(0,178,200,.08)';this.style.borderColor='rgba(0,178,200,.3)'" onmouseout="this.style.background='rgba(255,255,255,.05)';this.style.borderColor='rgba(255,255,255,.1)'">
+        <div style="font-family:'Montserrat',sans-serif;font-size:.6rem;font-weight:800;color:var(--teal-l);letter-spacing:.1em;text-transform:uppercase;margin-bottom:1rem">IMSS · Datos Epidemiológicos</div>
+        <div style="font-family:'Montserrat',sans-serif;font-size:clamp(2.8rem,6vw,4rem);font-weight:900;color:var(--teal-l);line-height:.9;letter-spacing:-.03em">7<span style="font-size:50%;opacity:.7">/10</span></div>
+        <div style="font-family:'Montserrat',sans-serif;font-weight:700;color:#fff;font-size:.95rem;line-height:1.4;margin:.75rem 0 .6rem">mexicanos porta <em style="color:var(--teal-l);font-style:italic">H. pylori</em> sin saberlo</div>
+        <p style="font-size:.78rem;color:rgba(255,255,255,.55);line-height:1.65">La bacteria silenciosa más prevalente del país. La mayoría nunca lo sabrá sin una prueba específica.</p>
+      </div>
+
+      <!-- Card E2: Detección tardía -->
+      <div class="s-scale delay-1" style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-top:3px solid var(--gold);border-radius:16px;padding:1.75rem;transition:all .3s;cursor:default" onmouseover="this.style.background='rgba(184,146,42,.08)';this.style.borderColor='rgba(184,146,42,.3)'" onmouseout="this.style.background='rgba(255,255,255,.05)';this.style.borderColor='rgba(255,255,255,.1)'">
+        <div style="font-family:'Montserrat',sans-serif;font-size:.6rem;font-weight:800;color:var(--gold);letter-spacing:.1em;text-transform:uppercase;margin-bottom:1rem">SS México · INCAN</div>
+        <div style="font-family:'Montserrat',sans-serif;font-size:clamp(2.8rem,6vw,4rem);font-weight:900;color:var(--gold);line-height:.9;letter-spacing:-.03em">70<span style="font-size:50%;opacity:.7">%</span></div>
+        <div style="font-family:'Montserrat',sans-serif;font-weight:700;color:#fff;font-size:.95rem;line-height:1.4;margin:.75rem 0 .6rem">del cáncer gástrico en México se detecta en etapas avanzadas</div>
+        <p style="font-size:.78rem;color:rgba(255,255,255,.55);line-height:1.65">Cuando los síntomas se vuelven evidentes, las opciones de tratamiento son significativamente limitadas.</p>
+      </div>
+
+      <!-- Card E3: Casos nuevos -->
+      <div class="s-scale delay-2" style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-top:3px solid var(--teal);border-radius:16px;padding:1.75rem;transition:all .3s;cursor:default" onmouseover="this.style.background='rgba(0,178,200,.08)';this.style.borderColor='rgba(0,178,200,.3)'" onmouseout="this.style.background='rgba(255,255,255,.05)';this.style.borderColor='rgba(255,255,255,.1)'">
+        <div style="font-family:'Montserrat',sans-serif;font-size:.6rem;font-weight:800;color:var(--teal-l);letter-spacing:.1em;text-transform:uppercase;margin-bottom:1rem">Instituto Nacional de Cancerología</div>
+        <div style="font-family:'Montserrat',sans-serif;font-size:clamp(2.2rem,5vw,3.2rem);font-weight:900;color:var(--teal-l);line-height:.9;letter-spacing:-.03em">6–8<span style="font-size:50%;opacity:.7">K</span></div>
+        <div style="font-family:'Montserrat',sans-serif;font-weight:700;color:#fff;font-size:.95rem;line-height:1.4;margin:.75rem 0 .6rem">casos nuevos de cáncer gástrico cada año en México</div>
+        <p style="font-size:.78rem;color:rgba(255,255,255,.55);line-height:1.65">Es la 3ª causa de mortalidad por cáncer en hombres mexicanos. Una cifra prevenible.</p>
+      </div>
+
+      <!-- Card E4: Relación H. pylori - cáncer -->
+      <div class="s-scale" style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-top:3px solid var(--gold);border-radius:16px;padding:1.75rem;transition:all .3s;cursor:default" onmouseover="this.style.background='rgba(184,146,42,.08)';this.style.borderColor='rgba(184,146,42,.3)'" onmouseout="this.style.background='rgba(255,255,255,.05)';this.style.borderColor='rgba(255,255,255,.1)'">
+        <div style="font-family:'Montserrat',sans-serif;font-size:.6rem;font-weight:800;color:var(--gold);letter-spacing:.1em;text-transform:uppercase;margin-bottom:1rem">IARC / OMS · Carcinógeno Grupo I</div>
+        <div style="font-family:'Montserrat',sans-serif;font-size:clamp(2.8rem,6vw,4rem);font-weight:900;color:var(--gold);line-height:.9;letter-spacing:-.03em">90<span style="font-size:50%;opacity:.7">%</span></div>
+        <div style="font-family:'Montserrat',sans-serif;font-weight:700;color:#fff;font-size:.95rem;line-height:1.4;margin:.75rem 0 .6rem">de los tumores gástricos en el mundo se relacionan con <em style="color:var(--teal-l);font-style:italic">H. pylori</em></div>
+        <p style="font-size:.78rem;color:rgba(255,255,255,.55);line-height:1.65">La OMS la clasifica como carcinógeno de Grupo I — el nivel más alto de evidencia sobre causa de cáncer.</p>
+      </div>
+
+      <!-- Card E5: Reducción de riesgo (Lancet) -->
+      <div class="s-scale delay-1" style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-top:3px solid var(--teal);border-radius:16px;padding:1.75rem;transition:all .3s;cursor:default" onmouseover="this.style.background='rgba(0,178,200,.08)';this.style.borderColor='rgba(0,178,200,.3)'" onmouseout="this.style.background='rgba(255,255,255,.05)';this.style.borderColor='rgba(255,255,255,.1)'">
+        <div style="font-family:'Montserrat',sans-serif;font-size:.6rem;font-weight:800;color:var(--teal-l);letter-spacing:.1em;text-transform:uppercase;margin-bottom:1rem">Lancet Gastroenterology · Seguimiento 26 años</div>
+        <div style="font-family:'Montserrat',sans-serif;font-size:clamp(2.8rem,6vw,4rem);font-weight:900;color:var(--teal-l);line-height:.9;letter-spacing:-.03em">80<span style="font-size:50%;opacity:.7">%</span></div>
+        <div style="font-family:'Montserrat',sans-serif;font-weight:700;color:#fff;font-size:.95rem;line-height:1.4;margin:.75rem 0 .6rem">reducción del riesgo de cáncer gástrico al erradicar <em style="color:var(--teal-l);font-style:italic">H. pylori</em> a tiempo</div>
+        <p style="font-size:.78rem;color:rgba(255,255,255,.55);line-height:1.65">La detección y erradicación temprana es la intervención preventiva con mayor evidencia disponible. <a href="https://www.thelancet.com/journals/langas/article/PIIS2468-1253(22)00041-X/fulltext" target="_blank" rel="noopener" style="color:var(--teal-l);text-decoration:none">Ver estudio →</a></p>
+      </div>
+
+      <!-- Card E6: Tratamiento avanzado (Kwon 2025, sin nombrar producto) -->
+      <div class="s-scale delay-2" style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-top:3px solid var(--gold);border-radius:16px;padding:1.75rem;transition:all .3s;cursor:default" onmouseover="this.style.background='rgba(184,146,42,.08)';this.style.borderColor='rgba(184,146,42,.3)'" onmouseout="this.style.background='rgba(255,255,255,.05)';this.style.borderColor='rgba(255,255,255,.1)'">
+        <div style="font-family:'Montserrat',sans-serif;font-size:.6rem;font-weight:800;color:var(--gold);letter-spacing:.1em;text-transform:uppercase;margin-bottom:1rem">Frontiers in Medicine · 2025</div>
+        <div style="font-family:'Montserrat',sans-serif;font-size:clamp(2.8rem,6vw,4rem);font-weight:900;color:var(--gold);line-height:.9;letter-spacing:-.03em">96<span style="font-size:50%;opacity:.7">%</span></div>
+        <div style="font-family:'Montserrat',sans-serif;font-weight:700;color:#fff;font-size:.95rem;line-height:1.4;margin:.75rem 0 .6rem">tasa de erradicación con los esquemas de tratamiento más modernos</div>
+        <p style="font-size:.78rem;color:rgba(255,255,255,.55);line-height:1.65">Los nuevos protocolos superan significativamente los esquemas convencionales, incluso en cepas resistentes. <a href="https://pubmed.ncbi.nlm.nih.gov/?term=Kwon+tegoprazan+helicobacter" target="_blank" rel="noopener" style="color:var(--gold);text-decoration:none">Ver estudio →</a></p>
+      </div>
+
+    </div><!-- /data-cards grid -->
+
+    <!-- CTA -->
+    <div class="s-fade" style="text-align:center;padding:2.5rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:20px">
+      <p style="font-family:'Montserrat',sans-serif;font-size:clamp(1.1rem,2.5vw,1.4rem);font-weight:800;color:#fff;line-height:1.5;margin-bottom:1.5rem">Pregunta a tu médico por el tratamiento que está mejorando <em style="color:var(--teal-l)">significativamente</em> su tasa de curación.</p>
+      <button onclick="document.getElementById('quiz').scrollIntoView({behavior:'smooth'})" style="font-family:'Montserrat',sans-serif;font-weight:800;font-size:.9rem;color:var(--navy);background:var(--teal-l);border:none;padding:.9rem 2.2rem;border-radius:50px;cursor:pointer;transition:all .2s;letter-spacing:.03em" onmouseover="this.style.background='#fff';this.style.transform='translateY(-2px)'" onmouseout="this.style.background='var(--teal-l)';this.style.transform='none'">Evalúa tu riesgo ahora →</button>
+      <p style="font-size:.72rem;color:rgba(255,255,255,.35);margin-top:1rem">Esta información no sustituye la consulta médica.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ AWARENESS CALLOUT ══ -->
+<section class="aware-sec">
+  <div class="aware-i container">
+    <div class="aware-big-stat s-left">
+      <span class="abs-num">7</span>
+      <span class="abs-denom">de cada 10</span>
+      <p class="abs-label">estómagos mexicanos<br>portan la bacteria <em class="hpyl" style="color:var(--teal-l)">H. pylori</em><br>— y la mayoría no lo sabe.</p>
+    </div>
+    <div class="aware-txt s-right">
+      <div class="ey" style="color:var(--teal-l)">¿Por qué importa?</div>
+      <h2>La infección por <em class="hpyl" style="color:var(--teal-l)">H. pylori</em> es la primera causa infecciosa de cáncer gástrico a nivel mundial.</h2>
+      <div class="div-teal"></div>
+      <p>Se presenta con síntomas como gastritis, acidez y reflujo — señales que millones de personas normalizan. Detectarla a tiempo marca la diferencia.</p>
+      <div class="aware-cta-strip">
+        <strong>Pregunta a tu médico</strong> por el tratamiento que está mejorando <span class="sig">significativamente</span> su tasa de curación.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ STATS MAGAZINE ══ -->
+<section class="stats-band" id="info">
+  <div class="stats-i">
+    <div class="stat-it s-fade">
+      <span class="stat-n">70%</span>
+      <div class="stat-l">de mexicanos porta <em class="hpyl" style="color:var(--teal-l)">H. pylori</em> sin saberlo</div>
+      <div class="stat-src">AMG, 2024</div>
+    </div>
+    <div class="stat-it s-fade delay-1">
+      <span class="stat-n">90%</span>
+      <div class="stat-l">del cáncer gástrico inicia como infección por <em class="hpyl" style="color:var(--teal-l)">H. pylori</em></div>
+      <div class="stat-src">WGO, 2023</div>
+    </div>
+    <div class="stat-it s-fade delay-2">
+      <span class="stat-n">80%</span>
+      <div class="stat-l">reducción del riesgo de cáncer gástrico al erradicar la bacteria</div>
+      <div class="stat-src">Lancet Gastroenterology, 2022</div>
+    </div>
+    <div class="stat-it s-fade delay-3">
+      <span class="stat-n">95%</span>
+      <div class="stat-l">tasa de curación con el tratamiento correcto y supervisado</div>
+      <div class="stat-src">Guías AMG, 2025</div>
+    </div>
+  </div>
+</section>
+<!-- News ticker -->
+<div class="ticker-wrap">
+  <div class="ticker">
+    <span>MÉXICO SIN CÁNCER GÁSTRICO</span><span class="dot">·</span>
+    <span>7 DE CADA 10 MEXICANOS PORTA H. PYLORI SIN SABERLO</span><span class="dot">·</span>
+    <span>DETECCIÓN OPORTUNA SALVA VIDAS</span><span class="dot">·</span>
+    <span>PRUEBA DE ALIENTO — SIN PIQUETES, SIN ENDOSCOPÍA</span><span class="dot">·</span>
+    <span>LA ERRADICACIÓN REDUCE 80% EL RIESGO DE CÁNCER GÁSTRICO</span><span class="dot">·</span>
+    <span>90% DEL CÁNCER GÁSTRICO INICIA CON H. PYLORI</span><span class="dot">·</span>
+    <span>PREGUNTA A TU MÉDICO</span><span class="dot">·</span>
+    <span>INFORMACIÓN MÉDICA VERIFICADA</span><span class="dot">·</span>
+    <span>DETECTA · TRATA · PREVIENE</span><span class="dot">·</span>
+    <span>MÉXICO SIN CÁNCER GÁSTRICO</span><span class="dot">·</span>
+    <span>7 DE CADA 10 MEXICANOS PORTA H. PYLORI SIN SABERLO</span><span class="dot">·</span>
+    <span>DETECCIÓN OPORTUNA SALVA VIDAS</span><span class="dot">·</span>
+    <span>PRUEBA DE ALIENTO — SIN PIQUETES, SIN ENDOSCOPÍA</span><span class="dot">·</span>
+    <span>LA ERRADICACIÓN REDUCE 80% EL RIESGO DE CÁNCER GÁSTRICO</span><span class="dot">·</span>
+    <span>90% DEL CÁNCER GÁSTRICO INICIA CON H. PYLORI</span><span class="dot">·</span>
+    <span>PREGUNTA A TU MÉDICO</span><span class="dot">·</span>
+    <span>INFORMACIÓN MÉDICA VERIFICADA</span><span class="dot">·</span>
+    <span>DETECTA · TRATA · PREVIENE</span><span class="dot">·</span>
+  </div>
+</div>
+
+<!-- ══ QUIZ ══ -->
+<section class="quiz-sec" id="quiz">
+  <div class="quiz-i">
+    <!-- Left -->
+    <div class="ql s-left">
+      <div class="ey">Evaluación de síntomas</div>
+      <h2>Test de riesgo <em class="hpyl-dark">H. pylori</em></h2>
+      <div class="div-teal"></div>
+      <p>Responde 6 preguntas rápidas sobre tus síntomas. Recibirás una evaluación de tu nivel de riesgo y orientación sobre cuándo consultar a tu médico.</p>
+      <div class="qfeats">
+        <div class="qf">
+          <div class="qf-ico">⏱️</div>
+          <div class="qf-txt"><strong>3 minutos</strong><span>Test breve, sin registro necesario</span></div>
+        </div>
+        <div class="qf">
+          <div class="qf-ico">🔒</div>
+          <div class="qf-txt"><strong>Anónimo y confidencial</strong><span>No almacenamos ni compartimos tus datos</span></div>
+        </div>
+        <div class="qf">
+          <div class="qf-ico">🩺</div>
+          <div class="qf-txt"><strong>Basado en criterios clínicos validados</strong><span>ACG Guidelines 2017 · V Consenso AMG 2025</span></div>
+        </div>
+        <div class="qf">
+          <div class="qf-ico">📋</div>
+          <div class="qf-txt"><strong>Resultado inmediato</strong><span>Con recomendación de pasos a seguir</span></div>
+        </div>
+      </div>
+    </div>
+    <!-- Right: Quiz card -->
+    <div class="qwrap s-right">
+      <div class="qcard">
+        <div class="qhd">
+          <div class="qhd-lbl">Test de Riesgo · Criterios ACG / AMG</div>
+          <div class="prog-row">
+            <div class="prog-dots" id="progDots">
+              <div class="pd act" id="pd1"></div>
+              <div class="pd" id="pd2"></div>
+              <div class="pd" id="pd3"></div>
+              <div class="pd" id="pd4"></div>
+              <div class="pd" id="pd5"></div>
+              <div class="pd" id="pd6"></div>
+            </div>
+            <div class="prog-t" id="progTxt">Pregunta 1 de 6</div>
+          </div>
+        </div>
+        <div class="qbody">
+          <!-- Q1 -->
+          <div class="qstep act" data-step="1">
+            <div class="qn">Pregunta 1</div>
+            <div class="qq">¿Con qué frecuencia tienes dolor o malestar en la zona del estómago?</div>
+            <div class="qhint">Considera el área del abdomen superior, entre el ombligo y el pecho.</div>
+            <div class="qopts">
+              <button class="qo" data-v="0" onclick="sel(this,1)"><em>😊</em> Nunca o muy rara vez</button>
+              <button class="qo" data-v="1" onclick="sel(this,1)"><em>😐</em> A veces (1–2 veces por semana)</button>
+              <button class="qo" data-v="2" onclick="sel(this,1)"><em>😟</em> Frecuentemente (casi todos los días)</button>
+              <button class="qo" data-v="3" onclick="sel(this,1)"><em>😣</em> Constantemente</button>
+            </div>
+            <div class="qnav"><button class="qbk" disabled>← Atrás</button><button class="qnx" id="qn1" onclick="nxt(1)" disabled>Siguiente →</button></div>
+          </div>
+          <!-- Q2 -->
+          <div class="qstep" data-step="2">
+            <div class="qn">Pregunta 2</div>
+            <div class="qq">¿Sientes acidez, reflujo o ardor después de comer?</div>
+            <div class="qhint">Sensación de quemadura en el pecho o garganta.</div>
+            <div class="qopts">
+              <button class="qo" data-v="0" onclick="sel(this,2)"><em>😊</em> Casi nunca</button>
+              <button class="qo" data-v="1" onclick="sel(this,2)"><em>😐</em> Después de comidas pesadas</button>
+              <button class="qo" data-v="2" onclick="sel(this,2)"><em>😟</em> Regularmente tras cualquier comida</button>
+              <button class="qo" data-v="3" onclick="sel(this,2)"><em>😣</em> Con frecuencia, independiente de lo que como</button>
+            </div>
+            <div class="qnav"><button class="qbk" onclick="back(2)">← Atrás</button><button class="qnx" id="qn2" onclick="nxt(2)" disabled>Siguiente →</button></div>
+          </div>
+          <!-- Q3 -->
+          <div class="qstep" data-step="3">
+            <div class="qn">Pregunta 3</div>
+            <div class="qq">¿Alguna vez has tenido gastritis diagnosticada o úlceras estomacales?</div>
+            <div class="qhint">Incluyendo diagnósticos anteriores aunque hayan sido tratados.</div>
+            <div class="qopts">
+              <button class="qo" data-v="0" onclick="sel(this,3)"><em>✅</em> No, nunca</button>
+              <button class="qo" data-v="1" onclick="sel(this,3)"><em>❓</em> Creo que sí pero no tengo diagnóstico formal</button>
+              <button class="qo" data-v="2" onclick="sel(this,3)"><em>📋</em> Sí, he tenido gastritis antes</button>
+              <button class="qo" data-v="3" onclick="sel(this,3)"><em>⚠️</em> Sí, úlceras o gastritis crónica</button>
+            </div>
+            <div class="qnav"><button class="qbk" onclick="back(3)">← Atrás</button><button class="qnx" id="qn3" onclick="nxt(3)" disabled>Siguiente →</button></div>
+          </div>
+          <!-- Q4 -->
+          <div class="qstep" data-step="4">
+            <div class="qn">Pregunta 4</div>
+            <div class="qq">¿Tienes familiares directos con úlceras, gastritis crónica o cáncer gástrico?</div>
+            <div class="qhint">Padres, hermanos o abuelos con estas condiciones.</div>
+            <div class="qopts">
+              <button class="qo" data-v="0" onclick="sel(this,4)"><em>✅</em> No que yo sepa</button>
+              <button class="qo" data-v="1" onclick="sel(this,4)"><em>🤔</em> Tal vez, no estoy seguro/a</button>
+              <button class="qo" data-v="2" onclick="sel(this,4)"><em>👨‍👩‍👧</em> Sí, un familiar con úlcera o gastritis</button>
+              <button class="qo" data-v="3" onclick="sel(this,4)"><em>⚠️</em> Sí, cáncer gástrico en mi familia</button>
+            </div>
+            <div class="qnav"><button class="qbk" onclick="back(4)">← Atrás</button><button class="qnx" id="qn4" onclick="nxt(4)" disabled>Siguiente →</button></div>
+          </div>
+          <!-- Q5 -->
+          <div class="qstep" data-step="5">
+            <div class="qn">Pregunta 5</div>
+            <div class="qq">¿Sientes náuseas, eructos frecuentes o sensación de llenura rápida?</div>
+            <div class="qhint">Síntomas digestivos que pueden acompañar la infección por H. pylori.</div>
+            <div class="qopts">
+              <button class="qo" data-v="0" onclick="sel(this,5)"><em>😊</em> Rara vez o nunca</button>
+              <button class="qo" data-v="1" onclick="sel(this,5)"><em>😐</em> Ocasionalmente</button>
+              <button class="qo" data-v="2" onclick="sel(this,5)"><em>😟</em> Frecuentemente</button>
+              <button class="qo" data-v="3" onclick="sel(this,5)"><em>😣</em> Casi siempre, afecta mi día a día</button>
+            </div>
+            <div class="qnav"><button class="qbk" onclick="back(5)">← Atrás</button><button class="qnx" id="qn5" onclick="nxt(5)" disabled>Siguiente →</button></div>
+          </div>
+          <!-- Q6 -->
+          <div class="qstep" data-step="6">
+            <div class="qn">Pregunta 6</div>
+            <div class="qq">¿Te has realizado alguna prueba de <em class="hpyl-dark">H. pylori</em> (aliento, endoscopía o sangre)?</div>
+            <div class="qhint">Indica si ha habido alguna evaluación médica previa para esta bacteria.</div>
+            <div class="qopts">
+              <button class="qo" data-v="0" onclick="sel(this,6)"><em>✅</em> Sí, y fue negativa</button>
+              <button class="qo" data-v="0" onclick="sel(this,6)"><em>📋</em> Sí, tuve tratamiento y me curé</button>
+              <button class="qo" data-v="2" onclick="sel(this,6)"><em>❓</em> No, nunca me he realizado ninguna prueba</button>
+              <button class="qo" data-v="3" onclick="sel(this,6)"><em>⚠️</em> Sí, fue positiva pero no recibí tratamiento</button>
+            </div>
+            <div class="qnav"><button class="qbk" onclick="back(6)">← Atrás</button><button class="qnx" id="qn6" onclick="calcRes()" disabled>Ver resultado →</button></div>
+          </div>
+          <!-- Result -->
+          <div id="qres">
+            <div id="res-ico-el" class="res-ico"></div>
+            <div id="res-lvl-el" class="res-lvl"></div>
+            <div id="res-ttl-el" class="res-ttl"></div>
+            <div id="res-bd-el" class="res-bd"></div>
+            <div class="res-acts">
+              <button class="res-p" onclick="window.open('https://www.gastro.org.mx/socios/directorio-socios','_blank')">Ver directorio de especialistas →</button>
+              <button class="res-s" onclick="resetQuiz()">Repetir test</button>
+            </div>
+            <p class="res-disc">Esta evaluación es orientativa y no constituye diagnóstico médico. Criterios basados en <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5536265/" target="_blank" rel="noopener" style="color:var(--teal-d)">ACG Clinical Guideline 2017</a> y el <a href="https://www.revistagastroenterologiamexico.org/es-v-consenso-mexicano-sobre-el-articulo-S0375090625001697" target="_blank" rel="noopener" style="color:var(--teal-d)">V Consenso Mexicano AMG 2025</a>.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ NEWSLETTER ══ -->
+<section class="nl-sec">
+  <div class="nl-i">
+    <div class="ey s-fade">Mantente informado</div>
+    <h2 class="s-fade">Recibe contenido validado sobre salud gástrica</h2>
+    <p class="s-fade">Artículos, consejos de especialistas y actualizaciones del mundo de la gastroenterología, directamente en tu correo. Sin spam.</p>
+    <div class="nl-form s-fade">
+      <input class="nl-inp" type="email" placeholder="tu@correo.com">
+      <button class="nl-btn" onclick="showToast('¡Suscripción disponible al lanzar!')">Suscribirme →</button>
+    </div>
+    <p class="nl-disc s-fade">Sin spam. Puedes cancelar cuando quieras. Contenido avalado por AMG.</p>
+    <div class="nl-soc s-fade">
+      <a class="spill" href="#" onclick="showToast('¡Redes sociales próximamente!')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="var(--teal-d)"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" fill="white"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke="white" stroke-width="2"/></svg>
+        Instagram
+      </a>
+      <a class="spill" href="#" onclick="showToast('¡Redes sociales próximamente!')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="#1877F2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+        Facebook
+      </a>
+      <a class="spill" href="#" onclick="showToast('¡Redes sociales próximamente!')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="var(--navy)"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg>
+        Twitter / X
+      </a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══ FUENTES CONFIABLES ══ ELIMINADA — contenido integrado en sección Ciencia + Evidencia -->
+<!-- placeholder para mantener el ancla de navegación si se requiere -->
+<span id="evidencia" style="display:block;height:0;visibility:hidden"></span>
+
+
+<!-- ══ CTA STRIP — Campaign style diagonal ══ -->
+<div class="cta-strip">
+  <div class="cta-strip-bg"></div>
+  <div class="cta-strip-i container">
+    <div class="cta-strip-txt s-left">
+      <p>Pregunta a tu médico por el tratamiento que está mejorando <em>significativamente</em> su tasa de curación.</p>
+      <div class="cta-strip-disc">Campaña educativa avalada por la Asociación Mexicana de Gastroenterología. Esta información no sustituye la consulta médica. Consulta a tu médico ante cualquier síntoma.</div>
+    </div>
+    <button class="cta-strip-btn s-right" onclick="document.getElementById('quiz').scrollIntoView({behavior:'smooth'})">Hacer el test →</button>
+  </div>
+</div>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div class="ft-i">
+    <div class="ft-top">
+      <div class="ft-brand">
+        <div class="ft-logo"><img src="img/logo-mscg.png" alt="México sin Cáncer Gástrico" style="height:83px;width:auto;object-fit:contain;filter:brightness(0) invert(1);opacity:.9;"></div>
+        <p>Hub de información médica sobre <em class="hpyl" style="color:var(--teal-l)">Helicobacter pylori</em> para pacientes y familias mexicanas. Contenido avalado por la AMG.</p>
+        <div style="display:flex;align-items:center;gap:10px;margin-top:.75rem">
+          <img src="img/logo-amg.png" alt="Asociación Mexicana de Gastroenterología" style="width:72px;height:72px;object-fit:contain;opacity:.9;filter:brightness(0) invert(1);">
+          <div style="font-size:.72rem;color:rgba(255,255,255,.5);line-height:1.4">Contenido curado por especialistas<br><strong style="color:rgba(255,255,255,.7)">Avalado por la Asociación Mexicana de Gastroenterología</strong></div>
+        </div>
+      </div>
+      <div class="ft-col">
+        <h5>Información</h5>
+        <a href="#">¿Qué es H. pylori?</a>
+        <a href="#">Síntomas</a>
+        <a href="#">Diagnóstico</a>
+        <a href="#">Tratamiento</a>
+        <a href="#">Nutrición</a>
+      </div>
+      <div class="ft-col">
+        <h5>Herramientas</h5>
+        <a href="#">Test de riesgo</a>
+        <a href="#">Buscador de médicos</a>
+        <a href="#">Biblioteca de artículos</a>
+        <a href="#">Newsletter</a>
+      </div>
+      <div class="ft-col">
+        <h5>Respaldo</h5>
+        <a href="#">AMG</a>
+        <a href="#">Aviso de privacidad</a>
+        <a href="#">Términos de uso</a>
+        <a href="#">Contacto</a>
+      </div>
+    </div>
+    <div class="ft-disc">
+      Esta información es de carácter educativo y no sustituye la consulta médica. Consulta siempre a un profesional de la salud ante cualquier síntoma. El uso de esta plataforma implica la aceptación de nuestros términos de uso y aviso de privacidad.
+    </div>
+    <div class="ft-bot">
+      <span>© 2026 México sin Cáncer Gástrico · Todos los derechos reservados.</span>
+      <span>Plataforma educativa de salud digestiva · Avalada por AMG</span>
+    </div>
+  </div>
+</footer>
+
+<!-- Mobile float CTA -->
+<div class="mob-float">
+  <button class="mob-btn" onclick="document.getElementById('quiz').scrollIntoView({behavior:'smooth'})">Hacer el test de riesgo →</button>
+</div>
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ──────────────────────────────────────
+// HEADER SCROLL
+// ──────────────────────────────────────
+const hdr = document.getElementById('hdr');
+window.addEventListener('scroll', () => {
+  hdr.classList.toggle('scrolled', window.scrollY > 30);
+}, {passive: true});
+
+// ──────────────────────────────────────
+// MOBILE NAV
+// ──────────────────────────────────────
+function toggleMobNav(){
+  document.getElementById('mobNav').classList.toggle('open');
+}
+
+// ──────────────────────────────────────
+// TOAST
+// ──────────────────────────────────────
+let toastTimer;
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+// ──────────────────────────────────────
+// SCROLL REVEAL — Intersection Observer
+// (elements are hidden via CSS, .in makes them visible)
+// ──────────────────────────────────────
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if(e.isIntersecting){
+      e.target.classList.add('in');
+      io.unobserve(e.target);
+    }
+  });
+}, {threshold: 0.1, rootMargin: '0px 0px -30px 0px'});
+
+document.querySelectorAll('.s-fade, .s-left, .s-right, .s-scale').forEach(el => {
+  // Don't observe hero — it animates on load
+  if(el.id === 'hero-r') return;
+  io.observe(el);
+});
+
+// Hero animate on load
+setTimeout(() => {
+  const hr = document.getElementById('hero-r');
+  if(hr) hr.classList.add('in');
+}, 120);
+
+// ──────────────────────────────────────
+// COUNTER ANIMATION
+// ──────────────────────────────────────
+const cio = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if(!e.isIntersecting) return;
+    const el = e.target;
+    const target = parseInt(el.dataset.target);
+    const suffix = el.dataset.suffix || '';
+    let start = 0;
+    const dur = 1600;
+    const step = (ts) => {
+      if(!start) start = ts;
+      const p = Math.min((ts - start) / dur, 1);
+      const ease = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.round(ease * target) + suffix;
+      if(p < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+    cio.unobserve(el);
+  });
+}, {threshold: 0.4});
+
+document.querySelectorAll('.stat-n[data-target]').forEach(el => cio.observe(el));
+
+// ──────────────────────────────────────
+// BENTO 3D TILT
+// ──────────────────────────────────────
+document.querySelectorAll('.bc').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const r = card.getBoundingClientRect();
+    const x = ((e.clientX - r.left) / r.width - .5) * 6;
+    const y = ((e.clientY - r.top) / r.height - .5) * -6;
+    card.style.transform = `scale(1.025) perspective(800px) rotateX(${y}deg) rotateY(${x}deg)`;
+  });
+  card.addEventListener('mouseleave', () => { card.style.transform = ''; });
+});
+
+// ──────────────────────────────────────
+// QUIZ LOGIC
+// ──────────────────────────────────────
+const A = {};
+
+function sel(el, s){
+  el.closest('.qstep').querySelectorAll('.qo').forEach(o => o.classList.remove('sel'));
+  el.classList.add('sel');
+  A[s] = +el.dataset.v;
+  const b = document.getElementById('qn' + s);
+  if(b) b.disabled = false;
+}
+
+function updProg(step){
+  for(let i = 1; i <= 6; i++){
+    const d = document.getElementById('pd' + i);
+    if(!d) continue;
+    d.classList.remove('act','dn');
+    if(i < step) d.classList.add('dn');
+    else if(i === step) d.classList.add('act');
+  }
+  document.getElementById('progTxt').textContent = `Pregunta ${step} de 6`;
+}
+
+function nxt(s){
+  document.querySelector('[data-step="'+s+'"]').classList.remove('act');
+  const nx = document.querySelector('[data-step="'+(s+1)+'"]');
+  if(nx){ nx.classList.add('act'); updProg(s+1); }
+}
+
+function back(s){
+  document.querySelector('[data-step="'+s+'"]').classList.remove('act');
+  const pv = document.querySelector('[data-step="'+(s-1)+'"]');
+  if(pv){ pv.classList.add('act'); updProg(s-1); }
+}
+
+function calcRes(){
+  document.querySelector('[data-step="6"]').classList.remove('act');
+  const tot = Object.values(A).reduce((a,b) => a+b, 0);
+  const res = document.getElementById('qres');
+  const ico = document.getElementById('res-ico-el');
+  const lvl = document.getElementById('res-lvl-el');
+  const ttl = document.getElementById('res-ttl-el');
+  const bd  = document.getElementById('res-bd-el');
+
+  if(tot <= 3){
+    ico.textContent = '✅';
+    ico.style.background = 'rgba(0,178,200,.1)';
+    lvl.textContent = 'Riesgo bajo';
+    lvl.style.color = 'var(--teal-d)';
+    ttl.textContent = '¡Buenas noticias! Tu perfil sugiere bajo riesgo';
+    bd.textContent = 'Tus respuestas no indican señales de alarma para H. pylori en este momento. Sin embargo, como el 70% de los mexicanos puede tenerla sin síntomas, sigue siendo una buena idea mencionarlo en tu próxima visita médica.';
+  } else if(tot <= 9){
+    ico.textContent = '⚠️';
+    ico.style.background = 'rgba(184,146,42,.1)';
+    lvl.textContent = 'Riesgo moderado';
+    lvl.style.color = 'var(--gold)';
+    ttl.textContent = 'Considera hablar con tu médico próximamente';
+    bd.textContent = 'Tienes algunos síntomas o factores de riesgo que vale la pena explorar. Una prueba sencilla (aliento o serológica) puede descartar o confirmar H. pylori en pocos minutos. No esperes a que los síntomas empeoren.';
+  } else {
+    ico.textContent = '🩺';
+    ico.style.background = 'rgba(192,57,43,.1)';
+    lvl.textContent = 'Riesgo elevado — actúa pronto';
+    lvl.style.color = '#C0392B';
+    ttl.textContent = 'Te recomendamos consultar a un médico esta semana';
+    bd.textContent = 'Tu perfil muestra múltiples factores de riesgo asociados a H. pylori. Busca a un gastroenterólogo o médico general. Pide específicamente una prueba de H. pylori. El tratamiento es sencillo y la curación es alta cuando se detecta a tiempo.';
+  }
+  res.style.display = 'block';
+  document.getElementById('progTxt').textContent = 'Resultado listo';
+}
+
+function resetQuiz(){
+  for(let k in A) delete A[k];
+  document.getElementById('qres').style.display = 'none';
+  document.querySelectorAll('.qstep').forEach(s => s.classList.remove('act'));
+  document.querySelector('[data-step="1"]').classList.add('act');
+  document.querySelectorAll('.qo').forEach(o => o.classList.remove('sel'));
+  document.querySelectorAll('.qnx').forEach(b => b.disabled = true);
+  updProg(1);
+}
+
+// ──────────────────────────────────────
+// ARTICLE FILTER (visual only — demo)
+// ──────────────────────────────────────
+function filterArts(btn, cat){
+  document.querySelectorAll('.fp').forEach(p => p.classList.remove('act'));
+  btn.classList.add('act');
+  showToast('Filtro "' + btn.textContent + '" activo — demo de navegación');
+}
+
+// ──────────────────────────────────────
+// SUBTLE PARALLAX on hero glow
+// ──────────────────────────────────────
+</script>
+</body>
+</html>
