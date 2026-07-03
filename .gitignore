@@ -40,3 +40,7 @@ HUB_AMG_PYLORI/**/Infografía Prensa.pdf
 # Firebase credentials — NUNCA commitear (contiene clave privada)
 firebase-adminsdk.json
 deploy_firebase.py
+
+# Daemon de auto-deploy — log y scripts auxiliares
+.auto_deploy.log
+push_hub.sh
