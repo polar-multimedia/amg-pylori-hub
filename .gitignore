@@ -36,3 +36,7 @@ para-medicos.html
 # Artes pesados (>25 MB) — se comparten por separado, no por el repo público
 HUB_AMG_PYLORI/brand_amg/Infografía Prensa.pdf
 HUB_AMG_PYLORI/**/Infografía Prensa.pdf
+
+# Firebase credentials — NUNCA commitear (contiene clave privada)
+firebase-adminsdk.json
+deploy_firebase.py
