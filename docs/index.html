@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>México sin Cáncer Gástrico — Información médica avalada</title>
+<title>México sin Cáncer Gástrico — Información científica sobre H. pylori</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Open+Sans:ital,wght@0,400;0,600;1,400&display=swap');
 
@@ -528,19 +528,19 @@ footer{background:var(--navy);color:rgba(255,255,255,.5);padding:4rem 2rem 2rem}
 <!-- ══ HEADER ══ -->
 <header id="hdr">
   <div class="hdr-i">
-    <a class="logo" href="#">
+    <a class="logo" href="index.html">
       <img src="img/logo-mscg.png" alt="México sin Cáncer Gástrico" style="height:70px;width:auto;object-fit:contain;">
     </a>
     <nav class="nav-links">
       <a href="#quiz">Test de riesgo</a>
       <a href="#categorias">Información</a>
       <a href="#articulos">Artículos</a>
-      <a href="#amg">Avalado por AMG</a>
+      <a href="#amg">Especialistas</a>
     </nav>
     <div style="display:flex;align-items:center;gap:1rem">
       <div class="amg-pill" style="display:flex;align-items:center;gap:8px;padding:4px 14px 4px 6px;">
-        <img src="img/logo-amg.png" alt="AMG" style="width:34px;height:34px;object-fit:contain;">
-        <span>Avalado AMG</span>
+        <img src="img/brand_amg/logo_amg_oscuro.png" alt="AMG" style="width:34px;height:34px;object-fit:contain;">
+        <span>AMG · V Consenso</span>
       </div>
       <button class="nav-cta" onclick="document.getElementById('quiz').scrollIntoView({behavior:'smooth'})">Hacer el test</button>
     </div>
@@ -551,7 +551,7 @@ footer{background:var(--navy);color:rgba(255,255,255,.5);padding:4rem 2rem 2rem}
   <a href="#quiz" onclick="toggleMobNav()">Test de riesgo</a>
   <a href="#categorias" onclick="toggleMobNav()">Información</a>
   <a href="#articulos" onclick="toggleMobNav()">Artículos</a>
-  <a href="#amg" onclick="toggleMobNav()">Avalado por AMG</a>
+  <a href="#amg" onclick="toggleMobNav()">Especialistas</a>
 </nav>
 
 <!-- ══ HERO ══ -->
@@ -568,11 +568,11 @@ footer{background:var(--navy);color:rgba(255,255,255,.5);padding:4rem 2rem 2rem}
       </h1>
       <!-- AMG logo destacado -->
       <div style="display:flex;align-items:center;gap:16px;margin:1.5rem 0;padding:1rem 1.25rem;background:rgba(184,146,42,.07);border:1.5px solid rgba(184,146,42,.25);border-radius:16px;">
-        <img src="img/logo-amg.png" alt="Asociación Mexicana de Gastroenterología" style="width:80px;height:80px;object-fit:contain;flex-shrink:0;">
+        <img src="img/brand_amg/logo_amg_claro.png" alt="Asociación Mexicana de Gastroenterología" style="width:80px;height:80px;object-fit:contain;flex-shrink:0;">
         <div>
           <div style="font-family:'Montserrat',sans-serif;font-size:.62rem;font-weight:800;color:var(--gold);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.3rem">Aval científico</div>
           <div style="font-family:'Montserrat',sans-serif;font-size:.88rem;font-weight:700;color:#fff;line-height:1.35">Asociación Mexicana<br>de Gastroenterología</div>
-          <div style="font-size:.7rem;color:rgba(255,255,255,.6);margin-top:.25rem">Contenido revisado y avalado por especialistas</div>
+          <div style="font-size:.7rem;color:rgba(255,255,255,.6);margin-top:.25rem">Información fundamentada en el V Consenso Mexicano de Gastroenterología</div>
         </div>
       </div>
       <div class="hero-pills">
@@ -597,7 +597,7 @@ footer{background:var(--navy);color:rgba(255,255,255,.5);padding:4rem 2rem 2rem}
           Explorar información
         </button>
       </div>
-      <p class="hero-disclaimer">Campaña educativa avalada por la Asociación Mexicana de Gastroenterología.<br>Esta información no sustituye la consulta médica.</p>
+      <p class="hero-disclaimer">Información basada en el V Consenso Mexicano de Gastroenterología (AMG, 2025).<br>Esta información no sustituye la consulta médica.</p>
     </div>
   </div>
 </section>
@@ -626,7 +626,7 @@ footer{background:var(--navy);color:rgba(255,255,255,.5);padding:4rem 2rem 2rem}
           <span class="ac-cat">💊 Tratamiento</span>
           <div class="ac-ttl">Los nuevos esquemas de tratamiento y por qué la tasa de curación mejora significativamente</div>
           <div class="ac-ft">
-            <span>7 min lectura · Avalado AMG</span>
+            <span>7 min lectura · AMG 2025</span>
             <span class="ac-rd">Leer artículo →</span>
           </div>
         </div>
@@ -1152,7 +1152,7 @@ footer{background:var(--navy);color:rgba(255,255,255,.5);padding:4rem 2rem 2rem}
       <input class="nl-inp" type="email" placeholder="tu@correo.com">
       <button class="nl-btn" onclick="showToast('¡Suscripción disponible al lanzar!')">Suscribirme →</button>
     </div>
-    <p class="nl-disc s-fade">Sin spam. Puedes cancelar cuando quieras. Contenido avalado por AMG.</p>
+    <p class="nl-disc s-fade">Sin spam. Puedes cancelar cuando quieras. Información basada en evidencia científica publicada.</p>
     <div class="nl-soc s-fade">
       <a class="spill" href="#" onclick="showToast('¡Redes sociales próximamente!')">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="var(--teal-d)"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" fill="white"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke="white" stroke-width="2"/></svg>
@@ -1182,7 +1182,7 @@ footer{background:var(--navy);color:rgba(255,255,255,.5);padding:4rem 2rem 2rem}
   <div class="cta-strip-i container">
     <div class="cta-strip-txt s-left">
       <p>Pregunta a tu médico por el tratamiento que está mejorando <em>significativamente</em> su tasa de curación.</p>
-      <div class="cta-strip-disc">Campaña educativa avalada por la Asociación Mexicana de Gastroenterología. Esta información no sustituye la consulta médica. Consulta a tu médico ante cualquier síntoma.</div>
+      <div class="cta-strip-disc">Información fundamentada en el V Consenso Mexicano de Gastroenterología (AMG, 2025). Esta información no sustituye la consulta médica. Consulta a tu médico ante cualquier síntoma.</div>
     </div>
     <button class="cta-strip-btn s-right" onclick="document.getElementById('quiz').scrollIntoView({behavior:'smooth'})">Hacer el test →</button>
   </div>
@@ -1194,33 +1194,33 @@ footer{background:var(--navy);color:rgba(255,255,255,.5);padding:4rem 2rem 2rem}
     <div class="ft-top">
       <div class="ft-brand">
         <div class="ft-logo"><img src="img/logo-mscg.png" alt="México sin Cáncer Gástrico" style="height:83px;width:auto;object-fit:contain;filter:brightness(0) invert(1);opacity:.9;"></div>
-        <p>Hub de información médica sobre <em class="hpyl" style="color:var(--teal-l)">Helicobacter pylori</em> para pacientes y familias mexicanas. Contenido avalado por la AMG.</p>
+        <p>Hub de información médica sobre <em class="hpyl" style="color:var(--teal-l)">Helicobacter pylori</em> para pacientes y familias mexicanas. Basada en el V Consenso Mexicano de Gastroenterología.</p>
         <div style="display:flex;align-items:center;gap:10px;margin-top:.75rem">
           <img src="img/logo-amg.png" alt="Asociación Mexicana de Gastroenterología" style="width:72px;height:72px;object-fit:contain;opacity:.9;filter:brightness(0) invert(1);">
-          <div style="font-size:.72rem;color:rgba(255,255,255,.5);line-height:1.4">Contenido curado por especialistas<br><strong style="color:rgba(255,255,255,.7)">Avalado por la Asociación Mexicana de Gastroenterología</strong></div>
+          <div style="font-size:.72rem;color:rgba(255,255,255,.5);line-height:1.4">Contenido curado por especialistas<br><strong style="color:rgba(255,255,255,.7)">V Consenso Mexicano de Gastroenterología · AMG 2025</strong></div>
         </div>
       </div>
       <div class="ft-col">
         <h5>Información</h5>
-        <a href="#">¿Qué es H. pylori?</a>
-        <a href="#">Síntomas</a>
-        <a href="#">Diagnóstico</a>
-        <a href="#">Tratamiento</a>
-        <a href="#">Nutrición</a>
+        <a href="art-contagio.html">¿Qué es H. pylori?</a>
+        <a href="art-gastritis.html">Síntomas</a>
+        <a href="art-diagnostico.html">Diagnóstico</a>
+        <a href="art-tratamiento.html">Tratamiento</a>
+        <a href="art-nutricion.html">Nutrición</a>
       </div>
       <div class="ft-col">
         <h5>Herramientas</h5>
-        <a href="#">Test de riesgo</a>
-        <a href="#">Buscador de médicos</a>
-        <a href="#">Biblioteca de artículos</a>
-        <a href="#">Newsletter</a>
+        <a href="#quiz">Test de riesgo</a>
+        <a href="deteccion.html">Buscador de médicos</a>
+        <a href="biblioteca.html">Biblioteca de artículos</a>
+        <a href="#newsletter">Newsletter</a>
       </div>
       <div class="ft-col">
         <h5>Respaldo</h5>
-        <a href="#">AMG</a>
-        <a href="#">Aviso de privacidad</a>
-        <a href="#">Términos de uso</a>
-        <a href="#">Contacto</a>
+        <a href="https://www.gastro.org.mx/" target="_blank" rel="noopener">AMG</a>
+        <a href="#" onclick="showToast('Aviso de privacidad próximamente')">Aviso de privacidad</a>
+        <a href="#" onclick="showToast('Términos de uso próximamente')">Términos de uso</a>
+        <a href="mailto:info@mexicosincancergastrico.com.mx">Contacto</a>
       </div>
     </div>
     <div class="ft-disc">
@@ -1228,7 +1228,7 @@ footer{background:var(--navy);color:rgba(255,255,255,.5);padding:4rem 2rem 2rem}
     </div>
     <div class="ft-bot">
       <span>© 2026 México sin Cáncer Gástrico · Todos los derechos reservados.</span>
-      <span>Plataforma educativa de salud digestiva · Avalada por AMG</span>
+      <span>Plataforma educativa de salud digestiva · V Consenso AMG 2025</span>
     </div>
   </div>
 </footer>
