@@ -1,386 +1,278 @@
 <!DOCTYPE html>
 <html lang="es-MX">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<meta name="description" content="Cómo detectar Helicobacter pylori: la prueba de aliento (urea breath test) explicada paso a paso. Sepa cuándo hablar con su médico y qué esperar del proceso.">
-<meta property="og:title" content="Detección de H. pylori — México Sin Cáncer Gástrico">
-<meta property="og:description" content="La prueba de aliento detecta Helicobacter pylori en 20 minutos, sin piquetes. Sepa cuándo hablar con su médico.">
-<meta property="og:image" content="img/brand_amg/hero_a1.png">
-<title>Cómo detectar H. pylori — México Sin Cáncer Gástrico</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Open+Sans:ital,wght@0,400;0,600;1,400&display=swap">
-<style>
-/* ══ TOKENS — Paleta canónica AMG v2026 ══ */
-:root{
-  --navy:    #183888;
-  --navy2:   #1E4EB0;
-  --teal:    #30B8B0;
-  --teal-l:  #5ECDC6;
-  --teal-d:  #1F9A93;
-  --white:   #FFFFFF;
-  --bg:      #F7F9FF;
-  --text:    #183888;
-  --muted:   #5B6C9E;
-  --border:  #D8E0F5;
-  --gold:    #887028;
-}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{font-family:'Open Sans',system-ui,sans-serif;background:#fff;color:#334155;line-height:1.7;overflow-x:hidden}
-h1,h2,h3,h4{font-family:'Montserrat',system-ui,sans-serif;font-weight:800;line-height:1.15;color:var(--navy)}
-img{display:block;max-width:100%}
-a{text-decoration:none}
-.hpyl{color:var(--teal);font-style:italic;font-weight:700}
-
-/* HEADER */
-.hdr{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,.96);backdrop-filter:blur(8px);border-bottom:1px solid var(--border);transition:box-shadow .3s}
-.hdr-i{max-width:1200px;margin:0 auto;padding:0 24px;height:64px;display:flex;align-items:center;justify-content:space-between;gap:24px}
-.logo{display:flex;align-items:center;gap:10px;text-decoration:none}
-.logo img{height:32px;width:auto}
-.logo-nm{font-family:'Montserrat',sans-serif;font-size:.7rem;font-weight:800;color:var(--navy);line-height:1.2}
-.logo-nm small{display:block;font-weight:400;color:var(--muted);font-size:.58rem}
-.nav-links{display:flex;align-items:center;gap:4px}
-.nav-links a{font-family:'Montserrat',sans-serif;font-size:.72rem;font-weight:700;color:var(--muted);padding:6px 12px;border-radius:50px;transition:all .2s}
-.nav-links a:hover,.nav-links a.active{color:var(--navy);background:var(--bg)}
-.nav-cta{background:var(--teal)!important;color:#fff!important;padding:7px 18px!important}
-.nav-cta:hover{background:var(--teal-d)!important;opacity:1}
-.amg-pill{display:flex;align-items:center;gap:6px;background:rgba(24,56,136,.07);border:1px solid rgba(24,56,136,.15);border-radius:50px;padding:5px 12px;font-family:'Montserrat',sans-serif;font-size:.6rem;font-weight:800;color:var(--navy);letter-spacing:.04em;text-transform:uppercase}
-.amg-pill img{height:18px;width:auto}
-@media(max-width:768px){.nav-links{display:none}}
-
-/* HERO */
-.det-hero{background:linear-gradient(135deg,#183888 0%,#30B8B0 100%);padding:110px 24px 72px;text-align:center;position:relative;overflow:hidden}
-.det-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 50% 120%,rgba(255,255,255,.05),transparent);pointer-events:none}
-.hero-inner{max-width:780px;margin:0 auto;position:relative;z-index:1}
-.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:50px;padding:6px 16px;font-family:'Montserrat',sans-serif;font-size:.65rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.85);margin-bottom:1.5rem}
-.det-hero h1{font-family:'Montserrat',sans-serif;font-size:clamp(1.8rem,5vw,3rem);font-weight:900;color:#fff;margin-bottom:1rem;line-height:1.1}
-.det-hero h1 em{color:var(--teal-l);font-style:italic}
-.hero-lead{font-size:clamp(.95rem,2vw,1.05rem);color:rgba(255,255,255,.82);max-width:640px;margin:0 auto 2rem;line-height:1.65}
-.hero-pills{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
-.hpill{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:50px;padding:8px 20px;font-family:'Montserrat',sans-serif;font-size:.8rem;font-weight:700;color:#fff}
-.hpill strong{color:var(--teal-l)}
-
-/* STAT BAND */
-.stat-band{background:var(--navy);border-top:3px solid var(--teal);border-bottom:1px solid rgba(255,255,255,.08);padding:28px 24px}
-.stat-row{max-width:900px;margin:0 auto;display:flex;justify-content:center;gap:48px;flex-wrap:wrap;text-align:center}
-.stat-item .stat-n{font-family:'Montserrat',sans-serif;font-size:2rem;font-weight:900;color:var(--teal-l);line-height:1}
-.stat-item .stat-l{font-size:.72rem;color:rgba(255,255,255,.55);margin-top:4px;text-transform:uppercase;letter-spacing:.07em}
-
-/* CONTENT */
-.content-wrap{max-width:820px;margin:0 auto;padding:56px 24px}
-.section-eyebrow{font-family:'Montserrat',sans-serif;font-size:.6rem;font-weight:800;letter-spacing:.15em;text-transform:uppercase;color:var(--teal);margin-bottom:.75rem;display:block}
-.content-wrap h2{font-size:1.6rem;color:var(--navy);margin:2.5rem 0 1rem;padding-bottom:.6rem;border-bottom:3px solid var(--teal);display:inline-block}
-.content-wrap p{margin-bottom:1rem;color:#475569;font-size:.97rem}
-.content-wrap ul,
-.content-wrap ol{margin:.5rem 0 1rem 1.4rem;color:#475569;font-size:.97rem}
-.content-wrap li{margin-bottom:.5rem}
-
-/* UBT STEPS */
-.ubt-steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.25rem;margin:1.5rem 0 2rem}
-.ubt-step{background:var(--bg);border:1px solid var(--border);border-radius:14px;padding:1.5rem}
-.ubt-step-num{width:36px;height:36px;background:var(--teal);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Montserrat',sans-serif;font-size:.9rem;font-weight:900;color:#fff;margin-bottom:.75rem}
-.ubt-step h3{font-size:.95rem;color:var(--navy);margin-bottom:.4rem}
-.ubt-step p{font-size:.83rem;color:var(--muted);margin:0}
-
-/* UBT METRICS */
-.ubt-metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1rem;margin:1.5rem 0 2rem}
-.ubt-metric{background:linear-gradient(135deg,#183888,#1E4EB0);border-radius:14px;padding:1.25rem;text-align:center}
-.ubt-metric .met-n{font-family:'Montserrat',sans-serif;font-size:1.6rem;font-weight:900;color:var(--teal-l);line-height:1}
-.ubt-metric .met-l{font-size:.72rem;color:rgba(255,255,255,.65);margin-top:.3rem}
-
-/* ELIGIBILITY */
-.elig-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;margin:1.5rem 0 2rem}
-.elig-card{background:var(--bg);border:1px solid var(--border);border-left:4px solid var(--teal);border-radius:10px;padding:1.25rem;display:flex;gap:1rem;align-items:flex-start}
-.elig-icon{font-size:1.5rem;flex-shrink:0;margin-top:2px}
-.elig-card h4{font-size:.88rem;color:var(--navy);margin-bottom:.25rem}
-.elig-card p{font-size:.79rem;color:var(--muted);margin:0}
-
-/* CALLOUT */
-.callout{background:#FFF8E8;border:1px solid rgba(136,112,40,.3);border-radius:12px;padding:1.25rem 1.5rem;margin:1.5rem 0;display:flex;gap:1rem;align-items:flex-start}
-.callout-icon{font-size:1.4rem;flex-shrink:0}
-.callout strong{display:block;font-family:'Montserrat',sans-serif;font-weight:800;color:#7A6020;margin-bottom:.3rem;font-size:.88rem}
-.callout p{font-size:.83rem;color:#7A6020;margin:0;line-height:1.6}
-
-/* FAQ */
-.faq-item{border:1px solid var(--border);border-radius:12px;margin-bottom:.75rem;overflow:hidden}
-.faq-item summary{font-family:'Montserrat',sans-serif;font-weight:700;color:var(--navy);cursor:pointer;padding:1.1rem 1.4rem;font-size:.93rem;list-style:none;display:flex;justify-content:space-between;align-items:center}
-.faq-item summary::-webkit-details-marker{display:none}
-.faq-item summary::after{content:'▾';color:var(--teal);font-size:1.1rem;transition:transform .2s}
-.faq-item[open] summary::after{transform:rotate(-180deg)}
-.faq-body{padding:0 1.4rem 1.2rem;font-size:.88rem;color:#475569;line-height:1.7}
-
-/* AMG SECTION */
-.amg-banner{background:linear-gradient(135deg,#183888 0%,#30B8B0 100%);border-radius:16px;padding:2rem 2rem;margin:2.5rem 0;display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap}
-.amg-banner img{height:48px;width:auto;filter:brightness(0) invert(1);opacity:.9;flex-shrink:0}
-.amg-banner p{font-size:.85rem;color:rgba(255,255,255,.82);margin:0;flex:1;min-width:200px}
-.amg-banner strong{color:#fff}
-
-/* CTA STRIP */
-.cta-strip{background:var(--navy);padding:56px 24px;text-align:center}
-.cta-strip h2{color:#fff;font-size:clamp(1.3rem,4vw,2rem);margin-bottom:.75rem}
-.cta-strip p{color:rgba(255,255,255,.75);margin-bottom:2rem;font-size:.95rem}
-.cta-btn{display:inline-flex;align-items:center;gap:8px;background:var(--teal);color:#fff;font-family:'Montserrat',sans-serif;font-size:.88rem;font-weight:700;padding:14px 30px;border-radius:50px;transition:background .2s}
-.cta-btn:hover{background:var(--teal-d)}
-.cta-sec{display:inline-flex;align-items:center;gap:8px;background:transparent;color:rgba(255,255,255,.7);border:1px solid rgba(255,255,255,.25);font-family:'Montserrat',sans-serif;font-size:.82rem;font-weight:700;padding:12px 24px;border-radius:50px;margin-left:12px;transition:all .2s}
-.cta-sec:hover{border-color:rgba(255,255,255,.5);color:#fff}
-
-/* DISCLAIMER */
-.disclaimer{background:#FFF8E8;border:1px solid rgba(136,112,40,.25);border-radius:10px;padding:1rem 1.25rem;font-size:.77rem;color:#7A6020;line-height:1.6;margin:1.5rem 0}
-
-/* FOOTER */
-footer{background:#0D1B3E;padding:2rem 24px;text-align:center}
-footer p{font-size:.75rem;color:rgba(255,255,255,.4);line-height:1.7;max-width:700px;margin:0 auto .75rem}
-footer img{margin:0 auto;opacity:.3;height:28px}
-footer a{color:rgba(255,255,255,.4);text-decoration:underline}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Campaña de Detección Gratuita · Julio–Septiembre 2026 | México Sin Cáncer Gástrico</title>
+  <meta name="description" content="Campaña de detección gratuita de Helicobacter pylori · Julio–Septiembre 2026. Prueba de aliento no invasiva en sedes participantes. Miles de mexicanos ya participaron. Avalado por la AMG.">
+  
+  
+  
+  <link rel="stylesheet" href="assets/hub-v2.css">
 </head>
 <body>
 
-<!-- HEADER -->
-<header class="hdr">
+<header id="hdr">
   <div class="hdr-i">
     <a href="index.html" class="logo">
-      <img src="img/brand_amg/logo_amg_oscuro.png" alt="México Sin Cáncer Gástrico">
+      <img src="HUB_AMG_PYLORI/brand_amg/logo_amg_transparent.png" alt="AMG">
       <div class="logo-nm">México Sin Cáncer Gástrico<small>Asociación Mexicana de Gastroenterología</small></div>
     </a>
     <nav class="nav-links">
       <a href="index.html">Inicio</a>
-      <a href="art-contagio.html">Artículos</a>
+      <a href="articulos/index.html">Artículos</a>
       <a href="deteccion.html" class="active">Detección</a>
-      <a href="biblioteca.html">Bibliografía</a>
-      <div class="amg-pill">
-        <img src="img/brand_amg/logo_amg_oscuro.png" alt="AMG">
-        AMG · V Consenso
-      </div>
+      <a href="para-medicos.html">Para médicos</a>
+      <span class="amg-pill">AMG 2026</span>
+      <a href="deteccion.html#registro" class="nav-cta">Participa gratis</a>
     </nav>
+    <div class="hbg" onclick="document.getElementById('mob-nav').classList.toggle('open')">
+      <span></span><span></span><span></span>
+    </div>
   </div>
 </header>
+<nav class="mob-nav" id="mob-nav">
+  <a href="index.html">Inicio</a>
+  <a href="articulos/index.html">Artículos</a>
+  <a href="deteccion.html">Detección</a>
+  <a href="para-medicos.html">Para médicos</a>
+  <a href="deteccion.html#registro" class="nav-cta" style="align-self:flex-start;">Participa gratis</a>
+</nav>
 
 <!-- HERO -->
-<section class="det-hero">
-  <div class="hero-inner">
-    <div class="hero-eyebrow">🔬 Detección Oportuna · H. pylori</div>
-    <h1>Detectar <em>H. pylori</em> es el primer paso para prevenirlo todo</h1>
-    <p class="hero-lead">7 de cada 10 mexicanos conviven con la bacteria sin saberlo. La prueba de aliento —no invasiva, sin piquetes— puede detectarla en 20 minutos. Habla con tu médico.</p>
-    <div class="hero-pills">
-      <div class="hpill"><strong>20 min</strong> · sin piquetes</div>
-      <div class="hpill"><strong>&gt;95%</strong> precisión diagnóstica</div>
-      <div class="hpill">Avalado por la <strong>AMG</strong></div>
+<section class="article-hero" style="padding:100px 0 80px;">
+  <div class="article-hero-img" style="background-image:url('assets/img/breath.png'); opacity:.25;"></div>
+  <div class="container">
+    <div class="article-hero-content">
+      <div class="article-meta">
+        <span class="pill pill-teal">🔬 Campaña activa · Jul–Sep 2026</span>
+        <span class="pill pill-dorado">Gratis · Sin piquetes</span>
+      </div>
+      <h1>Campaña de Detección Gratuita de <em style="color:var(--teal)">Helicobacter pylori</em></h1>
+      <p class="lead" style="margin-top:16px;">Miles de mexicanos ya se hicieron la prueba. La campaña sigue activa: una prueba de aliento no invasiva, en 20 minutos, sin piquetes. Si tienes factores de riesgo, tu médico puede referirte sin costo.</p>
+      <div style="margin-top:28px; display:flex; gap:12px; flex-wrap:wrap;">
+        <a href="#requisitos" class="btn btn-primary" style="background:var(--teal); border:none;">¿Aplico? Ver factores de riesgo</a>
+        <a href="#como-funciona" class="btn btn-outline" style="color:white; border-color:rgba(255,255,255,.5);">Cómo funciona →</a>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- STAT BAND -->
-<div class="stat-band">
-  <div class="stat-row">
-    <div class="stat-item">
-      <div class="stat-n">7/10</div>
-      <div class="stat-l">adultos mexicanos con la bacteria</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-n">70%</div>
-      <div class="stat-l">del cáncer gástrico detectado tarde</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-n">&gt;90%</div>
-      <div class="stat-l">erradicación con tratamiento completo</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-n">20 min</div>
-      <div class="stat-l">duración de la prueba de aliento</div>
-    </div>
-  </div>
-</div>
-
-<!-- MAIN CONTENT -->
-<div class="content-wrap">
-
-  <!-- INTRO -->
-  <span class="section-eyebrow">¿Por qué importa detectarse?</span>
-  <h2>La bacteria que no da señales… hasta que es tarde</h2>
-  <p>La <span class="hpyl">Helicobacter pylori</span> es la infección bacteriana crónica más prevalente en México. La mayoría de quienes la tienen no presentan síntomas claros — la bacteria vive en el revestimiento del estómago sin causar molestias evidentes durante años, incluso décadas.</p>
-  <p>El problema: con el tiempo, <span class="hpyl">H. pylori</span> puede desencadenar gastritis crónica, úlcera péptica y, en los casos más graves, adenocarcinoma gástrico — el tipo más común de cáncer de estómago. México es uno de los países con mayor mortalidad por cáncer gástrico en América Latina.</p>
-  <p>La buena noticia: cuando se detecta, <span class="hpyl">H. pylori</span> tiene tratamiento efectivo. La detección oportuna rompe la cadena antes de que el daño sea irreversible.</p>
-
-  <!-- HOW IS IT DETECTED -->
-  <span class="section-eyebrow">La prueba estándar</span>
-  <h2>El urea breath test (UBT): cómo funciona</h2>
-  <p>El <strong>urea breath test</strong> —o prueba de aliento con urea— es el método de referencia no invasivo para detectar <span class="hpyl">H. pylori</span>. Es el estándar recomendado por la Asociación Mexicana de Gastroenterología (AMG) en el V Consenso Mexicano 2025 para diagnóstico en adultos sin indicación de endoscopia.</p>
-
-  <div class="ubt-steps">
-    <div class="ubt-step">
-      <div class="ubt-step-num">1</div>
-      <h3>Soplas en el tubo inicial</h3>
-      <p>Una muestra de tu aliento antes de la bebida, como punto de referencia.</p>
-    </div>
-    <div class="ubt-step">
-      <div class="ubt-step-num">2</div>
-      <h3>Tomas la bebida de urea marcada</h3>
-      <p>Una solución que contiene urea marcada con carbono-13, inofensiva.</p>
-    </div>
-    <div class="ubt-step">
-      <div class="ubt-step-num">3</div>
-      <h3>Esperas 20 minutos</h3>
-      <p>Si <em class="hpyl">H. pylori</em> está presente, su enzima (ureasa) descompone la urea.</p>
-    </div>
-    <div class="ubt-step">
-      <div class="ubt-step-num">4</div>
-      <h3>Soplas en el tubo final</h3>
-      <p>El analizador detecta el CO₂ marcado en tu aliento. Resultado en minutos.</p>
-    </div>
-  </div>
-
-  <div class="ubt-metrics">
-    <div class="ubt-metric">
-      <div class="met-n">&gt;95%</div>
-      <div class="met-l">Sensibilidad diagnóstica</div>
-    </div>
-    <div class="ubt-metric">
-      <div class="met-n">&gt;95%</div>
-      <div class="met-l">Especificidad</div>
-    </div>
-    <div class="ubt-metric">
-      <div class="met-n">20 min</div>
-      <div class="met-l">Duración total</div>
-    </div>
-    <div class="ubt-metric">
-      <div class="met-n">0</div>
-      <div class="met-l">Piquetes o cortes</div>
-    </div>
-  </div>
-
-  <div class="callout">
-    <div class="callout-icon">⚠️</div>
-    <div>
-      <strong>Importante antes de la prueba</strong>
-      <p>El UBT requiere estar sin <strong>inhibidores de bomba de protones (IBP)</strong> ni P-CAB durante al menos 15 días antes. Esto aplica a omeprazol, pantoprazol, tegoprazán y similares. <strong>Nunca suspendas estos medicamentos sin indicación médica.</strong> Tu médico te indicará cómo hacerlo de forma segura.</p>
-    </div>
-  </div>
-
-  <!-- WHEN TO TALK TO YOUR DOCTOR -->
-  <span class="section-eyebrow">¿Cuándo hablar con tu médico?</span>
-  <h2>Factores de riesgo: quién debería hacerse la prueba</h2>
-  <p>No es necesario tener síntomas para considerar la prueba. Habla con tu médico si tienes uno o más de los siguientes factores:</p>
-
-  <div class="elig-grid">
-    <div class="elig-card">
-      <span class="elig-icon">🤕</span>
+<!-- MOMENTUM BAND -->
+<section style="background:var(--navy); padding:32px 0; border-top:3px solid var(--teal);">
+  <div class="container">
+    <div style="display:flex; justify-content:center; gap:48px; flex-wrap:wrap; text-align:center;">
       <div>
-        <h4>Dolor gástrico recurrente</h4>
-        <p>Ardor o molestia en el epigastrio que reaparece con frecuencia, aun con tratamiento convencional.</p>
+        <div style="font-family:var(--font-head); font-weight:900; font-size:2rem; color:var(--teal);">+25,000</div>
+        <div style="font-size:.8rem; color:rgba(255,255,255,.65); margin-top:4px; text-transform:uppercase; letter-spacing:.07em;">Usuarios únicos en el hub</div>
       </div>
-    </div>
-    <div class="elig-card">
-      <span class="elig-icon">🔄</span>
       <div>
-        <h4>Gastritis en más de una ocasión</h4>
-        <p>Diagnóstico repetido de gastritis con síntomas que regresan después del tratamiento.</p>
+        <div style="font-family:var(--font-head); font-weight:900; font-size:2rem; color:var(--teal);">7 / 10</div>
+        <div style="font-size:.8rem; color:rgba(255,255,255,.65); margin-top:4px; text-transform:uppercase; letter-spacing:.07em;">Adultos mexicanos con la bacteria</div>
       </div>
-    </div>
-    <div class="elig-card">
-      <span class="elig-icon">🧬</span>
       <div>
-        <h4>Antecedente familiar de cáncer gástrico</h4>
-        <p>Familiar de primer o segundo grado con diagnóstico de cáncer de estómago.</p>
+        <div style="font-family:var(--font-head); font-weight:900; font-size:2rem; color:var(--teal);">20 min</div>
+        <div style="font-size:.8rem; color:rgba(255,255,255,.65); margin-top:4px; text-transform:uppercase; letter-spacing:.07em;">Duración de la prueba</div>
       </div>
-    </div>
-    <div class="elig-card">
-      <span class="elig-icon">🚬</span>
       <div>
-        <h4>Tabaquismo</h4>
-        <p>El tabaco aumenta el riesgo de complicaciones por H. pylori y puede afectar la respuesta al tratamiento.</p>
-      </div>
-    </div>
-    <div class="elig-card">
-      <span class="elig-icon">🇲🇽</span>
-      <div>
-        <h4>Vivir en zona de alta prevalencia</h4>
-        <p>Zonas rurales y de alta densidad poblacional en México tienen tasas de infección superiores al 80%.</p>
-      </div>
-    </div>
-    <div class="elig-card">
-      <span class="elig-icon">🍽️</span>
-      <div>
-        <h4>Acceso a agua no tratada o higiene limitada</h4>
-        <p>La bacteria se transmite por vía fecal-oral. El agua y los alimentos contaminados son rutas de contagio.</p>
+        <div style="font-family:var(--font-head); font-weight:900; font-size:2rem; color:var(--teal);">&gt;90%</div>
+        <div style="font-size:.8rem; color:rgba(255,255,255,.65); margin-top:4px; text-transform:uppercase; letter-spacing:.07em;">Efectividad del tratamiento</div>
       </div>
     </div>
   </div>
-
-  <!-- WHAT HAPPENS AFTER -->
-  <span class="section-eyebrow">Después de la prueba</span>
-  <h2>Si el resultado es positivo: hay tratamiento</h2>
-  <p>Un resultado positivo en el UBT significa que tienes la bacteria — no que tendrás cáncer. La infección por <span class="hpyl">H. pylori</span> tiene tratamiento con <strong>tasas de erradicación superiores al 90%</strong> cuando el esquema es el correcto y se completa en su totalidad.</p>
-  <p>Tu médico te prescribirá un esquema de antibióticos combinado con un supresor ácido durante 14 días. La clave es completar el tratamiento íntegro, incluso si los síntomas mejoran antes. Suspenderlo antes puede generar resistencia antibiótica y hacer el segundo tratamiento más difícil.</p>
-  <p>Al finalizar el tratamiento, el V Consenso AMG recomienda una prueba de control (nuevo UBT) a las 4–8 semanas para confirmar que la erradicación fue exitosa.</p>
-
-  <div class="callout">
-    <div class="callout-icon">✅</div>
-    <div>
-      <strong>La clave está en completar el ciclo</strong>
-      <p>Interrumpir el tratamiento es la causa más común de fallo. Si tienes efectos secundarios o dudas, llama a tu médico antes de suspenderlo — existen ajustes y alternativas.</p>
-    </div>
-  </div>
-
-  <!-- AMG BADGE -->
-  <div class="amg-banner">
-    <img src="img/brand_amg/logo_amg_claro.png" alt="Asociación Mexicana de Gastroenterología">
-    <p>Esta información está basada en el <strong>V Consenso Mexicano sobre Helicobacter pylori</strong>, publicado por la Asociación Mexicana de Gastroenterología (AMG, 2025). Las guías clínicas citadas son de acceso público y revisadas por pares.</p>
-  </div>
-
-  <!-- FAQ -->
-  <span class="section-eyebrow">Preguntas frecuentes</span>
-  <h2>Lo que más nos preguntan</h2>
-
-  <details class="faq-item">
-    <summary>¿Cuánto tiempo de ayuno se necesita para la prueba?</summary>
-    <div class="faq-body">Se requiere 1 hora de ayuno completo (sin comer, beber líquidos ni masticar chicle) antes del procedimiento. No es necesario ayuno nocturno completo — solo 1 hora previa.</div>
-  </details>
-
-  <details class="faq-item">
-    <summary>Tomo omeprazol o tegoprazán. ¿Puedo hacerme la prueba?</summary>
-    <div class="faq-body">Los inhibidores de bomba de protones (IBP como omeprazol, pantoprazol) y los P-CAB (como tegoprazán) pueden generar falsos negativos en el UBT. Se recomienda suspenderlos al menos 15 días antes — <strong>pero nunca los suspendas sin indicación médica.</strong> Tu médico te dirá cómo hacerlo de forma segura según tu situación.</div>
-  </details>
-
-  <details class="faq-item">
-    <summary>Tengo síntomas. ¿Qué hago primero?</summary>
-    <div class="faq-body">El primer paso es consultar a tu médico y describir tus síntomas con detalle. Él decidirá si el UBT es el estudio indicado o si hay otra vía de diagnóstico más adecuada para tu caso. No hay auto-enrolamiento ni acceso directo sin referencia médica.</div>
-  </details>
-
-  <details class="faq-item">
-    <summary>¿Cuándo estarán listos los resultados?</summary>
-    <div class="faq-body">La mayoría de los laboratorios y clínicas que realizan el UBT entregan resultados el mismo día o en 24 horas. Tu médico te los comunicará e indicará los pasos siguientes.</div>
-  </details>
-
-  <details class="faq-item">
-    <summary>Si mi resultado es negativo, ¿puedo descartarlo para siempre?</summary>
-    <div class="faq-body">Un resultado negativo es tranquilizador, pero no garantiza inmunidad permanente. Si en el futuro desarrollas síntomas o factores de riesgo adicionales, tu médico puede indicar repetir la prueba. La bacteria puede adquirirse en cualquier momento a través de agua o alimentos contaminados.</div>
-  </details>
-
-  <details class="faq-item">
-    <summary>¿La prueba de aliento es para cualquier edad?</summary>
-    <div class="faq-body">El UBT es una prueba no invasiva adecuada para adultos y niños mayores de 6 años en la mayoría de los protocolos. Para menores, el médico evaluará la indicación y la técnica más apropiada. No requiere anestesia ni procedimientos invasivos.</div>
-  </details>
-
-  <div class="disclaimer">
-    <strong>Información educativa —</strong> Este contenido está basado en el V Consenso Mexicano sobre <em>Helicobacter pylori</em> (AMG, 2025) y literatura científica de acceso público. No sustituye la consulta médica. Consulta a tu médico ante cualquier síntoma o para determinar si la prueba es adecuada para ti.
-  </div>
-
-</div><!-- /content-wrap -->
-
-<!-- CTA STRIP -->
-<section class="cta-strip">
-  <h2>El siguiente paso es tu médico</h2>
-  <p>Cuéntale tus síntomas o factores de riesgo. Pregúntale si el urea breath test es adecuado para ti.</p>
-  <a href="art-diagnostico.html" class="cta-btn">Leer: métodos de diagnóstico →</a>
-  <a href="art-tratamiento.html" class="cta-sec">¿Ya tienes diagnóstico? Conoce el tratamiento</a>
 </section>
 
-<!-- FOOTER -->
-<footer>
-  <p>Campaña educativa avalada por la Asociación Mexicana de Gastroenterología · V Consenso Mexicano sobre <em>Helicobacter pylori</em> 2025. Esta información no sustituye la consulta médica. Consulta a tu médico ante cualquier síntoma. © 2026 México Sin Cáncer Gástrico · <a href="index.html">mexicosincancergastrico.com.mx</a></p>
-  <img src="img/brand_amg/logo_amg_claro.png" alt="AMG">
+<!-- HOW IT WORKS - DETAILED -->
+<section id="como-funciona" class="section bg-white">
+  <div class="container">
+    <div class="section-header">
+      <span class="eyebrow">Paso a paso</span>
+      <h2>¿Cómo funciona la campaña?</h2>
+      <p>El proceso es simple: hablas con tu médico, él decide si aplicas, y te refiere a la prueba gratuita en una sede participante.</p>
+    </div>
+    <div class="steps">
+      <div class="step" style="background:white; border-radius:16px; box-shadow:var(--shadow-sm); padding:36px 28px;">
+        <div class="step-num">1</div>
+        <h3>Consulta con tu médico</h3>
+        <p>Dile a tu médico que quieres participar en la campaña de detección. Él revisará si tienes alguno de los factores de riesgo y decidirá si eres candidato.</p>
+        <p style="font-size:.82rem; color:var(--muted); margin-top:12px;">⚠️ El médico es quien decide. No hay auto-enrolamiento.</p>
+        <div class="step-connector"></div>
+      </div>
+      <div class="step" style="background:white; border-radius:16px; box-shadow:var(--shadow-sm); padding:36px 28px;">
+        <div class="step-num">2</div>
+        <h3>Prepárate para la prueba</h3>
+        <p>Antes de hacerte el urea breath test necesitas:</p>
+        <ul style="text-align:left; margin:12px 0 0 20px; font-size:.88rem;">
+          <li>1 hora de ayuno total</li>
+          <li>15 días sin IBP ni P-CAB (bajo supervisión médica)</li>
+          <li>1 día sin antiácidos de venta libre</li>
+        </ul>
+        <div class="step-connector"></div>
+      </div>
+      <div class="step" style="background:white; border-radius:16px; box-shadow:var(--shadow-sm); padding:36px 28px;">
+        <div class="step-num">3</div>
+        <h3>Realiza la prueba y recibe tu resultado</h3>
+        <p>La prueba de aliento dura 20 minutos. Soplas en un tubo de colección, tomas una bebida especial y soplas de nuevo. Sin piquetes. Sin endoscopia. En minutos tienes tu resultado.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ELIGIBILITY - FULL -->
+<section id="requisitos" class="section bg-teal-light">
+  <div class="container">
+    <div class="section-header">
+      <span class="eyebrow">¿Aplicas?</span>
+      <h2>Factores de elegibilidad</h2>
+      <p>Habla con tu médico si tienes uno o más de estos factores. Él es quien determina si eres candidato para la prueba gratuita.</p>
+    </div>
+    <div class="eligibility-grid" style="max-width:820px; margin:0 auto;">
+      <div class="eligibility-item" style="background:white;">
+        <span class="eligibility-icon">🤕</span>
+        <div>
+          <h4>Dolor gástrico frecuente</h4>
+          <p>Molestia o ardor en la zona del estómago (epigastrio) que se repite con frecuencia, aun después de tratamientos convencionales.</p>
+        </div>
+      </div>
+      <div class="eligibility-item" style="background:white;">
+        <span class="eligibility-icon">🔄</span>
+        <div>
+          <h4>Gastritis recurrente</h4>
+          <p>Has recibido un diagnóstico de gastritis en más de una ocasión y los síntomas regresan a pesar del tratamiento.</p>
+        </div>
+      </div>
+      <div class="eligibility-item" style="background:white;">
+        <span class="eligibility-icon">🚬</span>
+        <div>
+          <h4>Fumador o exfumador</h4>
+          <p>El tabaco aumenta el riesgo de complicaciones por H. pylori y puede interferir con la respuesta al tratamiento.</p>
+        </div>
+      </div>
+      <div class="eligibility-item" style="background:white;">
+        <span class="eligibility-icon">🧬</span>
+        <div>
+          <h4>Antecedente familiar de cáncer gástrico</h4>
+          <p>Tener un familiar de primer o segundo grado con diagnóstico de cáncer de estómago eleva significativamente tu riesgo.</p>
+        </div>
+      </div>
+    </div>
+    <div class="highlight-box" style="max-width:820px; margin:28px auto 0; background:white; border:1px solid rgba(48,184,176,.2); border-radius:12px; padding:24px; display:flex; gap:16px; align-items:flex-start;">
+      <span style="font-size:1.8rem; flex-shrink:0;">💊</span>
+      <div>
+        <h4 style="color:var(--navy); margin-bottom:6px;">Nota sobre medicamentos</h4>
+        <p style="font-size:.9rem;">Si tomas inhibidores de bomba de protones (IBP) u otros medicamentos para el ácido estomacal, habla con tu médico <strong>antes de suspenderlos</strong>. La prueba requiere 15 días sin estos medicamentos, pero esto debe ser bajo supervisión médica.</p>
+        <p style="font-size:.82rem; color:var(--muted); margin-top:6px;">Nunca suspendas medicamentos sin indicación médica.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THE TEST EXPLAINED -->
+<section class="section bg-white">
+  <div class="container">
+    <div class="grid-2" style="align-items:center; gap:56px;">
+      <div>
+        <img src="assets/img/breath.png" alt="Prueba de aliento urea breath test" style="border-radius:16px; box-shadow:var(--shadow-lg); width:100%;">
+      </div>
+      <div>
+        <span class="eyebrow" style="display:block; margin-bottom:12px; font-family:var(--font-head); font-size:.78rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--teal);">La prueba de aliento</span>
+        <div class="divider-teal"></div>
+        <h2>Una prueba simple. Soplas, tomas una bebida, vuelves a soplar.</h2>
+        <p style="margin-top:16px;">El <strong>urea breath test (UBT)</strong> es el estándar de oro no invasivo para detectar <em class="italic-pylori">Helicobacter pylori</em>. No requiere endoscopia, no requiere piquetes, y los resultados están disponibles en minutos.</p>
+        <p>Si la bacteria está presente en tu estómago, produce una enzima llamada ureasa que descompone la urea marcada que ingieres. Al soplar nuevamente, el analizador detecta esa reacción.</p>
+        <div style="margin-top:24px; display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+          <div style="background:var(--bg); border-radius:8px; padding:14px; text-align:center;">
+            <div style="font-family:var(--font-head); font-weight:900; font-size:1.4rem; color:var(--teal);">20 min</div>
+            <div style="font-size:.78rem; color:var(--muted);">Duración total</div>
+          </div>
+          <div style="background:var(--bg); border-radius:8px; padding:14px; text-align:center;">
+            <div style="font-family:var(--font-head); font-weight:900; font-size:1.4rem; color:var(--teal);">0</div>
+            <div style="font-size:.78rem; color:var(--muted);">Piquetes o cortes</div>
+          </div>
+          <div style="background:var(--bg); border-radius:8px; padding:14px; text-align:center;">
+            <div style="font-family:var(--font-head); font-weight:900; font-size:1.4rem; color:var(--teal);">>95%</div>
+            <div style="font-size:.78rem; color:var(--muted);">Sensibilidad diagnóstica</div>
+          </div>
+          <div style="background:var(--bg); border-radius:8px; padding:14px; text-align:center;">
+            <div style="font-family:var(--font-head); font-weight:900; font-size:1.4rem; color:var(--teal);">Gratis</div>
+            <div style="font-size:.78rem; color:var(--muted);">En sedes participantes</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ SECTION -->
+<section class="section bg-white">
+  <div class="container" style="max-width:820px;">
+    <div class="section-header">
+      <span class="eyebrow">Preguntas frecuentes</span>
+      <h2>Lo que más nos preguntan</h2>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:16px;">
+      <details style="border:1px solid var(--border); border-radius:12px; padding:20px 24px;">
+        <summary style="font-weight:700; color:var(--navy); cursor:pointer; font-size:1rem;">¿Cuánto tiempo tengo que estar en ayuno?</summary>
+        <p style="margin-top:12px; color:var(--body); font-size:.92rem;">Se requiere 1 hora de ayuno total (sin comer, beber ni masticar chicle) antes de la prueba. No es necesario ayuno de noche completa.</p>
+      </details>
+      <details style="border:1px solid var(--border); border-radius:12px; padding:20px 24px;">
+        <summary style="font-weight:700; color:var(--navy); cursor:pointer; font-size:1rem;">Tomo omeprazol. ¿Puedo hacerme la prueba?</summary>
+        <p style="margin-top:12px; color:var(--body); font-size:.92rem;">Los inhibidores de bomba de protones (IBP) y los P-CAB pueden generar falsos negativos en la prueba. Necesitas 15 días sin tomarlos — pero <strong>nunca los suspendas sin indicación médica</strong>. Tu médico te indicará cómo hacerlo de forma segura.</p>
+      </details>
+      <details style="border:1px solid var(--border); border-radius:12px; padding:20px 24px;">
+        <summary style="font-weight:700; color:var(--navy); cursor:pointer; font-size:1rem;">¿Tengo síntomas y quiero participar. ¿Qué hago?</summary>
+        <p style="margin-top:12px; color:var(--body); font-size:.92rem;">El primer paso es siempre tu médico. Cuéntale tus síntomas y pregúntale si eres candidato para la prueba gratuita. El médico es quien determina la elegibilidad — no hay auto-enrolamiento directo.</p>
+      </details>
+      <details style="border:1px solid var(--border); border-radius:12px; padding:20px 24px;">
+        <summary style="font-weight:700; color:var(--navy); cursor:pointer; font-size:1rem;">¿Cuándo sabré el resultado?</summary>
+        <p style="margin-top:12px; color:var(--body); font-size:.92rem;">En la mayoría de las sedes participantes el resultado está disponible el mismo día o al día siguiente. Tu médico te lo comunicará y te indicará los pasos a seguir según el resultado.</p>
+      </details>
+      <details style="border:1px solid var(--border); border-radius:12px; padding:20px 24px;">
+        <summary style="font-weight:700; color:var(--navy); cursor:pointer; font-size:1rem;">Si el resultado es positivo, ¿qué sigue?</summary>
+        <p style="margin-top:12px; color:var(--body); font-size:.92rem;">Tu médico te prescribirá un esquema de erradicación: antibióticos más un supresor de ácido, durante 14 días. Después de completar el tratamiento, se recomienda una prueba de control (UBT) a las 4–8 semanas para confirmar que la bacteria fue eliminada.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ARTICLES CTA -->
+<section class="section" style="background:var(--bg);">
+  <div class="container" style="max-width:820px; text-align:center;">
+    <span class="eyebrow">Aprende más</span>
+    <h2 style="margin-bottom:8px;">¿Quieres entender mejor la bacteria?</h2>
+    <p style="color:var(--muted); margin-bottom:32px;">Leemos mucho para que no tengas que hacerlo. Artículos escritos con información avalada por la AMG.</p>
+    <div style="display:flex; gap:16px; flex-wrap:wrap; justify-content:center;">
+      <a href="articulos/pylori-transmision.html" class="btn btn-outline" style="border-color:var(--teal); color:var(--teal);">🧬 Cómo se transmite</a>
+      <a href="articulos/pylori-tratamiento.html" class="btn btn-outline" style="border-color:var(--teal); color:var(--teal);">💊 El tratamiento</a>
+      <a href="articulos/pylori-cancer-gastrico.html" class="btn btn-outline" style="border-color:var(--teal); color:var(--teal);">⚠️ H. pylori y cáncer gástrico</a>
+    </div>
+  </div>
+</section>
+
+<!-- CTA REGISTER -->
+<section id="registro" class="detect-band">
+  <div class="container">
+    <div class="detect-band-inner">
+      <div>
+        <h2>La campaña sigue activa. El siguiente paso es tu médico.</h2>
+        <p style="margin-top:12px;">Pregunta a tu médico por los requisitos para participar sin costo en las sedes participantes.</p>
+        <p style="margin-top:8px; font-size:.85rem; opacity:.75;">Habla con tu médico antes de suspender cualquier medicamento. La campaña es válida hasta diciembre 2026.</p>
+      </div>
+      <div class="detect-band-actions" style="flex-direction:column; align-items:flex-start;">
+        <a href="articulos/pylori-transmision.html" class="btn btn-white btn-lg">Leer: ¿Cómo se contagia?</a>
+        <a href="para-medicos.html" class="btn btn-outline" style="border-color:rgba(255,255,255,.5); color:white;">¿Eres médico? Información para referir →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-bottom" style="border-top:none; padding-top:0;">
+      <p class="footer-disclaimer">Campaña educativa avalada por la Asociación Mexicana de Gastroenterología. Esta información no sustituye la consulta médica. Consulta a tu médico ante cualquier síntoma. © 2026 México Sin Cáncer Gástrico · mexicosincancergastrico.com.mx</p>
+      <img src="HUB_AMG_PYLORI/brand_amg/logo_amg_transparent.png" alt="AMG" style="height:40px; filter:brightness(0) invert(1); opacity:.5;">
+    </div>
+  </div>
 </footer>
 
 </body>

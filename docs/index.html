@@ -125,7 +125,8 @@ body{padding-top:0}
    HERO — imagen izquierda, texto sobre blanco derecho
 ════════════════════════════ */
 .hero{
-  min-height:68vh;
+  min-height:48vh;
+  max-height:560px;
   position:relative;
   display:flex;
   align-items:center;
@@ -142,7 +143,7 @@ body{padding-top:0}
   width:100%;
   height:100%;
   object-fit:cover;
-  object-position:center center;
+  object-position:center 30%;
   display:block;
 }
 /* Overlay gradiente navy izquierda → transparente derecha */
@@ -152,10 +153,10 @@ body{padding-top:0}
   inset:0;
   background:linear-gradient(
     to right,
-    rgba(11,22,90,0.94) 0%,
-    rgba(11,22,90,0.82) 25%,
-    rgba(11,22,90,0.50) 52%,
-    rgba(11,22,90,0.12) 75%,
+    rgba(24,56,136,0.96) 0%,
+    rgba(24,56,136,0.85) 28%,
+    rgba(24,56,136,0.50) 55%,
+    rgba(24,56,136,0.10) 78%,
     transparent 100%
   );
 }
@@ -165,76 +166,92 @@ body{padding-top:0}
   z-index:1;
   max-width:1300px;
   margin:0 auto;
-  padding:88px 2rem 48px;
+  padding:72px 2rem 56px;
   width:100%;
   display:flex;
   justify-content:flex-start;
+  align-items:center;
 }
 /* Panel de texto — ocupa la zona oscura */
 #hero-r{
-  width:48%;
-  max-width:520px;
+  width:46%;
+  max-width:500px;
 }
-.hero-eyebrow{color:var(--teal-l)}
+.hero-eyebrow{color:var(--teal-l);font-size:.78rem;font-weight:700;font-family:'Montserrat',sans-serif;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.6rem;display:block}
 .hero-h1{
-  font-size:clamp(2rem,3.8vw,3.4rem);
+  font-size:clamp(1.8rem,3.2vw,3rem);
   color:#fff;
-  margin-bottom:1.25rem;
+  margin-bottom:1.5rem;
   letter-spacing:-.03em;
-  line-height:1.15;
+  line-height:1.18;
   font-weight:900;
 }
 .hero-h1 .hpyl{color:var(--teal-l);font-style:italic}
 .hero-lead{font-size:.95rem;color:rgba(255,255,255,.78);max-width:440px;margin-bottom:2rem;line-height:1.85}
-.hero-acts{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:2rem}
+.hero-acts{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:0}
 .hero-disclaimer{font-size:.68rem;color:rgba(255,255,255,.5);line-height:1.6;max-width:380px}
 
 /* Stat pills — sobre fondo oscuro */
 .hero-pills{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:2rem}
-.hpill{
-  background:rgba(255,255,255,.10);
-  border:1.5px solid rgba(255,255,255,.22);
-  border-radius:14px;
-  padding:.875rem 1.25rem;
-  flex:1;
-  min-width:110px;
-  backdrop-filter:blur(6px);
-}
+.hpill{background:rgba(255,255,255,.10);border:1.5px solid rgba(255,255,255,.22);border-radius:14px;padding:.875rem 1.25rem;flex:1;min-width:110px;backdrop-filter:blur(6px)}
 .hpill-n{font-family:'Montserrat',sans-serif;font-size:1.8rem;font-weight:900;color:#fff;line-height:1}
 .hpill-n span{font-size:1rem;color:var(--teal-l)}
 .hpill-l{font-size:.68rem;color:rgba(255,255,255,.65);margin-top:.25rem;line-height:1.4}
 
-/* AMG badge */
-.hero-amg-badge{
-  display:inline-flex;align-items:center;gap:8px;
-  background:rgba(136,112,40,.08);
-  border:1.5px solid rgba(136,112,40,.3);
-  border-radius:50px;
-  padding:6px 14px;
-  margin-bottom:1.5rem;
-}
+/* AMG badge compacto */
+.hero-amg-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(136,112,40,.08);border:1.5px solid rgba(136,112,40,.3);border-radius:50px;padding:6px 14px;margin-bottom:1.5rem}
 .hero-amg-badge span{font-family:'Montserrat',sans-serif;font-size:.68rem;font-weight:800;color:var(--gold);letter-spacing:.06em;text-transform:uppercase}
 
-@media(max-width:1024px){
-  #hero-r{width:58%}
+/* Scroll cue — flecha animada en el borde inferior */
+.scroll-cue{
+  position:absolute;
+  bottom:1.25rem;
+  left:50%;
+  transform:translateX(-50%);
+  z-index:5;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:5px;
+  cursor:pointer;
+  text-decoration:none;
 }
+.scroll-cue-label{
+  font-family:'Montserrat',sans-serif;
+  font-size:.6rem;
+  font-weight:700;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:rgba(255,255,255,.55);
+}
+.scroll-cue-icon{
+  width:32px;height:32px;
+  border-radius:50%;
+  background:rgba(255,255,255,.12);
+  border:1.5px solid rgba(255,255,255,.25);
+  display:flex;align-items:center;justify-content:center;
+  animation:scrollbounce 2s ease-in-out infinite;
+}
+.scroll-cue-icon svg{display:block}
+@keyframes scrollbounce{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(6px)}
+}
+
+@media(max-width:1024px){#hero-r{width:58%}}
 @media(max-width:768px){
+  .hero{min-height:auto;max-height:none}
   .hero-img-col::after{
     background:linear-gradient(
       to bottom,
-      rgba(11,22,90,0.30) 0%,
-      rgba(11,22,90,0.60) 40%,
-      rgba(11,22,90,0.92) 70%,
-      rgba(11,22,90,0.97) 100%
+      rgba(24,56,136,0.25) 0%,
+      rgba(24,56,136,0.65) 45%,
+      rgba(24,56,136,0.96) 100%
     );
   }
-  .hero-i{
-    padding:2rem 1.5rem 2.5rem;
-    align-items:flex-end;
-    min-height:auto;
-    box-sizing:border-box;
-  }
+  .hero-i{padding:2rem 1.5rem 3.5rem;align-items:flex-end;box-sizing:border-box}
   #hero-r{width:100%;max-width:100%}
+  .scroll-cue{bottom:.75rem}
 }
 
 /* ════════════════════════════
@@ -557,49 +574,38 @@ footer{background:var(--navy);color:rgba(255,255,255,.5);padding:4rem 2rem 2rem}
 <!-- ══ HERO ══ -->
 <section class="hero">
   <div class="hero-img-col">
-    <img src="img/hero_a2.png" alt="Campaña México sin Cáncer Gástrico — metro CDMX">
+    <img src="img/hero_a3.png" alt="Campaña México sin Cáncer Gástrico — metro CDMX">
   </div>
   <div class="hero-i">
-    <div id="hero-r" class="s-right">
-      <div class="ey hero-eyebrow">Campaña de concienciación sobre <span class="hpyl">H. pylori</span></div>
+    <div id="hero-r">
+      <span class="hero-eyebrow">Campaña de concienciación 2026</span>
       <h1 class="hero-h1">
-        7 de cada 10 mexicanos tienen la bacteria <span class="hpyl">Helicobacter pylori</span> en el estómago.<br>
-        Y la mayoría no lo sabe.
+        7 de cada 10 mexicanos tienen<br>
+        <span class="hpyl">Helicobacter pylori</span><br>
+        y la mayoría no lo sabe.
       </h1>
-      <!-- AMG logo destacado -->
-      <div style="display:flex;align-items:center;gap:16px;margin:1.5rem 0;padding:1rem 1.25rem;background:rgba(136,112,40,.07);border:1.5px solid rgba(136,112,40,.25);border-radius:16px;">
-        <img src="img/brand_amg/logo_amg_claro.png" alt="Asociación Mexicana de Gastroenterología" style="width:80px;height:80px;object-fit:contain;flex-shrink:0;">
+      <!-- AMG badge compacto -->
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:1.75rem;padding:.75rem 1rem;background:rgba(136,112,40,.08);border:1.5px solid rgba(136,112,40,.25);border-radius:14px;max-width:360px;">
+        <img src="img/brand_amg/logo_amg_claro.png" alt="AMG" style="width:52px;height:52px;object-fit:contain;flex-shrink:0;">
         <div>
-          <div style="font-family:'Montserrat',sans-serif;font-size:.62rem;font-weight:800;color:var(--gold);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.3rem">Aval científico</div>
-          <div style="font-family:'Montserrat',sans-serif;font-size:.88rem;font-weight:700;color:#fff;line-height:1.35">Asociación Mexicana<br>de Gastroenterología</div>
-          <div style="font-size:.7rem;color:rgba(255,255,255,.6);margin-top:.25rem">Información fundamentada en el V Consenso Mexicano de Gastroenterología</div>
-        </div>
-      </div>
-      <div class="hero-pills">
-        <div class="hpill">
-          <div class="hpill-n"><span class="stat-n" data-target="70" data-suffix="%">70%</span></div>
-          <div class="hpill-l">de mexicanos infectados</div>
-        </div>
-        <div class="hpill">
-          <div class="hpill-n"><span class="stat-n" data-target="90" data-suffix="%">90%</span></div>
-          <div class="hpill-l">del cáncer gástrico inicia con <em class="hpyl">H. pylori</em></div>
-        </div>
-        <div class="hpill">
-          <div class="hpill-n"><span class="stat-n" data-target="80" data-suffix="%">80%</span></div>
-          <div class="hpill-l">reducción de riesgo al erradicarlo</div>
+          <div style="font-family:'Montserrat',sans-serif;font-size:.58rem;font-weight:800;color:var(--gold);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.2rem">Aval científico</div>
+          <div style="font-family:'Montserrat',sans-serif;font-size:.82rem;font-weight:700;color:#fff;line-height:1.3">Asociación Mexicana de Gastroenterología<br><span style="font-size:.68rem;font-weight:400;color:rgba(255,255,255,.6)">V Consenso Mexicano, 2025</span></div>
         </div>
       </div>
       <div class="hero-acts">
         <button class="btn btn-teal" onclick="document.getElementById('quiz').scrollIntoView({behavior:'smooth'})">
           Hacer el test de riesgo →
         </button>
-        <button class="btn btn-outline" onclick="document.getElementById('info').scrollIntoView({behavior:'smooth'})">
-          Explorar información
-        </button>
       </div>
-      <p class="hero-disclaimer">Información basada en el V Consenso Mexicano de Gastroenterología (AMG, 2025).<br>Esta información no sustituye la consulta médica.</p>
     </div>
   </div>
+  <!-- Scroll cue -->
+  <a class="scroll-cue" onclick="document.getElementById('articulos').scrollIntoView({behavior:'smooth'});return false;" href="#articulos">
+    <span class="scroll-cue-label">Conoce más</span>
+    <span class="scroll-cue-icon">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.8)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </span>
+  </a>
 </section>
 
 <!-- ══ ARTÍCULOS ══ -->
