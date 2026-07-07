@@ -1114,8 +1114,8 @@ footer{background:var(--navy);color:rgba(255,255,255,.5);padding:4rem 2rem 2rem}
     if (imgs.length > 1) {
       nav = `
         <div class="cal-pv-slidecount">1 / ${imgs.length}</div>
-        <button class="cal-pv-arrow prev" onclick="pvGo(-1)">‹</button>
-        <button class="cal-pv-arrow next" onclick="pvGo(1)">›</button>
+        <button class="cal-pv-arrow prev" type="button">‹</button>
+        <button class="cal-pv-arrow next" type="button">›</button>
         <div class="cal-pv-dotsnav">${imgs.map((_,i)=>`<span class="${i===0?'active':''}"></span>`).join('')}</div>`;
     }
     return `<div class="cal-pv-media ${ratioClass}">${inner}${nav}</div>`;
@@ -1197,6 +1197,10 @@ footer{background:var(--navy);color:rgba(255,255,255,.5);padding:4rem 2rem 2rem}
     } else {
       content.innerHTML = renderCardStylePreview(p, arte, cfg);
     }
+    const prevBtn = content.querySelector('.cal-pv-arrow.prev');
+    const nextBtn = content.querySelector('.cal-pv-arrow.next');
+    if (prevBtn) prevBtn.addEventListener('click', function() { pvGo(-1); });
+    if (nextBtn) nextBtn.addEventListener('click', function() { pvGo(1); });
     overlay.classList.add('open');
   }
 
