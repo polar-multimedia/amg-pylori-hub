@@ -853,6 +853,12 @@ footer{background:var(--navy);color:rgba(255,255,255,.5);padding:4rem 2rem 2rem}
 .cal-visual-real.cal-visual-single img,.cal-visual-real.cal-visual-single video{max-height:340px}
 .cal-preview-btn{border:1.5px solid var(--navy);background:#fff;color:var(--navy);font-family:'Montserrat',sans-serif;font-weight:800;font-size:.78rem;padding:.55rem .9rem;border-radius:10px;cursor:pointer;transition:background .15s,color .15s}
 .cal-preview-btn:hover{background:var(--navy);color:#fff}
+.cal-card-body{display:none;flex-direction:column;gap:.6rem}
+.cal-card-body.open{display:flex}
+.cal-expand-toggle{margin-top:.15rem;background:var(--navy);color:#fff;border:none;font-family:'Montserrat',sans-serif;font-weight:800;font-size:.78rem;padding:.55rem .9rem;border-radius:10px;cursor:pointer;text-align:center;align-self:flex-start}
+.cal-expand-toggle:hover{background:var(--navy-d,#0E2454)}
+.cal-visual-count{position:absolute;bottom:8px;right:8px;background:rgba(14,36,84,.82);color:#fff;font-size:.68rem;font-weight:700;padding:.25rem .55rem;border-radius:999px;pointer-events:none}
+.cal-visual-real.cal-visual-single{position:relative}
 .cal-preview-overlay{position:fixed;inset:0;background:rgba(14,36,84,.72);backdrop-filter:blur(3px);display:flex;align-items:center;justify-content:center;z-index:9999;padding:2rem 1rem}
 .cal-preview-overlay.open{display:flex}
 .cal-preview-overlay:not(.open){display:none}
@@ -893,7 +899,7 @@ footer{background:var(--navy);color:rgba(255,255,255,.5);padding:4rem 2rem 2rem}
 .cal-pv-tiktok-rail .ico{font-size:1.6rem;display:block}
 .cal-pv-tiktok-bottom{position:absolute;left:0;right:70px;bottom:14px;padding:0 .9rem;z-index:3;text-shadow:0 1px 6px rgba(0,0,0,.6)}
 .cal-pv-tiktok-bottom .h{font-weight:800;font-size:.85rem;margin-bottom:.25rem}
-.cal-pv-tiktok-bottom .c{font-size:.78rem;line-height:1.3;max-height:4.6em;overflow:hidden}
+.cal-pv-tiktok-bottom .c{font-size:.78rem;line-height:1.3;display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden}
 .cal-pv-tiktok::before{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.65) 0%,rgba(0,0,0,0) 35%);z-index:2;pointer-events:none}
 .cal-pv-badge-example{position:absolute;top:10px;left:10px;background:rgba(136,112,40,.92);color:#fff;font-size:.62rem;font-weight:800;padding:.2rem .5rem;border-radius:6px;z-index:4;letter-spacing:.02em}
 .cal-visual{background:linear-gradient(135deg,var(--navy) 0%,var(--teal-d) 100%);border-radius:12px;padding:.9rem;color:#fff;font-size:.72rem;line-height:1.5;min-height:64px;display:flex;align-items:center;position:relative;overflow:hidden}
@@ -965,15 +971,21 @@ footer{background:var(--navy);color:rgba(255,255,255,.5);padding:4rem 2rem 2rem}
       return `<div class="cal-visual"><span>${esc(p.nota)}</span></div>`;
     }
     const imgs = arte.imagenes || [];
-    let media = imgs.map(src => `<img src="${src}" alt="Arte de la pieza" loading="lazy">`).join('');
+    const cover = imgs.length ? imgs[0] : '';
+    let media = '';
+    let overlay = '';
     if (arte.video) {
-      const poster = imgs.length ? imgs[imgs.length - 1] : '';
-      media += `<video src="${arte.video}" controls preload="none" playsinline poster="${poster}"></video>`;
+      media = `<video src="${arte.video}" controls preload="none" playsinline poster="${cover}"></video>`;
+      overlay = `<div class="cal-visual-count">🎬 video</div>`;
+    } else if (cover) {
+      media = `<img src="${cover}" alt="Arte de la pieza" loading="lazy">`;
+      if (imgs.length > 1) {
+        overlay = `<div class="cal-visual-count">🖼 1 / ${imgs.length} — usa "Ver preview" para recorrer el carrusel</div>`;
+      }
     }
-    const singleClass = (imgs.length + (arte.video ? 1 : 0)) <= 1 ? ' cal-visual-single' : '';
     return `
       <div class="cal-arte-badge">${esc(arte.estado)}</div>
-      <div class="cal-visual-real${singleClass}">${media}</div>
+      <div class="cal-visual-real cal-visual-single">${media}${overlay}</div>
     `;
   }
 
@@ -1167,7 +1179,7 @@ footer{background:var(--navy);color:rgba(255,255,255,.5);padding:4rem 2rem 2rem}
         </div>
         <div class="cal-pv-tiktok-bottom">
           <div class="h">@mexicosincancergastrico</div>
-          <div class="c">${esc(p.hook)}</div>
+          <div class="c">${captionWithHashtags(p)}</div>
         </div>
       </div>`;
   }
@@ -1195,6 +1207,7 @@ footer{background:var(--navy);color:rgba(255,255,255,.5);padding:4rem 2rem 2rem}
     const carrilClass = p.carril === 'C2' ? 'cal-tag-c2' : 'cal-tag-c1';
     const uid = 'cal-cap-' + p.n;
     const jsonUid = 'cal-json-' + p.n;
+    const bodyUid = 'cal-body-' + p.n;
     const pieceSpecs = CAL_SPECS[String(p.n)] || [];
     const isVideoPiece = pieceSpecs[0] && pieceSpecs[0].tipo_contenido === 'video';
     const numImgs = pieceSpecs.length;
@@ -1212,8 +1225,6 @@ footer{background:var(--navy);color:rgba(255,255,255,.5);padding:4rem 2rem 2rem}
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 15l4-4a2 2 0 0 1 2.8 0L14 15"/><circle cx="16" cy="8" r="1.5"/></svg>
         ${esc(dimsLabel)}${numImgs > 1 ? ' · ' + numImgs + ' imágenes' : ''}
       </div>
-      ${visualBlockHtml(p)}
-      ${CAL_ARTE[String(p.n)] ? '<button class="cal-preview-btn" data-preview-n="' + p.n + '">▶ Ver preview en ' + esc(p.plataforma) + '</button>' : ''}
       <div class="cal-hook">${esc(p.hook)}</div>
       <div class="cal-tag-row">
         <span class="cal-tag cal-tag-pilar">${esc(p.pilar)}</span>
@@ -1221,17 +1232,27 @@ footer{background:var(--navy);color:rgba(255,255,255,.5);padding:4rem 2rem 2rem}
         <span class="cal-tag cal-tag-formato">${esc(p.formato)}</span>
       </div>
       <div class="cal-tag-row"><span class="cal-tag ${estadoClass}">${esc(p.estado)}</span></div>
-      <button class="cal-toggle" data-target="${uid}">Ver caption completo ▼</button>
-      <div class="cal-caption" id="${uid}">${esc(p.caption)}\n\n<span class="cal-hashtags">${esc(p.hashtags)}</span></div>
-      <button class="cal-toggle" data-target="${jsonUid}">${jsonBtnLabel}</button>
+      <button class="cal-expand-toggle" data-target="${bodyUid}">▼ Ver pieza completa</button>
+      <div class="cal-card-body" id="${bodyUid}">
+        ${visualBlockHtml(p)}
+        ${CAL_ARTE[String(p.n)] ? '<button class="cal-preview-btn" data-preview-n="' + p.n + '">▶ Ver preview en ' + esc(p.plataforma) + '</button>' : ''}
+        <button class="cal-toggle" data-target="${uid}">Ver caption completo ▼</button>
+        <div class="cal-caption" id="${uid}">${esc(p.caption)}\n\n<span class="cal-hashtags">${esc(p.hashtags)}</span></div>
+        <button class="cal-toggle" data-target="${jsonUid}">${jsonBtnLabel}</button>
+      </div>
     `;
+    const bodyEl = card.querySelector('#' + bodyUid);
+    card.querySelector('.cal-expand-toggle[data-target="' + bodyUid + '"]').addEventListener('click', function() {
+      bodyEl.classList.toggle('open');
+      this.textContent = bodyEl.classList.contains('open') ? '▲ Ver menos' : '▼ Ver pieza completa';
+    });
     card.querySelector('.cal-toggle[data-target="' + uid + '"]').addEventListener('click', function() {
       const el = document.getElementById(uid);
       el.classList.toggle('open');
       this.textContent = el.classList.contains('open') ? 'Ocultar caption ▲' : 'Ver caption completo ▼';
     });
     const jsonBlock = buildJsonBlock(p);
-    card.appendChild(jsonBlock);
+    bodyEl.appendChild(jsonBlock);
     const jsonToggleBtn = card.querySelector('.cal-toggle[data-target="' + jsonUid + '"]');
     jsonToggleBtn.addEventListener('click', function() {
       jsonBlock.classList.toggle('open');
