@@ -1189,6 +1189,7 @@ footer{background:var(--navy);color:rgba(255,255,255,.5);padding:4rem 2rem 2rem}
     const arte = CAL_ARTE[String(n)];
     if (!p || !arte) return;
     const cfg = PLATFORM_CFG[p.plataforma] || PLATFORM_CFG['Instagram'];
+    const overlay = ensurePreviewOverlay();
     const content = document.getElementById('cal-preview-content');
     content.dataset.idx = '0';
     if (p.plataforma === 'TikTok') {
@@ -1196,7 +1197,7 @@ footer{background:var(--navy);color:rgba(255,255,255,.5);padding:4rem 2rem 2rem}
     } else {
       content.innerHTML = renderCardStylePreview(p, arte, cfg);
     }
-    ensurePreviewOverlay().classList.add('open');
+    overlay.classList.add('open');
   }
 
   function buildCard(p) {
