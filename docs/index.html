@@ -817,397 +817,227 @@ footer{background:var(--navy);color:rgba(255,255,255,.5);padding:4rem 2rem 2rem}
   </div>
 </section>
 
-<!-- ══ CIENCIA + EVIDENCIA (merged) ══ -->
-<section class="cats-sec" id="categorias" style="position:relative;overflow:hidden">
-  <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 85% 15%,rgba(48,184,176,.07) 0%,transparent 55%),radial-gradient(ellipse at 10% 80%,rgba(48,184,176,.05) 0%,transparent 50%);pointer-events:none"></div>
-  <div class="cats-i" style="position:relative;z-index:1">
+<!-- ══ CALENDARIO SEMANAL DE CONTENIDO (reemplaza Ciencia + Evidencia) ══ -->
+<section class="cats-sec cal-sec" id="categorias" style="position:relative;overflow:hidden;background:linear-gradient(180deg,#0B1E4D 0%,#102850 100%)">
+<span id="evidencia" style="display:block;height:0;visibility:hidden"></span>
+<style>
+.cal-sec { padding: 6rem 2rem; }
+.cal-i { max-width:1200px;margin:0 auto;position:relative;z-index:1 }
+.cal-badge-row{display:flex;gap:.6rem;flex-wrap:wrap;margin:1.5rem 0 2.5rem}
+.cal-badge{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:999px;padding:.4rem .9rem;font-size:.78rem;font-weight:700;font-family:'Montserrat',sans-serif;color:#fff}
+.cal-badge b{color:var(--teal-l)}
+.cal-filterbar{position:sticky;top:0;z-index:20;background:#fff;border-radius:16px;box-shadow:0 8px 30px rgba(0,0,0,.25);margin-bottom:2.5rem}
+.cal-filterbar-i{padding:1rem 1.25rem;display:flex;gap:.75rem;flex-wrap:wrap;align-items:center}
+.cal-filterbar label{font-family:'Montserrat',sans-serif;font-size:.62rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:.25rem}
+.cal-filterbar select, .cal-filterbar input[type=text]{border:1.5px solid var(--border);border-radius:10px;padding:.5rem .7rem;font-family:'Open Sans',sans-serif;font-size:.85rem;color:var(--navy);background:#fff;min-width:140px}
+.cal-filterbar select:focus, .cal-filterbar input:focus{outline:none;border-color:var(--teal)}
+.cal-count-pill{margin-left:auto;font-family:'Montserrat',sans-serif;font-size:.78rem;font-weight:700;color:var(--navy);background:var(--bg2, #EEF2FB);border-radius:999px;padding:.5rem 1rem;white-space:nowrap}
+.cal-month-section{margin-bottom:2.5rem}
+.cal-month-header{display:flex;align-items:center;gap:1rem;margin-bottom:1.25rem;padding-bottom:.6rem;border-bottom:2px solid rgba(255,255,255,.15)}
+.cal-month-header h3{font-size:1.4rem;color:#fff;font-family:'Montserrat',sans-serif;font-weight:800}
+.cal-month-count{font-size:.75rem;font-weight:700;color:var(--teal-l);background:rgba(48,184,176,.15);border-radius:999px;padding:.3rem .8rem;font-family:'Montserrat',sans-serif}
+.cal-week-block{margin-bottom:1.75rem}
+.cal-week-label{font-family:'Montserrat',sans-serif;font-size:.68rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:.75rem;display:flex;align-items:center;gap:8px}
+.cal-week-label::before{content:'';width:14px;height:2px;background:var(--gold);display:block;border-radius:2px}
+.cal-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1rem}
+.cal-card{background:#fff;border:1.5px solid var(--border);border-radius:16px;padding:1.15rem;transition:box-shadow .2s,transform .2s;display:flex;flex-direction:column;gap:.6rem}
+.cal-card:hover{box-shadow:0 8px 24px rgba(0,0,0,.25);transform:translateY(-2px)}
+.cal-card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:.5rem}
+.cal-plat-tag{display:flex;align-items:center;gap:.35rem;font-family:'Montserrat',sans-serif;font-size:.72rem;font-weight:800;color:var(--navy)}
+.cal-date-tag{font-size:.72rem;color:var(--muted);font-weight:600;white-space:nowrap}
+.cal-visual{background:linear-gradient(135deg,var(--navy) 0%,var(--teal-d) 100%);border-radius:12px;padding:.9rem;color:#fff;font-size:.72rem;line-height:1.5;min-height:64px;display:flex;align-items:center;position:relative;overflow:hidden}
+.cal-visual::before{content:'🖼';position:absolute;top:.5rem;right:.6rem;opacity:.35;font-size:1.1rem}
+.cal-visual span{position:relative;z-index:1}
+.cal-hook{font-weight:700;color:var(--navy);font-size:.9rem;line-height:1.4}
+.cal-tag-row{display:flex;gap:.4rem;flex-wrap:wrap}
+.cal-tag{font-size:.66rem;font-weight:700;padding:.22rem .6rem;border-radius:999px;font-family:'Montserrat',sans-serif}
+.cal-tag-pilar{background:rgba(24,56,136,.08);color:var(--navy)}
+.cal-tag-c1{background:rgba(48,184,176,.12);color:var(--teal-d)}
+.cal-tag-c2{background:rgba(136,112,40,.12);color:var(--gold)}
+.cal-tag-formato{background:var(--bg2,#EEF2FB);color:var(--muted)}
+.cal-tag-ok{background:rgba(48,184,176,.12);color:var(--teal-d)}
+.cal-tag-pend{background:rgba(200,40,40,.08);color:#C82828}
+.cal-toggle{margin-top:.2rem;background:none;border:none;color:var(--teal-d);font-family:'Montserrat',sans-serif;font-weight:700;font-size:.78rem;cursor:pointer;text-align:left;padding:0}
+.cal-toggle:hover{text-decoration:underline}
+.cal-caption{display:none;background:var(--bg2,#EEF2FB);border-radius:10px;padding:.85rem;font-size:.82rem;white-space:pre-wrap;color:var(--navy);line-height:1.55;max-height:340px;overflow-y:auto}
+.cal-caption.open{display:block}
+.cal-hashtags{font-size:.72rem;color:var(--teal-d);word-break:break-word}
+.cal-empty{text-align:center;padding:4rem 1rem;color:rgba(255,255,255,.6)}
+@media (max-width:640px){ .cal-sec{padding:4rem 1rem} .cal-filterbar-i{padding:.85rem} }
+</style>
 
-    <!-- Encabezado unificado -->
-    <div class="s-fade" style="margin-bottom:3rem">
-      <div class="ey" style="color:var(--teal-l)">México frente al H. pylori</div>
-      <div style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:1rem;margin-bottom:1rem">
-        <h2 style="color:#fff;font-size:clamp(1.8rem,3.5vw,2.8rem)">Ciencia y Evidencia</h2>
-        <a href="biblioteca.html" style="font-size:.875rem;color:var(--teal-l);font-weight:700;font-family:'Montserrat',sans-serif">Ver todos los temas →</a>
-      </div>
-      <div class="div-teal"></div>
-      <p style="color:rgba(255,255,255,.6);max-width:600px;line-height:1.85">Temas educativos y cifras verificadas de instituciones mexicanas e investigaciones clínicas publicadas en revistas arbitradas internacionales.</p>
-    </div>
-
-    <!-- ─ PARTE 1: Bento de temas ─ -->
-    <div class="s-fade" style="margin-bottom:1.25rem">
-      <div style="font-family:'Montserrat',sans-serif;font-size:.6rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--teal-l);display:flex;align-items:center;gap:8px">
-        <span style="width:16px;height:2px;background:var(--teal);display:block;border-radius:2px"></span>EXPLORA LOS TEMAS
-      </div>
-    </div>
-    <div class="bento" style="margin-bottom:4.5rem">
-      <!-- Card 1 -->
-      <a class="bc bc1 s-scale" href="art-contagio.html">
-        <img class="bc-img" src="img/02-comocontagia.png" alt="H. pylori bacteria" style="object-position:center 30%">
-        <div class="bc-ov">
-          <div class="bc-cat" style="color:var(--teal-l)">🦠 Entender la bacteria</div>
-          <div class="bc-ttl">¿Qué es el <em class="hpyl">Helicobacter pylori</em> y cómo te infecta?</div>
-          <div class="bc-sub">Mecanismos de infección, transmisión y por qué persiste</div>
-        </div>
-        <div class="bc-badge">Más visitado</div>
-      </a>
-      <!-- Card 2 -->
-      <a class="bc bc2 s-scale delay-1" href="art-diagnostico.html">
-        <img class="bc-img" src="img/06-pruebas.png" alt="Diagnóstico H. pylori" style="object-position:center top">
-        <div class="bc-ov">
-          <div class="bc-cat" style="color:#FBB74B">🔬 Diagnóstico</div>
-          <div class="bc-ttl">Cómo detectar <em class="hpyl">H. pylori</em>: prueba de aliento, sangre y endoscopía</div>
-        </div>
-      </a>
-      <!-- Card 3 -->
-      <a class="bc bc3 s-scale delay-2" href="art-tratamiento.html">
-        <img class="bc-img" src="img/01-esquemas.png" alt="Tratamiento H. pylori" style="object-position:center center">
-        <div class="bc-ov">
-          <div class="bc-cat" style="color:var(--teal-l)">💊 Tratamiento</div>
-          <div class="bc-ttl">El tratamiento que mejora <em class="hpyl">significativamente</em> la tasa de curación</div>
-        </div>
-        <div class="bc-badge">Nuevo</div>
-      </a>
-      <!-- Card 4 -->
-      <a class="bc bc4 s-scale delay-1" href="art-nutricion.html">
-        <img class="bc-img" src="img/04-quecomer.png" alt="Nutrición y H. pylori" style="object-position:center 20%">
-        <div class="bc-ov">
-          <div class="bc-cat" style="color:#FBB74B">🥗 Nutrición</div>
-          <div class="bc-ttl">Alimentos que ayudan (y evitar) durante el tratamiento</div>
-        </div>
-      </a>
-      <!-- Card 5 -->
-      <a class="bc bc5 s-scale delay-2" href="art-gastritis.html">
-        <img class="bc-img" src="img/03-gastritiscronica.png" alt="Síntomas gastritis" style="object-position:center 20%">
-        <div class="bc-ov">
-          <div class="bc-cat" style="color:var(--teal-l)">⚠️ Síntomas</div>
-          <div class="bc-ttl">Reconocer los síntomas: cuándo preocuparse y cuándo actuar</div>
-        </div>
-      </a>
-      <!-- Card 6 -->
-      <a class="bc bc6 s-scale delay-3" href="art-reinfeccion.html">
-        <img class="bc-img" src="img/05-comoreducir.png" alt="Prevención y reinfección" style="object-position:center 20%">
-        <div class="bc-ov">
-          <div class="bc-cat" style="color:var(--teal-l)">🔬 Prevención</div>
-          <div class="bc-ttl">Cómo reducir el riesgo de reinfección y proteger a tu familia</div>
-        </div>
-      </a>
-    </div>
-
-    <!-- Separador -->
-    <div class="s-fade" style="display:flex;align-items:center;gap:1.5rem;margin-bottom:3rem">
-      <div style="flex:1;height:1px;background:rgba(255,255,255,.12)"></div>
-      <div style="font-family:'Montserrat',sans-serif;font-size:.58rem;font-weight:800;color:var(--gold);letter-spacing:.14em;text-transform:uppercase;white-space:nowrap;display:flex;align-items:center;gap:8px">
-        <span style="width:12px;height:2px;background:var(--gold);display:block;border-radius:2px"></span>DATOS VERIFICADOS<span style="width:12px;height:2px;background:var(--gold);display:block;border-radius:2px"></span>
-      </div>
-      <div style="flex:1;height:1px;background:rgba(255,255,255,.12)"></div>
-    </div>
-
-    <!-- ─ PARTE 2: Data cards de evidencia ─ -->
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.25rem;margin-bottom:3.5rem">
-
-      <!-- Card E1: Prevalencia IMSS -->
-      <div class="s-scale" style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-top:3px solid var(--teal);border-radius:16px;padding:1.75rem;transition:all .3s;cursor:default" onmouseover="this.style.background='rgba(48,184,176,.08)';this.style.borderColor='rgba(48,184,176,.3)'" onmouseout="this.style.background='rgba(255,255,255,.05)';this.style.borderColor='rgba(255,255,255,.1)'">
-        <div style="font-family:'Montserrat',sans-serif;font-size:.6rem;font-weight:800;color:var(--teal-l);letter-spacing:.1em;text-transform:uppercase;margin-bottom:1rem">IMSS · Datos Epidemiológicos</div>
-        <div style="font-family:'Montserrat',sans-serif;font-size:clamp(2.8rem,6vw,4rem);font-weight:900;color:var(--teal-l);line-height:.9;letter-spacing:-.03em">7<span style="font-size:50%;opacity:.7">/10</span></div>
-        <div style="font-family:'Montserrat',sans-serif;font-weight:700;color:#fff;font-size:.95rem;line-height:1.4;margin:.75rem 0 .6rem">mexicanos porta <em style="color:var(--teal-l);font-style:italic">H. pylori</em> sin saberlo</div>
-        <p style="font-size:.78rem;color:rgba(255,255,255,.55);line-height:1.65">La bacteria silenciosa más prevalente del país. La mayoría nunca lo sabrá sin una prueba específica.</p>
-      </div>
-
-      <!-- Card E2: Detección tardía -->
-      <div class="s-scale delay-1" style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-top:3px solid var(--gold);border-radius:16px;padding:1.75rem;transition:all .3s;cursor:default" onmouseover="this.style.background='rgba(136,112,40,.08)';this.style.borderColor='rgba(136,112,40,.3)'" onmouseout="this.style.background='rgba(255,255,255,.05)';this.style.borderColor='rgba(255,255,255,.1)'">
-        <div style="font-family:'Montserrat',sans-serif;font-size:.6rem;font-weight:800;color:var(--gold);letter-spacing:.1em;text-transform:uppercase;margin-bottom:1rem">SS México · INCAN</div>
-        <div style="font-family:'Montserrat',sans-serif;font-size:clamp(2.8rem,6vw,4rem);font-weight:900;color:var(--gold);line-height:.9;letter-spacing:-.03em">70<span style="font-size:50%;opacity:.7">%</span></div>
-        <div style="font-family:'Montserrat',sans-serif;font-weight:700;color:#fff;font-size:.95rem;line-height:1.4;margin:.75rem 0 .6rem">del cáncer gástrico en México se detecta en etapas avanzadas</div>
-        <p style="font-size:.78rem;color:rgba(255,255,255,.55);line-height:1.65">Cuando los síntomas se vuelven evidentes, las opciones de tratamiento son significativamente limitadas.</p>
-      </div>
-
-      <!-- Card E3: Casos nuevos -->
-      <div class="s-scale delay-2" style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-top:3px solid var(--teal);border-radius:16px;padding:1.75rem;transition:all .3s;cursor:default" onmouseover="this.style.background='rgba(48,184,176,.08)';this.style.borderColor='rgba(48,184,176,.3)'" onmouseout="this.style.background='rgba(255,255,255,.05)';this.style.borderColor='rgba(255,255,255,.1)'">
-        <div style="font-family:'Montserrat',sans-serif;font-size:.6rem;font-weight:800;color:var(--teal-l);letter-spacing:.1em;text-transform:uppercase;margin-bottom:1rem">Instituto Nacional de Cancerología</div>
-        <div style="font-family:'Montserrat',sans-serif;font-size:clamp(2.2rem,5vw,3.2rem);font-weight:900;color:var(--teal-l);line-height:.9;letter-spacing:-.03em">6–8<span style="font-size:50%;opacity:.7">K</span></div>
-        <div style="font-family:'Montserrat',sans-serif;font-weight:700;color:#fff;font-size:.95rem;line-height:1.4;margin:.75rem 0 .6rem">casos nuevos de cáncer gástrico cada año en México</div>
-        <p style="font-size:.78rem;color:rgba(255,255,255,.55);line-height:1.65">Es la 3ª causa de mortalidad por cáncer en hombres mexicanos. Una cifra prevenible.</p>
-      </div>
-
-      <!-- Card E4: Relación H. pylori - cáncer -->
-      <div class="s-scale" style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-top:3px solid var(--gold);border-radius:16px;padding:1.75rem;transition:all .3s;cursor:default" onmouseover="this.style.background='rgba(136,112,40,.08)';this.style.borderColor='rgba(136,112,40,.3)'" onmouseout="this.style.background='rgba(255,255,255,.05)';this.style.borderColor='rgba(255,255,255,.1)'">
-        <div style="font-family:'Montserrat',sans-serif;font-size:.6rem;font-weight:800;color:var(--gold);letter-spacing:.1em;text-transform:uppercase;margin-bottom:1rem">IARC / OMS · Carcinógeno Grupo I</div>
-        <div style="font-family:'Montserrat',sans-serif;font-size:clamp(2.8rem,6vw,4rem);font-weight:900;color:var(--gold);line-height:.9;letter-spacing:-.03em">90<span style="font-size:50%;opacity:.7">%</span></div>
-        <div style="font-family:'Montserrat',sans-serif;font-weight:700;color:#fff;font-size:.95rem;line-height:1.4;margin:.75rem 0 .6rem">de los tumores gástricos en el mundo se relacionan con <em style="color:var(--teal-l);font-style:italic">H. pylori</em></div>
-        <p style="font-size:.78rem;color:rgba(255,255,255,.55);line-height:1.65">La OMS la clasifica como carcinógeno de Grupo I — el nivel más alto de evidencia sobre causa de cáncer.</p>
-      </div>
-
-      <!-- Card E5: Reducción de riesgo (Lancet) -->
-      <div class="s-scale delay-1" style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-top:3px solid var(--teal);border-radius:16px;padding:1.75rem;transition:all .3s;cursor:default" onmouseover="this.style.background='rgba(48,184,176,.08)';this.style.borderColor='rgba(48,184,176,.3)'" onmouseout="this.style.background='rgba(255,255,255,.05)';this.style.borderColor='rgba(255,255,255,.1)'">
-        <div style="font-family:'Montserrat',sans-serif;font-size:.6rem;font-weight:800;color:var(--teal-l);letter-spacing:.1em;text-transform:uppercase;margin-bottom:1rem">Lancet Gastroenterology · Seguimiento 26 años</div>
-        <div style="font-family:'Montserrat',sans-serif;font-size:clamp(2.8rem,6vw,4rem);font-weight:900;color:var(--teal-l);line-height:.9;letter-spacing:-.03em">80<span style="font-size:50%;opacity:.7">%</span></div>
-        <div style="font-family:'Montserrat',sans-serif;font-weight:700;color:#fff;font-size:.95rem;line-height:1.4;margin:.75rem 0 .6rem">reducción del riesgo de cáncer gástrico al erradicar <em style="color:var(--teal-l);font-style:italic">H. pylori</em> a tiempo</div>
-        <p style="font-size:.78rem;color:rgba(255,255,255,.55);line-height:1.65">La detección y erradicación temprana es la intervención preventiva con mayor evidencia disponible. <a href="https://www.thelancet.com/journals/langas/article/PIIS2468-1253(22)00041-X/fulltext" target="_blank" rel="noopener" style="color:var(--teal-l);text-decoration:none">Ver estudio →</a></p>
-      </div>
-
-      <!-- Card E6: Tratamiento avanzado (Kwon 2025, sin nombrar producto) -->
-      <div class="s-scale delay-2" style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-top:3px solid var(--gold);border-radius:16px;padding:1.75rem;transition:all .3s;cursor:default" onmouseover="this.style.background='rgba(136,112,40,.08)';this.style.borderColor='rgba(136,112,40,.3)'" onmouseout="this.style.background='rgba(255,255,255,.05)';this.style.borderColor='rgba(255,255,255,.1)'">
-        <div style="font-family:'Montserrat',sans-serif;font-size:.6rem;font-weight:800;color:var(--gold);letter-spacing:.1em;text-transform:uppercase;margin-bottom:1rem">Frontiers in Medicine · 2025</div>
-        <div style="font-family:'Montserrat',sans-serif;font-size:clamp(2.8rem,6vw,4rem);font-weight:900;color:var(--gold);line-height:.9;letter-spacing:-.03em">96<span style="font-size:50%;opacity:.7">%</span></div>
-        <div style="font-family:'Montserrat',sans-serif;font-weight:700;color:#fff;font-size:.95rem;line-height:1.4;margin:.75rem 0 .6rem">tasa de erradicación con los esquemas de tratamiento más modernos</div>
-        <p style="font-size:.78rem;color:rgba(255,255,255,.55);line-height:1.65">Los nuevos protocolos superan significativamente los esquemas convencionales, incluso en cepas resistentes. <a href="https://pubmed.ncbi.nlm.nih.gov/?term=Kwon+tegoprazan+helicobacter" target="_blank" rel="noopener" style="color:var(--gold);text-decoration:none">Ver estudio →</a></p>
-      </div>
-
-    </div><!-- /data-cards grid -->
-
-    <!-- CTA -->
-    <div class="s-fade" style="text-align:center;padding:2.5rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:20px">
-      <p style="font-family:'Montserrat',sans-serif;font-size:clamp(1.1rem,2.5vw,1.4rem);font-weight:800;color:#fff;line-height:1.5;margin-bottom:1.5rem">Pregunta a tu médico por el tratamiento que está mejorando <em style="color:var(--teal-l)">significativamente</em> su tasa de curación.</p>
-      <button onclick="document.getElementById('quiz').scrollIntoView({behavior:'smooth'})" style="font-family:'Montserrat',sans-serif;font-weight:800;font-size:.9rem;color:var(--navy);background:var(--teal-l);border:none;padding:.9rem 2.2rem;border-radius:50px;cursor:pointer;transition:all .2s;letter-spacing:.03em" onmouseover="this.style.background='#fff';this.style.transform='translateY(-2px)'" onmouseout="this.style.background='var(--teal-l)';this.style.transform='none'">Evalúa tu riesgo ahora →</button>
-      <p style="font-size:.72rem;color:rgba(255,255,255,.35);margin-top:1rem">Esta información no sustituye la consulta médica.</p>
-    </div>
-
-  </div>
-</section>
-
-<!-- ══ AWARENESS CALLOUT ══ -->
-<section class="aware-sec">
-  <div class="aware-i container">
-    <div class="aware-big-stat s-left">
-      <span class="abs-num">7</span>
-      <span class="abs-denom">de cada 10</span>
-      <p class="abs-label">estómagos mexicanos<br>portan la bacteria <em class="hpyl" style="color:var(--teal-l)">H. pylori</em><br>— y la mayoría no lo sabe.</p>
-    </div>
-    <div class="aware-txt s-right">
-      <div class="ey" style="color:var(--teal-l)">¿Por qué importa?</div>
-      <h2>La infección por <em class="hpyl" style="color:var(--teal-l)">H. pylori</em> es la primera causa infecciosa de cáncer gástrico a nivel mundial.</h2>
-      <div class="div-teal"></div>
-      <p>Se presenta con síntomas como gastritis, acidez y reflujo — señales que millones de personas normalizan. Detectarla a tiempo marca la diferencia.</p>
-      <div class="aware-cta-strip">
-        <strong>Pregunta a tu médico</strong> por el tratamiento que está mejorando <span class="sig">significativamente</span> su tasa de curación.
-      </div>
+<div class="cal-i">
+  <div class="s-fade" style="margin-bottom:1rem">
+    <div class="ey" style="color:var(--teal-l)">Calendario editorial en vivo</div>
+    <h2 style="color:#fff;font-size:clamp(1.8rem,3.5vw,2.8rem)">Semana a semana: mensaje + pieza</h2>
+    <div class="div-teal"></div>
+    <p style="color:rgba(255,255,255,.6);max-width:640px;line-height:1.85">Cada semana, el mensaje exacto que publicamos junto con el formato y la pieza que lo acompaña — carrusel, reel, post o documento. Filtra por mes, plataforma o pilar editorial.</p>
+    <div class="cal-badge-row">
+      <div class="cal-badge">Ventana <b>15 Jul → 31 Dic 2026</b></div>
+      <div class="cal-badge"><b>66</b> piezas totales</div>
+      <div class="cal-badge">Avalado por <b>AMG A.C.</b></div>
     </div>
   </div>
-</section>
 
-<!-- ══ STATS MAGAZINE ══ -->
-<section class="stats-band" id="info">
-  <div class="stats-i">
-    <div class="stat-it s-fade">
-      <span class="stat-n">70%</span>
-      <div class="stat-l">de mexicanos porta <em class="hpyl" style="color:var(--teal-l)">H. pylori</em> sin saberlo</div>
-      <div class="stat-src">AMG, 2024</div>
-    </div>
-    <div class="stat-it s-fade delay-1">
-      <span class="stat-n">90%</span>
-      <div class="stat-l">del cáncer gástrico inicia como infección por <em class="hpyl" style="color:var(--teal-l)">H. pylori</em></div>
-      <div class="stat-src">WGO, 2023</div>
-    </div>
-    <div class="stat-it s-fade delay-2">
-      <span class="stat-n">80%</span>
-      <div class="stat-l">reducción del riesgo de cáncer gástrico al erradicar la bacteria</div>
-      <div class="stat-src">Lancet Gastroenterology, 2022</div>
-    </div>
-    <div class="stat-it s-fade delay-3">
-      <span class="stat-n">95%</span>
-      <div class="stat-l">tasa de curación con el tratamiento correcto y supervisado</div>
-      <div class="stat-src">Guías AMG, 2025</div>
+  <div class="cal-filterbar">
+    <div class="cal-filterbar-i">
+      <div><label>Mes</label><select id="cal-f-mes"><option value="">Todos</option></select></div>
+      <div><label>Plataforma</label><select id="cal-f-plataforma"><option value="">Todas</option></select></div>
+      <div><label>Pilar</label><select id="cal-f-pilar"><option value="">Todos</option></select></div>
+      <div><label>Carril</label><select id="cal-f-carril"><option value="">Todos</option></select></div>
+      <div><label>Buscar</label><input type="text" id="cal-f-search" placeholder="hook, caption..."></div>
+      <div class="cal-count-pill" id="cal-count-pill">66 piezas</div>
     </div>
   </div>
-</section>
-<!-- News ticker -->
-<div class="ticker-wrap">
-  <div class="ticker">
-    <span>MÉXICO SIN CÁNCER GÁSTRICO</span><span class="dot">·</span>
-    <span>7 DE CADA 10 MEXICANOS PORTA H. PYLORI SIN SABERLO</span><span class="dot">·</span>
-    <span>DETECCIÓN OPORTUNA SALVA VIDAS</span><span class="dot">·</span>
-    <span>PRUEBA DE ALIENTO — SIN PIQUETES, SIN ENDOSCOPÍA</span><span class="dot">·</span>
-    <span>LA ERRADICACIÓN REDUCE 80% EL RIESGO DE CÁNCER GÁSTRICO</span><span class="dot">·</span>
-    <span>90% DEL CÁNCER GÁSTRICO INICIA CON H. PYLORI</span><span class="dot">·</span>
-    <span>PREGUNTA A TU MÉDICO</span><span class="dot">·</span>
-    <span>INFORMACIÓN MÉDICA VERIFICADA</span><span class="dot">·</span>
-    <span>DETECTA · TRATA · PREVIENE</span><span class="dot">·</span>
-    <span>MÉXICO SIN CÁNCER GÁSTRICO</span><span class="dot">·</span>
-    <span>7 DE CADA 10 MEXICANOS PORTA H. PYLORI SIN SABERLO</span><span class="dot">·</span>
-    <span>DETECCIÓN OPORTUNA SALVA VIDAS</span><span class="dot">·</span>
-    <span>PRUEBA DE ALIENTO — SIN PIQUETES, SIN ENDOSCOPÍA</span><span class="dot">·</span>
-    <span>LA ERRADICACIÓN REDUCE 80% EL RIESGO DE CÁNCER GÁSTRICO</span><span class="dot">·</span>
-    <span>90% DEL CÁNCER GÁSTRICO INICIA CON H. PYLORI</span><span class="dot">·</span>
-    <span>PREGUNTA A TU MÉDICO</span><span class="dot">·</span>
-    <span>INFORMACIÓN MÉDICA VERIFICADA</span><span class="dot">·</span>
-    <span>DETECTA · TRATA · PREVIENE</span><span class="dot">·</span>
-  </div>
+
+  <div id="cal-main"></div>
 </div>
 
-<!-- ══ QUIZ ══ -->
-<section class="quiz-sec" id="quiz">
-  <div class="quiz-i">
-    <!-- Left -->
-    <div class="ql s-left">
-      <div class="ey">Evaluación de síntomas</div>
-      <h2>Test de riesgo <em class="hpyl-dark">H. pylori</em></h2>
-      <div class="div-teal"></div>
-      <p>Responde 6 preguntas rápidas sobre tus síntomas. Recibirás una evaluación de tu nivel de riesgo y orientación sobre cuándo consultar a tu médico.</p>
-      <div class="qfeats">
-        <div class="qf">
-          <div class="qf-ico">⏱️</div>
-          <div class="qf-txt"><strong>3 minutos</strong><span>Test breve, sin registro necesario</span></div>
-        </div>
-        <div class="qf">
-          <div class="qf-ico">🔒</div>
-          <div class="qf-txt"><strong>Anónimo y confidencial</strong><span>No almacenamos ni compartimos tus datos</span></div>
-        </div>
-        <div class="qf">
-          <div class="qf-ico">🩺</div>
-          <div class="qf-txt"><strong>Basado en criterios clínicos validados</strong><span>ACG Guidelines 2017 · V Consenso AMG 2025</span></div>
-        </div>
-        <div class="qf">
-          <div class="qf-ico">📋</div>
-          <div class="qf-txt"><strong>Resultado inmediato</strong><span>Con recomendación de pasos a seguir</span></div>
-        </div>
+<script>
+(function() {
+  const CAL_DATA = [{"n": 1, "fecha": "15/Jul", "dia": "Mar", "mes": "Julio", "plataforma": "Facebook", "pilar": "P4 · Pregunta a tu médico", "carril": "C1", "formato": "Post imagen", "hook": "Una pregunta puede cambiar tu diagnóstico de 10 años.", "caption": "Muchos pacientes llevan años con el mismo diagnóstico: gastritis. El mismo ciclo: medicamento, mejoría, recaída.\n\nHay una pregunta que puede cambiar eso:\n\n'Doctor, ¿ya me hice la prueba para Helicobacter pylori?'\n\nSi tienes uno o más de estos factores, pregúntale a tu médico:\n🔸 Ardor o dolor gástrico frecuente\n🔸 Gastritis diagnosticada más de una vez\n🔸 Eres o fuiste fumador/a\n🔸 Algún familiar tuvo cáncer de estómago\n\nLa Campaña de Detección 2026 de la AMG ofrece la prueba de aliento sin costo para candidatos elegibles.\n\nTu médico es quien determina si aplicas. Pero primero tienes que preguntar.\n\n🔗 mexicosincancergastrico.com.mx", "hashtags": "#MéxicoSinCáncerGástrico #HelicobacterPylori #DetecciónTemprana #SaludGástrica #AMG #GastritisNoEsNormal", "nota": "Imagen: texto pregunta en grande ('¿Ya le preguntaste?') sobre fondo teal. 4 bullet points de factores de riesgo. CTA navy.", "estado": "✅ C1 — Polar QC", "iso": "2026-07-15"}, {"n": 2, "fecha": "17/Jul", "dia": "Jue", "mes": "Julio", "plataforma": "TikTok", "pilar": "P3 · Solución mejor", "carril": "C1", "formato": "Video propio", "hook": "¿Cómo saben que tienes una bacteria en el estómago solo con soplar? La ciencia es increíble 🧪", "caption": "El urea breath test es uno de los diagnósticos no invasivos más elegantes de la medicina moderna.\n\n¿Por qué funciona?\n\nH. pylori produce una enzima llamada ureasa. Cuando le das urea marcada con carbono-13, la bacteria la procesa y libera CO₂ marcado en el aliento.\n\nSi soplas después de tomar la bebida y hay CO₂ marcado en tu aliento... la bacteria está ahí.\n\nSimple. Ingenioso. No invasivo.\n\nY en México tienes acceso a esta prueba gratis si eres candidato.\n\nPregunta a tu médico. 👇\nmexicosincancergastrico.com.mx", "hashtags": "#HelicobacterPylori #CienciaMedica #PruebaDeAliento #saludtiktok #medicinatiktok #MéxicoSinCáncerGástrico #DetecciónTemprana", "nota": "Explicación ciencia con gráfico animado simple (ureasa → CO₂). Tono asombro. Música curiosa. 25-35 seg.", "estado": "✅ C1 — Polar QC", "iso": "2026-07-17"}, {"n": 3, "fecha": "21/Jul", "dia": "Lun", "mes": "Julio", "plataforma": "Instagram", "pilar": "P2 · Lo que no sabías", "carril": "C1", "formato": "Carrusel", "hook": "5 señales de que podrías tener H. pylori (y las estás ignorando)", "caption": "📋 CARRUSEL — 5 señales de H. pylori que estás ignorando.\n\nSlide 1: 5 señales de que podrías tener H. pylori — y las estás ignorando\nSlide 2: 1. Ardor en la boca del estómago que regresa siempre\nSlide 3: 2. Gastritis diagnosticada más de una vez\nSlide 4: 3. Sensación de llenura rápida o náusea sin causa aparente\nSlide 5: 4. Antecedente familiar de cáncer gástrico\nSlide 6: 5. Años tomando omeprazol sin resolver el problema de raíz\n\n[Caption IG] Si te identificas con 2 o más de estos puntos, ya tienes una razón para hablar con tu médico.\n\nLa Campaña de Detección 2026 de la AMG ofrece prueba de aliento gratuita para candidatos. El médico es quien determina si aplicas.\n\n🔗 mexicosincancergastrico.com.mx", "hashtags": "#HelicobacterPylori #SaludGástrica #GastritisNoEsNormal #DetecciónTemprana #MéxicoSinCáncerGástrico #saludmexico #prevención", "nota": "6 slides lista: cada slide = 1 señal. Icono + texto corto. Numeración bold teal. Fondo off-white. Guardable.", "estado": "✅ C1 — Polar QC", "iso": "2026-07-21"}, {"n": 4, "fecha": "22/Jul", "dia": "Mar", "mes": "Julio", "plataforma": "Facebook", "pilar": "P4 · CTA detección", "carril": "C1", "formato": "Post imagen", "hook": "La prueba es gratis. La conversación es contigo y tu médico.", "caption": "¿Cuántas veces has vuelto al médico por lo mismo? El ardor que no se va. La gastritis que regresa. El medicamento que funciona un mes y luego deja de funcionar.\n\nHay una posibilidad que vale la pena explorar: Helicobacter pylori.\n\nLa Campaña de Detección 2026, avalada por la AMG, ofrece una prueba de aliento sin costo para pacientes con factores de riesgo.\n\nSolo necesitas:\n1. Hablar con tu médico\n2. Que él evalúe si eres candidato\n3. Que te refiera a la sede participante más cercana\n\nLa prueba es gratuita. La conversación es el primer paso.\n\n🔗 mexicosincancergastrico.com.mx", "hashtags": "#MéxicoSinCáncerGástrico #DetecciónTemprana #HelicobacterPylori #SaludGástrica #AMG", "nota": "Imagen limpia: 3 pasos numerados en grande. Fondo blanco. CTA button visual en navy. Sello AMG pequeño.", "estado": "✅ C1 — Polar QC", "iso": "2026-07-22"}, {"n": 5, "fecha": "24/Jul", "dia": "Jue", "mes": "Julio", "plataforma": "LinkedIn", "pilar": "P1 · Diagnóstico HCP", "carril": "C2", "formato": "Documento (sello AMG)", "hook": "AMG 2026: actualización en diagnóstico y manejo de H. pylori en México", "caption": "La Asociación Mexicana de Gastroenterología presenta su posición actualizada sobre el manejo de Helicobacter pylori en el contexto epidemiológico mexicano.\n\nPuntos clave para la práctica clínica:\n\n✅ Test and treat: recomendado en pacientes con dispepsia no investigada menores de 55 años sin señales de alarma\n✅ UBT (urea breath test): estándar no invasivo para diagnóstico y confirmación de erradicación post-tratamiento\n✅ Cuadro triple o cuádruple: depende de tasas de resistencia local a claritromicina\n✅ Confirmación de erradicación: 4-8 semanas post-tratamiento, con 2 semanas de suspensión de IBP previas\n\nLa Campaña de Detección 2026 está disponible como recurso de detección para sus pacientes elegibles.\n\n🔗 mexicosincancergastrico.com.mx/para-medicos\n\n[Sello AMG]", "hashtags": "#gastroenterología #medicina #AMG #HelicobacterPylori #MéxicoSinCáncerGástrico #PyloridDetection", "nota": "Documento estilo guía clínica. Portada navy con sello AMG dorado. 4 bullets técnicos. Tono pares. REQUIERE APROBACIÓN AMG.", "estado": "⏳ C2 — Requiere aprobación AMG", "iso": "2026-07-24"}, {"n": 6, "fecha": "28/Jul", "dia": "Lun", "mes": "Julio", "plataforma": "TikTok", "pilar": "P5 · Historia real", "carril": "C1", "formato": "Video propio", "hook": "Marcos tiene 38 años. Su papá murió de cáncer gástrico. Y esta semana se hizo la prueba.", "caption": "Marcos no tenía síntomas graves. Solo ardor ocasional. Y el recuerdo de su papá.\n\n'Mi papá murió de cáncer de estómago. Siempre supe que yo tenía que revisarme.'\n\nEl antecedente familiar de cáncer gástrico es uno de los principales factores de riesgo para H. pylori.\n\nMarcos fue referido por su médico. La prueba de aliento tomó 20 minutos. El resultado fue positivo.\n\nHoy está en tratamiento.\n\nSi tienes antecedentes familiares, no esperes síntomas. Habla con tu médico sobre la campaña de detección gratuita.\n\nmexicosincancergastrico.com.mx\n\n⚠️ Historia representativa. No sustituye la consulta médica.", "hashtags": "#HelicobacterPylori #DetecciónTemprana #MéxicoSinCáncerGástrico #SaludGástrica #saludtiktok #prevención", "nota": "Historia testimonial: texto en pantalla + voz. Tono emotivo pero no dramático. Disclaimer visible al final. 35 seg.", "estado": "✅ C1 — Polar QC", "iso": "2026-07-28"}, {"n": 7, "fecha": "04/Ago", "dia": "Mar", "mes": "Agosto", "plataforma": "Instagram", "pilar": "P3 · Solución mejor", "carril": "C1", "formato": "Reel", "hook": "¿Cómo es hacerse la prueba de H. pylori? Te mostramos exactamente qué pasa ☁️", "caption": "Mucha gente no va porque no sabe qué esperar. Así que aquí va el paso a paso completo:\n\n1️⃣ Llegas en ayuno de 1 hora a la sede participante\n2️⃣ Soplas en el primer tubo de colección (muestra basal)\n3️⃣ Tomas una bebida con sabor cítrico — contiene urea marcada\n4️⃣ Esperas 15-20 minutos sentado(a), sin actividad intensa\n5️⃣ Soplas en el segundo tubo de colección\n6️⃣ Las muestras se procesan en laboratorio\n\nEl resultado llega en 24-48 horas.\n\nSin piquetes. Sin endoscopia. Sin sedación. Sin recuperación.\n\nSi tienes factores de riesgo, pregunta a tu médico por la campaña gratuita.\n🔗 mexicosincancergastrico.com.mx\n\nCampaña educativa AMG. No sustituye la consulta médica.", "hashtags": "#HelicobacterPylori #PruebaDeAliento #DetecciónTemprana #MéxicoSinCáncerGástrico #SaludGástrica #saludmexico #prevención", "nota": "Tutorial visual paso a paso. Numeración grande teal. Fondo limpio. Voz o texto animado. 30-40 seg.", "estado": "✅ C1 — Polar QC", "iso": "2026-08-04"}, {"n": 8, "fecha": "05/Ago", "dia": "Mié", "mes": "Agosto", "plataforma": "Facebook", "pilar": "P1 · Diagnóstico equivocado", "carril": "C1", "formato": "Post imagen", "hook": "La gastritis que regresa una y otra vez no es mala suerte. Es una señal.", "caption": "Si tu gastritis ha regresado 2, 3 o más veces — no es coincidencia. Es información.\n\nEl patrón de gastritis recurrente, especialmente cuando no responde bien al tratamiento convencional, es uno de los principales indicadores de infección por Helicobacter pylori.\n\nNo siempre hay síntomas claros. No siempre duele. Pero la bacteria puede estar activa por dentro, manteniendo ese ciclo de inflamación que no termina nunca.\n\n¿Cuántas veces has repetido este ciclo?\n\nConsulta a tu médico y pregunta si eres candidato para la prueba de detección gratuita de la Campaña 2026 de la AMG.\n\n🔗 mexicosincancergastrico.com.mx\n\nCampaña educativa avalada por la AMG A.C. No sustituye la consulta médica.", "hashtags": "#GastritisNoEsNormal #HelicobacterPylori #DetecciónTemprana #MéxicoSinCáncerGástrico #SaludGástrica", "nota": "Frase impacto centrada: '¿Cuántas veces ya?' en grande. Fondo navy. Texto blanco. Icono ciclo repetitivo.", "estado": "✅ C1 — Polar QC", "iso": "2026-08-05"}, {"n": 9, "fecha": "07/Ago", "dia": "Vie", "mes": "Agosto", "plataforma": "TikTok", "pilar": "P2 · Lo que no sabías", "carril": "C1", "formato": "Video propio", "hook": "¿Cómo se contagia el H. pylori? La respuesta te va a sorprender 😳", "caption": "La mayoría pensamos que las enfermedades gástricas vienen de lo que comemos. Y en parte sí. Pero el H. pylori se contagia diferente.\n\nRutas de transmisión más comunes:\n🚰 Agua o alimentos contaminados\n🤝 Contacto directo con saliva (compartir cubiertos, beso)\n👨‍👩‍👧 Contacto familiar cercano en la infancia\n\nEsto explica por qué en México la prevalencia es tan alta. No porque seamos descuidados. Sino porque las condiciones de saneamiento y el contacto familiar estrecho facilitan la transmisión.\n\nLa buena noticia: no importa cómo la adquiriste. Lo que importa es detectarla y tratarla.\n\nmexicosincancergastrico.com.mx", "hashtags": "#HelicobacterPylori #SaludGástrica #MéxicoSinCáncerGástrico #saludtiktok #medicinatiktok #DetecciónTemprana", "nota": "3 rutas de contagio con iconos animados. Tono revelador, no alarmista. Conclusión empoderar. 25 seg.", "estado": "✅ C1 — Polar QC", "iso": "2026-08-07"}, {"n": 10, "fecha": "11/Ago", "dia": "Lun", "mes": "Agosto", "plataforma": "Instagram", "pilar": "P3 · Solución mejor", "carril": "C2", "formato": "Carrusel (sello AMG)", "hook": "El tratamiento para H. pylori: lo que necesitas saber antes de empezar", "caption": "📋 CARRUSEL — El tratamiento de H. pylori: lo que necesitas saber.\n\nSlide 1: El tratamiento para H. pylori: lo que necesitas saber\nSlide 2: No es un antibiótico solo. Es un esquema combinado supervisado por médico.\nSlide 3: El esquema incluye: antibióticos + inhibidor de ácido. Duración: 14 días.\nSlide 4: Es fundamental completarlo. Suspenderlo antes reduce efectividad y favorece resistencia.\nSlide 5: Los esquemas actuales logran tasas de erradicación superiores al 90%.\nSlide 6: Después del tratamiento: UBT de control a 4-8 semanas para confirmar erradicación.\nSlide 7: [Sello AMG] Campaña educativa AMG 2026\n\n[Caption IG] Lo que más falla en el tratamiento de H. pylori no es el esquema — es no completarlo.\n\nGuarda este carrusel si estás por empezar o si conoces a alguien en tratamiento.\n\nCampaña educativa avalada por la AMG A.C. No sustituye la consulta médica.", "hashtags": "#HelicobacterPylori #SaludGástrica #AMG #DetecciónTemprana #MéxicoSinCáncerGástrico #gastroenterología #saludmexico", "nota": "7 slides informativos. Slide final sello AMG dorado. Diseño tipo guía clínica simplificada. REQUIERE APROBACIÓN AMG.", "estado": "⏳ C2 — Requiere aprobación AMG", "iso": "2026-08-11"}, {"n": 11, "fecha": "12/Ago", "dia": "Mié", "mes": "Agosto", "plataforma": "LinkedIn", "pilar": "P4 · HCP referral", "carril": "C1", "formato": "Documento", "hook": "Sus pacientes pueden acceder a detección gratuita de H. pylori. Así es el proceso.", "caption": "Para médicos generales, internistas y gastroenterólogos:\n\nLa Campaña de Detección 2026 de la AMG pone a su disposición pruebas de aliento (UBT) sin costo para sus pacientes elegibles.\n\nEl proceso es simple:\n\n1. Identifique pacientes con criterios de elegibilidad:\n   → Dispepsia o dolor epigástrico recurrente\n   → Gastritis diagnosticada múltiples veces\n   → Tabaquismo activo o pasado\n   → Antecedente familiar de cáncer gástrico\n\n2. Oriente al paciente a consultar los requisitos previos a la prueba (suspensión de IBP, ayuno)\n\n3. Refiera a la sede participante más cercana\n\n4. Confirme erradicación con UBT de control 4-8 semanas post-tratamiento\n\nInformación completa para médicos en mexicosincancergastrico.com.mx/para-medicos", "hashtags": "#gastroenterología #medicina #AMG #HelicobacterPylori #MéxicoSinCáncerGástrico", "nota": "Documento 4 pasos para médico. Portada teal profesional. Tono colega-a-colega. Lenguaje clínico apropiado.", "estado": "✅ C1 — Polar QC", "iso": "2026-08-12"}, {"n": 12, "fecha": "14/Ago", "dia": "Vie", "mes": "Agosto", "plataforma": "Facebook", "pilar": "P5 · Historia real", "carril": "C1", "formato": "Post + video", "hook": "Cuando una mamá pregunta: '¿Y nosotros también tenemos la bacteria?'", "caption": "La historia de la familia Hernández empezó cuando la mamá fue diagnosticada con H. pylori.\n\nSu gastritis llevaba 8 años sin resolverse. Finalmente fue referida a la prueba de aliento. Resultado: positivo.\n\nPero entonces llegó la pregunta: '¿Y mis hijos? ¿Mi esposo?'\n\nLa bacteria se transmite principalmente en el entorno familiar, por contacto cercano durante la infancia. Cuando un miembro la tiene, es razonable preguntar si otros también podrían tenerla.\n\nEl médico evaluó a los demás integrantes. Dos de sus hijos también presentaban factores de riesgo.\n\nHoy los tres están en seguimiento.\n\nPregunta a tu médico. Y si lo consideras, también pregunta por tu familia.\n\n🔗 mexicosincancergastrico.com.mx\n\n⚠️ Historia representativa. AMG 2026. No sustituye la consulta médica.", "hashtags": "#HelicobacterPylori #SaludGástrica #DetecciónTemprana #MéxicoSinCáncerGástrico #GastritisNoEsNormal", "nota": "Historia familiar: imagen cálida. Texto en bloques narrativos cortos. Tono cercano. Disclaimer al pie.", "estado": "✅ C1 — Polar QC", "iso": "2026-08-14"}, {"n": 13, "fecha": "18/Ago", "dia": "Lun", "mes": "Agosto", "plataforma": "Instagram", "pilar": "P2 · Lo que no sabías", "carril": "C1", "formato": "Reel", "hook": "¿Por qué México tiene una de las tasas de H. pylori más altas del mundo?", "caption": "No es exageración. México está entre los países con mayor prevalencia de Helicobacter pylori en adultos.\n\nY hay razones concretas:\n\n🔸 Infraestructura de agua: en muchas regiones, el acceso a agua potable libre de contaminación bacterial no es universal\n🔸 Densidad familiar: el contacto cercano en la infancia es la principal vía de transmisión\n🔸 Diagnóstico tardío: muchos casos se tratan como 'gastritis' sin investigar la causa\n\nEl resultado: una bacteria que afecta a 7 de cada 10 adultos, en gran parte sin diagnóstico activo.\n\nEl primer paso para cambiar esto es la detección. Y la Campaña 2026 de la AMG está haciendo exactamente eso.\n\n🔗 mexicosincancergastrico.com.mx", "hashtags": "#HelicobacterPylori #SaludMexico #MéxicoSinCáncerGástrico #DetecciónTemprana #AMG #SaludGástrica #saludmexico", "nota": "Mapa de México animado + 3 razones apareciendo. Tono analítico-accesible. Fondo navy/teal. 25-35 seg.", "estado": "✅ C1 — Polar QC", "iso": "2026-08-18"}, {"n": 14, "fecha": "19/Ago", "dia": "Mié", "mes": "Agosto", "plataforma": "TikTok", "pilar": "P4 · Pregunta a tu médico", "carril": "C1", "formato": "Video propio", "hook": "La pregunta exacta que debes hacerle a tu médico en tu próxima consulta 📋", "caption": "Anota esto para tu próxima consulta:\n\n'Doctor, tengo [síntoma] desde hace [tiempo]. ¿Me conviene hacerme la prueba de Helicobacter pylori?'\n\nSi la respuesta es sí, el siguiente paso es:\n'¿Soy candidato para la Campaña de Detección Gratuita 2026 de la AMG?'\n\nEso es todo. Dos preguntas.\n\nMuchos diagnósticos de gastritis crónica no incluyen automáticamente esta investigación. No porque el médico no sepa — sino porque el paciente no lo pide.\n\nLos factores de riesgo que hacen que valga la pena preguntar:\n✓ Ardor frecuente\n✓ Gastritis repetida\n✓ Fumaste o fumas\n✓ Antecedente familiar de cáncer gástrico\n\nmexicosincancergastrico.com.mx", "hashtags": "#HelicobacterPylori #DetecciónTemprana #SaludGástrica #MéxicoSinCáncerGástrico #saludtiktok #medicinatiktok #GastritisNoEsNormal", "nota": "Texto de preguntas apareciendo on screen, como si se escribieran. Tono accionable. CTA al final. 25 seg.", "estado": "✅ C1 — Polar QC", "iso": "2026-08-19"}, {"n": 15, "fecha": "21/Ago", "dia": "Vie", "mes": "Agosto", "plataforma": "Facebook", "pilar": "P1 · Diagnóstico equivocado", "carril": "C1", "formato": "Post imagen", "hook": "¿Cuántas veces te han dado el mismo diagnóstico? Hay una pregunta que falta.", "caption": "Diagnóstico: gastritis. Tratamiento: omeprazol. Resultado: mejoría temporal.\nSemanas después: mismo ciclo.\n\nEste patrón afecta a millones de mexicanos. Y en muchos casos, hay una causa subyacente que no se ha investigado: Helicobacter pylori.\n\nLa bacteria vive en el estómago y mantiene una inflamación crónica de la mucosa gástrica. Sin eliminarla, la gastritis puede seguir regresando indefinidamente.\n\nEl diagnóstico diferencial es sencillo: una prueba de aliento (UBT) puede confirmar o descartar la presencia de la bacteria en 20 minutos. Sin piquetes. Sin endoscopia.\n\nSi tu gastritis sigue regresando, tienes una razón para preguntar.\n\n🔗 mexicosincancergastrico.com.mx", "hashtags": "#GastritisNoEsNormal #HelicobacterPylori #DetecciónTemprana #MéxicoSinCáncerGástrico #SaludGástrica", "nota": "Cronología visual: 3 veces el mismo diagnóstico, fecha diferente. Estilo archivo médico. Impacto visual fuerte.", "estado": "✅ C1 — Polar QC", "iso": "2026-08-21"}, {"n": 16, "fecha": "25/Ago", "dia": "Lun", "mes": "Agosto", "plataforma": "Instagram", "pilar": "P3 · Solución mejor", "carril": "C1", "formato": "Carrusel", "hook": "¿Qué esperar cuando tienes H. pylori y empiezas tratamiento? Un antes y después real.", "caption": "📋 CARRUSEL — H. pylori: lo que cambia cuando empiezas el tratamiento.\n\nSlide 1: H. pylori: lo que cambia cuando empiezas el tratamiento\nSlide 2: ANTES: ardor recurrente · gastritis repetida · ciclos sin resolución\nSlide 3: SEMANA 1-2: posible malestar inicial por antibióticos. Es temporal y esperado.\nSlide 4: SEMANA 3-4: síntomas empiezan a ceder. La mucosa comienza a recuperarse.\nSlide 5: A LAS 4-8 SEMANAS: UBT de control para confirmar erradicación exitosa.\nSlide 6: DESPUÉS (erradicación): muchos pacientes reportan mejora significativa o desaparición de síntomas crónicos.\nSlide 7: Clave: completar el tratamiento + confirmar erradicación. Tu médico te guía.\n\n[Caption IG] El proceso no es instantáneo, pero los resultados pueden cambiar años de historia clínica.\n\nGuarda este carrusel. Compártelo con alguien que lleva años con el mismo diagnóstico.\n\nAMG 2026 · No sustituye la consulta médica.", "hashtags": "#HelicobacterPylori #SaludGástrica #DetecciónTemprana #MéxicoSinCáncerGástrico #GastritisNoEsNormal #saludmexico #prevención", "nota": "Timeline visual antes/después: 7 slides progresivos. Colores cálidos → teal (recuperación). Guardable/compartible.", "estado": "✅ C1 — Polar QC", "iso": "2026-08-25"}, {"n": 17, "fecha": "26/Ago", "dia": "Mié", "mes": "Agosto", "plataforma": "LinkedIn", "pilar": "P2 · Estadísticas", "carril": "C1", "formato": "Documento", "hook": "H. pylori en México 2026: datos que definen una prioridad de salud pública", "caption": "Resumen ejecutivo de prevalencia e impacto clínico:\n\n📊 Prevalencia general en adultos mexicanos: >70% (ENSANUT / estudios AMG)\n🎯 Porcentaje de casos sin diagnóstico activo: estimado >80%\n🔗 Relación causal con cáncer gástrico: 90% (IARC, Agente Grupo 1)\n🏥 Cáncer gástrico: entre las 5 primeras causas de muerte por cáncer en México\n💉 Tasa de erradicación con esquemas supervisados: >90%\n🧪 Estándar diagnóstico no invasivo: urea breath test (UBT)\n\nLa brecha entre prevalencia y diagnóstico activo representa la mayor oportunidad de intervención en salud digestiva en México hoy.\n\nLa Campaña de Detección 2026 de la AMG es un primer paso de escala real.\n\nRecursos para médicos: mexicosincancergastrico.com.mx/para-medicos", "hashtags": "#gastroenterología #saludpública #AMG #HelicobacterPylori #MéxicoSinCáncerGástrico #medicina", "nota": "Infografía de datos: 6 cifras clave con iconos. Diseño data-viz limpio. Fuentes visibles (ENSANUT, IARC, AMG).", "estado": "✅ C1 — Polar QC", "iso": "2026-08-26"}, {"n": 18, "fecha": "28/Ago", "dia": "Vie", "mes": "Agosto", "plataforma": "TikTok", "pilar": "P5 · Historia real", "carril": "C1", "formato": "Video propio", "hook": "Mi médico de cabecera me lo dijo directo: 'Ya es hora de descartar H. pylori.'", "caption": "Mariana llevaba 6 años con la misma historia: ardor, omeprazol, mejoría, recaída.\n\nEn su última consulta, su médico le dijo algo diferente.\n\n'Ya es hora de investigar si no es H. pylori. Tienes exactamente el perfil.'\n\nLa prueba de aliento tardó 20 minutos. Positivo para H. pylori.\n\n'Seis años. Seis años podría haberme evitado si hubiera preguntado antes.'\n\nLa bacteria es tratable. El diagnóstico es simple. La pregunta es lo primero.\n\n¿Ya le preguntaste a tu médico?\n\nmexicosincancergastrico.com.mx\n\n⚠️ Historia representativa. AMG 2026.", "hashtags": "#HelicobacterPylori #SaludGástrica #DetecciónTemprana #MéxicoSinCáncerGástrico #saludtiktok #GastritisNoEsNormal #medicinatiktok", "nota": "Historia: diálogo reconstructivo médico-paciente. Texto on screen. Tono reflexivo. Disclaimer al cierre. 35 seg.", "estado": "✅ C1 — Polar QC", "iso": "2026-08-28"}, {"n": 19, "fecha": "01/Sep", "dia": "Mar", "mes": "Septiembre", "plataforma": "Instagram", "pilar": "P2 · Lo que no sabías", "carril": "C1", "formato": "Reel", "hook": "El 90% del cáncer gástrico tiene algo en común. Y se puede prevenir.", "caption": "Hay una estadística que cambia la perspectiva sobre el cáncer gástrico.\n\nEl 90% de los adenocarcinomas gástricos — la forma más común de cáncer de estómago — están causalmente relacionados con la infección por Helicobacter pylori.\n\nEsto significa que no son solo mala suerte genética. Son el resultado de una infección crónica que avanza lentamente durante años o décadas.\n\nY si la infección tiene tratamiento con >90% de efectividad…\n\n…¿qué significa eso para la prevención del cáncer gástrico?\n\nExactamente lo que estás pensando.\n\nDetectar y tratar H. pylori a tiempo interrumpe esa cadena. No garantiza nada — pero cambia el riesgo de manera significativa.\n\nEs lo que la Campaña de Detección 2026 de la AMG está haciendo.\n\n🔗 mexicosincancergastrico.com.mx", "hashtags": "#MéxicoSinCáncerGástrico #HelicobacterPylori #DetecciónTemprana #Prevención #AMG #SaludGástrica #saludmexico", "nota": "Estadística 90% en grande. Gráfico visual de cadena (bacteria→cáncer) que se interrumpe. Tono esperanzador. 30 seg.", "estado": "✅ C1 — Polar QC", "iso": "2026-09-01"}, {"n": 20, "fecha": "03/Sep", "dia": "Jue", "mes": "Septiembre", "plataforma": "Facebook", "pilar": "P4 · Campaña recta final", "carril": "C1", "formato": "Post imagen", "hook": "La campaña de detección sigue activa. Y el siguiente candidato podrías ser tú.", "caption": "Llevamos meses llevando la Campaña de Detección 2026 de la AMG a miles de mexicanos.\n\nY seguimos.\n\nSi tienes factores de riesgo — gastritis recurrente, ardor frecuente, antecedente familiar de cáncer gástrico o historial de tabaquismo — todavía estás a tiempo.\n\nEl proceso sigue siendo el mismo:\n1. Habla con tu médico\n2. Él evalúa si aplicas\n3. Te refiere a la sede participante\n\nLa prueba sigue siendo gratuita. El resultado puede cambiar tu historia clínica.\n\n¿Ya preguntaste?\n\n🔗 mexicosincancergastrico.com.mx", "hashtags": "#MéxicoSinCáncerGástrico #DetecciónTemprana #HelicobacterPylori #AMG #SaludGástrica #GastritisNoEsNormal", "nota": "Imagen urgencia suave: 'Todavía estás a tiempo'. Contador visual de meses activos. CTA destacado navy.", "estado": "✅ C1 — Polar QC", "iso": "2026-09-03"}, {"n": 21, "fecha": "04/Sep", "dia": "Vie", "mes": "Septiembre", "plataforma": "TikTok", "pilar": "P1 · Diagnóstico equivocado", "carril": "C1", "formato": "Video propio", "hook": "10 años pensando que era estrés. Era una bacteria. 🦠", "caption": "Sofía tenía 32 años cuando finalmente le hicieron la prueba.\n\nPor una década, su diagnóstico fue siempre el mismo: gastritis por estrés.\n\n'Me decían que comía mal, que trabajaba demasiado, que era ansiosa. Todo era culpa mía.'\n\nPero el estrés no vive físicamente en el estómago. La bacteria sí.\n\nLa prueba de aliento tardó 20 minutos. Positivo.\n\n'Fue raro. Por un lado alivio de saber qué era. Por otro, 10 años…'\n\nSi llevas tiempo con el mismo diagnóstico y no mejora, hay una pregunta que vale la pena hacerle a tu médico.\n\nmexicosincancergastrico.com.mx\n\n⚠️ Historia representativa. No sustituye la consulta médica.", "hashtags": "#HelicobacterPylori #GastritisNoEsNormal #DetecciónTemprana #MéxicoSinCáncerGástrico #saludtiktok #medicinatiktok", "nota": "Contraste: 'estrés' tachado → 'bacteria detectada'. Voz reflexiva. Texto on screen. Emotivo sin drama. 35 seg.", "estado": "✅ C1 — Polar QC", "iso": "2026-09-04"}, {"n": 22, "fecha": "08/Sep", "dia": "Mar", "mes": "Septiembre", "plataforma": "Instagram", "pilar": "P2 · Educación profunda", "carril": "C2", "formato": "Carrusel (sello AMG)", "hook": "¿Cómo pasa una bacteria a cáncer? La cascada que explica el 90% de los casos.", "caption": "📋 CARRUSEL — De la infección al cáncer: la cascada de Correa. [Sello AMG]\n\nSlide 1: De la infección al cáncer: la cascada de Correa\nSlide 2: Paso 1: Infección por H. pylori → mucosa gástrica normal infectada\nSlide 3: Paso 2: Gastritis crónica activa → inflamación persistente\nSlide 4: Paso 3: Atrofia gástrica → pérdida de glándulas normales\nSlide 5: Paso 4: Metaplasia intestinal → células de tipo intestinal en mucosa gástrica\nSlide 6: Paso 5: Displasia → células anormales con potencial maligno\nSlide 7: Paso 6: Adenocarcinoma gástrico. 90% de estos casos originados en H. pylori.\nSlide 8: El proceso toma décadas. Cada paso puede interrumpirse con la erradicación temprana.\nSlide 9: [Sello AMG] Información avalada por la AMG A.C.\n\n[Caption IG] Entender la cadena es entender por qué la detección temprana no es opcional.\n\nCampaña educativa AMG 2026 · No sustituye la consulta médica.", "hashtags": "#MéxicoSinCáncerGástrico #HelicobacterPylori #AMG #Prevención #DetecciónTemprana #gastroenterología #SaludGástrica", "nota": "9 slides: cascada visual progresiva con flechas. Diseño científico accesible. Sello AMG prominente. REQUIERE APROBACIÓN AMG.", "estado": "⏳ C2 — Requiere aprobación AMG", "iso": "2026-09-08"}, {"n": 23, "fecha": "09/Sep", "dia": "Mié", "mes": "Septiembre", "plataforma": "LinkedIn", "pilar": "P1 · HCP errores comunes", "carril": "C1", "formato": "Documento", "hook": "Los 3 errores más comunes en el manejo de H. pylori en atención primaria", "caption": "Un repaso desde la perspectiva de la AMG para médicos de primer contacto:\n\n❌ Error 1: Tratar gastritis crónica sin descartar H. pylori\nEl tratamiento con IBP alivia síntomas pero no elimina la bacteria. La erradicación requiere antibióticos + supresión de ácido.\n\n❌ Error 2: No confirmar erradicación post-tratamiento\nLa confirmación con UBT 4-8 semanas post-tratamiento (con 2 semanas de pausa de IBP) es fundamental. Sin ella, no hay certeza de erradicación.\n\n❌ Error 3: No reinvestigar en caso de recurrencia\nSi los síntomas regresan tras un tratamiento aparentemente exitoso, puede indicar re-infección, resistencia, o erradicación incompleta. Se requiere nueva prueba diagnóstica.\n\nLa Campaña 2026 de la AMG ofrece UBT diagnóstico gratuito para sus pacientes elegibles.\n\nmexicosincancergastrico.com.mx/para-medicos", "hashtags": "#gastroenterología #medicina #AMG #HelicobacterPylori #MéxicoSinCáncerGástrico", "nota": "Documento estilo 'errores a evitar'. 3 tarjetas rojas → solución verde. Tono par-a-par. Profesional y directo.", "estado": "✅ C1 — Polar QC", "iso": "2026-09-09"}, {"n": 24, "fecha": "11/Sep", "dia": "Vie", "mes": "Septiembre", "plataforma": "Facebook", "pilar": "P3 · Solución mejor", "carril": "C1", "formato": "Video / post", "hook": "20 minutos. Sin piquetes. Y un diagnóstico que puede cambiar 10 años de historia.", "caption": "Imagina que el diagnóstico que llevas repitiendo desde hace años se pudiera resolver con una prueba de 20 minutos.\n\nEso es exactamente lo que hace el urea breath test (UBT) para Helicobacter pylori.\n\nNo requiere piquetes. No requiere endoscopia. No requiere sedación ni recuperación.\n\nSolo soplas, tomas una bebida, esperas 15-20 minutos y soplas de nuevo.\n\nSi la bacteria está ahí, el resultado lo confirma. Y si está ahí, hay un tratamiento con más del 90% de efectividad.\n\nLa Campaña de Detección 2026 de la AMG pone esta prueba al alcance de pacientes con factores de riesgo. Sin costo.\n\n¿Ya tienes los factores de riesgo? ¿Ya le preguntó a su médico?\n\n🔗 mexicosincancergastrico.com.mx", "hashtags": "#MéxicoSinCáncerGástrico #HelicobacterPylori #DetecciónTemprana #PruebaDeAliento #AMG #SaludGástrica", "nota": "Visual: cronómetro 20 min. 3 ✗ (sin piquetes, sin endosco, sin sedación). CTA final potente. Tono esperanzador.", "estado": "✅ C1 — Polar QC", "iso": "2026-09-11"}, {"n": 25, "fecha": "15/Sep", "dia": "Lun", "mes": "Septiembre", "plataforma": "Instagram", "pilar": "P5 · Historia real", "carril": "C1", "formato": "Reel", "hook": "Lupita tiene 45 años. Su médico la mandó a la prueba. Salió positivo. Y eso es una gran noticia.", "caption": "A primera vista suena contradictorio: que un resultado positivo sea una buena noticia.\n\nPero cuando Lupita recibió su resultado positivo para H. pylori, su médico fue claro:\n\n'Lo detectamos. Ahora podemos tratarlo.'\n\nLupita tenía antecedente familiar de cáncer gástrico. Llevaba años con molestias digestivas. Y al fin tenía un nombre para lo que estaba pasando.\n\nSalió positivo. Empezó el esquema de erradicación. Completó el tratamiento. La UBT de control a las 6 semanas: negativo.\n\nErradicación exitosa.\n\n'Ahora me hago mis controles y ya. Pero gracias a que pregunté.'\n\nPositivo no es el final. Es el principio de la solución.\n\n🔗 mexicosincancergastrico.com.mx\n\n⚠️ Historia representativa. AMG 2026.", "hashtags": "#HelicobacterPylori #DetecciónTemprana #MéxicoSinCáncerGástrico #SaludGástrica #saludmexico #prevención #AMG", "nota": "Historia arco completo: positivo → tratamiento → negativo. Tono de resolución. Inspirador. 35-45 seg.", "estado": "✅ C1 — Polar QC", "iso": "2026-09-15"}, {"n": 26, "fecha": "16/Sep", "dia": "Mié", "mes": "Septiembre", "plataforma": "TikTok", "pilar": "P4 · Pregunta a tu médico", "carril": "C1", "formato": "Video propio", "hook": "Ya llevan meses viendo esto. Una pregunta. Nada más. ¿Ya la hiciste? 💬", "caption": "Llevamos meses compartiendo información sobre H. pylori y la campaña de detección gratuita.\n\nUno de los que siguen esta cuenta tiene factores de riesgo. Puede que más de uno.\n\nY la pregunta sigue siendo la misma.\n\n¿Ya le preguntaste a tu médico?\n\nNo necesitas venir de consulta especial. No necesitas justificación elaborada. Solo dile:\n\n'Doctor, ¿cree que me conviene hacerme la prueba de H. pylori?'\n\nSi tienes factores de riesgo, tu médico lo sabrá. Y si eres candidato, puede referirte a la campaña gratuita.\n\nUna pregunta. La haces o no la haces.\n\nmexicosincancergastrico.com.mx", "hashtags": "#HelicobacterPylori #DetecciónTemprana #MéxicoSinCáncerGástrico #saludtiktok #GastritisNoEsNormal #prevención", "nota": "Video directo a cámara: tono de conversación honesta. Solo texto y voz. Sin producción elaborada. 20-25 seg.", "estado": "✅ C1 — Polar QC", "iso": "2026-09-16"}, {"n": 27, "fecha": "18/Sep", "dia": "Jue", "mes": "Septiembre", "plataforma": "Facebook", "pilar": "P2 · Lo que no sabías", "carril": "C1", "formato": "Post imagen", "hook": "Cada año sin detectar H. pylori es un año más de daño acumulado en la mucosa gástrica.", "caption": "La Helicobacter pylori no hace ruido. Pero actúa.\n\nPor cada año que permanece sin detectar y sin tratar, el proceso inflamatorio crónico avanza. La mucosa gástrica se va dañando de manera gradual y progresiva.\n\nNo es alarmismo. Es la biología de esta bacteria.\n\nLo que hace diferente a la detección temprana no es el drama del diagnóstico. Es que interrumpe ese proceso antes de que llegue a estadios más avanzados.\n\nEl esquema de erradicación funciona con más del 90% de efectividad. Pero solo puede actuar si primero se hace el diagnóstico.\n\nSi tienes factores de riesgo, hoy es mejor que mañana.\n\n🔗 mexicosincancergastrico.com.mx", "hashtags": "#HelicobacterPylori #DetecciónTemprana #MéxicoSinCáncerGástrico #SaludGástrica #GastritisNoEsNormal #AMG", "nota": "Visual: línea de tiempo con daño acumulado vs. interrupción con detección. Fondo navy. Contraste impactante.", "estado": "✅ C1 — Polar QC", "iso": "2026-09-18"}, {"n": 28, "fecha": "22/Sep", "dia": "Lun", "mes": "Septiembre", "plataforma": "Instagram", "pilar": "P3 · Congreso AMG", "carril": "C2", "formato": "Carrusel (sello AMG)", "hook": "Congreso AMG 2026: lo que los especialistas en gastro reafirman sobre H. pylori", "caption": "📋 CARRUSEL — Consenso AMG 2026 sobre H. pylori.\n\nSlide 1: Lo que los gastroenterólogos de México reafirman: H. pylori en 2026\nSlide 2: 'El diagnóstico activo de H. pylori debe ser parte del protocolo en todo paciente con dispepsia crónica.' — AMG\nSlide 3: 'La prueba de aliento (UBT) es el estándar no invasivo para diagnóstico y confirmación post-tratamiento.' — AMG\nSlide 4: 'Los esquemas actuales logran tasas de erradicación superiores al 90% en pacientes que completan el tratamiento.' — AMG\nSlide 5: 'La erradicación temprana de H. pylori es la intervención preventiva más costo-efectiva frente al cáncer gástrico.' — AMG\nSlide 6: La Campaña de Detección 2026 de la AMG es la puesta en práctica de estas recomendaciones.\nSlide 7: [Sello AMG] Asociación Mexicana de Gastroenterología · Campaña 2026\n\n[Caption IG] La ciencia lo respalda. Los especialistas lo reafirman. La campaña lo hace posible.\n\nCampaña educativa avalada por la AMG A.C. No sustituye la consulta médica.", "hashtags": "#MéxicoSinCáncerGástrico #AMG #HelicobacterPylori #gastroenterología #DetecciónTemprana #Prevención #saludmexico", "nota": "7 slides: estilo actas de congreso. Citas en comillas, atribuidas a AMG. Sello AMG dorado prominente. REQUIERE APROBACIÓN AMG.", "estado": "⏳ C2 — Requiere aprobación AMG", "iso": "2026-09-22"}, {"n": 29, "fecha": "23/Sep", "dia": "Mié", "mes": "Septiembre", "plataforma": "LinkedIn", "pilar": "P2 · Highlights AMG", "carril": "C2", "formato": "Documento (sello AMG)", "hook": "AMG 2026: posicionamiento actualizado sobre diagnóstico y prevención de H. pylori en México", "caption": "En el marco de las actividades científicas de la AMG en 2026, se reafirman los siguientes puntos de consenso sobre Helicobacter pylori:\n\n1. EPIDEMIOLOGÍA: Prevalencia en adultos mexicanos >70%, con alta carga de infección no diagnosticada.\n\n2. DIAGNÓSTICO: El UBT es el método no invasivo preferido. Biopsia endoscópica reservada para señales de alarma.\n\n3. TRATAMIENTO: Esquemas de triple o cuádruple terapia (14 días) con tasas de erradicación >90% bajo supervisión médica.\n\n4. SEGUIMIENTO: Confirmación de erradicación con UBT 4-8 semanas post-tratamiento obligatoria para cierre del episodio.\n\n5. PREVENCIÓN: La erradicación de H. pylori es la intervención preventiva más costo-efectiva para reducir riesgo de adenocarcinoma gástrico.\n\nLa Campaña de Detección 2026 pone a disposición de médicos y pacientes los recursos diagnósticos para escalar el impacto.\n\n[Sello AMG]\n\nmexicosincancergastrico.com.mx/para-medicos", "hashtags": "#gastroenterología #AMG #HelicobacterPylori #medicina #MéxicoSinCáncerGástrico #PyloridDetection", "nota": "Documento estilo white paper 5 puntos. Portada sello AMG. Tono autoridad científica. REQUIERE APROBACIÓN AMG.", "estado": "⏳ C2 — Requiere aprobación AMG", "iso": "2026-09-23"}, {"n": 30, "fecha": "25/Sep", "dia": "Jue", "mes": "Septiembre", "plataforma": "TikTok", "pilar": "P1 · Diagnóstico equivocado", "carril": "C1", "formato": "Video propio", "hook": "Fui con el gastroenterólogo. Lo primero que me preguntó fue si me habían hecho la prueba de H. pylori. 👇", "caption": "Fui por primera vez con un gastroenterólogo después de años de gastritis.\n\nLo primero que me preguntó: '¿Alguna vez te han hecho la prueba de aliento para Helicobacter pylori?'\n\nMe la habían recetado dos veces. Nunca me habían investigado la causa.\n\n'Eso explica por qué sigue regresando', me dijo.\n\n¿Cuántos años llevas con el mismo ciclo sin que nadie haya descartado la bacteria?\n\nNo necesitas especialista para empezar. Tu médico de cabecera puede pedirte la prueba.\n\nY si tienes factores de riesgo, la campaña de detección 2026 de la AMG ofrece la prueba sin costo.\n\nmexicosincancergastrico.com.mx\n\n⚠️ Historia representativa. AMG 2026.", "hashtags": "#HelicobacterPylori #GastritisNoEsNormal #DetecciónTemprana #MéxicoSinCáncerGástrico #saludtiktok #medicinatiktok", "nota": "Historia testimonio: consulta reconstruida. Frase del médico on-screen en grande. Call-to-action directo. 30 seg.", "estado": "✅ C1 — Polar QC", "iso": "2026-09-25"}, {"n": 31, "fecha": "01/Oct", "dia": "Jue", "mes": "Octubre", "plataforma": "Instagram", "pilar": "P1 · Diagnóstico equivocado", "carril": "C1", "formato": "Reel", "hook": "Cambiaste de antiácido tres veces y el ardor sigue igual. Tal vez nunca fue el medicamento.", "caption": "Probar antiácido tras antiácido sin que el malestar desaparezca del todo no significa que el tratamiento esté mal — puede significar que falta identificar la causa.\n\nHelicobacter pylori es la causa más común de gastritis crónica en México, y no siempre se descarta antes de recetar el siguiente antiácido.\n\n7 de cada 10 estómagos mexicanos portan esta bacteria — y la mayoría no lo sabe.\n\nSi llevas meses en el mismo ciclo, hay una pregunta que puede cambiar el rumbo: '¿Ya descartamos H. pylori?'\n\n🔗 mexicosincancergastrico.com.mx\n\nCampaña educativa avalada por la AMG A.C. No sustituye la consulta médica.", "hashtags": "#MéxicoSinCáncerGástrico #HelicobacterPylori #DetecciónTemprana #SaludGástrica #AMG #GastritisNoEsNormal #saludmexico #prevención #gastroenterología", "nota": "V0 Fotográfica — persona con mano en el estómago, halo teal, franja divisora teal→navy.", "estado": "✅ Redactado — pendiente Polar QC", "iso": "2026-10-01"}, {"n": 32, "fecha": "02/Oct", "dia": "Vie", "mes": "Octubre", "plataforma": "Facebook", "pilar": "P4 · Pregúntale a tu médico", "carril": "C1", "formato": "Post imagen", "hook": "Una pregunta de 8 palabras puede cambiar 10 años de diagnóstico.", "caption": "'¿Ya descartamos Helicobacter pylori como causa?' — es todo lo que hace falta preguntar en tu próxima consulta.\n\nNo reemplaza el criterio de tu médico. Lo complementa: le da un dato más para decidir si una prueba de detección tiene sentido en tu caso.\n\nLa Campaña de Detección 2026, avalada por la AMG, ofrece una prueba de aliento gratuita para pacientes con factores de riesgo en sedes participantes.\n\n🔗 mexicosincancergastrico.com.mx\n\nCampaña educativa avalada por la AMG A.C. No sustituye la consulta médica.", "hashtags": "#MéxicoSinCáncerGástrico #HelicobacterPylori #DetecciónTemprana #SaludGástrica #AMG #GastritisNoEsNormal", "nota": "Infografía: la pregunta destacada en tipografía grande sobre fondo navy, sello AMG esquina superior derecha.", "estado": "✅ Redactado — pendiente Polar QC", "iso": "2026-10-02"}, {"n": 33, "fecha": "05/Oct", "dia": "Lun", "mes": "Octubre", "plataforma": "TikTok", "pilar": "P2 · Lo que no sabías", "carril": "C1", "formato": "Video propio", "hook": "La bacteria no se contagia por comida picante. Se contagia así 👇", "caption": "Mito: 'me dio gastritis por comer picante'. Realidad: el picante puede irritar, pero no causa la infección.\n\nHelicobacter pylori se transmite principalmente de persona a persona — saliva, agua o alimentos contaminados, sobre todo en la infancia.\n\nPor eso puede pasar años sin dar señales, y por eso 7 de cada 10 mexicanos la portan sin saberlo.\n\n🔗 mexicosincancergastrico.com.mx", "hashtags": "#MéxicoSinCáncerGástrico #HelicobacterPylori #DetecciónTemprana #SaludGástrica #AMG #GastritisNoEsNormal #saludtiktok #medicinatiktok #doctorok", "nota": "Explainer con texto animado, comparación mito vs. realidad, 25-35 seg.", "estado": "✅ Redactado — pendiente Polar QC", "iso": "2026-10-05"}, {"n": 34, "fecha": "06/Oct", "dia": "Mar", "mes": "Octubre", "plataforma": "Instagram", "pilar": "P4 · Pregúntale a tu médico", "carril": "C2", "formato": "Carrusel (sello AMG)", "hook": "5 preguntas que deberías hacerle a tu médico sobre H. pylori", "caption": "📋 CARRUSEL — Preguntas para tu próxima consulta.\n\nSlide 1: 5 preguntas que deberías hacerle a tu médico sobre H. pylori.\n\nSlide 2: ¿Tengo H. pylori? ¿Cómo lo sabemos con certeza?\n\nSlide 3: ¿Qué prueba de detección me recomienda: aliento, sangre o endoscopía?\n\nSlide 4: Si la tengo, ¿cuál es el tratamiento más corto disponible hoy?\n\nSlide 5: ¿Cuál es la probabilidad de reinfección después del tratamiento?\n\nSlide 6: Con estos factores de riesgo, ¿califico para la campaña de detección gratuita 2026?\n\n[Caption IG] Llévate estas preguntas a tu próxima cita. La AMG ofrece pruebas de detección gratuitas para pacientes con factores de riesgo.\n\nCampaña educativa avalada por la AMG A.C. No sustituye la consulta médica.", "hashtags": "#MéxicoSinCáncerGástrico #HelicobacterPylori #DetecciónTemprana #SaludGástrica #AMG #GastritisNoEsNormal #gastroenterología", "nota": "6 slides navy/teal alternado, tipografía Montserrat Bold, sello AMG dorado prominente en slide 6. REQUIERE APROBACIÓN AMG.", "estado": "✅ Redactado — pendiente Polar QC", "iso": "2026-10-06"}, {"n": 35, "fecha": "08/Oct", "dia": "Jue", "mes": "Octubre", "plataforma": "LinkedIn", "pilar": "P3 · Hay solución mejor", "carril": "C1", "formato": "Documento", "hook": "H. pylori: la conversación que sus pacientes no siempre inician", "caption": "Muchos pacientes normalizan la gastritis recurrente antes de mencionarla en consulta — o la mencionan como algo secundario frente a otros síntomas.\n\nPreguntar activamente por antecedentes de gastritis crónica, tabaquismo y antecedente familiar de cáncer gástrico puede abrir la puerta a una prueba de detección oportuna.\n\nLa prueba de aliento (UBT) sigue siendo el estándar no invasivo recomendado para diagnóstico inicial y confirmación de erradicación.\n\nLa Campaña de Detección 2026, avalada por la AMG, está activa en sedes participantes para pacientes que cumplan criterios de elegibilidad.\n\nMás información: mexicosincancergastrico.com.mx/para-medicos", "hashtags": "#MéxicoSinCáncerGástrico #HelicobacterPylori #DetecciónTemprana #SaludGástrica #AMG #medicina #PyloridDetection", "nota": "Documento PDF 4 páginas, portada navy, tono técnico/profesional, CTA médico final.", "estado": "✅ Redactado — pendiente Polar QC", "iso": "2026-10-08"}, {"n": 36, "fecha": "09/Oct", "dia": "Vie", "mes": "Octubre", "plataforma": "Facebook", "pilar": "P1 · Diagnóstico equivocado", "carril": "C1", "formato": "Post imagen", "hook": "'Es tu ansiedad.' A veces sí. A veces hay algo más que revisar.", "caption": "El estrés puede empeorar los síntomas digestivos — pero atribuir todo el malestar a la ansiedad puede dejar sin revisar una causa física tratable.\n\nHelicobacter pylori produce síntomas que se parecen mucho a los del estrés digestivo: ardor, hinchazón, malestar después de comer.\n\nDescartarla con una prueba simple no cuesta nada en las sedes participantes de la campaña de detección 2026.\n\n🔗 mexicosincancergastrico.com.mx\n\nCampaña educativa avalada por la AMG A.C. No sustituye la consulta médica.", "hashtags": "#MéxicoSinCáncerGástrico #HelicobacterPylori #DetecciónTemprana #SaludGástrica #AMG #GastritisNoEsNormal", "nota": "Post imagen con ilustración de balanza: 'estrés' vs 'causa física', fondo off-white, sello AMG.", "estado": "✅ Redactado — pendiente Polar QC", "iso": "2026-10-09"}, {"n": 37, "fecha": "12/Oct", "dia": "Lun", "mes": "Octubre", "plataforma": "Instagram", "pilar": "P2 · Lo que no sabías", "carril": "C1", "formato": "Reel", "hook": "El 90% del cáncer gástrico en México empieza igual. Con esto 👇", "caption": "No con mala suerte. No con la edad. Con una infección bacteriana que tiene nombre, diagnóstico y tratamiento: Helicobacter pylori.\n\nLa OMS la clasifica como carcinógeno de Grupo I — el nivel más alto de evidencia sobre causa de cáncer.\n\nLa buena noticia: detectarla y tratarla a tiempo reduce significativamente ese riesgo.\n\nPregunta a tu médico por la prueba de detección.\n\n🔗 mexicosincancergastrico.com.mx", "hashtags": "#MéxicoSinCáncerGástrico #HelicobacterPylori #DetecciónTemprana #SaludGástrica #AMG #GastritisNoEsNormal #saludmexico", "nota": "Reel con cifra 90% en tipografía XL teal sobre navy, franja degradada divisora, 20-25 seg.", "estado": "✅ Redactado — pendiente Polar QC", "iso": "2026-10-12"}, {"n": 38, "fecha": "14/Oct", "dia": "Mié", "mes": "Octubre", "plataforma": "TikTok", "pilar": "P4 · Pregúntale a tu médico", "carril": "C1", "formato": "Video propio", "hook": "Así se ve la conversación que puede cambiarlo todo", "caption": "Paciente: 'Doctor, ¿podría ser H. pylori lo que tengo?' Médico: 'Vamos a revisarlo con una prueba.'\n\nAsí de simple puede empezar. La bacteria es común, la prueba es sencilla, y el gate lo pone siempre tu médico — es quien decide si eres candidato.\n\nSi tienes gastritis recurrente, eres fumador o tienes antecedente familiar de cáncer gástrico, esta pregunta es para ti.\n\n🔗 mexicosincancergastrico.com.mx", "hashtags": "#MéxicoSinCáncerGástrico #HelicobacterPylori #DetecciónTemprana #SaludGástrica #AMG #GastritisNoEsNormal #doctorok", "nota": "Mini-dramatización consultorio, captions on-screen, 30-40 seg.", "estado": "✅ Redactado — pendiente Polar QC", "iso": "2026-10-14"}, {"n": 39, "fecha": "16/Oct", "dia": "Vie", "mes": "Octubre", "plataforma": "Instagram", "pilar": "P3 · Hay solución mejor", "carril": "C1", "formato": "Carrusel", "hook": "Así es la prueba que detecta H. pylori sin piquetes", "caption": "📋 CARRUSEL — La prueba de aliento paso a paso.\n\nSlide 1: Así es la prueba que detecta H. pylori sin piquetes.\n\nSlide 2: Soplas en un tubo de colección (muestra basal).\n\nSlide 3: Tomas una bebida especial con urea marcada.\n\nSlide 4: Esperas 15 minutos.\n\nSlide 5: Soplas de nuevo — el laboratorio analiza si la bacteria procesó la urea.\n\nSlide 6: 20 minutos. Sin piquetes. Pregunta a tu médico si eres candidato a la prueba gratuita.\n\nCampaña educativa avalada por la AMG A.C. No sustituye la consulta médica.", "hashtags": "#MéxicoSinCáncerGástrico #HelicobacterPylori #DetecciónTemprana #SaludGástrica #AMG #GastritisNoEsNormal", "nota": "6 slides estilo explainer ilustrado, iconografía línea navy, sello AMG en slide final.", "estado": "✅ Redactado — pendiente Polar QC", "iso": "2026-10-16"}, {"n": 40, "fecha": "19/Oct", "dia": "Lun", "mes": "Octubre", "plataforma": "Facebook", "pilar": "P5 · Historias reales", "carril": "C1", "formato": "Post + video", "hook": "Ricardo llevaba 8 años con 'gastritis nerviosa'. Nunca le habían hecho la prueba.", "caption": "Ricardo tiene 52 años. Durante 8 años atribuyó su malestar digestivo al estrés del trabajo.\n\nEn una consulta de rutina, su médico le preguntó si alguna vez se había hecho una prueba para H. pylori. Nunca se la habían hecho.\n\nSalió positivo. Empezó tratamiento. Meses después, la mejoría fue notable.\n\nSu caso no es único — es uno de los que la campaña de detección 2026 busca identificar a tiempo.\n\nSi te identificas con su historia, habla con tu médico.\n\nCampaña educativa avalada por la AMG A.C. No sustituye la consulta médica.", "hashtags": "#MéxicoSinCáncerGástrico #HelicobacterPylori #DetecciónTemprana #SaludGástrica #AMG #GastritisNoEsNormal", "nota": "Formato testimonial dramatizado (declarar dramatización), 45-60 seg, tono cálido no dramático.", "estado": "✅ Redactado — pendiente Polar QC", "iso": "2026-10-19"}, {"n": 41, "fecha": "23/Oct", "dia": "Vie", "mes": "Octubre", "plataforma": "LinkedIn", "pilar": "P2 · Lo que no sabías", "carril": "C2", "formato": "Documento (sello AMG)", "hook": "AMG 2026: por qué preguntar por H. pylori debería ser rutina en consulta", "caption": "La prevalencia de Helicobacter pylori en adultos mexicanos supera el 70% según datos epidemiológicos nacionales y estudios AMG.\n\nSin embargo, la pregunta activa por antecedentes de gastritis crónica, tabaquismo y antecedente familiar de cáncer gástrico no siempre forma parte del interrogatorio inicial.\n\n90% de los adenocarcinomas gástricos tienen relación directa con H. pylori (IARC, Clase I carcinógeno).\n\nLa Campaña de Detección 2026, avalada por la AMG, facilita el acceso a la prueba de aliento en sedes participantes para pacientes elegibles.\n\nMás información: mexicosincancergastrico.com.mx/para-medicos", "hashtags": "#MéxicoSinCáncerGástrico #HelicobacterPylori #DetecciónTemprana #SaludGástrica #AMG #medicina #PyloridDetection", "nota": "Documento PDF 5 páginas con sello AMG, tono institucional. REQUIERE APROBACIÓN AMG.", "estado": "✅ Redactado — pendiente Polar QC", "iso": "2026-10-23"}, {"n": 42, "fecha": "26/Oct", "dia": "Lun", "mes": "Octubre", "plataforma": "TikTok", "pilar": "P4 · Pregúntale a tu médico", "carril": "C1", "formato": "Video propio", "hook": "3 factores que significan que deberías preguntar por H. pylori hoy", "caption": "1. Gastritis diagnosticada más de una vez. 2. Fumas o fumaste. 3. Alguien en tu familia tuvo cáncer gástrico.\n\nSi te identificas con uno solo, vale la pena la pregunta en tu próxima consulta.\n\nTu médico decide si eres candidato a la prueba de detección gratuita 2026.\n\n🔗 mexicosincancergastrico.com.mx", "hashtags": "#MéxicoSinCáncerGástrico #HelicobacterPylori #DetecciónTemprana #SaludGástrica #AMG #GastritisNoEsNormal #saludtiktok", "nota": "Lista animada de 3 factores con iconos, captions on-screen, 25-30 seg.", "estado": "✅ Redactado — pendiente Polar QC", "iso": "2026-10-26"}, {"n": 43, "fecha": "02/Nov", "dia": "Lun", "mes": "Noviembre", "plataforma": "Instagram", "pilar": "P3 · Hay solución mejor", "carril": "C1", "formato": "Reel", "hook": "El tratamiento para H. pylori cambió. Esto es lo que hace diferente hoy 👇", "caption": "Los esquemas actuales combinan antibióticos con un supresor ácido de nueva generación que mantiene el pH gástrico estable por más tiempo.\n\nEso importa porque los antibióticos funcionan mejor cuando el ambiente del estómago es menos ácido.\n\nEl resultado: tasas de erradicación superiores a las de los esquemas convencionales.\n\nPregunta a tu médico por el tratamiento que está mejorando significativamente su tasa de curación.\n\n🔗 mexicosincancergastrico.com.mx\n\nCampaña educativa avalada por la AMG A.C. No sustituye la consulta médica.", "hashtags": "#MéxicoSinCáncerGástrico #HelicobacterPylori #DetecciónTemprana #SaludGástrica #AMG #GastritisNoEsNormal #gastroenterología", "nota": "V1 Tipográfica — cifra de erradicación en textura de franja degradada, headline navy.", "estado": "✅ Redactado — pendiente Polar QC", "iso": "2026-11-02"}, {"n": 44, "fecha": "03/Nov", "dia": "Mar", "mes": "Noviembre", "plataforma": "Facebook", "pilar": "P1 · Diagnóstico equivocado", "carril": "C1", "formato": "Post imagen", "hook": "Terminaste el tratamiento y el malestar volvió. Esto es lo que puede estar pasando.", "caption": "No siempre significa que el tratamiento falló. A veces significa que no se confirmó la erradicación con una prueba de control.\n\nLa prueba de aliento de confirmación debe hacerse entre 4 y 8 semanas después de terminar el tratamiento — antes puede dar falsos negativos.\n\nSi tus síntomas regresaron, esa es la pregunta indicada para tu médico.\n\n🔗 mexicosincancergastrico.com.mx\n\nCampaña educativa avalada por la AMG A.C. No sustituye la consulta médica.", "hashtags": "#MéxicoSinCáncerGástrico #HelicobacterPylori #DetecciónTemprana #SaludGástrica #AMG #GastritisNoEsNormal", "nota": "Post imagen con línea de tiempo (tratamiento → 4-8 semanas → prueba de control), fondo off-white.", "estado": "✅ Redactado — pendiente Polar QC", "iso": "2026-11-03"}, {"n": 45, "fecha": "05/Nov", "dia": "Jue", "mes": "Noviembre", "plataforma": "TikTok", "pilar": "P2 · Lo que no sabías", "carril": "C1", "formato": "Video propio", "hook": "¿Por qué el tratamiento de H. pylori necesita varios medicamentos a la vez?", "caption": "Porque la bacteria puede desarrollar resistencia si se ataca con un solo antibiótico.\n\nLos esquemas combinan 2-3 antibióticos + un supresor ácido, todos al mismo tiempo, durante un ciclo específico.\n\nSuena a mucho, pero es lo que logra tasas de curación superiores al 90% con el esquema correcto.\n\n🔗 mexicosincancergastrico.com.mx", "hashtags": "#MéxicoSinCáncerGástrico #HelicobacterPylori #DetecciónTemprana #SaludGástrica #AMG #GastritisNoEsNormal #medicinatiktok", "nota": "Explainer visual con iconos de medicamentos combinándose, 25-30 seg.", "estado": "✅ Redactado — pendiente Polar QC", "iso": "2026-11-05"}, {"n": 46, "fecha": "09/Nov", "dia": "Lun", "mes": "Noviembre", "plataforma": "Instagram", "pilar": "P3 · Hay solución mejor", "carril": "C2", "formato": "Carrusel (sello AMG)", "hook": "Lo que necesitas saber antes de empezar tratamiento para H. pylori", "caption": "📋 CARRUSEL — Antes de empezar tu tratamiento.\n\nSlide 1: Lo que necesitas saber antes de empezar tratamiento para H. pylori.\n\nSlide 2: El esquema combina antibióticos + un supresor ácido durante un ciclo específico.\n\nSlide 3: Es normal sentir mejoría antes de terminar el ciclo — completa el tratamiento completo de todas formas.\n\nSlide 4: El alcohol puede interferir seriamente con algunos antibióticos del esquema — evítalo durante todo el ciclo.\n\nSlide 5: La prueba de control se hace 4-8 semanas después de terminar, no antes.\n\nSlide 6: Sigue las indicaciones de tu médico al pie de la letra — es clave para la tasa de curación.\n\nCampaña educativa avalada por la AMG A.C. No sustituye la consulta médica.", "hashtags": "#MéxicoSinCáncerGástrico #HelicobacterPylori #DetecciónTemprana #SaludGástrica #AMG #GastritisNoEsNormal #gastroenterología", "nota": "6 slides navy/teal, sello AMG en slide final. REQUIERE APROBACIÓN AMG.", "estado": "✅ Redactado — pendiente Polar QC", "iso": "2026-11-09"}, {"n": 47, "fecha": "10/Nov", "dia": "Mar", "mes": "Noviembre", "plataforma": "LinkedIn", "pilar": "P4 · Pregúntale a tu médico", "carril": "C1", "formato": "Documento", "hook": "Guía rápida: cómo hablar con sus pacientes sobre adherencia al tratamiento de H. pylori", "caption": "La adherencia incompleta es una de las causas más comunes de fracaso terapéutico en H. pylori.\n\n3 puntos clave para reforzar en consulta: (1) completar el ciclo completo aunque los síntomas mejoren antes, (2) evitar alcohol por posible interacción con antibióticos del esquema, (3) confirmar erradicación con prueba de control 4-8 semanas después.\n\nMaterial de apoyo descargable disponible para compartir con pacientes.\n\nMás información: mexicosincancergastrico.com.mx/para-medicos", "hashtags": "#MéxicoSinCáncerGástrico #HelicobacterPylori #DetecciónTemprana #SaludGástrica #AMG #medicina #PyloridDetection", "nota": "Documento PDF 4 páginas, checklist visual, tono técnico.", "estado": "✅ Redactado — pendiente Polar QC", "iso": "2026-11-10"}, {"n": 48, "fecha": "12/Nov", "dia": "Jue", "mes": "Noviembre", "plataforma": "Facebook", "pilar": "P1 · Diagnóstico equivocado", "carril": "C1", "formato": "Post imagen", "hook": "Le llaman 'gastritis crónica' pero nadie le puso nombre a la causa.", "caption": "'Gastritis crónica' describe lo que se ve en un estudio — no siempre explica por qué está ahí.\n\nEn la mayoría de los casos, la causa tiene nombre: Helicobacter pylori.\n\nPonerle nombre a la causa es lo que permite tratarla, no solo controlar los síntomas con antiácidos indefinidamente.\n\n🔗 mexicosincancergastrico.com.mx\n\nCampaña educativa avalada por la AMG A.C. No sustituye la consulta médica.", "hashtags": "#MéxicoSinCáncerGástrico #HelicobacterPylori #DetecciónTemprana #SaludGástrica #AMG #GastritisNoEsNormal", "nota": "Post imagen, tipografía grande 'gastritis crónica' tachada, 'H. pylori' debajo en teal itálica.", "estado": "✅ Redactado — pendiente Polar QC", "iso": "2026-11-12"}, {"n": 49, "fecha": "16/Nov", "dia": "Lun", "mes": "Noviembre", "plataforma": "Instagram", "pilar": "P2 · Lo que no sabías", "carril": "C1", "formato": "Reel", "hook": "La reinfección de H. pylori es menos común de lo que crees", "caption": "Con el tratamiento correcto y completo, la tasa de reinfección es menor al 5%.\n\nLa mayoría de los casos de 'volvió a salir positivo' se explican por tratamiento incompleto, no por una nueva infección.\n\nPor eso la prueba de control después del tratamiento es tan importante como el tratamiento mismo.\n\n🔗 mexicosincancergastrico.com.mx", "hashtags": "#MéxicoSinCáncerGástrico #HelicobacterPylori #DetecciónTemprana #SaludGástrica #AMG #GastritisNoEsNormal #saludmexico", "nota": "Reel con cifra <5% destacada, franja divisora teal, 20-25 seg.", "estado": "✅ Redactado — pendiente Polar QC", "iso": "2026-11-16"}, {"n": 50, "fecha": "18/Nov", "dia": "Mié", "mes": "Noviembre", "plataforma": "TikTok", "pilar": "P4 · Pregúntale a tu médico", "carril": "C1", "formato": "Video propio", "hook": "¿Cómo saber si el tratamiento para H. pylori realmente funcionó?", "caption": "La única forma confiable es con una prueba de control — no con 'ya no siento nada'.\n\nSe recomienda 4-8 semanas después de terminar el tratamiento, sin IBP ni P-CAB en los días previos bajo supervisión médica.\n\nPregúntale a tu médico cuándo y cómo confirmar tu erradicación.\n\n🔗 mexicosincancergastrico.com.mx", "hashtags": "#MéxicoSinCáncerGástrico #HelicobacterPylori #DetecciónTemprana #SaludGástrica #AMG #GastritisNoEsNormal #doctorok", "nota": "Explainer con checklist visual de la prueba de control, 25-30 seg.", "estado": "✅ Redactado — pendiente Polar QC", "iso": "2026-11-18"}, {"n": 51, "fecha": "20/Nov", "dia": "Vie", "mes": "Noviembre", "plataforma": "Instagram", "pilar": "P3 · Hay solución mejor", "carril": "C1", "formato": "Carrusel", "hook": "Antes y después: qué esperar durante el tratamiento de H. pylori", "caption": "📋 CARRUSEL — Tu tratamiento semana a semana.\n\nSlide 1: Antes y después: qué esperar durante el tratamiento de H. pylori.\n\nSlide 2: Primeros días: pueden persistir molestias leves mientras el tratamiento hace efecto.\n\nSlide 3: Durante el ciclo: evita alcohol y sigue el horario de medicamentos al pie de la letra.\n\nSlide 4: Al terminar: es normal sentir mejoría notable, pero el ciclo debe completarse igual.\n\nSlide 5: 4-8 semanas después: prueba de control para confirmar erradicación.\n\nSlide 6: Con el esquema correcto, la tasa de curación supera el 90%.\n\nCampaña educativa avalada por la AMG A.C. No sustituye la consulta médica.", "hashtags": "#MéxicoSinCáncerGástrico #HelicobacterPylori #DetecciónTemprana #SaludGástrica #AMG #GastritisNoEsNormal", "nota": "6 slides con línea de tiempo ilustrada, iconografía navy/teal.", "estado": "✅ Redactado — pendiente Polar QC", "iso": "2026-11-20"}, {"n": 52, "fecha": "23/Nov", "dia": "Lun", "mes": "Noviembre", "plataforma": "Instagram", "pilar": "P5 · Historias reales", "carril": "C1", "formato": "Reel", "hook": "Mi papá tuvo cáncer gástrico. Yo me hice la prueba a los 40.", "caption": "Cuando hay antecedente familiar de cáncer gástrico, la recomendación cambia: hablarlo activamente con tu médico, no esperar a tener síntomas.\n\nEsa fue la decisión de uno de los pacientes de la campaña: hacerse la prueba de detección sin esperar señales.\n\nSalió positivo, sin síntomas evidentes. El tratamiento empezó a tiempo.\n\nSi tienes antecedente familiar, esa conversación puede empezar hoy.\n\nCampaña educativa avalada por la AMG A.C. No sustituye la consulta médica.", "hashtags": "#MéxicoSinCáncerGástrico #HelicobacterPylori #DetecciónTemprana #SaludGástrica #AMG #GastritisNoEsNormal", "nota": "Reel testimonial dramatizado (declarar dramatización), tono cálido, 45-60 seg.", "estado": "✅ Redactado — pendiente Polar QC", "iso": "2026-11-23"}, {"n": 53, "fecha": "25/Nov", "dia": "Mié", "mes": "Noviembre", "plataforma": "LinkedIn", "pilar": "P2 · Lo que no sabías", "carril": "C2", "formato": "Documento (sello AMG)", "hook": "AMG 2026: actualización sobre esquemas de tratamiento y confirmación de erradicación", "caption": "Los esquemas de tratamiento actuales para H. pylori muestran tasas de erradicación superiores al 90% cuando se completan correctamente y se confirma con prueba de control.\n\nLa adherencia incompleta y la falta de confirmación post-tratamiento siguen siendo las principales causas de fracaso terapéutico reportadas.\n\nLa AMG recomienda reforzar en consulta: ciclo completo, restricción de alcohol durante el tratamiento, y prueba de control 4-8 semanas después.\n\nMás información: mexicosincancergastrico.com.mx/para-medicos", "hashtags": "#MéxicoSinCáncerGástrico #HelicobacterPylori #DetecciónTemprana #SaludGástrica #AMG #medicina #PyloridDetection", "nota": "Documento PDF 5 páginas, sello AMG, tono institucional. REQUIERE APROBACIÓN AMG.", "estado": "✅ Redactado — pendiente Polar QC", "iso": "2026-11-25"}, {"n": 54, "fecha": "27/Nov", "dia": "Vie", "mes": "Noviembre", "plataforma": "Facebook", "pilar": "P4 · Pregúntale a tu médico", "carril": "C1", "formato": "Post imagen", "hook": "Antes de terminar el año, hazte esta pregunta pendiente", "caption": "Si llevas todo el año posponiendo la conversación sobre tu gastritis recurrente, noviembre es buen momento para no dejarla pasar a 2027.\n\nUna pregunta simple en tu próxima consulta puede aclarar si H. pylori es parte del cuadro.\n\nLa campaña de detección gratuita 2026 sigue activa en sedes participantes.\n\n🔗 mexicosincancergastrico.com.mx\n\nCampaña educativa avalada por la AMG A.C. No sustituye la consulta médica.", "hashtags": "#MéxicoSinCáncerGástrico #HelicobacterPylori #DetecciónTemprana #SaludGástrica #AMG #GastritisNoEsNormal", "nota": "Post imagen con calendario/checklist visual de cierre de año, tono cálido.", "estado": "✅ Redactado — pendiente Polar QC", "iso": "2026-11-27"}, {"n": 55, "fecha": "01/Dic", "dia": "Mar", "mes": "Diciembre", "plataforma": "Instagram", "pilar": "P2 · Lo que no sabías", "carril": "C1", "formato": "Reel", "hook": "Este año, 7 de cada 10 mexicanos siguieron sin saber que tienen esta bacteria", "caption": "Es la misma cifra con la que empezamos la campaña en julio — y sigue siendo la razón por la que seguimos hablando de esto.\n\nHelicobacter pylori puede pasar años sin dar señales. La única forma de saberlo es con una prueba.\n\nCerramos el año como lo empezamos: invitándote a preguntar.\n\n🔗 mexicosincancergastrico.com.mx\n\nCampaña educativa avalada por la AMG A.C. No sustituye la consulta médica.", "hashtags": "#MéxicoSinCáncerGástrico #HelicobacterPylori #DetecciónTemprana #SaludGástrica #AMG #GastritisNoEsNormal #saludmexico", "nota": "Reel de cierre de año, cifra 7/10 en tipografía XL, franja divisora teal, 20-25 seg.", "estado": "✅ Redactado — pendiente Polar QC", "iso": "2026-12-01"}, {"n": 56, "fecha": "02/Dic", "dia": "Mié", "mes": "Diciembre", "plataforma": "Facebook", "pilar": "P1 · Diagnóstico equivocado", "carril": "C1", "formato": "Post imagen", "hook": "'Es el estrés de fin de año.' A veces. Pero no siempre.", "caption": "Diciembre trae más comidas pesadas, más desvelos, más estrés — y con eso, más gastritis que se le atribuye todo al ajetreo decembrino.\n\nSi tu malestar digestivo es recurrente todo el año, no solo en diciembre, vale la pena preguntar por H. pylori en tu próxima consulta.\n\n🔗 mexicosincancergastrico.com.mx\n\nCampaña educativa avalada por la AMG A.C. No sustituye la consulta médica.", "hashtags": "#MéxicoSinCáncerGástrico #HelicobacterPylori #DetecciónTemprana #SaludGástrica #AMG #GastritisNoEsNormal", "nota": "Post imagen con motivo navideño sutil (sin saturar), paleta navy/teal/dorado AMG.", "estado": "✅ Redactado — pendiente Polar QC", "iso": "2026-12-02"}, {"n": 57, "fecha": "03/Dic", "dia": "Jue", "mes": "Diciembre", "plataforma": "TikTok", "pilar": "P3 · Hay solución mejor", "carril": "C1", "formato": "Video propio", "hook": "Lo que aprendimos este año sobre H. pylori en 30 segundos", "caption": "Se contagia principalmente en la infancia. Puede pasar años sin síntomas. Se detecta con una prueba de aliento sin piquetes. Se trata y se cura en la mayoría de los casos.\n\nSi algo te quedó pendiente de revisar este año, hazlo antes de que empiece el próximo.\n\n🔗 mexicosincancergastrico.com.mx", "hashtags": "#MéxicoSinCáncerGástrico #HelicobacterPylori #DetecciónTemprana #SaludGástrica #AMG #GastritisNoEsNormal #saludtiktok", "nota": "Recap animado con 4 datos clave, uno por pantalla, 30 seg.", "estado": "✅ Redactado — pendiente Polar QC", "iso": "2026-12-03"}, {"n": 58, "fecha": "05/Dic", "dia": "Sáb", "mes": "Diciembre", "plataforma": "Instagram", "pilar": "P4 · Pregúntale a tu médico", "carril": "C2", "formato": "Carrusel (sello AMG)", "hook": "Cierre de año: lo que debes preguntarle a tu médico antes de 2027", "caption": "📋 CARRUSEL — Cierre de año, checklist de salud digestiva.\n\nSlide 1: Cierre de año: lo que debes preguntarle a tu médico antes de 2027.\n\nSlide 2: ¿He tenido gastritis diagnosticada más de una vez este año?\n\nSlide 3: ¿Fumo o fumé alguna vez?\n\nSlide 4: ¿Hay antecedente de cáncer gástrico en mi familia?\n\nSlide 5: Si alguna respuesta es sí, pregunta por la prueba de detección de H. pylori.\n\nSlide 6: La campaña de detección 2026 sigue activa en sedes participantes.\n\nCampaña educativa avalada por la AMG A.C. No sustituye la consulta médica.", "hashtags": "#MéxicoSinCáncerGástrico #HelicobacterPylori #DetecciónTemprana #SaludGástrica #AMG #GastritisNoEsNormal #gastroenterología", "nota": "6 slides con motivo de cierre de año, sello AMG en slide final. REQUIERE APROBACIÓN AMG.", "estado": "✅ Redactado — pendiente Polar QC", "iso": "2026-12-05"}, {"n": 59, "fecha": "07/Dic", "dia": "Lun", "mes": "Diciembre", "plataforma": "LinkedIn", "pilar": "P2 · Lo que no sabías", "carril": "C1", "formato": "Documento", "hook": "H. pylori en 2026: lo que la evidencia confirmó este año", "caption": "A lo largo de 2026, la evidencia siguió confirmando lo que ya sabíamos: H. pylori es la infección bacteriana crónica más común en México y la principal causa infecciosa de cáncer gástrico a nivel mundial (IARC, Clase I).\n\nLa detección oportuna con prueba de aliento y el tratamiento correcto siguen siendo las herramientas más efectivas de prevención disponibles hoy.\n\nGracias por acompañar esta conversación con sus pacientes durante el año.\n\nMás información: mexicosincancergastrico.com.mx/para-medicos", "hashtags": "#MéxicoSinCáncerGástrico #HelicobacterPylori #DetecciónTemprana #SaludGástrica #AMG #medicina #PyloridDetection", "nota": "Documento PDF 4 páginas, tono de cierre/resumen anual, sello AMG.", "estado": "✅ Redactado — pendiente Polar QC", "iso": "2026-12-07"}, {"n": 60, "fecha": "08/Dic", "dia": "Mar", "mes": "Diciembre", "plataforma": "Facebook", "pilar": "P1 · Diagnóstico equivocado", "carril": "C1", "formato": "Post imagen", "hook": "No dejes pendiente tu salud digestiva para el próximo año", "caption": "Si este año postergaste la conversación sobre tu gastritis recurrente, no hace falta esperar a enero para retomarla.\n\nUna prueba simple puede darte una respuesta antes de que termine el año.\n\nPregunta a tu médico por la campaña de detección gratuita 2026 en sedes participantes.\n\n🔗 mexicosincancergastrico.com.mx\n\nCampaña educativa avalada por la AMG A.C. No sustituye la consulta médica.", "hashtags": "#MéxicoSinCáncerGástrico #HelicobacterPylori #DetecciónTemprana #SaludGástrica #AMG #GastritisNoEsNormal", "nota": "Post imagen tono cálido de cierre de año, paleta navy/teal/dorado AMG.", "estado": "✅ Redactado — pendiente Polar QC", "iso": "2026-12-08"}, {"n": 61, "fecha": "09/Dic", "dia": "Mié", "mes": "Diciembre", "plataforma": "Instagram", "pilar": "P3 · Hay solución mejor", "carril": "C1", "formato": "Reel", "hook": "Lo que cambia cuando detectas H. pylori a tiempo", "caption": "Cambia el tratamiento. Cambia el pronóstico. Y en muchos casos, cambia años de síntomas mal explicados.\n\nLa detección y el tratamiento oportunos siguen siendo la intervención con mayor evidencia disponible para reducir el riesgo asociado a esta infección.\n\nEmpieza la conversación con tu médico.\n\n🔗 mexicosincancergastrico.com.mx\n\nCampaña educativa avalada por la AMG A.C. No sustituye la consulta médica.", "hashtags": "#MéxicoSinCáncerGástrico #HelicobacterPylori #DetecciónTemprana #SaludGástrica #AMG #GastritisNoEsNormal", "nota": "Reel con antes/después conceptual (no literal), franja teal→navy, 20-25 seg.", "estado": "✅ Redactado — pendiente Polar QC", "iso": "2026-12-09"}, {"n": 62, "fecha": "10/Dic", "dia": "Jue", "mes": "Diciembre", "plataforma": "TikTok", "pilar": "P4 · Pregúntale a tu médico", "carril": "C1", "formato": "Video propio", "hook": "La pregunta que puedes hacer antes de que cierre el año", "caption": "'¿Debería revisar si tengo H. pylori?' Ocho palabras, una consulta, una respuesta que puede cambiar el rumbo de tu salud digestiva.\n\nTu médico decide si eres candidato a la prueba de detección — el gate es siempre médico.\n\nNo esperes a enero para preguntarlo.\n\n🔗 mexicosincancergastrico.com.mx", "hashtags": "#MéxicoSinCáncerGástrico #HelicobacterPylori #DetecciónTemprana #SaludGástrica #AMG #GastritisNoEsNormal #doctorok", "nota": "Video con la pregunta en texto grande on-screen, 20-25 seg.", "estado": "✅ Redactado — pendiente Polar QC", "iso": "2026-12-10"}, {"n": 63, "fecha": "11/Dic", "dia": "Vie", "mes": "Diciembre", "plataforma": "Facebook", "pilar": "P5 · Historias reales", "carril": "C1", "formato": "Post + video", "hook": "Empezamos el año hablando de una bacteria silenciosa. Terminamos con historias de personas que preguntaron a tiempo.", "caption": "A lo largo de 2026 compartimos historias de personas que decidieron no normalizar su malestar digestivo — y preguntaron.\n\nAlgunas tenían gastritis de 'toda la vida'. Otras, antecedente familiar de cáncer gástrico. Todas encontraron una respuesta con una prueba simple.\n\nSi su historia se parece a la tuya, esa pregunta sigue disponible en cualquier consulta.\n\nCampaña educativa avalada por la AMG A.C. No sustituye la consulta médica.", "hashtags": "#MéxicoSinCáncerGástrico #HelicobacterPylori #DetecciónTemprana #SaludGástrica #AMG #GastritisNoEsNormal", "nota": "Recopilatorio de momentos de piezas anteriores (con derechos), tono cálido de cierre, 45-60 seg.", "estado": "✅ Redactado — pendiente Polar QC", "iso": "2026-12-11"}, {"n": 64, "fecha": "12/Dic", "dia": "Sáb", "mes": "Diciembre", "plataforma": "Instagram", "pilar": "P2 · Lo que no sabías", "carril": "C1", "formato": "Carrusel", "hook": "2026 en cifras: lo que aprendimos sobre H. pylori en México", "caption": "📋 CARRUSEL — Cifras del año.\n\nSlide 1: 2026 en cifras: lo que aprendimos sobre H. pylori en México.\n\nSlide 2: 7 de cada 10 estómagos mexicanos portan esta bacteria.\n\nSlide 3: 90% del cáncer gástrico inicia con esta infección (IARC, Clase I).\n\nSlide 4: Una prueba de aliento de 20 minutos, sin piquetes, puede detectarla.\n\nSlide 5: Con el tratamiento correcto, la tasa de curación supera el 90%.\n\nSlide 6: La conversación sigue en 2027. Pregunta a tu médico.\n\nCampaña educativa avalada por la AMG A.C. No sustituye la consulta médica.", "hashtags": "#MéxicoSinCáncerGástrico #HelicobacterPylori #DetecciónTemprana #SaludGástrica #AMG #GastritisNoEsNormal", "nota": "6 slides recopilatorio de cifras del año, navy/teal, sello AMG en slide final.", "estado": "✅ Redactado — pendiente Polar QC", "iso": "2026-12-12"}, {"n": 65, "fecha": "13/Dic", "dia": "Dom", "mes": "Diciembre", "plataforma": "LinkedIn", "pilar": "P4 · Pregúntale a tu médico", "carril": "C1", "formato": "Post imagen", "hook": "Antes de cerrar el expediente del año: una última recomendación", "caption": "Para sus pacientes con gastritis recurrente, tabaquismo o antecedente familiar de cáncer gástrico que no se hayan realizado prueba de H. pylori este año: diciembre es buen momento para dejarlo agendado.\n\nLa campaña de detección 2026 permanece activa en sedes participantes hasta el cierre del año.\n\nGracias por su acompañamiento a esta conversación durante 2026.\n\nMás información: mexicosincancergastrico.com.mx/para-medicos", "hashtags": "#MéxicoSinCáncerGástrico #HelicobacterPylori #DetecciónTemprana #SaludGástrica #AMG #medicina #PyloridDetection", "nota": "Post imagen tono institucional de cierre, sello AMG, tipografía Montserrat.", "estado": "✅ Redactado — pendiente Polar QC", "iso": "2026-12-13"}, {"n": 66, "fecha": "18/Dic", "dia": "Vie", "mes": "Diciembre", "plataforma": "Instagram", "pilar": "P3 · Hay solución mejor", "carril": "C1", "formato": "Reel", "hook": "Última semana del año para no dejar pendiente tu salud digestiva", "caption": "Antes de las fiestas, las cenas y los desvelos de fin de año, una recomendación simple: si algo quedó pendiente de revisar, agenda tu consulta antes de que empiece 2027.\n\nLa prueba de detección de H. pylori toma 20 minutos, sin piquetes, sin endoscopía.\n\nPregunta a tu médico por el tratamiento que está mejorando significativamente su tasa de curación.\n\n🔗 mexicosincancergastrico.com.mx\n\nCampaña educativa avalada por la AMG A.C. No sustituye la consulta médica.", "hashtags": "#MéxicoSinCáncerGástrico #HelicobacterPylori #DetecciónTemprana #SaludGástrica #AMG #GastritisNoEsNormal #saludmexico", "nota": "Reel de cierre, tono cálido navideño sutil sin saturar, franja divisora teal→navy, 20-25 seg.", "estado": "✅ Redactado — pendiente Polar QC", "iso": "2026-12-18"}];
+  const CAL_ICON = {"Instagram":"📸","TikTok":"🎵","Facebook":"👍","LinkedIn":"💼"};
+
+  function esc(s) {
+    const d = document.createElement('div');
+    d.innerText = s || '';
+    return d.innerHTML;
+  }
+
+  function populateFilters() {
+    const meses = [...new Set(CAL_DATA.map(p => p.mes))];
+    const plataformas = [...new Set(CAL_DATA.map(p => p.plataforma))].sort();
+    const pilares = [...new Set(CAL_DATA.map(p => p.pilar))].sort();
+    const carriles = [...new Set(CAL_DATA.map(p => p.carril))].sort();
+    const fill = (id, arr) => {
+      const sel = document.getElementById(id);
+      arr.forEach(v => {
+        const o = document.createElement('option');
+        o.value = v; o.textContent = v;
+        sel.appendChild(o);
+      });
+    };
+    fill('cal-f-mes', meses);
+    fill('cal-f-plataforma', plataformas);
+    fill('cal-f-pilar', pilares);
+    fill('cal-f-carril', carriles);
+  }
+
+  function weekLabel(iso) {
+    const d = new Date(iso + "T00:00:00");
+    const day = d.getDay();
+    const diff = (day === 0 ? -6 : 1) - day;
+    const monday = new Date(d);
+    monday.setDate(d.getDate() + diff);
+    const sunday = new Date(monday);
+    sunday.setDate(monday.getDate() + 6);
+    const fmt = (dt) => dt.toLocaleDateString('es-MX', { day: 'numeric', month: 'short' });
+    return { key: monday.toISOString().slice(0,10), label: `Semana del ${fmt(monday)} al ${fmt(sunday)}` };
+  }
+
+  function buildCard(p) {
+    const card = document.createElement('div');
+    card.className = 'cal-card';
+    const icon = CAL_ICON[p.plataforma] || '📱';
+    const estadoClass = p.estado && p.estado.includes('⏳') ? 'cal-tag-pend' : 'cal-tag-ok';
+    const carrilClass = p.carril === 'C2' ? 'cal-tag-c2' : 'cal-tag-c1';
+    const uid = 'cal-cap-' + p.n;
+    card.innerHTML = `
+      <div class="cal-card-top">
+        <div class="cal-plat-tag">${icon} ${esc(p.plataforma)}</div>
+        <div class="cal-date-tag">${esc(p.fecha)} · ${esc(p.dia)}</div>
       </div>
-    </div>
-    <!-- Right: Quiz card -->
-    <div class="qwrap s-right">
-      <div class="qcard">
-        <div class="qhd">
-          <div class="qhd-lbl">Test de Riesgo · Criterios ACG / AMG</div>
-          <div class="prog-row">
-            <div class="prog-dots" id="progDots">
-              <div class="pd act" id="pd1"></div>
-              <div class="pd" id="pd2"></div>
-              <div class="pd" id="pd3"></div>
-              <div class="pd" id="pd4"></div>
-              <div class="pd" id="pd5"></div>
-              <div class="pd" id="pd6"></div>
-            </div>
-            <div class="prog-t" id="progTxt">Pregunta 1 de 6</div>
-          </div>
-        </div>
-        <div class="qbody">
-          <!-- Q1 -->
-          <div class="qstep act" data-step="1">
-            <div class="qn">Pregunta 1</div>
-            <div class="qq">¿Con qué frecuencia tienes dolor o malestar en la zona del estómago?</div>
-            <div class="qhint">Considera el área del abdomen superior, entre el ombligo y el pecho.</div>
-            <div class="qopts">
-              <button class="qo" data-v="0" onclick="sel(this,1)"><em>😊</em> Nunca o muy rara vez</button>
-              <button class="qo" data-v="1" onclick="sel(this,1)"><em>😐</em> A veces (1–2 veces por semana)</button>
-              <button class="qo" data-v="2" onclick="sel(this,1)"><em>😟</em> Frecuentemente (casi todos los días)</button>
-              <button class="qo" data-v="3" onclick="sel(this,1)"><em>😣</em> Constantemente</button>
-            </div>
-            <div class="qnav"><button class="qbk" disabled>← Atrás</button><button class="qnx" id="qn1" onclick="nxt(1)" disabled>Siguiente →</button></div>
-          </div>
-          <!-- Q2 -->
-          <div class="qstep" data-step="2">
-            <div class="qn">Pregunta 2</div>
-            <div class="qq">¿Sientes acidez, reflujo o ardor después de comer?</div>
-            <div class="qhint">Sensación de quemadura en el pecho o garganta.</div>
-            <div class="qopts">
-              <button class="qo" data-v="0" onclick="sel(this,2)"><em>😊</em> Casi nunca</button>
-              <button class="qo" data-v="1" onclick="sel(this,2)"><em>😐</em> Después de comidas pesadas</button>
-              <button class="qo" data-v="2" onclick="sel(this,2)"><em>😟</em> Regularmente tras cualquier comida</button>
-              <button class="qo" data-v="3" onclick="sel(this,2)"><em>😣</em> Con frecuencia, independiente de lo que como</button>
-            </div>
-            <div class="qnav"><button class="qbk" onclick="back(2)">← Atrás</button><button class="qnx" id="qn2" onclick="nxt(2)" disabled>Siguiente →</button></div>
-          </div>
-          <!-- Q3 -->
-          <div class="qstep" data-step="3">
-            <div class="qn">Pregunta 3</div>
-            <div class="qq">¿Alguna vez has tenido gastritis diagnosticada o úlceras estomacales?</div>
-            <div class="qhint">Incluyendo diagnósticos anteriores aunque hayan sido tratados.</div>
-            <div class="qopts">
-              <button class="qo" data-v="0" onclick="sel(this,3)"><em>✅</em> No, nunca</button>
-              <button class="qo" data-v="1" onclick="sel(this,3)"><em>❓</em> Creo que sí pero no tengo diagnóstico formal</button>
-              <button class="qo" data-v="2" onclick="sel(this,3)"><em>📋</em> Sí, he tenido gastritis antes</button>
-              <button class="qo" data-v="3" onclick="sel(this,3)"><em>⚠️</em> Sí, úlceras o gastritis crónica</button>
-            </div>
-            <div class="qnav"><button class="qbk" onclick="back(3)">← Atrás</button><button class="qnx" id="qn3" onclick="nxt(3)" disabled>Siguiente →</button></div>
-          </div>
-          <!-- Q4 -->
-          <div class="qstep" data-step="4">
-            <div class="qn">Pregunta 4</div>
-            <div class="qq">¿Tienes familiares directos con úlceras, gastritis crónica o cáncer gástrico?</div>
-            <div class="qhint">Padres, hermanos o abuelos con estas condiciones.</div>
-            <div class="qopts">
-              <button class="qo" data-v="0" onclick="sel(this,4)"><em>✅</em> No que yo sepa</button>
-              <button class="qo" data-v="1" onclick="sel(this,4)"><em>🤔</em> Tal vez, no estoy seguro/a</button>
-              <button class="qo" data-v="2" onclick="sel(this,4)"><em>👨‍👩‍👧</em> Sí, un familiar con úlcera o gastritis</button>
-              <button class="qo" data-v="3" onclick="sel(this,4)"><em>⚠️</em> Sí, cáncer gástrico en mi familia</button>
-            </div>
-            <div class="qnav"><button class="qbk" onclick="back(4)">← Atrás</button><button class="qnx" id="qn4" onclick="nxt(4)" disabled>Siguiente →</button></div>
-          </div>
-          <!-- Q5 -->
-          <div class="qstep" data-step="5">
-            <div class="qn">Pregunta 5</div>
-            <div class="qq">¿Sientes náuseas, eructos frecuentes o sensación de llenura rápida?</div>
-            <div class="qhint">Síntomas digestivos que pueden acompañar la infección por H. pylori.</div>
-            <div class="qopts">
-              <button class="qo" data-v="0" onclick="sel(this,5)"><em>😊</em> Rara vez o nunca</button>
-              <button class="qo" data-v="1" onclick="sel(this,5)"><em>😐</em> Ocasionalmente</button>
-              <button class="qo" data-v="2" onclick="sel(this,5)"><em>😟</em> Frecuentemente</button>
-              <button class="qo" data-v="3" onclick="sel(this,5)"><em>😣</em> Casi siempre, afecta mi día a día</button>
-            </div>
-            <div class="qnav"><button class="qbk" onclick="back(5)">← Atrás</button><button class="qnx" id="qn5" onclick="nxt(5)" disabled>Siguiente →</button></div>
-          </div>
-          <!-- Q6 -->
-          <div class="qstep" data-step="6">
-            <div class="qn">Pregunta 6</div>
-            <div class="qq">¿Te has realizado alguna prueba de <em class="hpyl-dark">H. pylori</em> (aliento, endoscopía o sangre)?</div>
-            <div class="qhint">Indica si ha habido alguna evaluación médica previa para esta bacteria.</div>
-            <div class="qopts">
-              <button class="qo" data-v="0" onclick="sel(this,6)"><em>✅</em> Sí, y fue negativa</button>
-              <button class="qo" data-v="0" onclick="sel(this,6)"><em>📋</em> Sí, tuve tratamiento y me curé</button>
-              <button class="qo" data-v="2" onclick="sel(this,6)"><em>❓</em> No, nunca me he realizado ninguna prueba</button>
-              <button class="qo" data-v="3" onclick="sel(this,6)"><em>⚠️</em> Sí, fue positiva pero no recibí tratamiento</button>
-            </div>
-            <div class="qnav"><button class="qbk" onclick="back(6)">← Atrás</button><button class="qnx" id="qn6" onclick="calcRes()" disabled>Ver resultado →</button></div>
-          </div>
-          <!-- Result -->
-          <div id="qres">
-            <div id="res-ico-el" class="res-ico"></div>
-            <div id="res-lvl-el" class="res-lvl"></div>
-            <div id="res-ttl-el" class="res-ttl"></div>
-            <div id="res-bd-el" class="res-bd"></div>
-            <div class="res-acts">
-              <button class="res-p" onclick="window.open('https://www.gastro.org.mx/socios/directorio-socios','_blank')">Ver directorio de especialistas →</button>
-              <button class="res-s" onclick="resetQuiz()">Repetir test</button>
-            </div>
-            <p class="res-disc">Esta evaluación es orientativa y no constituye diagnóstico médico. Criterios basados en <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5536265/" target="_blank" rel="noopener" style="color:var(--teal-d)">ACG Clinical Guideline 2017</a> y el <a href="https://www.revistagastroenterologiamexico.org/es-v-consenso-mexicano-sobre-el-articulo-S0375090625001697" target="_blank" rel="noopener" style="color:var(--teal-d)">V Consenso Mexicano AMG 2025</a>.</p>
-          </div>
-        </div>
+      <div class="cal-visual"><span>${esc(p.nota)}</span></div>
+      <div class="cal-hook">${esc(p.hook)}</div>
+      <div class="cal-tag-row">
+        <span class="cal-tag cal-tag-pilar">${esc(p.pilar)}</span>
+        <span class="cal-tag ${carrilClass}">${esc(p.carril)}</span>
+        <span class="cal-tag cal-tag-formato">${esc(p.formato)}</span>
       </div>
-    </div>
-  </div>
+      <div class="cal-tag-row"><span class="cal-tag ${estadoClass}">${esc(p.estado)}</span></div>
+      <button class="cal-toggle" data-target="${uid}">Ver caption completo ▼</button>
+      <div class="cal-caption" id="${uid}">${esc(p.caption)}\n\n<span class="cal-hashtags">${esc(p.hashtags)}</span></div>
+    `;
+    card.querySelector('.cal-toggle').addEventListener('click', function() {
+      const el = document.getElementById(uid);
+      el.classList.toggle('open');
+      this.textContent = el.classList.contains('open') ? 'Ocultar caption ▲' : 'Ver caption completo ▼';
+    });
+    return card;
+  }
+
+  function render() {
+    const mes = document.getElementById('cal-f-mes').value;
+    const plataforma = document.getElementById('cal-f-plataforma').value;
+    const pilar = document.getElementById('cal-f-pilar').value;
+    const carril = document.getElementById('cal-f-carril').value;
+    const search = document.getElementById('cal-f-search').value.toLowerCase();
+
+    let filtered = CAL_DATA.filter(p => {
+      if (mes && p.mes !== mes) return false;
+      if (plataforma && p.plataforma !== plataforma) return false;
+      if (pilar && p.pilar !== pilar) return false;
+      if (carril && p.carril !== carril) return false;
+      if (search) {
+        const hay = (p.hook + " " + p.caption + " " + p.hashtags).toLowerCase();
+        if (!hay.includes(search)) return false;
+      }
+      return true;
+    });
+
+    document.getElementById('cal-count-pill').textContent = filtered.length + " pieza" + (filtered.length===1?"":"s");
+
+    const main = document.getElementById('cal-main');
+    main.innerHTML = "";
+
+    if (filtered.length === 0) {
+      main.innerHTML = '<div class="cal-empty">No hay piezas que coincidan con estos filtros.</div>';
+      return;
+    }
+
+    const monthOrder = [];
+    const byMonth = {};
+    filtered.forEach(p => {
+      if (!byMonth[p.mes]) { byMonth[p.mes] = []; monthOrder.push(p.mes); }
+      byMonth[p.mes].push(p);
+    });
+
+    monthOrder.forEach(mesName => {
+      const pieces = byMonth[mesName];
+      const monthSec = document.createElement('div');
+      monthSec.className = 'cal-month-section';
+      monthSec.innerHTML = `<div class="cal-month-header"><h3>${mesName} 2026</h3><span class="cal-month-count">${pieces.length} pieza${pieces.length===1?'':'s'}</span></div>`;
+
+      const byWeek = {};
+      const weekOrder = [];
+      pieces.forEach(p => {
+        const w = weekLabel(p.iso);
+        if (!byWeek[w.key]) { byWeek[w.key] = { label: w.label, items: [] }; weekOrder.push(w.key); }
+        byWeek[w.key].items.push(p);
+      });
+
+      weekOrder.forEach(wk => {
+        const wb = document.createElement('div');
+        wb.className = 'cal-week-block';
+        const grid = document.createElement('div');
+        grid.className = 'cal-grid';
+        byWeek[wk].items.forEach(p => grid.appendChild(buildCard(p)));
+        wb.innerHTML = `<div class="cal-week-label">${byWeek[wk].label}</div>`;
+        wb.appendChild(grid);
+        monthSec.appendChild(wb);
+      });
+
+      main.appendChild(monthSec);
+    });
+  }
+
+  populateFilters();
+  render();
+  ['cal-f-mes','cal-f-plataforma','cal-f-pilar','cal-f-carril'].forEach(id => document.getElementById(id).addEventListener('change', render));
+  document.getElementById('cal-f-search').addEventListener('input', render);
+})();
+</script>
 </section>
-
-<!-- ══ NEWSLETTER ══ -->
-<section class="nl-sec">
-  <div class="nl-i">
-    <div class="ey s-fade">Mantente informado</div>
-    <h2 class="s-fade">Recibe contenido validado sobre salud gástrica</h2>
-    <p class="s-fade">Artículos, consejos de especialistas y actualizaciones del mundo de la gastroenterología, directamente en tu correo. Sin spam.</p>
-    <div class="nl-form s-fade">
-      <input class="nl-inp" type="email" placeholder="tu@correo.com">
-      <button class="nl-btn" onclick="showToast('¡Suscripción disponible al lanzar!')">Suscribirme →</button>
-    </div>
-    <p class="nl-disc s-fade">Sin spam. Puedes cancelar cuando quieras. Información basada en evidencia científica publicada.</p>
-    <div class="nl-soc s-fade">
-      <a class="spill" href="#" onclick="showToast('¡Redes sociales próximamente!')">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="var(--teal-d)"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" fill="white"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke="white" stroke-width="2"/></svg>
-        Instagram
-      </a>
-      <a class="spill" href="#" onclick="showToast('¡Redes sociales próximamente!')">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="#1877F2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
-        Facebook
-      </a>
-      <a class="spill" href="#" onclick="showToast('¡Redes sociales próximamente!')">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="var(--navy)"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg>
-        Twitter / X
-      </a>
-    </div>
-  </div>
-</section>
-
-
-<!-- ══ FUENTES CONFIABLES ══ ELIMINADA — contenido integrado en sección Ciencia + Evidencia -->
-<!-- placeholder para mantener el ancla de navegación si se requiere -->
-<span id="evidencia" style="display:block;height:0;visibility:hidden"></span>
 
 
 <!-- ══ CTA STRIP — Campaign style diagonal ══ -->
