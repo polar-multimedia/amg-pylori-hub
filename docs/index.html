@@ -845,6 +845,8 @@ footer{background:var(--navy);color:rgba(255,255,255,.5);padding:4rem 2rem 2rem}
 .cal-card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:.5rem}
 .cal-plat-tag{display:flex;align-items:center;gap:.35rem;font-family:'Montserrat',sans-serif;font-size:.72rem;font-weight:800;color:var(--navy)}
 .cal-date-tag{font-size:.72rem;color:var(--muted);font-weight:600;white-space:nowrap}
+.cal-size-badge{display:inline-flex;align-items:center;gap:.35rem;align-self:flex-start;background:var(--navy);color:#fff;font-family:'Montserrat',sans-serif;font-size:.74rem;font-weight:800;letter-spacing:.02em;padding:.32rem .7rem;border-radius:8px}
+.cal-size-badge svg{width:13px;height:13px;flex-shrink:0}
 .cal-visual{background:linear-gradient(135deg,var(--navy) 0%,var(--teal-d) 100%);border-radius:12px;padding:.9rem;color:#fff;font-size:.72rem;line-height:1.5;min-height:64px;display:flex;align-items:center;position:relative;overflow:hidden}
 .cal-visual::before{content:'🖼';position:absolute;top:.5rem;right:.6rem;opacity:.35;font-size:1.1rem}
 .cal-visual span{position:relative;z-index:1}
@@ -982,11 +984,18 @@ footer{background:var(--navy);color:rgba(255,255,255,.5);padding:4rem 2rem 2rem}
     const carrilClass = p.carril === 'C2' ? 'cal-tag-c2' : 'cal-tag-c1';
     const uid = 'cal-cap-' + p.n;
     const jsonUid = 'cal-json-' + p.n;
-    const numImgs = (CAL_SPECS[String(p.n)] || []).length;
+    const pieceSpecs = CAL_SPECS[String(p.n)] || [];
+    const numImgs = pieceSpecs.length;
+    const dims = pieceSpecs[0] ? pieceSpecs[0].dimensiones_px : null;
+    const dimsLabel = dims ? `${dims.ancho} × ${dims.alto} px` : 'N/D';
     card.innerHTML = `
       <div class="cal-card-top">
         <div class="cal-plat-tag">${icon} ${esc(p.plataforma)}</div>
         <div class="cal-date-tag">${esc(p.fecha)} · ${esc(p.dia)}</div>
+      </div>
+      <div class="cal-size-badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 15l4-4a2 2 0 0 1 2.8 0L14 15"/><circle cx="16" cy="8" r="1.5"/></svg>
+        ${esc(dimsLabel)}${numImgs > 1 ? ' · ' + numImgs + ' imágenes' : ''}
       </div>
       <div class="cal-visual"><span>${esc(p.nota)}</span></div>
       <div class="cal-hook">${esc(p.hook)}</div>
