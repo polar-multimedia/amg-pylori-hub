@@ -538,6 +538,62 @@ footer{background:var(--navy);color:rgba(255,255,255,.5);padding:4rem 2rem 2rem}
 .mob-float{display:none;position:fixed;bottom:0;left:0;right:0;z-index:900;padding:1rem 1.5rem;background:rgba(13,27,110,.97);backdrop-filter:blur(16px);border-top:1px solid rgba(255,255,255,.08)}
 @media(max-width:768px){.mob-float{display:block}}
 .mob-btn{width:100%;background:var(--teal);color:#fff;border:none;padding:15px;border-radius:50px;font-family:'Montserrat',sans-serif;font-weight:800;font-size:.95rem;cursor:pointer;box-shadow:0 8px 24px rgba(48,184,176,.4)}
+
+/* ════════════════════════════
+   OLAS DE INFLUENCERS
+════════════════════════════ */
+.ola-sec{padding:6rem 2rem;background:linear-gradient(180deg,var(--bg) 0%,var(--bg2) 100%)}
+.ola-i{max-width:1200px;margin:0 auto}
+.ola-top{margin-bottom:3rem;max-width:760px}
+.ola-top h2{font-size:clamp(1.8rem,3.5vw,2.8rem);color:var(--navy);margin-bottom:.9rem}
+.ola-lead{font-size:.95rem;color:var(--muted);line-height:1.8}
+.ola-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin:2.5rem 0 3rem}
+.ola-kpi{background:#fff;border:1.5px solid var(--border);border-radius:18px;padding:1.4rem 1.5rem}
+.ola-kpi-n{font-family:'Montserrat',sans-serif;font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;
+  background:linear-gradient(135deg,#183888 0%,#30B8B0 100%);-webkit-background-clip:text;
+  background-clip:text;color:transparent;line-height:1.1}
+.ola-kpi-l{font-size:.75rem;color:var(--muted);margin-top:.4rem;letter-spacing:.02em}
+.ola-g{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.ola-c{background:#fff;border:1.5px solid var(--border);border-radius:22px;overflow:hidden;
+  display:flex;flex-direction:column;transition:transform .35s,box-shadow .35s}
+.ola-c:hover{transform:translateY(-4px);box-shadow:0 18px 40px rgba(24,56,136,.12)}
+.ola-hd{background:linear-gradient(135deg,#183888 0%,#30B8B0 100%);padding:1.5rem 1.5rem 1.3rem;color:#fff}
+.ola-num{font-family:'Montserrat',sans-serif;font-size:.7rem;font-weight:800;letter-spacing:.16em;
+  text-transform:uppercase;color:rgba(255,255,255,.72)}
+.ola-name{font-family:'Montserrat',sans-serif;font-size:1.25rem;font-weight:800;margin:.35rem 0 .2rem;color:#fff}
+.ola-date{font-size:.78rem;color:rgba(255,255,255,.82)}
+.ola-bd{padding:1.5rem;flex:1;display:flex;flex-direction:column}
+.ola-sub{font-family:'Montserrat',sans-serif;font-size:.66rem;font-weight:800;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--teal-d);margin-bottom:.85rem}
+.ola-t{display:flex;gap:.85rem;padding:.8rem 0;border-bottom:1px solid var(--border)}
+.ola-t:last-of-type{border-bottom:0}
+.ola-t-av{width:38px;height:38px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;
+  justify-content:center;font-family:'Montserrat',sans-serif;font-size:.72rem;font-weight:800;
+  background:rgba(48,184,176,.12);color:var(--teal-dk);border:1.5px solid rgba(48,184,176,.35)}
+.ola-t-b{flex:1;min-width:0}
+.ola-t-n{font-family:'Montserrat',sans-serif;font-size:.86rem;font-weight:700;color:var(--navy);line-height:1.3}
+.ola-t-e{font-size:.71rem;color:var(--muted);margin-top:.12rem}
+.ola-t-d{font-size:.71rem;color:var(--teal-d);font-weight:600;margin-top:.3rem}
+.ola-t-v{text-align:right;flex-shrink:0}
+.ola-t-v-n{font-family:'Montserrat',sans-serif;font-size:.86rem;font-weight:800;color:var(--navy)}
+.ola-t-v-l{font-size:.6rem;color:var(--muted);letter-spacing:.03em}
+.ola-slot{display:flex;align-items:center;gap:.6rem;padding:.7rem .85rem;margin-top:.7rem;
+  background:var(--bg);border:1px dashed var(--border);border-radius:12px}
+.ola-slot-t{font-size:.74rem;color:var(--muted)}
+.ola-slot-t b{color:var(--navy);font-weight:700}
+.ola-ft{margin-top:auto;padding-top:1.2rem}
+.ola-reach{background:var(--bg);border-radius:14px;padding:1rem 1.1rem;margin-bottom:.8rem}
+.ola-reach-n{font-family:'Montserrat',sans-serif;font-size:1.5rem;font-weight:800;color:var(--navy);line-height:1.1}
+.ola-reach-l{font-size:.68rem;color:var(--muted);margin-top:.2rem}
+.ola-pauta{display:flex;align-items:flex-start;gap:.55rem;padding:.85rem 1rem;
+  background:rgba(48,184,176,.08);border-left:3px solid var(--teal);border-radius:0 12px 12px 0}
+.ola-pauta-ico{font-size:.9rem;line-height:1.2}
+.ola-pauta-t{font-size:.72rem;color:var(--navy);line-height:1.55}
+.ola-pauta-t b{font-weight:700}
+.ola-note{margin-top:2.5rem;font-size:.72rem;color:var(--muted);line-height:1.7;
+  padding-top:1.2rem;border-top:1px solid var(--border)}
+@media(max-width:980px){.ola-g{grid-template-columns:1fr}.ola-kpis{grid-template-columns:1fr}}
+
 </style>
 </head>
 <body>
@@ -553,6 +609,7 @@ footer{background:var(--navy);color:rgba(255,255,255,.5);padding:4rem 2rem 2rem}
       <a href="#categorias">Información</a>
       <a href="#articulos">Artículos</a>
       <a href="#amg">Especialistas</a>
+        <a href="#olas">Influencers</a>
     </nav>
     <div style="display:flex;align-items:center;gap:1rem">
       <div class="amg-pill" style="display:flex;align-items:center;gap:8px;padding:4px 14px 4px 6px;">
@@ -569,6 +626,7 @@ footer{background:var(--navy);color:rgba(255,255,255,.5);padding:4rem 2rem 2rem}
   <a href="#categorias" onclick="toggleMobNav()">Información</a>
   <a href="#articulos" onclick="toggleMobNav()">Artículos</a>
   <a href="#amg" onclick="toggleMobNav()">Especialistas</a>
+    <a href="#olas" onclick="toggleMobNav()">Influencers</a>
 </nav>
 
 <!-- ══ HERO ══ -->
@@ -697,7 +755,7 @@ footer{background:var(--navy);color:rgba(255,255,255,.5);padding:4rem 2rem 2rem}
 </section>
 
 <!-- ══ VOCES CALIFICADAS AMG ══ -->
-<section class="inf-sec">
+<section class="inf-sec" id="amg">
   <div class="inf-i">
     <div class="inf-top s-fade">
       <div>
@@ -818,6 +876,37 @@ footer{background:var(--navy);color:rgba(255,255,255,.5);padding:4rem 2rem 2rem}
 </section>
 
 <!-- ══ CALENDARIO SEMANAL DE CONTENIDO (reemplaza Ciencia + Evidencia) ══ -->
+
+<!-- ══ OLAS DE INFLUENCERS ══ -->
+<section class="ola-sec" id="olas">
+  <div class="ola-i">
+    <div class="ola-top s-fade">
+      <div class="ey">Pool de influencers médicos</div>
+      <h2>Tres olas de activación</h2>
+      <div class="div-teal"></div>
+      <p class="ola-lead">El pool de voces médicas se despliega en tres momentos pivote de la campaña:
+      lanzamiento, consolidación clínica y cierre navideño. Cada ola combina divulgación de alcance
+      masivo con especialistas en aparato digestivo, y se amplifica con pauta sobre las piezas de
+      mejor desempeño orgánico.</p>
+    </div>
+
+    <div class="ola-kpis s-fade">
+      <div class="ola-kpi"><div class="ola-kpi-n">903,253</div>
+        <div class="ola-kpi-l">Alcance orgánico estimado · total de las tres olas</div></div>
+      <div class="ola-kpi"><div class="ola-kpi-n">3 olas</div>
+        <div class="ola-kpi-l">Junio–julio · septiembre · noviembre–diciembre</div></div>
+      <div class="ola-kpi"><div class="ola-kpi-n">5 voces</div>
+        <div class="ola-kpi-l">Médicos divulgadores y gastroenterólogos + slots TikTok y voz familiar</div></div>
+    </div>
+
+    <div class="ola-g"><article class="ola-c s-fade"><div class="ola-hd"><div class="ola-num">Ola 1</div><div class="ola-name">Lanzamiento</div><div class="ola-date">Junio — Julio 2026</div></div><div class="ola-bd"><div class="ola-sub">Talento confirmado</div><div class="ola-t"><div class="ola-t-av">MP</div><div class="ola-t-b"><div class="ola-t-n">Dr. Miguel Padilla</div><div class="ola-t-e">Médico general · 2M seguidores</div><div class="ola-t-d">1 Reel</div></div><div class="ola-t-v"><div class="ola-t-v-n">387,166</div><div class="ola-t-v-l">views prom</div></div></div><div class="ola-t"><div class="ola-t-av">GG</div><div class="ola-t-b"><div class="ola-t-n">Dr. Gerardo García</div><div class="ola-t-e">Médico general · 80,100 seguidores</div><div class="ola-t-d">1 Reel + 1 Historia</div></div><div class="ola-t-v"><div class="ola-t-v-n">55,758</div><div class="ola-t-v-l">views prom</div></div></div><div class="ola-t"><div class="ola-t-av">GR</div><div class="ola-t-b"><div class="ola-t-n">Dra. Gabriela Rangel</div><div class="ola-t-e">Gastroenteróloga · 24,200 seguidores</div><div class="ola-t-d">2 Historias</div></div><div class="ola-t-v"><div class="ola-t-v-n">11,824</div><div class="ola-t-v-l">views prom</div></div></div><div class="ola-slot"><div class="ola-slot-t"><b>Slot médico joven TikTok</b> · 2 TikToks de gancho viral · segmento &lt;30 años</div></div><div class="ola-ft"><div class="ola-reach"><div class="ola-reach-n">442,924</div><div class="ola-reach-l">Alcance orgánico estimado · suma de views promedio de los Reels</div></div><div class="ola-pauta"><div class="ola-pauta-ico">◆</div><div class="ola-pauta-t"><b>Spark Ads</b> · 7 días · sobre los Reels de mayor alcance orgánico</div></div></div></div></article><article class="ola-c s-fade"><div class="ola-hd"><div class="ola-num">Ola 2</div><div class="ola-name">Consolidación clínica</div><div class="ola-date">Septiembre 2026</div></div><div class="ola-bd"><div class="ola-sub">Talento confirmado</div><div class="ola-t"><div class="ola-t-av">JB</div><div class="ola-t-b"><div class="ola-t-n">Dr. José Bandera</div><div class="ola-t-e">Gastroenterólogo · 91,700 seguidores</div><div class="ola-t-d">1 Reel + 1 Historia</div></div><div class="ola-t-v"><div class="ola-t-v-n">4,440</div><div class="ola-t-v-l">views prom</div></div></div><div class="ola-t"><div class="ola-t-av">GR</div><div class="ola-t-b"><div class="ola-t-n">Dra. Gabriela Rangel</div><div class="ola-t-e">Gastroenteróloga · 24,200 seguidores</div><div class="ola-t-d">1 Reel + 1 Feed</div></div><div class="ola-t-v"><div class="ola-t-v-n">11,824</div><div class="ola-t-v-l">views prom</div></div></div><div class="ola-t"><div class="ola-t-av">FC</div><div class="ola-t-b"><div class="ola-t-n">Dr. Francisco Canell</div><div class="ola-t-e">Gastroenterólogo · 8,600 seguidores</div><div class="ola-t-d">1 Reel + 1 Historia</div></div><div class="ola-t-v"><div class="ola-t-v-n">1,141</div><div class="ola-t-v-l">views prom</div></div></div><div class="ola-ft"><div class="ola-reach"><div class="ola-reach-n">17,405</div><div class="ola-reach-l">Alcance orgánico estimado · suma de views promedio de los Reels</div></div><div class="ola-pauta"><div class="ola-pauta-ico">◆</div><div class="ola-pauta-t"><b>Spark Ads</b> · 7 días · sobre el Reel de mayor tracción de la ola</div></div></div></div></article><article class="ola-c s-fade"><div class="ola-hd"><div class="ola-num">Ola 3</div><div class="ola-name">Cierre navideño</div><div class="ola-date">Noviembre — Diciembre 2026</div></div><div class="ola-bd"><div class="ola-sub">Talento confirmado</div><div class="ola-t"><div class="ola-t-av">MP</div><div class="ola-t-b"><div class="ola-t-n">Dr. Miguel Padilla</div><div class="ola-t-e">Médico general · 2M seguidores</div><div class="ola-t-d">1 Reel</div></div><div class="ola-t-v"><div class="ola-t-v-n">387,166</div><div class="ola-t-v-l">views prom</div></div></div><div class="ola-t"><div class="ola-t-av">GG</div><div class="ola-t-b"><div class="ola-t-n">Dr. Gerardo García</div><div class="ola-t-e">Médico general · 80,100 seguidores</div><div class="ola-t-d">1 Reel + 1 Historia</div></div><div class="ola-t-v"><div class="ola-t-v-n">55,758</div><div class="ola-t-v-l">views prom</div></div></div><div class="ola-t"><div class="ola-t-av">GR</div><div class="ola-t-b"><div class="ola-t-n">Dra. Gabriela Rangel</div><div class="ola-t-e">Gastroenteróloga · 24,200 seguidores</div><div class="ola-t-d">2 Historias</div></div><div class="ola-t-v"><div class="ola-t-v-n">11,824</div><div class="ola-t-v-l">views prom</div></div></div><div class="ola-slot"><div class="ola-slot-t"><b>Slot voz familiar</b> · 1 Reel navideño + 4 Stories de presencia diaria</div></div><div class="ola-slot"><div class="ola-slot-t"><b>Slot médico joven TikTok</b> · 2 TikToks «propósitos 2027»</div></div><div class="ola-ft"><div class="ola-reach"><div class="ola-reach-n">442,924</div><div class="ola-reach-l">Alcance orgánico estimado · suma de views promedio de los Reels</div></div><div class="ola-pauta"><div class="ola-pauta-ico">◆</div><div class="ola-pauta-t"><b>Spark Ads</b> · 7 días por activación · dos ventanas (noviembre y diciembre)</div></div></div></div></article></div>
+
+    <p class="ola-note">Las cifras de alcance corresponden al promedio de reproducciones por pieza
+    reportado por cada perfil y se presentan como estimación orgánica, sin considerar la amplificación
+    por pauta. El desempeño real se reporta mes a mes en el informe de performance.</p>
+  </div>
+</section>
+
 <section class="cats-sec cal-sec" id="categorias" style="position:relative;overflow:hidden;background:linear-gradient(180deg,#0B1E4D 0%,#102850 100%)">
 <span id="evidencia" style="display:block;height:0;visibility:hidden"></span>
 <style>
@@ -1344,6 +1433,220 @@ footer{background:var(--navy);color:rgba(255,255,255,.5);padding:4rem 2rem 2rem}
 })();
 </script>
 </section>
+
+<!-- ══ RESTAURADO: aware · stats · quiz · newsletter ══ -->
+<section class="aware-sec">
+  <div class="aware-i container">
+    <div class="aware-big-stat s-left">
+      <span class="abs-num">7</span>
+      <span class="abs-denom">de cada 10</span>
+      <p class="abs-label">estómagos mexicanos<br>portan la bacteria <em class="hpyl" style="color:var(--teal-l)">H. pylori</em><br>— y la mayoría no lo sabe.</p>
+    </div>
+    <div class="aware-txt s-right">
+      <div class="ey" style="color:var(--teal-l)">¿Por qué importa?</div>
+      <h2>La infección por <em class="hpyl" style="color:var(--teal-l)">H. pylori</em> es la primera causa infecciosa de cáncer gástrico a nivel mundial.</h2>
+      <div class="div-teal"></div>
+      <p>Se presenta con síntomas como gastritis, acidez y reflujo — señales que millones de personas normalizan. Detectarla a tiempo marca la diferencia.</p>
+      <div class="aware-cta-strip">
+        <strong>Pregunta a tu médico</strong> por el tratamiento que está mejorando <span class="sig">significativamente</span> su tasa de curación.
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="stats-band" id="info">
+  <div class="stats-i">
+    <div class="stat-it s-fade">
+      <span class="stat-n">70%</span>
+      <div class="stat-l">de mexicanos porta <em class="hpyl" style="color:var(--teal-l)">H. pylori</em> sin saberlo</div>
+      <div class="stat-src">AMG, 2024</div>
+    </div>
+    <div class="stat-it s-fade delay-1">
+      <span class="stat-n">90%</span>
+      <div class="stat-l">del cáncer gástrico inicia como infección por <em class="hpyl" style="color:var(--teal-l)">H. pylori</em></div>
+      <div class="stat-src">WGO, 2023</div>
+    </div>
+    <div class="stat-it s-fade delay-2">
+      <span class="stat-n">80%</span>
+      <div class="stat-l">reducción del riesgo de cáncer gástrico al erradicar la bacteria</div>
+      <div class="stat-src">Lancet Gastroenterology, 2022</div>
+    </div>
+    <div class="stat-it s-fade delay-3">
+      <span class="stat-n">95%</span>
+      <div class="stat-l">tasa de curación con el tratamiento correcto y supervisado</div>
+      <div class="stat-src">Guías AMG, 2025</div>
+    </div>
+  </div>
+</section>
+
+<section class="quiz-sec" id="quiz">
+  <div class="quiz-i">
+    <!-- Left -->
+    <div class="ql s-left">
+      <div class="ey">Evaluación de síntomas</div>
+      <h2>Test de riesgo <em class="hpyl-dark">H. pylori</em></h2>
+      <div class="div-teal"></div>
+      <p>Responde 6 preguntas rápidas sobre tus síntomas. Recibirás una evaluación de tu nivel de riesgo y orientación sobre cuándo consultar a tu médico.</p>
+      <div class="qfeats">
+        <div class="qf">
+          <div class="qf-ico">⏱️</div>
+          <div class="qf-txt"><strong>3 minutos</strong><span>Test breve, sin registro necesario</span></div>
+        </div>
+        <div class="qf">
+          <div class="qf-ico">🔒</div>
+          <div class="qf-txt"><strong>Anónimo y confidencial</strong><span>No almacenamos ni compartimos tus datos</span></div>
+        </div>
+        <div class="qf">
+          <div class="qf-ico">🩺</div>
+          <div class="qf-txt"><strong>Basado en criterios clínicos validados</strong><span>ACG Guidelines 2017 · V Consenso AMG 2025</span></div>
+        </div>
+        <div class="qf">
+          <div class="qf-ico">📋</div>
+          <div class="qf-txt"><strong>Resultado inmediato</strong><span>Con recomendación de pasos a seguir</span></div>
+        </div>
+      </div>
+    </div>
+    <!-- Right: Quiz card -->
+    <div class="qwrap s-right">
+      <div class="qcard">
+        <div class="qhd">
+          <div class="qhd-lbl">Test de Riesgo · Criterios ACG / AMG</div>
+          <div class="prog-row">
+            <div class="prog-dots" id="progDots">
+              <div class="pd act" id="pd1"></div>
+              <div class="pd" id="pd2"></div>
+              <div class="pd" id="pd3"></div>
+              <div class="pd" id="pd4"></div>
+              <div class="pd" id="pd5"></div>
+              <div class="pd" id="pd6"></div>
+            </div>
+            <div class="prog-t" id="progTxt">Pregunta 1 de 6</div>
+          </div>
+        </div>
+        <div class="qbody">
+          <!-- Q1 -->
+          <div class="qstep act" data-step="1">
+            <div class="qn">Pregunta 1</div>
+            <div class="qq">¿Con qué frecuencia tienes dolor o malestar en la zona del estómago?</div>
+            <div class="qhint">Considera el área del abdomen superior, entre el ombligo y el pecho.</div>
+            <div class="qopts">
+              <button class="qo" data-v="0" onclick="sel(this,1)"><em>😊</em> Nunca o muy rara vez</button>
+              <button class="qo" data-v="1" onclick="sel(this,1)"><em>😐</em> A veces (1–2 veces por semana)</button>
+              <button class="qo" data-v="2" onclick="sel(this,1)"><em>😟</em> Frecuentemente (casi todos los días)</button>
+              <button class="qo" data-v="3" onclick="sel(this,1)"><em>😣</em> Constantemente</button>
+            </div>
+            <div class="qnav"><button class="qbk" disabled>← Atrás</button><button class="qnx" id="qn1" onclick="nxt(1)" disabled>Siguiente →</button></div>
+          </div>
+          <!-- Q2 -->
+          <div class="qstep" data-step="2">
+            <div class="qn">Pregunta 2</div>
+            <div class="qq">¿Sientes acidez, reflujo o ardor después de comer?</div>
+            <div class="qhint">Sensación de quemadura en el pecho o garganta.</div>
+            <div class="qopts">
+              <button class="qo" data-v="0" onclick="sel(this,2)"><em>😊</em> Casi nunca</button>
+              <button class="qo" data-v="1" onclick="sel(this,2)"><em>😐</em> Después de comidas pesadas</button>
+              <button class="qo" data-v="2" onclick="sel(this,2)"><em>😟</em> Regularmente tras cualquier comida</button>
+              <button class="qo" data-v="3" onclick="sel(this,2)"><em>😣</em> Con frecuencia, independiente de lo que como</button>
+            </div>
+            <div class="qnav"><button class="qbk" onclick="back(2)">← Atrás</button><button class="qnx" id="qn2" onclick="nxt(2)" disabled>Siguiente →</button></div>
+          </div>
+          <!-- Q3 -->
+          <div class="qstep" data-step="3">
+            <div class="qn">Pregunta 3</div>
+            <div class="qq">¿Alguna vez has tenido gastritis diagnosticada o úlceras estomacales?</div>
+            <div class="qhint">Incluyendo diagnósticos anteriores aunque hayan sido tratados.</div>
+            <div class="qopts">
+              <button class="qo" data-v="0" onclick="sel(this,3)"><em>✅</em> No, nunca</button>
+              <button class="qo" data-v="1" onclick="sel(this,3)"><em>❓</em> Creo que sí pero no tengo diagnóstico formal</button>
+              <button class="qo" data-v="2" onclick="sel(this,3)"><em>📋</em> Sí, he tenido gastritis antes</button>
+              <button class="qo" data-v="3" onclick="sel(this,3)"><em>⚠️</em> Sí, úlceras o gastritis crónica</button>
+            </div>
+            <div class="qnav"><button class="qbk" onclick="back(3)">← Atrás</button><button class="qnx" id="qn3" onclick="nxt(3)" disabled>Siguiente →</button></div>
+          </div>
+          <!-- Q4 -->
+          <div class="qstep" data-step="4">
+            <div class="qn">Pregunta 4</div>
+            <div class="qq">¿Tienes familiares directos con úlceras, gastritis crónica o cáncer gástrico?</div>
+            <div class="qhint">Padres, hermanos o abuelos con estas condiciones.</div>
+            <div class="qopts">
+              <button class="qo" data-v="0" onclick="sel(this,4)"><em>✅</em> No que yo sepa</button>
+              <button class="qo" data-v="1" onclick="sel(this,4)"><em>🤔</em> Tal vez, no estoy seguro/a</button>
+              <button class="qo" data-v="2" onclick="sel(this,4)"><em>👨‍👩‍👧</em> Sí, un familiar con úlcera o gastritis</button>
+              <button class="qo" data-v="3" onclick="sel(this,4)"><em>⚠️</em> Sí, cáncer gástrico en mi familia</button>
+            </div>
+            <div class="qnav"><button class="qbk" onclick="back(4)">← Atrás</button><button class="qnx" id="qn4" onclick="nxt(4)" disabled>Siguiente →</button></div>
+          </div>
+          <!-- Q5 -->
+          <div class="qstep" data-step="5">
+            <div class="qn">Pregunta 5</div>
+            <div class="qq">¿Sientes náuseas, eructos frecuentes o sensación de llenura rápida?</div>
+            <div class="qhint">Síntomas digestivos que pueden acompañar la infección por H. pylori.</div>
+            <div class="qopts">
+              <button class="qo" data-v="0" onclick="sel(this,5)"><em>😊</em> Rara vez o nunca</button>
+              <button class="qo" data-v="1" onclick="sel(this,5)"><em>😐</em> Ocasionalmente</button>
+              <button class="qo" data-v="2" onclick="sel(this,5)"><em>😟</em> Frecuentemente</button>
+              <button class="qo" data-v="3" onclick="sel(this,5)"><em>😣</em> Casi siempre, afecta mi día a día</button>
+            </div>
+            <div class="qnav"><button class="qbk" onclick="back(5)">← Atrás</button><button class="qnx" id="qn5" onclick="nxt(5)" disabled>Siguiente →</button></div>
+          </div>
+          <!-- Q6 -->
+          <div class="qstep" data-step="6">
+            <div class="qn">Pregunta 6</div>
+            <div class="qq">¿Te has realizado alguna prueba de <em class="hpyl-dark">H. pylori</em> (aliento, endoscopía o sangre)?</div>
+            <div class="qhint">Indica si ha habido alguna evaluación médica previa para esta bacteria.</div>
+            <div class="qopts">
+              <button class="qo" data-v="0" onclick="sel(this,6)"><em>✅</em> Sí, y fue negativa</button>
+              <button class="qo" data-v="0" onclick="sel(this,6)"><em>📋</em> Sí, tuve tratamiento y me curé</button>
+              <button class="qo" data-v="2" onclick="sel(this,6)"><em>❓</em> No, nunca me he realizado ninguna prueba</button>
+              <button class="qo" data-v="3" onclick="sel(this,6)"><em>⚠️</em> Sí, fue positiva pero no recibí tratamiento</button>
+            </div>
+            <div class="qnav"><button class="qbk" onclick="back(6)">← Atrás</button><button class="qnx" id="qn6" onclick="calcRes()" disabled>Ver resultado →</button></div>
+          </div>
+          <!-- Result -->
+          <div id="qres">
+            <div id="res-ico-el" class="res-ico"></div>
+            <div id="res-lvl-el" class="res-lvl"></div>
+            <div id="res-ttl-el" class="res-ttl"></div>
+            <div id="res-bd-el" class="res-bd"></div>
+            <div class="res-acts">
+              <button class="res-p" onclick="document.getElementById('amg').scrollIntoView({behavior:'smooth'})">Ver especialistas de la AMG →</button>
+              <button class="res-s" onclick="resetQuiz()">Repetir test</button>
+            </div>
+            <p class="res-disc">Esta evaluación es orientativa y no constituye diagnóstico médico. Criterios basados en <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5536265/" target="_blank" rel="noopener" style="color:var(--teal-d)">ACG Clinical Guideline 2017</a> y el <a href="https://www.revistagastroenterologiamexico.org/es-v-consenso-mexicano-sobre-el-articulo-S0375090625001697" target="_blank" rel="noopener" style="color:var(--teal-d)">V Consenso Mexicano AMG 2025</a>.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="nl-sec" id="newsletter">
+  <div class="nl-i">
+    <div class="ey s-fade">Mantente informado</div>
+    <h2 class="s-fade">Recibe contenido validado sobre salud gástrica</h2>
+    <p class="s-fade">Artículos, consejos de especialistas y actualizaciones del mundo de la gastroenterología, directamente en tu correo. Sin spam.</p>
+    <div class="nl-form s-fade">
+      <input class="nl-inp" type="email" placeholder="tu@correo.com">
+      <button class="nl-btn" onclick="showToast('¡Suscripción disponible al lanzar!')">Suscribirme →</button>
+    </div>
+    <p class="nl-disc s-fade">Sin spam. Puedes cancelar cuando quieras. Información basada en evidencia científica publicada.</p>
+    <div class="nl-soc s-fade">
+      <a class="spill" href="#" onclick="showToast('¡Redes sociales próximamente!')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="var(--teal-d)"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" fill="white"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke="white" stroke-width="2"/></svg>
+        Instagram
+      </a>
+      <a class="spill" href="#" onclick="showToast('¡Redes sociales próximamente!')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="#1877F2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+        Facebook
+      </a>
+      <a class="spill" href="#" onclick="showToast('¡Redes sociales próximamente!')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="var(--navy)"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg>
+        Twitter / X
+      </a>
+    </div>
+  </div>
+</section>
+
 <!-- ══ CTA STRIP — Campaign style diagonal ══ -->
 <div class="cta-strip">
   <div class="cta-strip-bg"></div>
@@ -1381,7 +1684,8 @@ footer{background:var(--navy);color:rgba(255,255,255,.5);padding:4rem 2rem 2rem}
         <a href="#quiz">Test de riesgo</a>
         <a href="deteccion.html">Buscador de médicos</a>
         <a href="biblioteca.html">Biblioteca de artículos</a>
-        <a href="#newsletter">Newsletter</a>
+        <a href="#olas">Olas de influencers</a>
+            <a href="#newsletter">Newsletter</a>
       </div>
       <div class="ft-col">
         <h5>Respaldo</h5>
