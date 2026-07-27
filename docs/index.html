@@ -594,6 +594,33 @@ footer{background:var(--navy);color:rgba(255,255,255,.5);padding:4rem 2rem 2rem}
   padding-top:1.2rem;border-top:1px solid var(--border)}
 @media(max-width:980px){.ola-g{grid-template-columns:1fr}.ola-kpis{grid-template-columns:1fr}}
 
+
+/* ════════════════════════════
+   ÁREAS COLAPSABLES
+════════════════════════════ */
+.col-bar{display:flex;align-items:center;justify-content:space-between;gap:1.5rem;flex-wrap:wrap;margin-bottom:1.8rem}
+.col-btn{display:inline-flex;align-items:center;gap:.6rem;cursor:pointer;border:1.5px solid var(--border);
+  background:#fff;color:var(--navy);border-radius:999px;padding:.6rem 1.15rem;
+  font-family:'Montserrat',sans-serif;font-size:.74rem;font-weight:800;letter-spacing:.03em;
+  transition:all .25s;white-space:nowrap}
+.col-btn:hover{border-color:var(--teal);color:var(--teal-dk);transform:translateY(-1px)}
+.col-btn .col-chev{display:inline-block;transition:transform .3s;font-size:.7rem;line-height:1}
+.col-btn[aria-expanded="false"] .col-chev{transform:rotate(-90deg)}
+.col-btn[aria-expanded="false"] .col-txt-hide{display:none}
+.col-btn[aria-expanded="true"] .col-txt-show{display:none}
+/* variante sobre fondo oscuro (calendario) */
+.col-btn.col-dark{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.22);color:#fff}
+.col-btn.col-dark:hover{background:rgba(255,255,255,.14);border-color:var(--teal-l);color:var(--teal-l)}
+.col-body{display:block}
+.col-body[hidden]{display:none}
+.col-hint{font-size:.72rem;color:var(--muted)}
+.col-hint.col-dark-hint{color:rgba(255,255,255,.5)}
+/* nota estratégica en tarjeta de ola */
+.ola-flag{margin-top:.7rem;padding:.8rem 1rem;background:rgba(24,56,136,.05);
+  border-left:3px solid var(--navy);border-radius:0 12px 12px 0}
+.ola-flag-t{font-size:.71rem;color:var(--navy);line-height:1.6}
+.ola-flag-t b{font-weight:700}
+
 </style>
 </head>
 <body>
@@ -890,6 +917,17 @@ footer{background:var(--navy);color:rgba(255,255,255,.5);padding:4rem 2rem 2rem}
       mejor desempeño orgánico.</p>
     </div>
 
+
+    <div class="col-bar">
+      <div class="col-hint">3 olas &middot; 5 voces m&eacute;dicas &middot; alcance org&aacute;nico estimado 903,253</div>
+      <button class="col-btn" type="button" aria-expanded="true" aria-controls="olas-body"
+              onclick="toggleCollapse(this,'olas-body')">
+        <span class="col-chev">&#9660;</span>
+        <span class="col-txt-hide">Ocultar detalle</span>
+        <span class="col-txt-show">Ver detalle</span>
+      </button>
+    </div>
+    <div class="col-body" id="olas-body">
     <div class="ola-kpis s-fade">
       <div class="ola-kpi"><div class="ola-kpi-n">903,253</div>
         <div class="ola-kpi-l">Alcance orgánico estimado · total de las tres olas</div></div>
@@ -899,11 +937,12 @@ footer{background:var(--navy);color:rgba(255,255,255,.5);padding:4rem 2rem 2rem}
         <div class="ola-kpi-l">Médicos divulgadores y gastroenterólogos + slots TikTok y voz familiar</div></div>
     </div>
 
-    <div class="ola-g"><article class="ola-c s-fade"><div class="ola-hd"><div class="ola-num">Ola 1</div><div class="ola-name">Lanzamiento</div><div class="ola-date">Junio — Julio 2026</div></div><div class="ola-bd"><div class="ola-sub">Talento confirmado</div><div class="ola-t"><div class="ola-t-av">MP</div><div class="ola-t-b"><div class="ola-t-n">Dr. Miguel Padilla</div><div class="ola-t-e">Médico general · 2M seguidores</div><div class="ola-t-d">1 Reel</div></div><div class="ola-t-v"><div class="ola-t-v-n">387,166</div><div class="ola-t-v-l">views prom</div></div></div><div class="ola-t"><div class="ola-t-av">GG</div><div class="ola-t-b"><div class="ola-t-n">Dr. Gerardo García</div><div class="ola-t-e">Médico general · 80,100 seguidores</div><div class="ola-t-d">1 Reel + 1 Historia</div></div><div class="ola-t-v"><div class="ola-t-v-n">55,758</div><div class="ola-t-v-l">views prom</div></div></div><div class="ola-t"><div class="ola-t-av">GR</div><div class="ola-t-b"><div class="ola-t-n">Dra. Gabriela Rangel</div><div class="ola-t-e">Gastroenteróloga · 24,200 seguidores</div><div class="ola-t-d">2 Historias</div></div><div class="ola-t-v"><div class="ola-t-v-n">11,824</div><div class="ola-t-v-l">views prom</div></div></div><div class="ola-slot"><div class="ola-slot-t"><b>Slot médico joven TikTok</b> · 2 TikToks de gancho viral · segmento &lt;30 años</div></div><div class="ola-ft"><div class="ola-reach"><div class="ola-reach-n">442,924</div><div class="ola-reach-l">Alcance orgánico estimado · suma de views promedio de los Reels</div></div><div class="ola-pauta"><div class="ola-pauta-ico">◆</div><div class="ola-pauta-t"><b>Spark Ads</b> · 7 días · sobre los Reels de mayor alcance orgánico</div></div></div></div></article><article class="ola-c s-fade"><div class="ola-hd"><div class="ola-num">Ola 2</div><div class="ola-name">Consolidación clínica</div><div class="ola-date">Septiembre 2026</div></div><div class="ola-bd"><div class="ola-sub">Talento confirmado</div><div class="ola-t"><div class="ola-t-av">JB</div><div class="ola-t-b"><div class="ola-t-n">Dr. José Bandera</div><div class="ola-t-e">Gastroenterólogo · 91,700 seguidores</div><div class="ola-t-d">1 Reel + 1 Historia</div></div><div class="ola-t-v"><div class="ola-t-v-n">4,440</div><div class="ola-t-v-l">views prom</div></div></div><div class="ola-t"><div class="ola-t-av">GR</div><div class="ola-t-b"><div class="ola-t-n">Dra. Gabriela Rangel</div><div class="ola-t-e">Gastroenteróloga · 24,200 seguidores</div><div class="ola-t-d">1 Reel + 1 Feed</div></div><div class="ola-t-v"><div class="ola-t-v-n">11,824</div><div class="ola-t-v-l">views prom</div></div></div><div class="ola-t"><div class="ola-t-av">FC</div><div class="ola-t-b"><div class="ola-t-n">Dr. Francisco Canell</div><div class="ola-t-e">Gastroenterólogo · 8,600 seguidores</div><div class="ola-t-d">1 Reel + 1 Historia</div></div><div class="ola-t-v"><div class="ola-t-v-n">1,141</div><div class="ola-t-v-l">views prom</div></div></div><div class="ola-ft"><div class="ola-reach"><div class="ola-reach-n">17,405</div><div class="ola-reach-l">Alcance orgánico estimado · suma de views promedio de los Reels</div></div><div class="ola-pauta"><div class="ola-pauta-ico">◆</div><div class="ola-pauta-t"><b>Spark Ads</b> · 7 días · sobre el Reel de mayor tracción de la ola</div></div></div></div></article><article class="ola-c s-fade"><div class="ola-hd"><div class="ola-num">Ola 3</div><div class="ola-name">Cierre navideño</div><div class="ola-date">Noviembre — Diciembre 2026</div></div><div class="ola-bd"><div class="ola-sub">Talento confirmado</div><div class="ola-t"><div class="ola-t-av">MP</div><div class="ola-t-b"><div class="ola-t-n">Dr. Miguel Padilla</div><div class="ola-t-e">Médico general · 2M seguidores</div><div class="ola-t-d">1 Reel</div></div><div class="ola-t-v"><div class="ola-t-v-n">387,166</div><div class="ola-t-v-l">views prom</div></div></div><div class="ola-t"><div class="ola-t-av">GG</div><div class="ola-t-b"><div class="ola-t-n">Dr. Gerardo García</div><div class="ola-t-e">Médico general · 80,100 seguidores</div><div class="ola-t-d">1 Reel + 1 Historia</div></div><div class="ola-t-v"><div class="ola-t-v-n">55,758</div><div class="ola-t-v-l">views prom</div></div></div><div class="ola-t"><div class="ola-t-av">GR</div><div class="ola-t-b"><div class="ola-t-n">Dra. Gabriela Rangel</div><div class="ola-t-e">Gastroenteróloga · 24,200 seguidores</div><div class="ola-t-d">2 Historias</div></div><div class="ola-t-v"><div class="ola-t-v-n">11,824</div><div class="ola-t-v-l">views prom</div></div></div><div class="ola-slot"><div class="ola-slot-t"><b>Slot voz familiar</b> · 1 Reel navideño + 4 Stories de presencia diaria</div></div><div class="ola-slot"><div class="ola-slot-t"><b>Slot médico joven TikTok</b> · 2 TikToks «propósitos 2027»</div></div><div class="ola-ft"><div class="ola-reach"><div class="ola-reach-n">442,924</div><div class="ola-reach-l">Alcance orgánico estimado · suma de views promedio de los Reels</div></div><div class="ola-pauta"><div class="ola-pauta-ico">◆</div><div class="ola-pauta-t"><b>Spark Ads</b> · 7 días por activación · dos ventanas (noviembre y diciembre)</div></div></div></div></article></div>
+    <div class="ola-g"><article class="ola-c s-fade"><div class="ola-hd"><div class="ola-num">Ola 1</div><div class="ola-name">Lanzamiento</div><div class="ola-date">Junio — Julio 2026</div></div><div class="ola-bd"><div class="ola-sub">Talento confirmado</div><div class="ola-t"><div class="ola-t-av">MP</div><div class="ola-t-b"><div class="ola-t-n">Dr. Miguel Padilla</div><div class="ola-t-e">Médico general · 2M seguidores</div><div class="ola-t-d">1 Reel</div></div><div class="ola-t-v"><div class="ola-t-v-n">387,166</div><div class="ola-t-v-l">views prom</div></div></div><div class="ola-t"><div class="ola-t-av">GG</div><div class="ola-t-b"><div class="ola-t-n">Dr. Gerardo García</div><div class="ola-t-e">Médico general · 80,100 seguidores</div><div class="ola-t-d">1 Reel + 1 Historia</div></div><div class="ola-t-v"><div class="ola-t-v-n">55,758</div><div class="ola-t-v-l">views prom</div></div></div><div class="ola-t"><div class="ola-t-av">GR</div><div class="ola-t-b"><div class="ola-t-n">Dra. Gabriela Rangel</div><div class="ola-t-e">Gastroenteróloga · 24,200 seguidores</div><div class="ola-t-d">2 Historias</div></div><div class="ola-t-v"><div class="ola-t-v-n">11,824</div><div class="ola-t-v-l">views prom</div></div></div><div class="ola-slot"><div class="ola-slot-t"><b>Slot médico joven TikTok</b> · 2 TikToks de gancho viral · segmento &lt;30 años</div></div><div class="ola-ft"><div class="ola-reach"><div class="ola-reach-n">442,924</div><div class="ola-reach-l">Alcance orgánico estimado · suma de views promedio de los Reels</div></div><div class="ola-pauta"><div class="ola-pauta-ico">◆</div><div class="ola-pauta-t"><b>Spark Ads</b> · 7 días · sobre los Reels de mayor alcance orgánico</div></div></div></div></article><article class="ola-c s-fade"><div class="ola-hd"><div class="ola-num">Ola 2</div><div class="ola-name">Consolidación clínica</div><div class="ola-date">Septiembre 2026</div></div><div class="ola-bd"><div class="ola-sub">Talento confirmado</div><div class="ola-t"><div class="ola-t-av">JB</div><div class="ola-t-b"><div class="ola-t-n">Dr. José Bandera</div><div class="ola-t-e">Gastroenterólogo · 91,700 seguidores</div><div class="ola-t-d">1 Reel + 1 Historia</div></div><div class="ola-t-v"><div class="ola-t-v-n">4,440</div><div class="ola-t-v-l">views prom</div></div></div><div class="ola-t"><div class="ola-t-av">GR</div><div class="ola-t-b"><div class="ola-t-n">Dra. Gabriela Rangel</div><div class="ola-t-e">Gastroenteróloga · 24,200 seguidores</div><div class="ola-t-d">1 Reel + 1 Feed</div></div><div class="ola-t-v"><div class="ola-t-v-n">11,824</div><div class="ola-t-v-l">views prom</div></div></div><div class="ola-t"><div class="ola-t-av">FC</div><div class="ola-t-b"><div class="ola-t-n">Dr. Francisco Canell</div><div class="ola-t-e">Gastroenterólogo · 8,600 seguidores</div><div class="ola-t-d">1 Reel + 1 Historia</div></div><div class="ola-t-v"><div class="ola-t-v-n">1,141</div><div class="ola-t-v-l">views prom</div></div></div><div class="ola-ft"><div class="ola-reach"><div class="ola-reach-n">17,405</div><div class="ola-reach-l">Alcance orgánico estimado · suma de views promedio de los Reels</div></div><div class="ola-flag"><div class="ola-flag-t"><b>Ola de profundidad clínica.</b> Optimizada por intención, no por alcance. Es el único momento de la campaña con tres gastroenterólogos certificados, los perfiles habilitados para hablar de diagnóstico y tratamiento con respaldo de especialista. Su métrica es test completado y consulta generada, no reproducciones.</div></div><div class="ola-pauta"><div class="ola-pauta-ico">◆</div><div class="ola-pauta-t"><b>Spark Ads</b> · 7 días · sobre el Reel de mayor tracción de la ola</div></div></div></div></article><article class="ola-c s-fade"><div class="ola-hd"><div class="ola-num">Ola 3</div><div class="ola-name">Cierre navideño</div><div class="ola-date">Noviembre — Diciembre 2026</div></div><div class="ola-bd"><div class="ola-sub">Talento confirmado</div><div class="ola-t"><div class="ola-t-av">MP</div><div class="ola-t-b"><div class="ola-t-n">Dr. Miguel Padilla</div><div class="ola-t-e">Médico general · 2M seguidores</div><div class="ola-t-d">1 Reel</div></div><div class="ola-t-v"><div class="ola-t-v-n">387,166</div><div class="ola-t-v-l">views prom</div></div></div><div class="ola-t"><div class="ola-t-av">GG</div><div class="ola-t-b"><div class="ola-t-n">Dr. Gerardo García</div><div class="ola-t-e">Médico general · 80,100 seguidores</div><div class="ola-t-d">1 Reel + 1 Historia</div></div><div class="ola-t-v"><div class="ola-t-v-n">55,758</div><div class="ola-t-v-l">views prom</div></div></div><div class="ola-t"><div class="ola-t-av">GR</div><div class="ola-t-b"><div class="ola-t-n">Dra. Gabriela Rangel</div><div class="ola-t-e">Gastroenteróloga · 24,200 seguidores</div><div class="ola-t-d">2 Historias</div></div><div class="ola-t-v"><div class="ola-t-v-n">11,824</div><div class="ola-t-v-l">views prom</div></div></div><div class="ola-slot"><div class="ola-slot-t"><b>Slot voz familiar</b> · 1 Reel navideño + 4 Stories de presencia diaria</div></div><div class="ola-slot"><div class="ola-slot-t"><b>Slot médico joven TikTok</b> · 2 TikToks «propósitos 2027»</div></div><div class="ola-ft"><div class="ola-reach"><div class="ola-reach-n">442,924</div><div class="ola-reach-l">Alcance orgánico estimado · suma de views promedio de los Reels</div></div><div class="ola-pauta"><div class="ola-pauta-ico">◆</div><div class="ola-pauta-t"><b>Spark Ads</b> · 7 días por activación · dos ventanas (noviembre y diciembre)</div></div></div></div></article></div>
 
     <p class="ola-note">Las cifras de alcance corresponden al promedio de reproducciones por pieza
     reportado por cada perfil y se presentan como estimación orgánica, sin considerar la amplificación
     por pauta. El desempeño real se reporta mes a mes en el informe de performance.</p>
+    </div>
   </div>
 </section>
 
@@ -1033,7 +1072,18 @@ footer{background:var(--navy);color:rgba(255,255,255,.5);padding:4rem 2rem 2rem}
     </div>
   </div>
 
-  <div class="cal-filterbar">
+  
+      <div class="col-bar">
+        <div class="col-hint col-dark-hint">66 piezas &middot; 15 Jul &rarr; 31 Dic 2026 &middot; filtrable por mes, plataforma, pilar y carril</div>
+        <button class="col-btn col-dark" type="button" aria-expanded="true" aria-controls="cal-body"
+                onclick="toggleCollapse(this,'cal-body')">
+          <span class="col-chev">&#9660;</span>
+          <span class="col-txt-hide">Ocultar calendario</span>
+          <span class="col-txt-show">Ver calendario</span>
+        </button>
+      </div>
+      <div class="col-body" id="cal-body">
+        <div class="cal-filterbar">
     <div class="cal-filterbar-i">
       <div><label>Mes</label><select id="cal-f-mes"><option value="">Todos</option></select></div>
       <div><label>Plataforma</label><select id="cal-f-plataforma"><option value="">Todas</option></select></div>
@@ -1045,6 +1095,7 @@ footer{background:var(--navy);color:rgba(255,255,255,.5);padding:4rem 2rem 2rem}
   </div>
 
   <div id="cal-main"></div>
+      </div>
 </div>
 
 <script>
@@ -1896,6 +1947,19 @@ function filterArts(btn, cat){
 // ──────────────────────────────────────
 // SUBTLE PARALLAX on hero glow
 // ──────────────────────────────────────
+
+// ──────────────────────────────────────
+// ÁREAS COLAPSABLES
+// ──────────────────────────────────────
+function toggleCollapse(btn, targetId){
+  var body = document.getElementById(targetId);
+  if(!body) return;
+  var open = btn.getAttribute('aria-expanded') === 'true';
+  btn.setAttribute('aria-expanded', open ? 'false' : 'true');
+  if(open){ body.setAttribute('hidden',''); }
+  else    { body.removeAttribute('hidden'); }
+}
+
 </script>
 </body>
 </html>
