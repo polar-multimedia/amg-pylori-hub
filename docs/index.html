@@ -621,6 +621,33 @@ footer{background:var(--navy);color:rgba(255,255,255,.5);padding:4rem 2rem 2rem}
 .ola-flag-t{font-size:.71rem;color:var(--navy);line-height:1.6}
 .ola-flag-t b{font-weight:700}
 
+
+/* ════════════════════════════
+   ANEXOS — dos paneles en línea
+════════════════════════════ */
+.anx-sec{padding:5rem 2rem 6rem;background:var(--bg2)}
+.anx-i{max-width:1340px;margin:0 auto}
+.anx-lead{margin-bottom:2.5rem}
+.anx-lead h2{font-size:clamp(1.5rem,3vw,2.1rem)}
+.anx-g{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;align-items:start}
+.anx-g > section{padding:2rem !important;border-radius:22px;overflow:hidden;
+  border:1.5px solid var(--border);background:var(--bg);min-width:0;transition:grid-column .2s}
+.anx-g > section.cats-sec{border-color:rgba(255,255,255,.14)}
+.anx-g > section.anx-open{grid-column:1 / -1}
+.anx-g > section h2{font-size:clamp(1.15rem,2vw,1.5rem) !important}
+.anx-g .ola-i,.anx-g .cal-i{max-width:100%}
+.anx-g .ola-top,.anx-g .ola-lead{max-width:100%}
+.anx-g .ola-lead,.anx-g .cal-i p{font-size:.84rem}
+.anx-g .ola-kpis{grid-template-columns:1fr;gap:.7rem;margin:1.5rem 0 1.8rem}
+.anx-g .ola-g{grid-template-columns:1fr;gap:1.2rem}
+.anx-g section.anx-open .ola-g{grid-template-columns:repeat(3,1fr)}
+.anx-g section.anx-open .ola-kpis{grid-template-columns:repeat(3,1fr)}
+.anx-g .col-bar{margin-bottom:0}
+.anx-g section[aria-hidden] {}
+@media(max-width:980px){.anx-g{grid-template-columns:1fr}
+  .anx-g > section.anx-open{grid-column:auto}
+  .anx-g section.anx-open .ola-g,.anx-g section.anx-open .ola-kpis{grid-template-columns:1fr}}
+
 </style>
 </head>
 <body>
@@ -904,6 +931,243 @@ footer{background:var(--navy);color:rgba(255,255,255,.5);padding:4rem 2rem 2rem}
 
 <!-- ══ CALENDARIO SEMANAL DE CONTENIDO (reemplaza Ciencia + Evidencia) ══ -->
 
+
+
+<!-- ══ RESTAURADO: aware · stats · quiz · newsletter ══ -->
+<section class="aware-sec">
+  <div class="aware-i container">
+    <div class="aware-big-stat s-left">
+      <span class="abs-num">7</span>
+      <span class="abs-denom">de cada 10</span>
+      <p class="abs-label">estómagos mexicanos<br>portan la bacteria <em class="hpyl" style="color:var(--teal-l)">H. pylori</em><br>— y la mayoría no lo sabe.</p>
+    </div>
+    <div class="aware-txt s-right">
+      <div class="ey" style="color:var(--teal-l)">¿Por qué importa?</div>
+      <h2>La infección por <em class="hpyl" style="color:var(--teal-l)">H. pylori</em> es la primera causa infecciosa de cáncer gástrico a nivel mundial.</h2>
+      <div class="div-teal"></div>
+      <p>Se presenta con síntomas como gastritis, acidez y reflujo — señales que millones de personas normalizan. Detectarla a tiempo marca la diferencia.</p>
+      <div class="aware-cta-strip">
+        <strong>Pregunta a tu médico</strong> por el tratamiento que está mejorando <span class="sig">significativamente</span> su tasa de curación.
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="stats-band" id="info">
+  <div class="stats-i">
+    <div class="stat-it s-fade">
+      <span class="stat-n">70%</span>
+      <div class="stat-l">de mexicanos porta <em class="hpyl" style="color:var(--teal-l)">H. pylori</em> sin saberlo</div>
+      <div class="stat-src">AMG, 2024</div>
+    </div>
+    <div class="stat-it s-fade delay-1">
+      <span class="stat-n">90%</span>
+      <div class="stat-l">del cáncer gástrico inicia como infección por <em class="hpyl" style="color:var(--teal-l)">H. pylori</em></div>
+      <div class="stat-src">WGO, 2023</div>
+    </div>
+    <div class="stat-it s-fade delay-2">
+      <span class="stat-n">80%</span>
+      <div class="stat-l">reducción del riesgo de cáncer gástrico al erradicar la bacteria</div>
+      <div class="stat-src">Lancet Gastroenterology, 2022</div>
+    </div>
+    <div class="stat-it s-fade delay-3">
+      <span class="stat-n">95%</span>
+      <div class="stat-l">tasa de curación con el tratamiento correcto y supervisado</div>
+      <div class="stat-src">Guías AMG, 2025</div>
+    </div>
+  </div>
+</section>
+
+<section class="quiz-sec" id="quiz">
+  <div class="quiz-i">
+    <!-- Left -->
+    <div class="ql s-left">
+      <div class="ey">Evaluación de síntomas</div>
+      <h2>Test de riesgo <em class="hpyl-dark">H. pylori</em></h2>
+      <div class="div-teal"></div>
+      <p>Responde 6 preguntas rápidas sobre tus síntomas. Recibirás una evaluación de tu nivel de riesgo y orientación sobre cuándo consultar a tu médico.</p>
+      <div class="qfeats">
+        <div class="qf">
+          <div class="qf-ico">⏱️</div>
+          <div class="qf-txt"><strong>3 minutos</strong><span>Test breve, sin registro necesario</span></div>
+        </div>
+        <div class="qf">
+          <div class="qf-ico">🔒</div>
+          <div class="qf-txt"><strong>Anónimo y confidencial</strong><span>No almacenamos ni compartimos tus datos</span></div>
+        </div>
+        <div class="qf">
+          <div class="qf-ico">🩺</div>
+          <div class="qf-txt"><strong>Basado en criterios clínicos validados</strong><span>ACG Guidelines 2017 · V Consenso AMG 2025</span></div>
+        </div>
+        <div class="qf">
+          <div class="qf-ico">📋</div>
+          <div class="qf-txt"><strong>Resultado inmediato</strong><span>Con recomendación de pasos a seguir</span></div>
+        </div>
+      </div>
+    </div>
+    <!-- Right: Quiz card -->
+    <div class="qwrap s-right">
+      <div class="qcard">
+        <div class="qhd">
+          <div class="qhd-lbl">Test de Riesgo · Criterios ACG / AMG</div>
+          <div class="prog-row">
+            <div class="prog-dots" id="progDots">
+              <div class="pd act" id="pd1"></div>
+              <div class="pd" id="pd2"></div>
+              <div class="pd" id="pd3"></div>
+              <div class="pd" id="pd4"></div>
+              <div class="pd" id="pd5"></div>
+              <div class="pd" id="pd6"></div>
+            </div>
+            <div class="prog-t" id="progTxt">Pregunta 1 de 6</div>
+          </div>
+        </div>
+        <div class="qbody">
+          <!-- Q1 -->
+          <div class="qstep act" data-step="1">
+            <div class="qn">Pregunta 1</div>
+            <div class="qq">¿Con qué frecuencia tienes dolor o malestar en la zona del estómago?</div>
+            <div class="qhint">Considera el área del abdomen superior, entre el ombligo y el pecho.</div>
+            <div class="qopts">
+              <button class="qo" data-v="0" onclick="sel(this,1)"><em>😊</em> Nunca o muy rara vez</button>
+              <button class="qo" data-v="1" onclick="sel(this,1)"><em>😐</em> A veces (1–2 veces por semana)</button>
+              <button class="qo" data-v="2" onclick="sel(this,1)"><em>😟</em> Frecuentemente (casi todos los días)</button>
+              <button class="qo" data-v="3" onclick="sel(this,1)"><em>😣</em> Constantemente</button>
+            </div>
+            <div class="qnav"><button class="qbk" disabled>← Atrás</button><button class="qnx" id="qn1" onclick="nxt(1)" disabled>Siguiente →</button></div>
+          </div>
+          <!-- Q2 -->
+          <div class="qstep" data-step="2">
+            <div class="qn">Pregunta 2</div>
+            <div class="qq">¿Sientes acidez, reflujo o ardor después de comer?</div>
+            <div class="qhint">Sensación de quemadura en el pecho o garganta.</div>
+            <div class="qopts">
+              <button class="qo" data-v="0" onclick="sel(this,2)"><em>😊</em> Casi nunca</button>
+              <button class="qo" data-v="1" onclick="sel(this,2)"><em>😐</em> Después de comidas pesadas</button>
+              <button class="qo" data-v="2" onclick="sel(this,2)"><em>😟</em> Regularmente tras cualquier comida</button>
+              <button class="qo" data-v="3" onclick="sel(this,2)"><em>😣</em> Con frecuencia, independiente de lo que como</button>
+            </div>
+            <div class="qnav"><button class="qbk" onclick="back(2)">← Atrás</button><button class="qnx" id="qn2" onclick="nxt(2)" disabled>Siguiente →</button></div>
+          </div>
+          <!-- Q3 -->
+          <div class="qstep" data-step="3">
+            <div class="qn">Pregunta 3</div>
+            <div class="qq">¿Alguna vez has tenido gastritis diagnosticada o úlceras estomacales?</div>
+            <div class="qhint">Incluyendo diagnósticos anteriores aunque hayan sido tratados.</div>
+            <div class="qopts">
+              <button class="qo" data-v="0" onclick="sel(this,3)"><em>✅</em> No, nunca</button>
+              <button class="qo" data-v="1" onclick="sel(this,3)"><em>❓</em> Creo que sí pero no tengo diagnóstico formal</button>
+              <button class="qo" data-v="2" onclick="sel(this,3)"><em>📋</em> Sí, he tenido gastritis antes</button>
+              <button class="qo" data-v="3" onclick="sel(this,3)"><em>⚠️</em> Sí, úlceras o gastritis crónica</button>
+            </div>
+            <div class="qnav"><button class="qbk" onclick="back(3)">← Atrás</button><button class="qnx" id="qn3" onclick="nxt(3)" disabled>Siguiente →</button></div>
+          </div>
+          <!-- Q4 -->
+          <div class="qstep" data-step="4">
+            <div class="qn">Pregunta 4</div>
+            <div class="qq">¿Tienes familiares directos con úlceras, gastritis crónica o cáncer gástrico?</div>
+            <div class="qhint">Padres, hermanos o abuelos con estas condiciones.</div>
+            <div class="qopts">
+              <button class="qo" data-v="0" onclick="sel(this,4)"><em>✅</em> No que yo sepa</button>
+              <button class="qo" data-v="1" onclick="sel(this,4)"><em>🤔</em> Tal vez, no estoy seguro/a</button>
+              <button class="qo" data-v="2" onclick="sel(this,4)"><em>👨‍👩‍👧</em> Sí, un familiar con úlcera o gastritis</button>
+              <button class="qo" data-v="3" onclick="sel(this,4)"><em>⚠️</em> Sí, cáncer gástrico en mi familia</button>
+            </div>
+            <div class="qnav"><button class="qbk" onclick="back(4)">← Atrás</button><button class="qnx" id="qn4" onclick="nxt(4)" disabled>Siguiente →</button></div>
+          </div>
+          <!-- Q5 -->
+          <div class="qstep" data-step="5">
+            <div class="qn">Pregunta 5</div>
+            <div class="qq">¿Sientes náuseas, eructos frecuentes o sensación de llenura rápida?</div>
+            <div class="qhint">Síntomas digestivos que pueden acompañar la infección por H. pylori.</div>
+            <div class="qopts">
+              <button class="qo" data-v="0" onclick="sel(this,5)"><em>😊</em> Rara vez o nunca</button>
+              <button class="qo" data-v="1" onclick="sel(this,5)"><em>😐</em> Ocasionalmente</button>
+              <button class="qo" data-v="2" onclick="sel(this,5)"><em>😟</em> Frecuentemente</button>
+              <button class="qo" data-v="3" onclick="sel(this,5)"><em>😣</em> Casi siempre, afecta mi día a día</button>
+            </div>
+            <div class="qnav"><button class="qbk" onclick="back(5)">← Atrás</button><button class="qnx" id="qn5" onclick="nxt(5)" disabled>Siguiente →</button></div>
+          </div>
+          <!-- Q6 -->
+          <div class="qstep" data-step="6">
+            <div class="qn">Pregunta 6</div>
+            <div class="qq">¿Te has realizado alguna prueba de <em class="hpyl-dark">H. pylori</em> (aliento, endoscopía o sangre)?</div>
+            <div class="qhint">Indica si ha habido alguna evaluación médica previa para esta bacteria.</div>
+            <div class="qopts">
+              <button class="qo" data-v="0" onclick="sel(this,6)"><em>✅</em> Sí, y fue negativa</button>
+              <button class="qo" data-v="0" onclick="sel(this,6)"><em>📋</em> Sí, tuve tratamiento y me curé</button>
+              <button class="qo" data-v="2" onclick="sel(this,6)"><em>❓</em> No, nunca me he realizado ninguna prueba</button>
+              <button class="qo" data-v="3" onclick="sel(this,6)"><em>⚠️</em> Sí, fue positiva pero no recibí tratamiento</button>
+            </div>
+            <div class="qnav"><button class="qbk" onclick="back(6)">← Atrás</button><button class="qnx" id="qn6" onclick="calcRes()" disabled>Ver resultado →</button></div>
+          </div>
+          <!-- Result -->
+          <div id="qres">
+            <div id="res-ico-el" class="res-ico"></div>
+            <div id="res-lvl-el" class="res-lvl"></div>
+            <div id="res-ttl-el" class="res-ttl"></div>
+            <div id="res-bd-el" class="res-bd"></div>
+            <div class="res-acts">
+              <button class="res-p" onclick="document.getElementById('amg').scrollIntoView({behavior:'smooth'})">Ver especialistas de la AMG →</button>
+              <button class="res-s" onclick="resetQuiz()">Repetir test</button>
+            </div>
+            <p class="res-disc">Esta evaluación es orientativa y no constituye diagnóstico médico. Criterios basados en <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5536265/" target="_blank" rel="noopener" style="color:var(--teal-d)">ACG Clinical Guideline 2017</a> y el <a href="https://www.revistagastroenterologiamexico.org/es-v-consenso-mexicano-sobre-el-articulo-S0375090625001697" target="_blank" rel="noopener" style="color:var(--teal-d)">V Consenso Mexicano AMG 2025</a>.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="nl-sec" id="newsletter">
+  <div class="nl-i">
+    <div class="ey s-fade">Mantente informado</div>
+    <h2 class="s-fade">Recibe contenido validado sobre salud gástrica</h2>
+    <p class="s-fade">Artículos, consejos de especialistas y actualizaciones del mundo de la gastroenterología, directamente en tu correo. Sin spam.</p>
+    <div class="nl-form s-fade">
+      <input class="nl-inp" type="email" placeholder="tu@correo.com">
+      <button class="nl-btn" onclick="showToast('¡Suscripción disponible al lanzar!')">Suscribirme →</button>
+    </div>
+    <p class="nl-disc s-fade">Sin spam. Puedes cancelar cuando quieras. Información basada en evidencia científica publicada.</p>
+    <div class="nl-soc s-fade">
+      <a class="spill" href="#" onclick="showToast('¡Redes sociales próximamente!')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="var(--teal-d)"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" fill="white"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke="white" stroke-width="2"/></svg>
+        Instagram
+      </a>
+      <a class="spill" href="#" onclick="showToast('¡Redes sociales próximamente!')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="#1877F2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+        Facebook
+      </a>
+      <a class="spill" href="#" onclick="showToast('¡Redes sociales próximamente!')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="var(--navy)"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg>
+        Twitter / X
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CTA STRIP — Campaign style diagonal ══ -->
+<div class="cta-strip">
+  <div class="cta-strip-bg"></div>
+  <div class="cta-strip-i container">
+    <div class="cta-strip-txt s-left">
+      <p>Pregunta a tu médico por el tratamiento que está mejorando <em>significativamente</em> su tasa de curación.</p>
+      <div class="cta-strip-disc">Información fundamentada en el V Consenso Mexicano de Gastroenterología (AMG, 2025). Esta información no sustituye la consulta médica. Consulta a tu médico ante cualquier síntoma.</div>
+    </div>
+    <button class="cta-strip-btn s-right" onclick="document.getElementById('quiz').scrollIntoView({behavior:'smooth'})">Hacer el test →</button>
+  </div>
+</div>
+
+
+<!-- ══ ANEXOS DE CAMPAÑA (pool de influencers + calendario) ══ -->
+<section class="anx-sec" id="anexos">
+  <div class="anx-i">
+    <div class="anx-lead">
+      <div class="ey">Anexos de campaña</div>
+      <h2>Pool de influencers y calendario editorial</h2>
+      <div class="div-teal"></div>
+    </div>
+    <div class="anx-g">
 <!-- ══ OLAS DE INFLUENCERS ══ -->
 <section class="ola-sec" id="olas">
   <div class="ola-i">
@@ -920,14 +1184,14 @@ footer{background:var(--navy);color:rgba(255,255,255,.5);padding:4rem 2rem 2rem}
 
     <div class="col-bar">
       <div class="col-hint">3 olas &middot; 5 voces m&eacute;dicas &middot; alcance org&aacute;nico estimado 903,253</div>
-      <button class="col-btn" type="button" aria-expanded="true" aria-controls="olas-body"
+      <button class="col-btn" type="button" aria-expanded="false" aria-controls="olas-body"
               onclick="toggleCollapse(this,'olas-body')">
         <span class="col-chev">&#9660;</span>
         <span class="col-txt-hide">Ocultar detalle</span>
         <span class="col-txt-show">Ver detalle</span>
       </button>
     </div>
-    <div class="col-body" id="olas-body">
+    <div class="col-body" id="olas-body" hidden>
     <div class="ola-kpis s-fade">
       <div class="ola-kpi"><div class="ola-kpi-n">903,253</div>
         <div class="ola-kpi-l">Alcance orgánico estimado · total de las tres olas</div></div>
@@ -945,7 +1209,6 @@ footer{background:var(--navy);color:rgba(255,255,255,.5);padding:4rem 2rem 2rem}
     </div>
   </div>
 </section>
-
 <section class="cats-sec cal-sec" id="categorias" style="position:relative;overflow:hidden;background:linear-gradient(180deg,#0B1E4D 0%,#102850 100%)">
 <span id="evidencia" style="display:block;height:0;visibility:hidden"></span>
 <style>
@@ -1075,14 +1338,14 @@ footer{background:var(--navy);color:rgba(255,255,255,.5);padding:4rem 2rem 2rem}
   
       <div class="col-bar">
         <div class="col-hint col-dark-hint">66 piezas &middot; 15 Jul &rarr; 31 Dic 2026 &middot; filtrable por mes, plataforma, pilar y carril</div>
-        <button class="col-btn col-dark" type="button" aria-expanded="true" aria-controls="cal-body"
+        <button class="col-btn col-dark" type="button" aria-expanded="false" aria-controls="cal-body"
                 onclick="toggleCollapse(this,'cal-body')">
           <span class="col-chev">&#9660;</span>
           <span class="col-txt-hide">Ocultar calendario</span>
           <span class="col-txt-show">Ver calendario</span>
         </button>
       </div>
-      <div class="col-body" id="cal-body">
+      <div class="col-body" id="cal-body" hidden>
         <div class="cal-filterbar">
     <div class="cal-filterbar-i">
       <div><label>Mes</label><select id="cal-f-mes"><option value="">Todos</option></select></div>
@@ -1484,231 +1747,9 @@ footer{background:var(--navy);color:rgba(255,255,255,.5);padding:4rem 2rem 2rem}
 })();
 </script>
 </section>
-
-<!-- ══ RESTAURADO: aware · stats · quiz · newsletter ══ -->
-<section class="aware-sec">
-  <div class="aware-i container">
-    <div class="aware-big-stat s-left">
-      <span class="abs-num">7</span>
-      <span class="abs-denom">de cada 10</span>
-      <p class="abs-label">estómagos mexicanos<br>portan la bacteria <em class="hpyl" style="color:var(--teal-l)">H. pylori</em><br>— y la mayoría no lo sabe.</p>
-    </div>
-    <div class="aware-txt s-right">
-      <div class="ey" style="color:var(--teal-l)">¿Por qué importa?</div>
-      <h2>La infección por <em class="hpyl" style="color:var(--teal-l)">H. pylori</em> es la primera causa infecciosa de cáncer gástrico a nivel mundial.</h2>
-      <div class="div-teal"></div>
-      <p>Se presenta con síntomas como gastritis, acidez y reflujo — señales que millones de personas normalizan. Detectarla a tiempo marca la diferencia.</p>
-      <div class="aware-cta-strip">
-        <strong>Pregunta a tu médico</strong> por el tratamiento que está mejorando <span class="sig">significativamente</span> su tasa de curación.
-      </div>
     </div>
   </div>
 </section>
-
-<section class="stats-band" id="info">
-  <div class="stats-i">
-    <div class="stat-it s-fade">
-      <span class="stat-n">70%</span>
-      <div class="stat-l">de mexicanos porta <em class="hpyl" style="color:var(--teal-l)">H. pylori</em> sin saberlo</div>
-      <div class="stat-src">AMG, 2024</div>
-    </div>
-    <div class="stat-it s-fade delay-1">
-      <span class="stat-n">90%</span>
-      <div class="stat-l">del cáncer gástrico inicia como infección por <em class="hpyl" style="color:var(--teal-l)">H. pylori</em></div>
-      <div class="stat-src">WGO, 2023</div>
-    </div>
-    <div class="stat-it s-fade delay-2">
-      <span class="stat-n">80%</span>
-      <div class="stat-l">reducción del riesgo de cáncer gástrico al erradicar la bacteria</div>
-      <div class="stat-src">Lancet Gastroenterology, 2022</div>
-    </div>
-    <div class="stat-it s-fade delay-3">
-      <span class="stat-n">95%</span>
-      <div class="stat-l">tasa de curación con el tratamiento correcto y supervisado</div>
-      <div class="stat-src">Guías AMG, 2025</div>
-    </div>
-  </div>
-</section>
-
-<section class="quiz-sec" id="quiz">
-  <div class="quiz-i">
-    <!-- Left -->
-    <div class="ql s-left">
-      <div class="ey">Evaluación de síntomas</div>
-      <h2>Test de riesgo <em class="hpyl-dark">H. pylori</em></h2>
-      <div class="div-teal"></div>
-      <p>Responde 6 preguntas rápidas sobre tus síntomas. Recibirás una evaluación de tu nivel de riesgo y orientación sobre cuándo consultar a tu médico.</p>
-      <div class="qfeats">
-        <div class="qf">
-          <div class="qf-ico">⏱️</div>
-          <div class="qf-txt"><strong>3 minutos</strong><span>Test breve, sin registro necesario</span></div>
-        </div>
-        <div class="qf">
-          <div class="qf-ico">🔒</div>
-          <div class="qf-txt"><strong>Anónimo y confidencial</strong><span>No almacenamos ni compartimos tus datos</span></div>
-        </div>
-        <div class="qf">
-          <div class="qf-ico">🩺</div>
-          <div class="qf-txt"><strong>Basado en criterios clínicos validados</strong><span>ACG Guidelines 2017 · V Consenso AMG 2025</span></div>
-        </div>
-        <div class="qf">
-          <div class="qf-ico">📋</div>
-          <div class="qf-txt"><strong>Resultado inmediato</strong><span>Con recomendación de pasos a seguir</span></div>
-        </div>
-      </div>
-    </div>
-    <!-- Right: Quiz card -->
-    <div class="qwrap s-right">
-      <div class="qcard">
-        <div class="qhd">
-          <div class="qhd-lbl">Test de Riesgo · Criterios ACG / AMG</div>
-          <div class="prog-row">
-            <div class="prog-dots" id="progDots">
-              <div class="pd act" id="pd1"></div>
-              <div class="pd" id="pd2"></div>
-              <div class="pd" id="pd3"></div>
-              <div class="pd" id="pd4"></div>
-              <div class="pd" id="pd5"></div>
-              <div class="pd" id="pd6"></div>
-            </div>
-            <div class="prog-t" id="progTxt">Pregunta 1 de 6</div>
-          </div>
-        </div>
-        <div class="qbody">
-          <!-- Q1 -->
-          <div class="qstep act" data-step="1">
-            <div class="qn">Pregunta 1</div>
-            <div class="qq">¿Con qué frecuencia tienes dolor o malestar en la zona del estómago?</div>
-            <div class="qhint">Considera el área del abdomen superior, entre el ombligo y el pecho.</div>
-            <div class="qopts">
-              <button class="qo" data-v="0" onclick="sel(this,1)"><em>😊</em> Nunca o muy rara vez</button>
-              <button class="qo" data-v="1" onclick="sel(this,1)"><em>😐</em> A veces (1–2 veces por semana)</button>
-              <button class="qo" data-v="2" onclick="sel(this,1)"><em>😟</em> Frecuentemente (casi todos los días)</button>
-              <button class="qo" data-v="3" onclick="sel(this,1)"><em>😣</em> Constantemente</button>
-            </div>
-            <div class="qnav"><button class="qbk" disabled>← Atrás</button><button class="qnx" id="qn1" onclick="nxt(1)" disabled>Siguiente →</button></div>
-          </div>
-          <!-- Q2 -->
-          <div class="qstep" data-step="2">
-            <div class="qn">Pregunta 2</div>
-            <div class="qq">¿Sientes acidez, reflujo o ardor después de comer?</div>
-            <div class="qhint">Sensación de quemadura en el pecho o garganta.</div>
-            <div class="qopts">
-              <button class="qo" data-v="0" onclick="sel(this,2)"><em>😊</em> Casi nunca</button>
-              <button class="qo" data-v="1" onclick="sel(this,2)"><em>😐</em> Después de comidas pesadas</button>
-              <button class="qo" data-v="2" onclick="sel(this,2)"><em>😟</em> Regularmente tras cualquier comida</button>
-              <button class="qo" data-v="3" onclick="sel(this,2)"><em>😣</em> Con frecuencia, independiente de lo que como</button>
-            </div>
-            <div class="qnav"><button class="qbk" onclick="back(2)">← Atrás</button><button class="qnx" id="qn2" onclick="nxt(2)" disabled>Siguiente →</button></div>
-          </div>
-          <!-- Q3 -->
-          <div class="qstep" data-step="3">
-            <div class="qn">Pregunta 3</div>
-            <div class="qq">¿Alguna vez has tenido gastritis diagnosticada o úlceras estomacales?</div>
-            <div class="qhint">Incluyendo diagnósticos anteriores aunque hayan sido tratados.</div>
-            <div class="qopts">
-              <button class="qo" data-v="0" onclick="sel(this,3)"><em>✅</em> No, nunca</button>
-              <button class="qo" data-v="1" onclick="sel(this,3)"><em>❓</em> Creo que sí pero no tengo diagnóstico formal</button>
-              <button class="qo" data-v="2" onclick="sel(this,3)"><em>📋</em> Sí, he tenido gastritis antes</button>
-              <button class="qo" data-v="3" onclick="sel(this,3)"><em>⚠️</em> Sí, úlceras o gastritis crónica</button>
-            </div>
-            <div class="qnav"><button class="qbk" onclick="back(3)">← Atrás</button><button class="qnx" id="qn3" onclick="nxt(3)" disabled>Siguiente →</button></div>
-          </div>
-          <!-- Q4 -->
-          <div class="qstep" data-step="4">
-            <div class="qn">Pregunta 4</div>
-            <div class="qq">¿Tienes familiares directos con úlceras, gastritis crónica o cáncer gástrico?</div>
-            <div class="qhint">Padres, hermanos o abuelos con estas condiciones.</div>
-            <div class="qopts">
-              <button class="qo" data-v="0" onclick="sel(this,4)"><em>✅</em> No que yo sepa</button>
-              <button class="qo" data-v="1" onclick="sel(this,4)"><em>🤔</em> Tal vez, no estoy seguro/a</button>
-              <button class="qo" data-v="2" onclick="sel(this,4)"><em>👨‍👩‍👧</em> Sí, un familiar con úlcera o gastritis</button>
-              <button class="qo" data-v="3" onclick="sel(this,4)"><em>⚠️</em> Sí, cáncer gástrico en mi familia</button>
-            </div>
-            <div class="qnav"><button class="qbk" onclick="back(4)">← Atrás</button><button class="qnx" id="qn4" onclick="nxt(4)" disabled>Siguiente →</button></div>
-          </div>
-          <!-- Q5 -->
-          <div class="qstep" data-step="5">
-            <div class="qn">Pregunta 5</div>
-            <div class="qq">¿Sientes náuseas, eructos frecuentes o sensación de llenura rápida?</div>
-            <div class="qhint">Síntomas digestivos que pueden acompañar la infección por H. pylori.</div>
-            <div class="qopts">
-              <button class="qo" data-v="0" onclick="sel(this,5)"><em>😊</em> Rara vez o nunca</button>
-              <button class="qo" data-v="1" onclick="sel(this,5)"><em>😐</em> Ocasionalmente</button>
-              <button class="qo" data-v="2" onclick="sel(this,5)"><em>😟</em> Frecuentemente</button>
-              <button class="qo" data-v="3" onclick="sel(this,5)"><em>😣</em> Casi siempre, afecta mi día a día</button>
-            </div>
-            <div class="qnav"><button class="qbk" onclick="back(5)">← Atrás</button><button class="qnx" id="qn5" onclick="nxt(5)" disabled>Siguiente →</button></div>
-          </div>
-          <!-- Q6 -->
-          <div class="qstep" data-step="6">
-            <div class="qn">Pregunta 6</div>
-            <div class="qq">¿Te has realizado alguna prueba de <em class="hpyl-dark">H. pylori</em> (aliento, endoscopía o sangre)?</div>
-            <div class="qhint">Indica si ha habido alguna evaluación médica previa para esta bacteria.</div>
-            <div class="qopts">
-              <button class="qo" data-v="0" onclick="sel(this,6)"><em>✅</em> Sí, y fue negativa</button>
-              <button class="qo" data-v="0" onclick="sel(this,6)"><em>📋</em> Sí, tuve tratamiento y me curé</button>
-              <button class="qo" data-v="2" onclick="sel(this,6)"><em>❓</em> No, nunca me he realizado ninguna prueba</button>
-              <button class="qo" data-v="3" onclick="sel(this,6)"><em>⚠️</em> Sí, fue positiva pero no recibí tratamiento</button>
-            </div>
-            <div class="qnav"><button class="qbk" onclick="back(6)">← Atrás</button><button class="qnx" id="qn6" onclick="calcRes()" disabled>Ver resultado →</button></div>
-          </div>
-          <!-- Result -->
-          <div id="qres">
-            <div id="res-ico-el" class="res-ico"></div>
-            <div id="res-lvl-el" class="res-lvl"></div>
-            <div id="res-ttl-el" class="res-ttl"></div>
-            <div id="res-bd-el" class="res-bd"></div>
-            <div class="res-acts">
-              <button class="res-p" onclick="document.getElementById('amg').scrollIntoView({behavior:'smooth'})">Ver especialistas de la AMG →</button>
-              <button class="res-s" onclick="resetQuiz()">Repetir test</button>
-            </div>
-            <p class="res-disc">Esta evaluación es orientativa y no constituye diagnóstico médico. Criterios basados en <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5536265/" target="_blank" rel="noopener" style="color:var(--teal-d)">ACG Clinical Guideline 2017</a> y el <a href="https://www.revistagastroenterologiamexico.org/es-v-consenso-mexicano-sobre-el-articulo-S0375090625001697" target="_blank" rel="noopener" style="color:var(--teal-d)">V Consenso Mexicano AMG 2025</a>.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="nl-sec" id="newsletter">
-  <div class="nl-i">
-    <div class="ey s-fade">Mantente informado</div>
-    <h2 class="s-fade">Recibe contenido validado sobre salud gástrica</h2>
-    <p class="s-fade">Artículos, consejos de especialistas y actualizaciones del mundo de la gastroenterología, directamente en tu correo. Sin spam.</p>
-    <div class="nl-form s-fade">
-      <input class="nl-inp" type="email" placeholder="tu@correo.com">
-      <button class="nl-btn" onclick="showToast('¡Suscripción disponible al lanzar!')">Suscribirme →</button>
-    </div>
-    <p class="nl-disc s-fade">Sin spam. Puedes cancelar cuando quieras. Información basada en evidencia científica publicada.</p>
-    <div class="nl-soc s-fade">
-      <a class="spill" href="#" onclick="showToast('¡Redes sociales próximamente!')">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="var(--teal-d)"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" fill="white"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke="white" stroke-width="2"/></svg>
-        Instagram
-      </a>
-      <a class="spill" href="#" onclick="showToast('¡Redes sociales próximamente!')">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="#1877F2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
-        Facebook
-      </a>
-      <a class="spill" href="#" onclick="showToast('¡Redes sociales próximamente!')">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="var(--navy)"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg>
-        Twitter / X
-      </a>
-    </div>
-  </div>
-</section>
-
-<!-- ══ CTA STRIP — Campaign style diagonal ══ -->
-<div class="cta-strip">
-  <div class="cta-strip-bg"></div>
-  <div class="cta-strip-i container">
-    <div class="cta-strip-txt s-left">
-      <p>Pregunta a tu médico por el tratamiento que está mejorando <em>significativamente</em> su tasa de curación.</p>
-      <div class="cta-strip-disc">Información fundamentada en el V Consenso Mexicano de Gastroenterología (AMG, 2025). Esta información no sustituye la consulta médica. Consulta a tu médico ante cualquier síntoma.</div>
-    </div>
-    <button class="cta-strip-btn s-right" onclick="document.getElementById('quiz').scrollIntoView({behavior:'smooth'})">Hacer el test →</button>
-  </div>
-</div>
 
 <!-- ══ FOOTER ══ -->
 <footer>
@@ -1958,6 +1999,10 @@ function toggleCollapse(btn, targetId){
   btn.setAttribute('aria-expanded', open ? 'false' : 'true');
   if(open){ body.setAttribute('hidden',''); }
   else    { body.removeAttribute('hidden'); }
+  var panel = btn.closest('section');
+  if(panel && panel.parentElement && panel.parentElement.classList.contains('anx-g')){
+    panel.classList.toggle('anx-open', !open);
+  }
 }
 
 </script>
