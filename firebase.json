@@ -1,7 +1,19 @@
 {
   "hosting": {
     "public": "docs",
-    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**",
+      "img/Imagenes_gpt/**",
+      "img/socialmedia/**",
+      "img/brand_amg/Artes_campaña/**",
+      "img/brand_amg/Artes_campaña_deteccion/**",
+      "img/brand_amg/gpts/**",
+      "img/brand_amg/*.pdf",
+      "img/museo*.png",
+      "**/*.psd"
+    ],
     "headers": [
       { "source": "**/*.html", "headers": [{"key": "Cache-Control", "value": "no-cache, must-revalidate"}] },
       { "source": "**/*.png",  "headers": [{"key": "Cache-Control", "value": "public, max-age=604800"}] }
